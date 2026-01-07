@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenKorean - 한국의 크리스마스 케이크</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 폰트 링크 -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 루트 폰트 사이즈 설정 (반응형) */
+        :root {
+            font-size: clamp(12px, 1vw, 16px);
+        }
+
+        /* NanumSquareRound (기본 글꼴) */
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* NoonnuBasicGothic (사이드바, 관련어 등) */
+        @font-face {
+            font-family: 'NoonnuBasicGothic';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* NanumBarunPen (스크립트 본문, 관련어) */
+        @font-face {
+            font-family: 'NanumBarunPen';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* SchoolSafetyOcarina (단어 제목) */
+        @font-face {
+            font-family: 'SchoolSafetyOcarina';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* SchoolSafetyPictureDiary (주요 뜻) */
+        @font-face {
+            font-family: 'SchoolSafetyPictureDiary';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* SchoolSafeUniverse (예문 한국어) */
+        @font-face {
+            font-family: 'SchoolSafeUniverse';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* Cafe24Gowoonbam (예문 영어) */
+        @font-face {
+            font-family: 'Cafe24Gowoonbam';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* SchoolSafeDictation (관련어 뜻) */
+        @font-face {
+            font-family: 'SchoolSafeDictation';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        /* MapoHanaeum (관련어 - 신규 추가) */
+        @font-face {
+            font-family: 'MapoHanaeum';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+        
+        /* 기본 Body 폰트 변경: NanumSquareRound */
+        body { font-family: 'NanumSquareRound', sans-serif; background-color: #f9fafb; color: #334155; margin: 0; padding: 0; }
+        
+        /* Font Utility Classes */
+        .font-basic { font-family: 'NoonnuBasicGothic', sans-serif; }
+        .font-nanum-pen { font-family: 'NanumBarunPen', sans-serif; }
+        .font-ocarina { font-family: 'SchoolSafetyOcarina', sans-serif; }
+        .font-diary { font-family: 'SchoolSafetyPictureDiary', sans-serif; }
+        .font-universe { font-family: 'SchoolSafeUniverse', sans-serif; }
+        .font-gowoonbam { font-family: 'Cafe24Gowoonbam', sans-serif; }
+        .font-dictation { font-family: 'SchoolSafeDictation', sans-serif; }
+        .font-mapo { font-family: 'MapoHanaeum', sans-serif; }
+        
+        .font-jua { font-family: 'Jua', sans-serif; }
+        .font-noto { font-family: 'Noto Sans KR', sans-serif; }
+        .font-sunflower { font-family: 'Sunflower', sans-serif; }
+        
+        @font-face {
+            font-family: 'Cafe24SurroundAir';
+            src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+            font-weight: normal; font-display: swap;
+        }
+        .font-cafe24 { font-family: 'Cafe24SurroundAir', sans-serif; }
+
+        @font-face {
+            font-family: 'Cafe24Surround';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+            font-weight: normal; font-display: swap;
+        }
+        .font-cafe24-surround { font-family: 'Cafe24Surround', sans-serif; }
+
+        @font-face {
+            font-family: 'Cafe24Decoshadow';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2');
+            font-weight: normal; font-display: swap;
+        }
+        .font-cafe24-deco { font-family: 'Cafe24Decoshadow', sans-serif; }
+
+        @font-face {
+            font-family: 'Cafe24Decoschool';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');
+            font-weight: normal; font-display: swap;
+        }
+        .font-cafe24-school { font-family: 'Cafe24Decoschool', sans-serif; }
+
+        @font-face {
+            font-family: 'Cafe24Anemone';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');
+            font-weight: normal; font-display: swap;
+        }
+        .font-cafe24-anemone { font-family: 'Cafe24Anemone', sans-serif; }
+
+        @font-face {
+            font-family: 'SchoolSafetyRoundedSmile';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2');
+            font-weight: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'SchoolSafetyRoundedSmile';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');
+            font-weight: 700; font-display: swap;
+        }
+        .font-school-smile { font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
+
+        /* New Font for Logo Text: SchoolSafetyMustache */
+        @font-face {
+            font-family: 'SchoolSafetyMustache';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+        .font-mustache { font-family: 'SchoolSafetyMustache', sans-serif; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+
+        /* Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--thumb-color, #22c55e);
+            cursor: pointer;
+            margin-top: -6px;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
+        const { createPortal } = ReactDOM;
+
+        // --- Data ---
+        const LEVEL_DEFINITIONS = {
+            "A1": { title: "Novice", desc: "Can use and understand very simple everyday expressions. Can introduce themselves, ask and answer basic questions." },
+            "A1+": { title: "Pre-Beginner", desc: "Still beginner, but can handle slightly more than A1." },
+            "A2": { title: "Beginner", desc: "Can understand frequently used sentences (family, shopping, work, hobbies)." },
+            "A2+": { title: "Upper Beginner", desc: "Between A2 and B1. Can speak a bit more smoothly about daily life." },
+            "B1": { title: "Pre-Intermediate", desc: "Can understand the main points of clear standard speech or texts on familiar topics." },
+            "B1+": { title: "Lower Intermediate", desc: "Stronger B1. More comfortable carrying conversations." },
+            "B2": { title: "Intermediate", desc: "Can understand the main ideas of complex texts." },
+            "B2+": { title: "Upper Intermediate", desc: "Near C1. Can argue a point logically." },
+            "C1": { title: "Advanced", desc: "Can understand long, demanding texts and implied meanings." },
+            "C1+": { title: "Upper Advanced", desc: "Very strong C1, approaching native-like flexibility." },
+            "C2": { title: "Proficient", desc: "Can understand virtually everything heard or read." }
+        };
+
+        const VOCAB_DATA = [
+            {
+                term: '이 주제로 이야기해 봐요', 
+                mainDef: 'Let\'s Talk About This Topic', 
+                variants: ['이 주제로 이야기해 봐요'],
+                examples: [
+                    { kor: '우리 이 주제로 이야기해 봐요.', eng: 'Let\'s talk about this topic.' }, 
+                    { kor: '다음엔 다른 주제로 이야기해 봐요.', eng: 'Let\'s talk about a different topic next time.' }
+                ],
+                subDefs: [
+                    { subTerm: '▢▢을/를 주제로 이야기하다', subDef: 'to talk about [something] as a topic' },
+                    { subTerm: '-아/어 보다 as in 이야기해 봐요', subDef: 'used to make gentle suggestions without sounding pushy' }
+                ]
+            },
+            {
+                term: '딱 떠오르는 이미지',
+                mainDef: 'The image that pops up right away',
+                variants: ['딱 떠오르는 이미지가'],
+                examples: [
+                    { kor: '여름 하면 딱 떠오르는 음식이 있어요.', eng: 'There is a food that comes to mind right away when thinking of summer.' },
+                    { kor: '그 사람의 딱 떠오르는 이미지는 미소예요.', eng: 'The image that comes to mind right away for that person is a smile.' }
+                ],
+                subDefs: [
+                    { subTerm: '딱', subDef: 'just, exactly, right away' },
+                    { subTerm: '떠오르다', subDef: 'to come to mind' },
+                    { subTerm: '-는 as in 떠오르는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '이미지', subDef: 'image' }
+                ]
+            },
+            {
+                term: '생크림',
+                mainDef: 'Whipped cream',
+                variants: ['생크림에'],
+                examples: [
+                    { kor: '케이크에 생크림을 발라요.', eng: 'Spread whipped cream on the cake.' },
+                    { kor: '저는 생크림을 좋아해요.', eng: 'I like whipped cream.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '딸기가 올라간 케이크',
+                mainDef: 'A cake topped with strawberries',
+                variants: ['딸기가 올라간 케이크요'],
+                examples: [
+                    { kor: '과일이 올라간 케이크를 먹었어요.', eng: 'I ate a cake topped with fruit.' },
+                    { kor: '이것은 초콜릿이 올라간 빵이에요.', eng: 'This is bread topped with chocolate.' }
+                ],
+                subDefs: [
+                    { subTerm: '올라가다', subDef: 'to go up, to be placed on' },
+                    { subTerm: '-ㄴ as in 올라간', subDef: 'used to turn a past-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '한국의 전통적인 건 아니에요',
+                mainDef: 'It is not traditionally Korean',
+                variants: ['한국의 전통적인 건 아니에요'],
+                examples: [
+                    { kor: '이것은 전통적인 건 아니에요.', eng: 'This is not traditional.' },
+                    { kor: '그 옷은 한국의 전통적인 것이에요.', eng: 'That clothing is traditionally Korean.' }
+                ],
+                subDefs: [
+                    { subTerm: '전통적', subDef: 'traditional' },
+                    { subTerm: '-ㄴ/인 건 as in 전통적인 건', subDef: 'A colloquial form of -ㄴ/인 것은, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' }
+                ]
+            },
+            {
+                term: '당연히',
+                mainDef: 'Naturally / Of course',
+                variants: ['당연히'],
+                examples: [
+                    { kor: '당연히 갈게요.', eng: 'Of course I will go.' },
+                    { kor: '당연히 알고 있어요.', eng: 'Naturally, I know.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '서양에서 온 거',
+                mainDef: 'Something that came from the West',
+                variants: ['서양에서 온 거'],
+                examples: [
+                    { kor: '이 문화는 서양에서 온 거예요.', eng: 'This culture came from the West.' },
+                    { kor: '그것은 서양에서 온 것이 아니에요.', eng: 'That is not something that came from the West.' }
+                ],
+                subDefs: [
+                    { subTerm: '서양', subDef: 'the West' },
+                    { subTerm: '오다', subDef: 'to come' },
+                    { subTerm: '-ㄴ 거 as in 온 거', subDef: 'A colloquial form of -ㄴ 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”' }
+                ]
+            },
+            {
+                term: '시작된 게 아니에요',
+                mainDef: 'It didn\'t start (there)',
+                variants: ['시작된 게 아니에요'],
+                examples: [
+                    { kor: '여기서 시작된 게 아니에요.', eng: 'It didn\'t start here.' },
+                    { kor: '그 일은 어제 시작된 게 맞아요.', eng: 'It is correct that the work started yesterday.' }
+                ],
+                subDefs: [
+                    { subTerm: '시작되다', subDef: 'to be started' },
+                    { subTerm: '-ㄴ 게 as in 시작된 게', subDef: 'A colloquial form of -ㄴ 것이, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”' }
+                ]
+            },
+            {
+                term: '어디서 온 거예요?',
+                mainDef: 'Where did it come from?',
+                variants: ['어디서 온 거예요'],
+                examples: [
+                    { kor: '이 편지는 어디서 온 거예요?', eng: 'Where did this letter come from?' },
+                    { kor: '그 소식은 어디서 온 거예요?', eng: 'Where did that news come from?' }
+                ],
+                subDefs: [
+                    { subTerm: '오다', subDef: 'to come' },
+                    { subTerm: '-ㄴ 거예요 as in 온 거예요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' }
+                ]
+            },
+            {
+                term: '들어본 것 같아요',
+                mainDef: 'I think I\'ve heard of it',
+                variants: ['들어본 것 같아요'],
+                examples: [
+                    { kor: '그 노래는 들어본 것 같아요.', eng: 'I think I\'ve heard that song.' },
+                    { kor: '이 이야기는 어디서 들어본 것 같아요.', eng: 'I think I\'ve heard this story somewhere.' }
+                ],
+                subDefs: [
+                    { subTerm: '들어보다', subDef: 'to have heard (experience)' },
+                    { subTerm: '-ㄴ 것 같아요 as in 들어본 것 같아요', subDef: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”' }
+                ]
+            },
+            {
+                term: '통나무 모양',
+                mainDef: 'Log shape',
+                variants: ['통나무 모양'],
+                examples: [
+                    { kor: '통나무 모양의 집이 있어요.', eng: 'There is a log-shaped house.' },
+                    { kor: '이 과자는 통나무 모양이에요.', eng: 'This snack is log-shaped.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '먹거든요',
+                mainDef: '(I/We) eat (explaining)',
+                variants: ['먹거든요'],
+                examples: [
+                    { kor: '저는 매일 아침 사과를 먹거든요.', eng: 'I eat an apple every morning (you see).' },
+                    { kor: '한국 사람은 김치를 먹거든요.', eng: 'Koreans eat Kimchi (you see).' }
+                ],
+                subDefs: [
+                    { subTerm: '-거든요 as in 먹거든요', subDef: 'used when you are giving the listener information or a reason they don\'t know yet.' }
+                ]
+            },
+            {
+                term: '우리가 아는 이 딸기 케이크',
+                mainDef: 'This strawberry cake that we know',
+                variants: ['우리가 아는 이 딸기 케이크는', '우리가 아는 그 케이크는', '우리가 아는 그 케이크'],
+                examples: [
+                    { kor: '제가 아는 사람은 친절해요.', eng: 'The person I know is kind.' },
+                    { kor: '우리가 아는 노래를 불러요.', eng: 'Let\'s sing a song we know.' }
+                ],
+                subDefs: [
+                    { subTerm: '알다', subDef: 'to know' },
+                    { subTerm: '-는 as in 아는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '꽤 오래전이에요',
+                mainDef: 'It was quite a long time ago',
+                variants: ['꽤 오래전이에요'],
+                examples: [
+                    { kor: '그 영화는 꽤 오래전에 봤어요.', eng: 'I watched that movie quite a long time ago.' },
+                    { kor: '우리가 만난 지 꽤 오래전이에요.', eng: 'It\'s been quite a long time since we met.' }
+                ],
+                subDefs: [
+                    { subTerm: '꽤', subDef: 'quite' },
+                    { subTerm: '오래전', subDef: 'long ago' }
+                ]
+            },
+            {
+                term: '도쿄 긴자에 있는 ‘후지야(FUJIYA)’라는 빵집',
+                mainDef: 'A bakery called \'Fujiya\' in Ginza, Tokyo',
+                variants: ['도쿄 긴자에 있는 ‘후지야(FUJIYA)’라는 빵집에서'],
+                examples: [
+                    { kor: '서울에 있는 ‘행복’이라는 식당에 갔어요.', eng: 'I went to a restaurant called \'Happiness\' in Seoul.' },
+                    { kor: '학교 앞에 있는 ‘맛나’라는 분식집을 아세요?', eng: 'Do you know the snack bar called \'Manna\' in front of the school?' }
+                ],
+                subDefs: [
+                    { subTerm: '도교 긴자', subDef: 'Ginza, Tokyo' },
+                    { subTerm: '-에 있는 as in 긴자에 있는', subDef: 'located in' },
+                    { subTerm: '-라는 as in 후지야라는', subDef: 'called' }
+                ]
+            },
+            {
+                term: '완전히',
+                mainDef: 'Completely',
+                variants: ['완전히'],
+                examples: [
+                    { kor: '기분이 완전히 좋아졌어요.', eng: 'I feel completely better.' },
+                    { kor: '그 문제는 완전히 해결됐어요.', eng: 'The problem is completely solved.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '만든 거죠',
+                mainDef: 'Made it (confirming)',
+                variants: ['만든 거죠'],
+                examples: [
+                    { kor: '이것은 제가 직접 만든 거죠.', eng: 'I made this myself (you know).' },
+                    { kor: '어제 음식을 만든 거죠?', eng: 'You made the food yesterday, right?' }
+                ],
+                subDefs: [
+                    { subTerm: '-ㄴ 것이다 as in 만든 거죠', subDef: 'used to state or explain a fact or essence, often translating as "it is that…" or "the fact is that…"' },
+                    { subTerm: '-죠 as in 만든 거죠', subDef: 'informal sentence ending used for confirmation or emphasis' }
+                ]
+            },
+            {
+                term: '부드러운',
+                mainDef: 'Soft',
+                variants: ['부드러운'],
+                examples: [
+                    { kor: '부드러운 빵을 좋아해요.', eng: 'I like soft bread.' },
+                    { kor: '이 이불은 정말 부드러워요.', eng: 'This blanket is really soft.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '올리다',
+                mainDef: 'To put on top / To raise',
+                variants: ['올렸어요'],
+                examples: [
+                    { kor: '책상 위에 책을 올렸어요.', eng: 'I put the book on the desk.' },
+                    { kor: '손을 머리 위로 올리세요.', eng: 'Raise your hands above your head.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '구하다',
+                mainDef: 'To get / To obtain',
+                variants: ['구했을까요'],
+                examples: [
+                    { kor: '어렵게 표를 구했어요.', eng: 'I managed to get the ticket with difficulty.' },
+                    { kor: '좋은 집을 구하고 싶어요.', eng: 'I want to find a good house.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그 당시에',
+                mainDef: 'At that time',
+                variants: ['그 당시에', '당시에는'],
+                examples: [
+                    { kor: '그 당시에는 차가 없었어요.', eng: 'At that time, there were no cars.' },
+                    { kor: '그 당시에는 몰랐어요.', eng: 'I didn\'t know at that time.' }
+                ],
+                subDefs: [
+                    { subTerm: '당시', subDef: 'that time' }
+                ]
+            },
+            {
+                term: '온실 기술이 발전해서',
+                mainDef: 'Because greenhouse technology developed',
+                variants: ['온실 기술이 발전해서'],
+                examples: [
+                    { kor: '기술이 발전해서 생활이 편해졌어요.', eng: 'Life became comfortable because technology developed.' },
+                    { kor: '과학이 발전해서 많은 것을 할 수 있어요.', eng: 'We can do many things because science developed.' }
+                ],
+                subDefs: [
+                    { subTerm: '온실', subDef: 'greenhouse' },
+                    { subTerm: '기술', subDef: 'technology' },
+                    { subTerm: '발전하다', subDef: 'to develop' },
+                    { subTerm: '-아서/어서 as in 발전해서', subDef: 'used to connect clauses indicating cause or reason (‘because…’)' }
+                ]
+            },
+            {
+                term: '겨울에도 딸기를 만들 수 있었거든요',
+                mainDef: 'Could produce strawberries even in winter (explaining)',
+                variants: ['겨울에도 딸기를 만들 수 있었거든요'],
+                examples: [
+                    { kor: '저는 수영을 할 수 있거든요.', eng: 'I can swim (you see).' },
+                    { kor: '어제 잠을 못 잤거든요.', eng: 'I couldn\'t sleep yesterday (you see).' }
+                ],
+                subDefs: [
+                    { subTerm: '-거든요 as in 있었거든요', subDef: 'used when you are giving the listener information or a reason they don\'t know yet.' }
+                ]
+            },
+            {
+                term: '근대화',
+                mainDef: 'Modernization',
+                variants: ['근대화의', '근대화는요'],
+                examples: [
+                    { kor: '서울의 근대화는 빠르게 진행되었어요.', eng: 'Seoul\'s modernization proceeded quickly.' },
+                    { kor: '근대화로 인해 도시가 바뀌었어요.', eng: 'The city changed due to modernization.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '상징',
+                mainDef: 'Symbol',
+                variants: ['상징이었어요', '상징으로'],
+                examples: [
+                    { kor: '비둘기는 평화의 상징이에요.', eng: 'The dove is a symbol of peace.' },
+                    { kor: '이 반지는 사랑의 상징으로 주었어요.', eng: 'I gave this ring as a symbol of love.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '방식',
+                mainDef: 'Method / Way',
+                variants: ['방식에서', '방식으로'],
+                examples: [
+                    { kor: '새로운 방식으로 일해요.', eng: 'Work in a new way.' },
+                    { kor: '자신만의 방식을 찾으세요.', eng: 'Find your own way.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '새로운 기술을 가진 나라',
+                mainDef: 'A country with new technology',
+                variants: ['새로운 기술을 가진 나라다'],
+                examples: [
+                    { kor: '꿈을 가진 사람은 행복해요.', eng: 'A person with a dream is happy.' },
+                    { kor: '많은 돈을 가진 부자예요.', eng: 'He is a rich person with a lot of money.' }
+                ],
+                subDefs: [
+                    { subTerm: '기술', subDef: 'technology' },
+                    { subTerm: '가지다', subDef: 'to have' },
+                    { subTerm: '-ㄴ as in 가진', subDef: 'used to turn a past-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '이걸 보여주는 중요한 물건',
+                mainDef: 'An important item showing this',
+                variants: ['이걸 보여주는 중요한 물건이었던'],
+                examples: [
+                    { kor: '길을 보여주는 지도가 필요해요.', eng: 'I need a map showing the way.' },
+                    { kor: '사랑을 보여주는 행동이에요.', eng: 'It is an action showing love.' }
+                ],
+                subDefs: [
+                    { subTerm: '보여주다', subDef: 'to show' },
+                    { subTerm: '-는 as in 보여주는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '-았던/었던 것이다',
+                mainDef: 'It was that... (past explanation)',
+                variants: ['이었던 거죠'],
+                examples: [
+                    { kor: '그것은 정말 큰 실수였던 거죠.', eng: 'That was a really big mistake (you see).' },
+                    { kor: '그때 우리는 행복했던 거죠.', eng: 'We were happy back then (you see).' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그런 깊은 뜻이 있었군요',
+                mainDef: 'I see there was such a deep meaning',
+                variants: ['그런 깊은 뜻이 있었군요'],
+                examples: [
+                    { kor: '그 말에 깊은 뜻이 있었군요.', eng: 'I see there was a deep meaning in those words.' },
+                    { kor: '바다처럼 깊은 마음이에요.', eng: 'It is a heart as deep as the sea.' }
+                ],
+                subDefs: [
+                    { subTerm: '깊은', subDef: 'deep' },
+                    { subTerm: '뜻', subDef: 'meaning' },
+                    { subTerm: '-군요 as in 있었군요', subDef: 'used to express realization or surprise about a newly perceived fact ("I see...")' }
+                ]
+            },
+            {
+                term: '어떻게 모두가 먹게 된 거예요',
+                mainDef: 'How did everyone come to eat it?',
+                variants: ['어떻게 모두가 먹게 된 거예요'],
+                examples: [
+                    { kor: '어떻게 알게 된 거예요?', eng: 'How did you come to know?' },
+                    { kor: '어떻게 만나게 된 거예요?', eng: 'How did you come to meet?' }
+                ],
+                subDefs: [
+                    { subTerm: '-게 되다 as in 먹게 된', subDef: 'to become / come to' },
+                    { subTerm: '-ㄴ 거예요 as in 된 거예요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' }
+                ]
+            },
+            {
+                term: '냉장고가 보급되면서',
+                mainDef: 'As refrigerators became widespread',
+                variants: ['냉장고가 보급되면서'],
+                examples: [
+                    { kor: '컴퓨터가 보급되면서 일하기 편해졌어요.', eng: 'As computers became widespread, working became easier.' },
+                    { kor: '스마트폰이 보급되면서 생활이 바뀌었어요.', eng: 'As smartphones became widespread, life changed.' }
+                ],
+                subDefs: [
+                    { subTerm: '보급되다', subDef: 'to be widespread / supplied' },
+                    { subTerm: '-면서 as in 보급되면서', subDef: 'as / while' }
+                ]
+            },
+            {
+                term: '상황이 달라지다',
+                mainDef: 'The situation changes',
+                variants: ['상황이 달라졌어요'],
+                examples: [
+                    { kor: '날씨 때문에 상황이 달라졌어요.', eng: 'The situation changed because of the weather.' },
+                    { kor: '시간이 지나면 상황이 달라질 거예요.', eng: 'The situation will change as time passes.' }
+                ],
+                subDefs: [
+                    { subTerm: '상황', subDef: 'situation' },
+                    { subTerm: '달라지다', subDef: 'to change / become different' }
+                ]
+            },
+            {
+                term: '정확하다',
+                mainDef: 'Accurate / Correct',
+                variants: ['정확해요'],
+                examples: [
+                    { kor: '이 시계는 정확해요.', eng: 'This watch is accurate.' },
+                    { kor: '발음이 정확해요.', eng: 'The pronunciation is accurate.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '냉장고 없이는',
+                mainDef: 'Without a refrigerator',
+                variants: ['냉장고 없이는'],
+                examples: [
+                    { kor: '물 없이는 살 수 없어요.', eng: 'We cannot live without water.' },
+                    { kor: '친구 없이는 심심해요.', eng: 'I am bored without friends.' }
+                ],
+                subDefs: [
+                    { subTerm: '없이', subDef: 'without' }
+                ]
+            },
+            {
+                term: '보관하기가 어렵잖아요',
+                mainDef: 'It is hard to store (you know)',
+                variants: ['보관하기가 어렵잖아요'],
+                examples: [
+                    { kor: '혼자 하기가 어렵잖아요.', eng: 'It is hard to do alone (you know).' },
+                    { kor: '매일 운동하기가 어렵잖아요.', eng: 'It is hard to exercise everyday (you know).' }
+                ],
+                subDefs: [
+                    { subTerm: '보관하다', subDef: 'to store' },
+                    { subTerm: '-기 어렵다 as in 보관하기가 어렵다', subDef: 'hard to do' },
+                    { subTerm: '-잖아요 as in 어렵잖아요', subDef: 'used to remind the listener of shared or obvious information, or to emphasize that' }
+                ]
+            },
+            {
+                term: '냉장고가 있으니까',
+                mainDef: 'Since there is a refrigerator',
+                variants: ['냉장고가 있으니까'],
+                examples: [
+                    { kor: '시간이 있으니까 천천히 하세요.', eng: 'Since you have time, take your time.' },
+                    { kor: '우산이 있으니까 걱정 마세요.', eng: 'Don\'t worry because I have an umbrella.' }
+                ],
+                subDefs: [
+                    { subTerm: '-니까 as in 있으니까', subDef: 'because / since' }
+                ]
+            },
+            {
+                term: '팔 수 있게 되면서',
+                mainDef: 'As they became able to sell',
+                variants: ['팔 수 있게 되면서'],
+                examples: [
+                    { kor: '운전을 할 수 있게 되면서 여행을 많이 갔어요.', eng: 'As I became able to drive, I traveled a lot.' },
+                    { kor: '한국어를 말할 수 있게 되면서 친구가 생겼어요.', eng: 'As I became able to speak Korean, I made friends.' }
+                ],
+                subDefs: [
+                    { subTerm: '팔다', subDef: 'to sell' },
+                    { subTerm: '-ㄹ 수 있다 as in 팔 수 있게', subDef: 'can' },
+                    { subTerm: '-게 되다 as in 있게 되면서', subDef: 'become / come to' },
+                    { subTerm: '-면서 as in 되면서', subDef: 'as / while' }
+                ]
+            },
+            {
+                term: '즐길 수 있게 된 거예요',
+                mainDef: 'Came to be able to enjoy',
+                variants: ['즐길 수 있게 된 거예요'],
+                examples: [
+                    { kor: '이제 음악을 즐길 수 있게 된 거예요.', eng: 'Now I came to be able to enjoy music.' },
+                    { kor: '주말을 즐길 수 있게 된 거예요.', eng: 'I came to be able to enjoy the weekend.' }
+                ],
+                subDefs: [
+                    { subTerm: '즐기다', subDef: 'to enjoy' },
+                    { subTerm: '-ㄹ 수 있다 as in 즐길 수 있게', subDef: 'can' },
+                    { subTerm: '-게 되다 as in 있게 된', subDef: 'become' },
+                    { subTerm: '-ㄴ 거예요 as in 된 거예요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' }
+                ]
+            },
+            {
+                term: '모두가 먹는 케이크가 된 거군요',
+                mainDef: 'I see it became a cake everyone eats',
+                variants: ['모두가 먹는 케이크가 된 거군요'],
+                examples: [
+                    { kor: '좋은 친구가 된 거군요.', eng: 'I see you became good friends.' },
+                    { kor: '매일 먹는 음식이 된 거군요.', eng: 'I see it became a food you eat everyday.' }
+                ],
+                subDefs: [
+                    { subTerm: '먹다', subDef: 'to eat' },
+                    { subTerm: '-는 as in 먹는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '되다', subDef: 'to become' },
+                    { subTerm: '-ㄴ 거예요 as in 된 거군요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' },
+                    { subTerm: '-군요 as in 된 거군요', subDef: 'used to express realization or surprise about a newly perceived fact ("I see...")' }
+                ]
+            },
+            {
+                term: '들어오다',
+                mainDef: 'To come in / To be introduced',
+                variants: ['들어왔어요'],
+                examples: [
+                    { kor: '방에 모기가 들어왔어요.', eng: 'A mosquito came into the room.' },
+                    { kor: '새로운 문화가 들어왔어요.', eng: 'A new culture was introduced.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '선교사',
+                mainDef: 'Missionary',
+                variants: ['선교사의', '선교사요', '선교사가', '선교사는', '선교사', '선교사들처럼'],
+                examples: [
+                    { kor: '선교사가 한국에 왔어요.', eng: 'A missionary came to Korea.' },
+                    { kor: '그는 선교사로 일해요.', eng: 'He works as a missionary.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '기록이 나오다',
+                mainDef: 'A record appears',
+                variants: ['기록이 나와요'],
+                examples: [
+                    { kor: '옛날 책에 기록이 나와요.', eng: 'A record appears in an old book.' },
+                    { kor: '이름이 명단에 나오지 않아요.', eng: 'The name does not appear on the list.' }
+                ],
+                subDefs: [
+                    { subTerm: '기록', subDef: 'record' },
+                    { subTerm: '나오다', subDef: 'to come out / appear' }
+                ]
+            },
+            {
+                term: '종교',
+                mainDef: 'Religion',
+                variants: ['종교를', '종교랑은', '종교랑'],
+                examples: [
+                    { kor: '저는 종교가 없어요.', eng: 'I do not have a religion.' },
+                    { kor: '종교를 믿으세요?', eng: 'Do you believe in religion?' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '알리는 사람',
+                mainDef: 'Person who informs/announces',
+                variants: ['알리는 사람이에요'],
+                examples: [
+                    { kor: '소식을 알리는 사람이에요.', eng: 'He is a person who announces news.' },
+                    { kor: '길을 알리는 표지판이에요.', eng: 'It is a sign indicating the way.' }
+                ],
+                subDefs: [
+                    { subTerm: '알리다', subDef: 'to inform' },
+                    { subTerm: '-는 as in 알리는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '-라고 쓰여 있다',
+                mainDef: 'It is written as...',
+                variants: ['라고 쓰여 있었나요'],
+                examples: [
+                    { kor: '금지라고 쓰여 있어요.', eng: 'It is written as "prohibited".' },
+                    { kor: '입구라고 쓰여 있는 곳으로 가세요.', eng: 'Go to the place written as "entrance".' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '써 놓다',
+                mainDef: 'To write down (for later)',
+                variants: ['써 놨어요'],
+                examples: [
+                    { kor: '일기에 써 놓았어요.', eng: 'I wrote it down in my diary.' },
+                    { kor: '전화번호를 메모에 써 놓으세요.', eng: 'Please write down the phone number on a memo.' }
+                ],
+                subDefs: [
+                    { subTerm: '쓰다', subDef: 'to write' },
+                    { subTerm: '-아/어 놓다 as in 써 놓다', subDef: 'to do (something) and leave it; to have done.' }
+                ]
+            },
+            {
+                term: '일부',
+                mainDef: 'Part / Some',
+                variants: ['일부'],
+                examples: [
+                    { kor: '일부 학생들만 왔어요.', eng: 'Only some students came.' },
+                    { kor: '월급의 일부를 저축해요.', eng: 'I save part of my salary.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '먹은 건가요',
+                mainDef: 'Did they eat?',
+                variants: ['먹은 건가요'],
+                examples: [
+                    { kor: '벌써 점심을 먹은 건가요?', eng: 'Did you eat lunch already?' },
+                    { kor: '누가 케이크를 먹은 건가요?', eng: 'Who ate the cake?' }
+                ],
+                subDefs: [
+                    { subTerm: '-ㄴ/은 거예요 as in 먹은 건가요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' },
+                    { subTerm: '-가요? as in 건가요?', subDef: 'question ending' }
+                ]
+            },
+            {
+                term: '그랬다고 봐야죠',
+                mainDef: 'We should see it that way',
+                variants: ['그랬다고 봐야죠'],
+                examples: [
+                    { kor: '성공했다고 봐야죠.', eng: 'We should see it as a success.' },
+                    { kor: '끝났다고 봐야죠.', eng: 'We should consider it finished.' }
+                ],
+                subDefs: [
+                    { subTerm: '그렇다고 보다', subDef: 'to regard as such' },
+                    { subTerm: '-죠 as in 봐야죠', subDef: 'informal sentence ending used for confirmation or emphasis' }
+                ]
+            },
+            {
+                term: '시간이 좀 지나서',
+                mainDef: 'After some time passed',
+                variants: ['시간이 좀 지나서'],
+                examples: [
+                    { kor: '시간이 지나서 괜찮아졌어요.', eng: 'It became okay after time passed.' },
+                    { kor: '시간이 좀 지나서 다시 만나요.', eng: 'Let\'s meet again after some time passes.' }
+                ],
+                subDefs: [
+                    { subTerm: '시간이 지나다', subDef: 'time passes' },
+                    { subTerm: '-아서/어서 as in 지나서', subDef: 'after (doing); used to indicate temporal sequence' }
+                ]
+            },
+            {
+                term: '1930년대가 되면서',
+                mainDef: 'As it became the 1930s',
+                variants: ['1930년대가 되면서'],
+                examples: [
+                    { kor: '밤이 되면서 추워졌어요.', eng: 'It got cold as it became night.' },
+                    { kor: '어른이 되면서 생각이 바뀌었어요.', eng: 'My thoughts changed as I became an adult.' }
+                ],
+                subDefs: [
+                    { subTerm: '-면서 as in 되면서', subDef: 'as / while' }
+                ]
+            },
+            {
+                term: '크리스마스가 아주 인기가 많아졌다는 그런 증거',
+                mainDef: 'Evidence that Christmas became very popular',
+                variants: ['크리스마스가 아주 인기가 많아졌다는 그런 증거들이'],
+                examples: [
+                    { kor: '사람이 많아졌다는 증거예요.', eng: 'It is evidence that there are more people.' },
+                    { kor: '날씨가 더워졌다는 증거를 찾았어요.', eng: 'I found evidence that the weather got hotter.' }
+                ],
+                subDefs: [
+                    { subTerm: '많아지다', subDef: 'to increase' },
+                    { subTerm: '-다는 증거 as in 많아졌다는 증거', subDef: 'evidence that...' }
+                ]
+            },
+            {
+                term: '증거',
+                mainDef: 'Evidence',
+                variants: ['증거요', '증거가', '증거들이', '증거고요'],
+                examples: [
+                    { kor: '확실한 증거가 있어요.', eng: 'There is clear evidence.' },
+                    { kor: '증거를 보여주세요.', eng: 'Please show me the evidence.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '어떤 사실이 맞다고 보여주는 거요',
+                mainDef: 'Showing that a fact is correct',
+                variants: ['어떤 사실이 맞다고 보여주는 거요'],
+                examples: [
+                    { kor: '이것이 맞다고 보여주는 거예요.', eng: 'It is showing that this is correct.' },
+                    { kor: '사랑한다고 보여주는 행동이에요.', eng: 'It is an action showing that I love you.' }
+                ],
+                subDefs: [
+                    { subTerm: '-다고 보여주다 as in 맞다고 보여주는', subDef: 'show that...' },
+                    { subTerm: '-는 거에요 as in 보여주는 거요', subDef: 'A colloquial form of -는 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' }
+                ]
+            },
+            {
+                term: '윤치호라는 사람',
+                mainDef: 'A person named Yun Chi-ho',
+                variants: ['윤치호라는 사람이'],
+                examples: [
+                    { kor: '민수라는 사람을 알아요?', eng: 'Do you know a person named Minsu?' },
+                    { kor: '지수라는 사람이 전화했어요.', eng: 'A person named Jisoo called.' }
+                ],
+                subDefs: [
+                    { subTerm: '-라는 사람 as in 윤치호라는 사람', subDef: 'person called...' }
+                ]
+            },
+            {
+                term: '의미',
+                mainDef: 'Meaning',
+                variants: ['의미보다', '의미해요', '의미하겠어요'],
+                examples: [
+                    { kor: '이 단어의 의미를 몰라요.', eng: 'I don\'t know the meaning of this word.' },
+                    { kor: '빨간색은 위험을 의미해요.', eng: 'Red means danger.' }
+                ],
+                subDefs: [
+                    { subTerm: '의미하다', subDef: 'to mean' }
+                ]
+            },
+            {
+                term: '그건 좋은 말이 아닌데요.',
+                mainDef: 'That is not a good thing to say',
+                variants: ['그건 좋은 말이 아닌데요'],
+                examples: [
+                    { kor: '맛이 없는데요.', eng: 'It tastes bad (I tell you).' },
+                    { kor: '시간이 없는데요.', eng: 'I don\'t have time (I tell you).' }
+                ],
+                subDefs: [
+                    { subTerm: '-ㄴ데요 as in 아닌데요', subDef: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.' }
+                ]
+            },
+            {
+                term: '일종의',
+                mainDef: 'A kind of',
+                variants: ['일종의'],
+                examples: [
+                    { kor: '이것은 일종의 놀이에요.', eng: 'This is a kind of game.' },
+                    { kor: '그것은 일종의 약속이에요.', eng: 'That is a kind of promise.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '비판',
+                mainDef: 'Criticism',
+                variants: ['비판이죠', '비판이요', '비판이', '비판도', '비판했는데'],
+                examples: [
+                    { kor: '비판을 받아들여요.', eng: 'Accept criticism.' },
+                    { kor: '친구를 비판하지 마세요.', eng: 'Do not criticize your friend.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '좋지 않다고 말하는 거예요',
+                mainDef: 'Saying that it is not good',
+                variants: ['좋지 않다고 말하는 거예요'],
+                examples: [
+                    { kor: '가기 싫다고 말하는 거예요.', eng: 'I am saying that I don\'t want to go.' },
+                    { kor: '맛있다고 말하는 거예요.', eng: 'I am saying that it is delicious.' }
+                ],
+                subDefs: [
+                    { subTerm: '-다고 말하다 as in 않다고 말하는', subDef: 'say that...' },
+                    { subTerm: '-는 거예요 as in 말하는 거예요', subDef: 'A colloquial form of -는 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' }
+                ]
+            },
+            {
+                term: '이런 비판이 있었다는 것 자체가',
+                mainDef: 'The fact that there was such criticism itself',
+                variants: ['이런 비판이 있었다는 것 자체가'],
+                examples: [
+                    { kor: '참여했다는 것 자체가 중요해요.', eng: 'The fact that you participated itself is important.' },
+                    { kor: '시도했다는 것 자체가 용기예요.', eng: 'The fact that you tried itself is courage.' }
+                ],
+                subDefs: [
+                    { subTerm: '-는 것 자체 as in 있었다는 것 자체', subDef: 'the fact itself' }
+                ]
+            },
+            {
+                term: '널리 퍼졌다는 뜻이잖아요',
+                mainDef: 'It means it spread widely (you know)',
+                variants: ['널리 퍼졌다는 뜻이잖아요'],
+                examples: [
+                    { kor: '이미 시작했다는 뜻이잖아요.', eng: 'It means it already started (you know).' },
+                    { kor: '그가 왔다는 뜻이잖아요.', eng: 'It means he came (you know).' }
+                ],
+                subDefs: [
+                    { subTerm: '널리 퍼지다', subDef: 'to spread widely' },
+                    { subTerm: '-는 뜻이다 as in 퍼졌다는 뜻이잖아요', subDef: 'it means that...' },
+                    { subTerm: '-잖아요 as in 뜻이잖아요', subDef: 'used to remind the listener of shared or obvious information, or to emphasize that' }
+                ]
+            },
+            {
+                term: '관심이 없으면 비판도 안 하니까요',
+                mainDef: 'Because they wouldn\'t criticize if not interested',
+                variants: ['관심이 없으면 비판도 안 하니까요'],
+                examples: [
+                    { kor: '돈이 없으면 살 수도 없으니까요.', eng: 'Because you can\'t buy it if you don\'t have money.' },
+                    { kor: '시간이 없으면 갈 수도 없으니까요.', eng: 'Because you can\'t go if you don\'t have time.' }
+                ],
+                subDefs: [
+                    { subTerm: '-면/으면 as in 없으면', subDef: 'if' },
+                    { subTerm: '-도 없다 as in 비판도 안 하다', subDef: 'there is no... even' },
+                    { subTerm: '-니까요 as in 안 하니까요', subDef: 'because' }
+                ]
+            },
+            {
+                term: '크리스마스 케이크라는 단어',
+                mainDef: 'The word "Christmas Cake"',
+                variants: ['크리스마스 케이크라는 단어가'],
+                examples: [
+                    { kor: '사랑이라는 단어는 예뻐요.', eng: 'The word "love" is pretty.' },
+                    { kor: '희망이라는 단어를 좋아해요.', eng: 'I like the word "hope".' }
+                ],
+                subDefs: [
+                    { subTerm: '-라는 단어 as in 케이크라는 단어', subDef: 'word called...' }
+                ]
+            },
+            {
+                term: '신문에 처음 등장한 건',
+                mainDef: 'First appearance in the newspaper',
+                variants: ['신문에 처음 등장한 건'],
+                examples: [
+                    { kor: '무대에 등장한 건 1시예요.', eng: 'The appearance on stage was at 1 o\'clock.' },
+                    { kor: '그 배우가 영화에 등장한 건 작년이에요.', eng: 'That actor appeared in the movie last year.' }
+                ],
+                subDefs: [
+                    { subTerm: '등장하다', subDef: 'to appear' },
+                    { subTerm: '-ㄴ 건 as in 등장한 건', subDef: 'A colloquial form of -ㄴ/은 것은, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' }
+                ]
+            },
+            {
+                term: '전쟁 중',
+                mainDef: 'During the war',
+                variants: ['전쟁 중', '전쟁 중이었어요', '전쟁 중에', '전쟁 중에도'],
+                examples: [
+                    { kor: '전쟁은 슬퍼요.', eng: 'War is sad.' },
+                    { kor: '수업 중에 떠들지 마세요.', eng: 'Do not talk during class.' }
+                ],
+                subDefs: [
+                    { subTerm: '전쟁', subDef: 'war' }
+                ]
+            },
+            {
+                term: '비싼 케이크를 사서 파티하는 사람',
+                mainDef: 'People who buy expensive cakes and party',
+                variants: ['비싼 케이크를 사서 파티하는 사람들'],
+                examples: [
+                    { kor: '옷을 사서 입는 사람이에요.', eng: 'He is a person who buys clothes and wears them.' },
+                    { kor: '음식을 만들어서 먹는 사람이에요.', eng: 'He is a person who makes food and eats it.' }
+                ],
+                subDefs: [
+                    { subTerm: '사다', subDef: 'to buy' },
+                    { subTerm: '-아서/어서 as in 사서', subDef: 'used to connect two verbs, indicating that the first action is performed as the means or method for the second' },
+                    { subTerm: '파티하다', subDef: 'to party' },
+                    { subTerm: '-는 as in 파티하는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '비판했는데',
+                mainDef: 'Criticized, but...',
+                variants: ['비판했는데'],
+                examples: [
+                    { kor: '친구를 비판했는데 후회했어요.', eng: 'I criticized my friend, but I regretted it.' },
+                    { kor: '공부했는데 시험을 못 봤어요.', eng: 'I studied, but I didn\'t do well on the exam.' }
+                ],
+                subDefs: [
+                    { subTerm: '비판하다', subDef: 'to criticize' },
+                    { subTerm: '-는데 as in 비판했는데', subDef: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.' }
+                ]
+            },
+            {
+                term: '뭘 의미하겠어요?',
+                mainDef: 'What would it mean?',
+                variants: ['이게 뭘 의미하겠어요'],
+                examples: [
+                    { kor: '그 말이 뭘 의미하겠어요?', eng: 'What would those words mean?' },
+                    { kor: '이 선물이 뭘 의미하겠어요?', eng: 'What would this gift mean?' }
+                ],
+                subDefs: [
+                    { subTerm: '의미하다', subDef: 'to mean' },
+                    { subTerm: '-겠어요 as in 의미하겠어요', subDef: 'would (conjecture)' }
+                ]
+            },
+            {
+                term: '케이크를 먹는 문화가 있었다는 거네요.',
+                mainDef: 'So there was a culture of eating cake.',
+                variants: ['케이크를 먹는 문화가 있었다는 거네요'],
+                examples: [
+                    { kor: '사람들이 많았다는 거네요.', eng: 'So it means there were many people.' },
+                    { kor: '그때도 학교가 있었다는 거네요.', eng: 'So it means there was a school back then too.' }
+                ],
+                subDefs: [
+                    { subTerm: '문화', subDef: 'culture' },
+                    { subTerm: '-다는 거예요 as in 있었다는 거네요', subDef: 'it means that...' },
+                    { subTerm: '-네요 as in 거네요', subDef: '-네요 is used to express surprise, amazement, or a strong realization about something the speaker just discovered or witnessed.' }
+                ]
+            },
+            {
+                term: '그만큼 케이크가 이미 널리 퍼져 있었다는 증거고요.',
+                mainDef: 'And it\'s evidence that cakes were already widely spread.',
+                variants: ['그만큼 케이크가 이미 널리 퍼져 있었다는 증거고요'],
+                examples: [
+                    { kor: '그만큼 인기가 많다는 증거고요.', eng: 'And it\'s evidence that it is that popular.' },
+                    { kor: '그만큼 열심히 했다는 증거고요.', eng: 'And it\'s evidence that he worked that hard.' }
+                ],
+                subDefs: [
+                    { subTerm: '그만큼', subDef: 'to that extent' },
+                    { subTerm: '널리 퍼져 있다', subDef: 'to be widely spread' },
+                    { subTerm: '-다는 증거 as in 있었다는 증거', subDef: 'evidence that' },
+                    { subTerm: '-고요/이고요 as in 증거고요', subDef: 'used to connect two verbs, meaning “and then” or simply “and,” to show actions happening in sequence.' }
+                ]
+            },
+            {
+                term: '재미있는 점',
+                mainDef: 'Interesting point',
+                variants: ['재미있는 점이'],
+                examples: [
+                    { kor: '이 책의 재미있는 점은 그림이에요.', eng: 'The interesting point of this book is the pictures.' },
+                    { kor: '그 영화의 재미있는 점을 말해줘요.', eng: 'Tell me the interesting point of that movie.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '기독교 인구',
+                mainDef: 'Christian population',
+                variants: ['기독교 인구가'],
+                examples: [
+                    { kor: '기독교를 믿는 사람이 많아요.', eng: 'There are many people who believe in Christianity.' },
+                    { kor: '서울의 인구가 많아요.', eng: 'The population of Seoul is large.' }
+                ],
+                subDefs: [
+                    { subTerm: '기독교', subDef: 'Christianity' }
+                ]
+            },
+            {
+                term: '시장 규모',
+                mainDef: 'Market size',
+                variants: ['시장 규모는'],
+                examples: [
+                    { kor: '학교 규모가 커요.', eng: 'The scale of the school is large.' },
+                    { kor: '회사의 규모가 작아요.', eng: 'The size of the company is small.' }
+                ],
+                subDefs: [
+                    { subTerm: '규모', subDef: 'scale / size' }
+                ]
+            },
+            {
+                term: '600억 원이 넘거든요',
+                mainDef: 'It exceeds 60 billion won',
+                variants: ['600억 원이 넘거든요'],
+                examples: [
+                    { kor: '사람이 100명이 넘거든요.', eng: 'There are over 100 people (you see).' },
+                    { kor: '키가 180cm가 넘거든요.', eng: 'He is over 180cm tall (you see).' }
+                ],
+                subDefs: [
+                    { subTerm: '넘다', subDef: 'to exceed' },
+                    { subTerm: '-거든요 as in 넘거든요', subDef: 'used when you are giving the listener information or a reason they don\'t know yet.' }
+                ]
+            },
+            {
+                term: '기독교인이 아닌 사람들',
+                mainDef: 'People who are not Christians',
+                variants: ['기독교인이 아닌 사람들이'],
+                examples: [
+                    { kor: '학생이 아닌 사람들도 왔어요.', eng: 'People who are not students came too.' },
+                    { kor: '가족이 아닌 사람은 들어갈 수 없어요.', eng: 'People who are not family cannot enter.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '기독교인',
+                mainDef: 'Christian',
+                variants: ['기독교인이', '기독교인만'],
+                examples: [
+                    { kor: '제 친구는 기독교인이에요.', eng: 'My friend is a Christian.' },
+                    { kor: '기독교인을 만났어요.', eng: 'I met a Christian.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '-는 거네요',
+                mainDef: 'So it means that...',
+                variants: ['산다는 거네요', '있었다는 거네요'],
+                examples: [
+                    { kor: '비가 온다는 거네요.', eng: 'So it means it rains.' },
+                    { kor: '내일 간다는 거네요.', eng: 'So it means you are going tomorrow.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '먹는 게 아니네요.',
+                mainDef: 'It is not that (they) eat',
+                variants: ['먹는 게 아니네요'],
+                examples: [
+                    { kor: '공부하는 게 아니네요.', eng: 'It is not that he is studying.' },
+                    { kor: '노는 게 아니네요.', eng: 'It is not that he is playing.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '상관없는',
+                mainDef: 'Unrelated / Regardless',
+                variants: ['상관없는', '상관없이'],
+                examples: [
+                    { kor: '나이와 상관없이 할 수 있어요.', eng: 'You can do it regardless of age.' },
+                    { kor: '돈과 상관없는 일이에요.', eng: 'It is a matter unrelated to money.' }
+                ],
+                subDefs: [
+                    { subTerm: '상관없이', subDef: 'regardless of' }
+                ]
+            },
+            {
+                term: '문화',
+                mainDef: 'Culture',
+                variants: ['문화가'],
+                examples: [
+                    { kor: '한국 문화를 배우고 싶어요.', eng: 'I want to learn Korean culture.' },
+                    { kor: '음식 문화를 좋아해요.', eng: 'I like food culture.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '서양',
+                mainDef: 'The West',
+                variants: ['서양', '서양에서'],
+                examples: [
+                    { kor: '서양 역사를 공부해요.', eng: 'I study Western history.' },
+                    { kor: '서양 음식을 먹었어요.', eng: 'I ate Western food.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '전통',
+                mainDef: 'Tradition',
+                variants: ['전통', '전통적인', '전통인', '전통이라고', '전통이요', '전통들도'],
+                examples: [
+                    { kor: '우리는 전통을 지켜요.', eng: 'We keep traditions.' },
+                    { kor: '한국의 전통 놀이예요.', eng: 'It is a Korean traditional game.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '-ㄴ/은 줄 알다',
+                mainDef: 'Thought that...',
+                variants: ['인 줄 알았는데'],
+                examples: [
+                    { kor: '학생인 줄 알았는데 선생님이었어요.', eng: 'I thought he was a student, but he was a teacher.' },
+                    { kor: '비싼 줄 알았는데 쌌어요.', eng: 'I thought it was expensive, but it was cheap.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그게 아니었군요',
+                mainDef: 'So that wasn\'t it',
+                variants: ['그게 아니었군요'],
+                examples: [
+                    { kor: '사실이 아니었군요.', eng: 'So it wasn\'t true.' },
+                    { kor: '네가 아니었군요.', eng: 'So it wasn\'t you.' }
+                ],
+                subDefs: [
+                    { subTerm: '-군요 as in 아니었군요', subDef: 'used to express realization or surprise about a newly perceived fact ("I see...")' }
+                ]
+            },
+            {
+                term: '정리를 좀 해보면',
+                mainDef: 'To sum up, Let\'s recap',
+                variants: ['정리를 좀 해보면'],
+                examples: [
+                    { kor: '방 정리를 해요.', eng: 'Clean (organize) the room.' },
+                    { kor: '생각을 정리를 좀 해보면 알 수 있어요.', eng: 'If you summarize (organize) your thoughts, you can know.' }
+                ],
+                subDefs: [
+                    { subTerm: '정리를 하다', subDef: 'to organize / summarize' }
+                ]
+            },
+            {
+                term: '새로운 문화를 받아들이는 상징',
+                mainDef: 'Symbol of accepting new culture',
+                variants: ['새로운 문화를 받아들이는 상징으로'],
+                examples: [
+                    { kor: '친구를 받아들이다.', eng: 'To accept a friend.' },
+                    { kor: '변화를 받아들이는 상징이에요.', eng: 'It is a symbol of accepting change.' }
+                ],
+                subDefs: [
+                    { subTerm: '받아들이다', subDef: 'to accept' },
+                    { subTerm: '-는 as in 받아들이는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '상징', subDef: 'symbol' }
+                ]
+            },
+            {
+                term: '그게 한국으로 전해져서',
+                mainDef: 'That was transmitted to Korea and...',
+                variants: ['그게 한국으로 전해져서'],
+                examples: [
+                    { kor: '소식이 전해졌어요.', eng: 'The news was transmitted.' },
+                    { kor: '편지가 전해져서 기뻤어요.', eng: 'I was happy that the letter was delivered.' }
+                ],
+                subDefs: [
+                    { subTerm: '전해지다', subDef: 'to be transmitted' },
+                    { subTerm: '-아서/어서 as in 전해져서', subDef: 'used when the first action is a necessary step for the second action to happen, or when the first action directly influences the second.' }
+                ]
+            },
+            {
+                term: '모두가 즐기는 문화가 된 거죠',
+                mainDef: 'It became a culture everyone enjoys',
+                variants: ['모두가 즐기는 문화가 된 거죠'],
+                examples: [
+                    { kor: '모두가 좋아하는 가수가 된 거죠.', eng: 'He became a singer everyone likes (you see).' },
+                    { kor: '행복한 사람이 된 거죠.', eng: 'He became a happy person (you see).' }
+                ],
+                subDefs: [
+                    { subTerm: '즐기다', subDef: 'to enjoy' },
+                    { subTerm: '-는 as in 즐기는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '되다', subDef: 'to become' },
+                    { subTerm: '-ㄴ 거예요 as in 된 거죠', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' },
+                    { subTerm: '-죠 as in 된 거죠', subDef: 'informal sentence ending used for confirmation or emphasis' }
+                ]
+            },
+            {
+                term: '당연하게 생각했던 크리스마스 문화',
+                mainDef: 'Christmas culture we took for granted',
+                variants: ['당연하게 생각했던 크리스마스 문화가'],
+                examples: [
+                    { kor: '당연하게 생각했던 일들이에요.', eng: 'These are things I took for granted.' },
+                    { kor: '친절을 당연하게 생각했던 것 같아요.', eng: 'I think I took the kindness for granted.' }
+                ],
+                subDefs: [
+                    { subTerm: '당연하게 생각하다', subDef: 'to take for granted' },
+                    { subTerm: '-았던/었던 as in 생각했던', subDef: 'used to turn a past-tense verb into an \'adjective-ish\' phrase, often implying reminiscence.' }
+                ]
+            },
+            {
+                term: '천천히 만들어진 거였네요',
+                mainDef: 'It was created slowly (I see)',
+                variants: ['천천히 만들어진 거였네요'],
+                examples: [
+                    { kor: '맛있는 음식이 만들어진 거였네요.', eng: 'Delicious food was made (I see).' },
+                    { kor: '천천히 집이 만들어진 거였네요.', eng: 'The house was built slowly (I see).' }
+                ],
+                subDefs: [
+                    { subTerm: '만들어지다', subDef: 'to be made' },
+                    { subTerm: '-ㄴ 거예요 as in 만들어진 거였네요', subDef: 'A colloquial form of -ㄴ 것이에요, which is used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”' },
+                    { subTerm: '-네요 as in 거였네요', subDef: '-네요 is used to express surprise, amazement, or a strong realization about something the speaker just discovered or witnessed.' }
+                ]
+            },
+            {
+                term: '역사가',
+                mainDef: 'Historian',
+                variants: ['역사가'],
+                examples: [
+                    { kor: '역사가가 책을 썼어요.', eng: 'The historian wrote a book.' },
+                    { kor: '유명한 역사가를 만났어요.', eng: 'I met a famous historian.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '만들어진 전통',
+                mainDef: 'Invented tradition',
+                variants: ['만들어진 전통이라고', '만들어진 전통이요'],
+                examples: [
+                    { kor: '나무로 만들어진 의자예요.', eng: 'It is a chair made of wood.' },
+                    { kor: '새롭게 만들어진 전통이에요.', eng: 'It is a newly created tradition.' }
+                ],
+                subDefs: [
+                    { subTerm: '만들어지다', subDef: 'to be made' },
+                    { subTerm: '-ㄴ as in 만들어진', subDef: 'used to turn a past-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '전통', subDef: 'tradition' }
+                ]
+            },
+            {
+                term: '-라고 부르다',
+                mainDef: 'To call it...',
+                variants: ['라고 불렀어요'],
+                examples: [
+                    { kor: '친구라고 불러요.', eng: 'Call me friend.' },
+                    { kor: '그것을 사랑이라고 불러요.', eng: 'I call it love.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '오래된 것 같지만',
+                mainDef: 'It seems old, but...',
+                variants: ['오래된 것 같지만'],
+                examples: [
+                    { kor: '쉬운 것 같지만 어려워요.', eng: 'It seems easy, but it is hard.' },
+                    { kor: '비싼 것 같지만 싸요.', eng: 'It seems expensive, but it is cheap.' }
+                ],
+                subDefs: [
+                    { subTerm: '-ㄴ 것 같다 as in 오래된 것 같지만', subDef: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”' },
+                    { subTerm: '-지만 as in 같지만', subDef: '"but" or "although"; used to contrast two clauses' }
+                ]
+            },
+            {
+                term: '비교적',
+                mainDef: 'Relatively',
+                variants: ['비교적'],
+                examples: [
+                    { kor: '비교적 쉬워요.', eng: 'It is relatively easy.' },
+                    { kor: '오늘은 비교적 맑아요.', eng: 'Today is relatively clear.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '필요에 의해서',
+                mainDef: 'By necessity',
+                variants: ['필요에 의해서'],
+                examples: [
+                    { kor: '규칙에 의해서 결정해요.', eng: 'Decide according to the rules.' },
+                    { kor: '필요에 의해서 만들었어요.', eng: 'I made it by necessity.' }
+                ],
+                subDefs: [
+                    { subTerm: '-에 의해서 as in 필요에 의해서', subDef: 'by / due to' }
+                ]
+            },
+            {
+                term: '만들어진 것',
+                mainDef: 'Thing that was made',
+                variants: ['만들어진 것들'],
+                examples: [
+                    { kor: '이것은 종이로 만들어진 것이에요.', eng: 'This is something made of paper.' },
+                    { kor: '사랑으로 만들어진 것이에요.', eng: 'It is something made with love.' }
+                ],
+                subDefs: [
+                    { subTerm: '만들어지다', subDef: 'to be made' },
+                    { subTerm: '-ㄴ 것 as in 만들어진 것', subDef: 'used to nominalize verbs by turning a descriptive verb into a noun phrase meaning ‘the act of …,’ ‘the fact of …,’ or ‘the thing that …’' }
+                ]
+            },
+            {
+                term: '-이라는 뜻이에요',
+                mainDef: 'It means that...',
+                variants: ['이라는 뜻이에요'],
+                examples: [
+                    { kor: '사과라는 뜻이에요.', eng: 'It means apple.' },
+                    { kor: '행복이라는 뜻이에요.', eng: 'It means happiness.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그렇게 생각하니까',
+                mainDef: 'Thinking like that...',
+                variants: ['그렇게 생각하니까'],
+                examples: [
+                    { kor: '비가 오니까 우산을 챙기세요.', eng: 'Since it is raining, take an umbrella.' },
+                    { kor: '그렇게 생각하니까 기분이 좋아요.', eng: 'Thinking like that, I feel good.' }
+                ],
+                subDefs: [
+                    { subTerm: '-니까 as in 생각하니까', subDef: 'because / since' }
+                ]
+            },
+            {
+                term: '우리가 아는 다른 전통',
+                mainDef: 'Other traditions we know',
+                variants: ['우리가 아는 다른 전통들도'],
+                examples: [
+                    { kor: '제가 아는 노래예요.', eng: 'It is a song I know.' },
+                    { kor: '우리가 아는 이야기예요.', eng: 'It is a story we know.' }
+                ],
+                subDefs: [
+                    { subTerm: '알다', subDef: 'to know' },
+                    { subTerm: '-는 as in 아는', subDef: 'used to turn a present-tense verb into an ‘adjective-ish’ phrase that describes the following noun' },
+                    { subTerm: '전통', subDef: 'tradition' }
+                ]
+            },
+            {
+                term: '혹시',
+                mainDef: 'By any chance / Perhaps',
+                variants: ['혹시'],
+                examples: [
+                    { kor: '혹시 펜 있어요?', eng: 'Do you have a pen by any chance?' },
+                    { kor: '혹시 그 사람을 알아요?', eng: 'Do you know that person by any chance?' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '만들어진 게 아닐까 하는 생각',
+                mainDef: 'The thought that it might have been created',
+                variants: ['만들어진 게 아닐까 하는 생각이'],
+                examples: [
+                    { kor: '비가 올까 하는 생각이 들어요.', eng: 'I have a thought that it might rain.' },
+                    { kor: '틀린 게 아닐까 하는 생각이 들어요.', eng: 'I have a thought that it might be wrong.' }
+                ],
+                subDefs: [
+                    { subTerm: '만들어지다', subDef: 'to be made' },
+                    { subTerm: '-ㄴ 게 as in 만들어진 게', subDef: 'A colloquial form of -ㄴ 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”' },
+                    { subTerm: '“-ㄹ까?” 하는 생각 as in 아닐까 하는 생각', subDef: 'thought of "is it...?"' }
+                ]
+            },
+            {
+                term: '생각이 드는데요',
+                mainDef: 'I\'m having a thought (what do you think?)',
+                variants: ['드는데요'],
+                examples: [
+                    { kor: '좋은 생각이 들었어요.', eng: 'I had a good idea.' },
+                    { kor: '집에 가고 싶다는 생각이 들어요.', eng: 'I have a thought that I want to go home.' }
+                ],
+                subDefs: [
+                    { subTerm: '생각이 들다', subDef: 'a thought occurs; to have a thought' },
+                    { subTerm: '-는데요 as in 드는데요', subDef: 'used to share one\'s thought or feeling while inviting the listener\'s opinion or response; implies \'I think/feel this way, what about you?\' or \'this is what I think, how do you see it?\'' }
+                ]
+            },
+            {
+                term: '그럴 수도 있죠',
+                mainDef: 'That could be possible',
+                variants: ['그럴 수도 있죠'],
+                examples: [
+                    { kor: '실수할 수도 있죠.', eng: 'You could make a mistake.' },
+                    { kor: '늦을 수도 있죠.', eng: 'You could be late.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '당연하게 여기지만',
+                mainDef: 'Although taken for granted',
+                variants: ['당연하게 여기지만'],
+                examples: [
+                    { kor: '건강을 당연하게 여기지만 중요해요.', eng: 'We take health for granted, but it is important.' },
+                    { kor: '부모님의 사랑을 당연하게 여기지만 감사해요.', eng: 'We take parents\' love for granted, but I am thankful.' }
+                ],
+                subDefs: [
+                    { subTerm: '당연하게 여기다', subDef: 'to take for granted' },
+                    { subTerm: '-지만 as in 여기지만', subDef: '"but" or "although"; used to contrast two clauses' }
+                ]
+            },
+            {
+                term: '역사',
+                mainDef: 'History',
+                variants: ['역사가'],
+                examples: [
+                    { kor: '역사를 공부해요.', eng: 'Study history.' },
+                    { kor: '한국의 역사는 길어요.', eng: 'Korea\'s history is long.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '-는지 생각해 보다',
+                mainDef: 'to think about whether/how...',
+                variants: ['는지 한번 생각해 보시'],
+                examples: [
+                    { kor: '무엇을 먹을지 생각해 보세요.', eng: 'Think about what to eat.' },
+                    { kor: '어디로 갈지 생각해 보세요.', eng: 'Think about where to go.' }
+                ],
+                subDefs: []
+            }
+        ];
+
+        const QUIZ_LIST = [
+            {
+                id: 1,
+                questionKor: "한국에서 사람들은 크리스마스 하면 무슨 케이크를 떠올려요?",
+                questionEng: "What cake do people in Korea think of when they hear Christmas?",
+                sentence_pre: "'하얀 크림을 바르고 그 위에 새빨간 딸기를 ",
+                sentence_post: " 스펀지 케이크'예요.",
+                correct_word: "올린",
+                translation: "It's a sponge cake 'topped' with white cream and bright red strawberries.",
+                hint: "Topped / Put on",
+                options: [
+                    { text: "올린", isCorrect: true, feedback: "Correct! '올린' means 'topped' or 'raised'." },
+                    { text: "뺀", isCorrect: false, feedback: "Incorrect. '뺀' means 'removed'." },
+                    { text: "넣은", isCorrect: false, feedback: "Incorrect. '넣은' means 'put in'." },
+                    { text: "자른", isCorrect: false, feedback: "Incorrect. '자른' means 'cut'." }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "한국 사람들은 딸기 케이크가 어디에서 왔다고 생각해요?",
+                questionEng: "Where do Koreans think strawberry cakes came from?",
+                sentence_pre: "사람들은 이 딸기 케이크가 ",
+                sentence_post: "에서 온 전통이라고 생각하지만, 사실은 그게 아니에요.",
+                correct_word: "서양",
+                translation: "People think this strawberry cake is a tradition from the 'West', but actually it's not.",
+                hint: "The West / Occident",
+                options: [
+                    { text: "동양", isCorrect: false, feedback: "Incorrect. '동양' means 'The East'." },
+                    { text: "서양", isCorrect: true, feedback: "Correct! People commonly mistake it for a Western tradition." },
+                    { text: "북쪽", isCorrect: false, feedback: "Incorrect. '북쪽' means 'North'." },
+                    { text: "남쪽", isCorrect: false, feedback: "Incorrect. '남쪽' means 'South'." }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "1900년대, 일본에서 겨울에 딸기 생크림 케이크를 먹는 것은 무엇을 의미했어요?",
+                questionEng: "What did eating strawberry whipped cream cake in winter mean in Japan in the 1900s?",
+                sentence_pre: "",
+                sentence_post: "를 의미했어요. 이것은 ‘생활이 옛날 방식에서 새로운 방식으로 바뀌는 것’을 의미해요.",
+                correct_word: "근대화",
+                translation: "It meant 'modernization'. Modernization means changing from old ways to new ways.",
+                hint: "Modernization",
+                options: [
+                    { text: "근대화", isCorrect: true, feedback: "Correct! It was a symbol of modernization and new technology." },
+                    { text: "전통", isCorrect: false, feedback: "Incorrect. It represented the new, not the old." },
+                    { text: "유행", isCorrect: false, feedback: "Incorrect. While it was a trend, 'modernization' is the deeper meaning." },
+                    { text: "놀이", isCorrect: false, feedback: "Incorrect. It wasn't just a game." }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "이 케이크는 그냥 맛있는 음식이었어요?",
+                questionEng: "Was this cake just delicious food?",
+                sentence_pre: "이 케이크는 새로운 문화를 받아들이는 ",
+                sentence_post: "이 되었어요.",
+                correct_word: "상징",
+                translation: "This cake became a 'symbol' of accepting new culture.",
+                hint: "Symbol",
+                options: [
+                    { text: "상징", isCorrect: true, feedback: "Correct! It was a symbol of new culture." },
+                    { text: "비밀", isCorrect: false, feedback: "Incorrect. '비밀' means 'secret'." },
+                    { text: "선물", isCorrect: false, feedback: "Incorrect. '선물' means 'gift'." },
+                    { text: "마법", isCorrect: false, feedback: "Incorrect. '마법' means 'magic'." }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "선교사는 무엇을 알리는 사람이에요?",
+                questionEng: "What does a missionary spread?",
+                sentence_pre: "선교사는 다른 사람들에게 ",
+                sentence_post: "를 알리는 사람이에요.",
+                correct_word: "종교",
+                translation: "A missionary is someone who spreads 'religion' to others.",
+                hint: "Religion",
+                options: [
+                    { text: "종교", isCorrect: true, feedback: "Correct! Missionaries spread religion." },
+                    { text: "문화", isCorrect: false, feedback: "Incorrect. While they bring culture, their primary role is religion." },
+                    { text: "뉴스", isCorrect: false, feedback: "Incorrect. '뉴스' means 'news'." },
+                    { text: "외국어", isCorrect: false, feedback: "Incorrect. '외국어' means 'foreign language'." }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "1950년대, 한국 신문에서 크리스마스 파티를 하는 사람들을 칭찬했어요?",
+                questionEng: "Did Korean newspapers praise people having Christmas parties in the 1950s?",
+                sentence_pre: "한국 신문에서는 크리스마스 파티를 하는 사람들을 ",
+                sentence_post: ".",
+                correct_word: "비판했어요",
+                translation: "Korean newspapers 'criticized' people having Christmas parties.",
+                hint: "Criticized",
+                options: [
+                    { text: "응원했어요", isCorrect: false, feedback: "Incorrect. They did not cheer for them." },
+                    { text: "존경했어요", isCorrect: false, feedback: "Incorrect. They did not respect them." },
+                    { text: "무시했어요", isCorrect: false, feedback: "Incorrect. They did not ignore them." },
+                    { text: "비판했어요", isCorrect: true, feedback: "Correct! They criticized the extravagance during the war." }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "크리스마스에 대한 비판은 무엇을 보여주는 자료예요?",
+                questionEng: "What does the criticism of Christmas show?",
+                sentence_pre: "크리스마스에 대한 비판은 크리스마스가 이미 널리 퍼졌다는 ",
+                sentence_post: "예요.",
+                correct_word: "증거",
+                translation: "Criticism of Christmas is 'evidence' that Christmas had already spread widely.",
+                hint: "Evidence / Proof",
+                options: [
+                    { text: "증거", isCorrect: true, feedback: "Correct! Criticism proves its popularity." },
+                    { text: "이유", isCorrect: false, feedback: "Incorrect. '이유' means 'reason'." },
+                    { text: "사실", isCorrect: false, feedback: "Incorrect. '사실' means 'fact'." },
+                    { text: "핑계", isCorrect: false, feedback: "Incorrect. '핑계' means 'excuse'." }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "한국에서 크리스마스 케이크는 기독교인만 즐겨요?",
+                questionEng: "Do only Christians enjoy Christmas cake in Korea?",
+                sentence_pre: "지금은 종교랑 상관없이 모두가 즐기는 ",
+                sentence_post: "예요.",
+                correct_word: "문화",
+                translation: "Now it is a 'culture' enjoyed by everyone regardless of religion.",
+                hint: "Culture",
+                options: [
+                    { text: "질서", isCorrect: false, feedback: "Incorrect. '질서' means 'order'." },
+                    { text: "식사", isCorrect: false, feedback: "Incorrect. '식사' means 'meal'." },
+                    { text: "문화", isCorrect: true, feedback: "Correct! It has become a general culture." },
+                    { text: "취미", isCorrect: false, feedback: "Incorrect. '취미' means 'hobby'." }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "한국 사람들은 아주 옛날부터 크리스마스 케이크를 먹었어요?",
+                questionEng: "Have Koreans eaten Christmas cake for a very long time?",
+                sentence_pre: "한국에서 크리스마스 케이크의 ",
+                sentence_post: "는 길지 않아요. 약 100년 전쯤 시작되었어요.",
+                correct_word: "역사",
+                translation: "The 'history' of Christmas cake in Korea is not long. It started about 100 years ago.",
+                hint: "History",
+                options: [
+                    { text: "판매", isCorrect: false, feedback: "Incorrect. '판매' means 'sales'." },
+                    { text: "역사", isCorrect: true, feedback: "Correct! The history is relatively short." },
+                    { text: "제도", isCorrect: false, feedback: "Incorrect. '제도' means 'system'." },
+                    { text: "크기", isCorrect: false, feedback: "Incorrect. '크기' means 'size'." }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "크리스마스 케이크 문화는 서양에서 시작했고, 일본을 통해 한국에 왔어요. 그럼 한국 문화가 아니예요?",
+                questionEng: "Christmas cake culture started in the West and came via Japan. Is it not Korean culture?",
+                sentence_pre: "크리스마스 케이크는 한국에서 시작하지 않았지만, 이제 한국에서 만들어진 ",
+                sentence_post: "이 됐어요.",
+                correct_word: "전통",
+                translation: "Christmas cake didn't start in Korea, but it has now become an 'invented tradition' in Korea.",
+                hint: "Tradition",
+                options: [
+                    { text: "전통", isCorrect: true, feedback: "Correct! It's considered an 'invented tradition'." },
+                    { text: "법", isCorrect: false, feedback: "Incorrect. '법' means 'law'." },
+                    { text: "습관", isCorrect: false, feedback: "Incorrect. '습관' means 'habit'." },
+                    { text: "규칙", isCorrect: false, feedback: "Incorrect. '규칙' means 'rule'." }
+                ]
+            }
+        ];
+
+        const SCRIPT_DATA = [
+            { id: 's1', speaker: '유나', kor: '안녕하세요. <이 주제로 이야기해 봐요> 팟캐스트예요.', time: [12.478, 16.052], eng: "Hello. This is the <Let's Talk About This Topic> podcast." },
+            { id: 's2', speaker: '유나', kor: '저는 유나예요.', time: [16.145, 17.324], eng: "I'm Yuna." },
+            { id: 's3', speaker: '민호', kor: '안녕하세요. 저는 민호예요.', time: [17.447, 19.064], eng: "Hello. I'm Minho." },
+            { id: 's4', speaker: '유나', kor: '오늘은 크리스마스 케이크 이야기를 해 볼 거예요.', time: [19.867, 23.034], eng: "Today we're going to talk about Christmas cakes." },
+            { id: 's5', speaker: '유나', kor: '와, 케이크요? 정말 기대되는데요.', time: [23.123, 25.604], eng: "Wow, cake? I'm really looking forward to it." },
+            { id: 's6', speaker: '민호', kor: '크리스마스 하면 딱 떠오르는 이미지가 있잖아요.', time: [26.082, 28.871], eng: "There's an image that comes to mind when you think of Christmas." },
+            { id: 's7', speaker: '유나', kor: '어떤 이미지요?', time: [28.948, 30.000], eng: "What kind of image?" },
+            { id: 's8', speaker: '민호', kor: '그 하얀 생크림에 빨간 딸기가 올라간 케이크요. 다들 그렇죠?', time: [31.212, 36.999], eng: "That cake with white whipped cream and red strawberries. Everyone thinks that, right?" },
+            { id: 's9', speaker: '유나', kor: '네, 맞아요.', time: [37.065, 38.182], eng: "Yes, that's right." },
+            { id: 's10', speaker: '유나', kor: '그런데 그 케이크가 사실 한국의 전통적인 건 아니에요.', time: [38.475, 43.133], eng: "But actually, that cake isn't traditional to Korea." },
+            { id: 's11', speaker: '민호', kor: '네, 아 그건 알죠. 당연히 서양에서 온 거 아니에요.', time: [43.256, 46.642], eng: "Yes, oh I know that. Didn't it obviously come from the West?" },
+            { id: 's12', speaker: '유나', kor: '이게 미국이나 유럽에서 시작된 게 아니에요.', time: [47.151, 50.003], eng: "This didn't start in the US or Europe." },
+            { id: 's13', speaker: '민호', kor: '정말요? 그럼 어디서 온 거예요?', time: [50.142, 51.984], eng: "Really? Then where did it come from?" },
+            { id: 's14', speaker: '유나', kor: '다른 나라들은 크리스마스에 보통 다른 빵을 먹어요.', time: [52.848, 56.495], eng: "Other countries usually eat different breads for Christmas." },
+            { id: 's15', speaker: '유나', kor: '영국에서는 크리스마스 푸딩을 먹고요.', time: [57.000, 59.652], eng: "In the UK, they eat Christmas pudding." },
+            { id: 's16', speaker: '민호', kor: '들어본 것 같아요.', time: [59.806, 61.247], eng: "I think I've heard of that." },
+            { id: 's17', speaker: '유나', kor: '독일은 슈톨렌, 프랑스는 뷔슈 드 노엘이라는 통나무 모양 케이크를 먹거든요.', time: [61.503, 67.682], eng: "Germany eats Stollen, and France eats a log-shaped cake called Bûche de Noël." },
+            { id: 's18', speaker: '민호', kor: '와! 다 다르네요.', time: [68.449, 69.919], eng: "Wow! It's all different." },
+            { id: 's19', speaker: '민호', kor: '그럼 우리가 아는 이 딸기 케이크는 어디서 온 거예요?', time: [70.274, 73.451], eng: "Then where did this strawberry cake we know come from?" },
+            { id: 's20', speaker: '유나', kor: '우리가 아는 그 케이크는 사실 일본에서 시작됐어요.', time: [74.120, 77.598], eng: "The cake we know actually started in Japan." },
+            { id: 's21', speaker: '민호', kor: '일본이요? 진짜요?', time: [77.769, 80.079], eng: "Japan? Really?" },
+            { id: 's22', speaker: '민호', kor: '그게 언제 이야기예요?', time: [81.000, 82.291], eng: "When was that?" },
+            { id: 's23', speaker: '유나', kor: '꽤 오래전이에요.', time: [82.373, 83.609], eng: "It was quite a long time ago." },
+            { id: 's24', speaker: '유나', kor: "1922년 도쿄 긴자에 있는 ‘후지야(FUJIYA)’라는 빵집에서 시작됐어요.", time: [83.778, 88.809], eng: "It started in 1922 at a bakery called 'Fujiya' in Ginza, Tokyo." },
+            { id: 's25', speaker: '민호', kor: '그때 어떤 케이크를 만들었어요?', time: [89.487, 91.468], eng: "What kind of cake did they make then?" },
+            { id: 's26', speaker: '유나', kor: '그때 그 빵집에서 완전히 새로운 케이크를 만든 거죠.', time: [91.561, 95.301], eng: "That bakery made a completely new cake back then." },
+            { id: 's27', speaker: '유나', kor: '부드러운 스펀지 케이크에 하얀 크림을 바르고, 그 위에 새빨간 딸기를 올렸어요.', time: [95.317, 101.347], eng: "They put white cream on a soft sponge cake and topped it with bright red strawberries." },
+            { id: 's28', speaker: '민호', kor: '와! 잠깐만요!', time: [102.000, 103.834], eng: "Wow! Wait a minute!" },
+            { id: 's29', speaker: '민호', kor: '겨울인데 어떻게 딸기를 구했을까요?', time: [103.868, 106.424], eng: "How did they get strawberries in winter?" },
+            { id: 's30', speaker: '유나', kor: '그거 아주 좋은 질문이에요.', time: [106.468, 108.391], eng: "That's a very good question." },
+            { id: 's31', speaker: '유나', kor: '그 당시에 온실 기술이 발전해서 겨울에도 딸기를 만들 수 있었거든요.', time: [109.184, 114.215], eng: "At that time, greenhouse technology had advanced, so they could produce strawberries even in winter." },
+            { id: 's32', speaker: '민호', kor: '아하!', time: [114.308, 115.150], eng: "Aha!" },
+            { id: 's33', speaker: '유나', kor: '그래서 이 케이크가 당시에는 근대화의 상징이었어요.', time: [115.953, 119.234], eng: "So this cake was a symbol of modernization at the time." },
+            { id: 's34', speaker: '민호', kor: '근대화요? 그게 뭐예요?', time: [119.267, 121.729], eng: "Modernization? What is that?" },
+            { id: 's35', speaker: '유나', kor: '근대화는요, 옛날 방식에서 새로운 방식으로 바뀌는 걸 의미해요.', time: [122.301, 128.153], eng: "Modernization means changing from old ways to new ways." },
+            { id: 's36', speaker: '유나', kor: "그니까 이 케이크 하나가 '우리는 이렇게 새로운 기술을 가진 나라다'", time: [128.817, 133.634], eng: "So this single cake was saying 'We are a country with this kind of new technology'." },
+            { id: 's37', speaker: '유나', kor: '이걸 보여주는 중요한 물건이었던 거죠.', time: [133.668, 136.223], eng: "It was an important item showing this." },
+            { id: 's38', speaker: '민호', kor: '와! 케이크 하나에 그런 깊은 뜻이 있었군요.', time: [136.311, 139.974], eng: "Wow! There was such a deep meaning in a single cake." },
+            { id: 's39', speaker: '민호', kor: '그럼 그 케이크는 어떻게 모두가 먹게 된 거예요?', time: [140.558, 143.742], eng: "Then how did everyone come to eat that cake?" },
+            { id: 's40', speaker: '유나', kor: '1950년대에 냉장고가 보급되면서 상황이 달라졌어요.', time: [144.000, 149.702], eng: "The situation changed in the 1950s as refrigerators were distributed." },
+            { id: 's41', speaker: '민호', kor: '냉장고? 아! 생크림 때문에요?', time: [149.877, 152.943], eng: "Refrigerator? Ah! Because of the whipped cream?" },
+            { id: 's42', speaker: '유나', kor: '정확해요.', time: [153.780, 154.851], eng: "Exactly." },
+            { id: 's43', speaker: '유나', kor: '생크림 케이크는 냉장고 없이는 보관하기가 어렵잖아요.', time: [154.944, 158.734], eng: "It's hard to store whipped cream cakes without a refrigerator." },
+            { id: 's44', speaker: '민호', kor: '그렇죠.', time: [158.734, 159.373], eng: "That's right." },
+            { id: 's45', speaker: '유나', kor: '냉장고가 있으니까 케이크를 많이 만들고 팔 수 있게 되면서 모든 사람이 즐길 수 있게 된 거예요.', time: [160.162, 167.515], eng: "Since there were refrigerators, they could make and sell a lot of cakes, so everyone could enjoy them." },
+            { id: 's46', speaker: '민호', kor: '아, 그래서 모두가 먹는 케이크가 된 거군요.', time: [167.623, 170.703], eng: "Ah, so that's how it became a cake everyone eats." },
+            { id: 's47', speaker: '민호', kor: '그럼 한국에는 언제 들어왔어요?', time: [171.566, 174.093], eng: "Then when did it come to Korea?" },
+            { id: 's48', speaker: '유나', kor: '한국에서는 1897년에 한 선교사의 편지에 처음 기록이 나와요.', time: [174.435, 181.515], eng: "In Korea, the first record appears in a missionary's letter in 1897." },
+            { id: 's49', speaker: '민호', kor: '선교사요? 선교사가 뭐예요?', time: [181.809, 184.301], eng: "Missionary? What is a missionary?" },
+            { id: 's50', speaker: '유나', kor: '아, 선교사는 종교를 다른 사람들에게 알리는 사람이에요.', time: [184.365, 188.846], eng: "Ah, a missionary is someone who spreads religion to other people." },
+            { id: 's51', speaker: '민호', kor: '아하 알겠어요!', time: [189.525, 191.054], eng: "Aha, I see!" },
+            { id: 's52', speaker: '민호', kor: '거기에 크리스마스 케이크라고 쓰여 있었나요?', time: [191.147, 194.472], eng: "Did it say Christmas cake there?" },
+            { id: 's53', speaker: '유나', kor: "아뇨, 그 선교사 가족이 '저녁 식사로 초코 케이크랑 과일 케이크를 먹었다’ 이렇게 써 놨어요.", time: [194.673, 203.376], eng: "No, the missionary family wrote, 'We ate chocolate cake and fruit cake for dinner'." },
+            { id: 's54', speaker: '민호', kor: '그럼 그때는 선교사들처럼 일부 외국인들만 케이크를 먹은 건가요?', time: [203.606, 208.827], eng: "Then back then, did only some foreigners like missionaries eat cake?" },
+            { id: 's55', speaker: '유나', kor: '네, 처음에는 그랬다고 봐야죠.', time: [209.012, 211.777], eng: "Yes, you could say so at first." },
+            { id: 's56', speaker: '유나', kor: '하지만 시간이 좀 지나서 1930년대가 되면서 크리스마스가 아주 인기가 많아졌다는 그런 증거들이 있어요.', time: [212.381, 221.481], eng: "But as time passed and the 1930s came, there is evidence that Christmas became very popular." },
+            { id: 's57', speaker: '민호', kor: '증거요? 어떤 사실이 맞다고 보여주는 거요?', time: [221.701, 225.056], eng: "Evidence? Something that shows a fact is true?" },
+            { id: 's58', speaker: '유나', kor: '네.', time: [225.067, 225.567], eng: "Yes." },
+            { id: 's59', speaker: '민호', kor: '어떤 증거가 있어요?', time: [225.601, 226.811], eng: "What kind of evidence is there?" },
+            { id: 's60', speaker: '유나', kor: '그때 윤치호라는 사람이 일기에 이렇게 썼어요.', time: [227.536, 231.774], eng: "At that time, a man named Yun Chi-ho wrote this in his diary." },
+            { id: 's61', speaker: '유나', kor: "'사람들이 크리스마스의 의미보다 쇼핑에만 관심이 있다' 이렇게요.", time: [231.836, 237.293], eng: "'People are only interested in shopping rather than the meaning of Christmas', like this." },
+            { id: 's62', speaker: '민호', kor: '그건 좋은 말이 아닌데요.', time: [237.419, 241.245], eng: "That's not a good thing." },
+            { id: 's63', speaker: '유나', kor: '네, 일종의 비판이죠.', time: [241.322, 243.345], eng: "Yes, it's a kind of criticism." },
+            { id: 's64', speaker: '민호', kor: '비판이요?', time: [243.401, 244.101], eng: "Criticism?" },
+            { id: 's65', speaker: '유나', kor: '좋지 않다고 말하는 거예요.', time: [244.204, 246.163], eng: "Saying something is not good." },
+            { id: 's66', speaker: '유나', kor: '그런데 이런 비판이 있었다는 것 자체가 이미 그때 크리스마스가 널리 퍼졌다는 뜻이잖아요.', time: [246.842, 253.443], eng: "But the fact that there was this criticism means Christmas had already spread widely back then." },
+            { id: 's67', speaker: '민호', kor: '아, 그러네요. 관심이 없으면 비판도 안 하니까요.', time: [253.551, 256.751], eng: "Ah, true. If they weren't interested, they wouldn't even criticize." },
+            { id: 's68', speaker: '유나', kor: '맞아요.', time: [257.298, 258.280], eng: "Right." },
+            { id: 's69', speaker: '유나', kor: '그리고 크리스마스 케이크라는 단어가 신문에 처음 등장한 건 1952년이에요.', time: [258.373, 264.700], eng: "And the word 'Christmas cake' first appeared in a newspaper in 1952." },
+            { id: 's70', speaker: '민호', kor: '1952년이면 한국 전쟁 중 아니에요?', time: [264.962, 269.440], eng: "Isn't 1952 during the Korean War?" },
+            { id: 's71', speaker: '유나', kor: '맞아요. 전쟁 중이었어요.', time: [269.579, 271.869], eng: "That's right. It was during the war." },
+            { id: 's72', speaker: '유나', kor: '한 신문 기사가 전쟁 중에 비싼 케이크를 사서 파티하는 사람들을 비판했는데 이게 뭘 의미하겠어요?', time: [272.424, 280.170], eng: "A newspaper article criticized people for buying expensive cakes and partying during the war, what does this mean?" },
+            { id: 's73', speaker: '민호', kor: '와, 전쟁 중에도 케이크를 먹는 문화가 있었다는 거네요.', time: [280.247, 284.023], eng: "Wow, it means there was a culture of eating cake even during the war." },
+            { id: 's74', speaker: '민호', kor: '그만큼 케이크가 이미 널리 퍼져 있었다는 증거고요.', time: [284.131, 287.609], eng: "It's evidence that cakes were already widely spread." },
+            { id: 's75', speaker: '유나', kor: '네, 바로 그거예요.', time: [287.701, 289.408], eng: "Yes, exactly." },
+            { id: 's76', speaker: '유나', kor: '여기서 재미있는 점이 있어요.', time: [289.757, 291.893], eng: "Here's an interesting point." },
+            { id: 's77', speaker: '유나', kor: '한국의 기독교 인구가 약 23% 정도인데, 크리스마스 케이크 시장 규모는 600억 원이 넘거든요.', time: [291.985, 300.000], eng: "Korea's Christian population is about 23%, but the Christmas cake market size is over 60 billion won." },
+            { id: 's78', speaker: '민호', kor: '기독교인이 아닌 사람들이 훨씬 더 많이 케이크를 산다는 거네요.', time: [300.512, 304.652], eng: "That means non-Christians buy a lot more cakes." },
+            { id: 's79', speaker: '유나', kor: '바로 그거죠.', time: [304.822, 306.143], eng: "That's exactly it." },
+            { id: 's80', speaker: '민호', kor: '그럼 크리스마스 케이크는 기독교인만 먹는 게 아니네요.', time: [306.667, 310.489], eng: "Then Christmas cake isn't just for Christians." },
+            { id: 's81', speaker: '유나', kor: '그럼요. 이제 크리스마스 케이크는 종교랑은 거의 상관없는 문화가 됐어요.', time: [310.591, 316.392], eng: "Of course. Now Christmas cake has become a culture almost unrelated to religion." },
+            { id: 's82', speaker: '민호', kor: '와! 당연히 아주 오래된 서양 전통인 줄 알았는데 그게 아니었군요.', time: [316.932, 322.279], eng: "Wow! I naturally thought it was a very old Western tradition, but it wasn't." },
+            { id: 's83', speaker: '유나', kor: '네, 그래서 정리를 좀 해보면, 한 100년 전쯤 일본에서 새로운 문화를 받아들이는 상징으로 만들어졌고,', time: [322.796, 331.171], eng: "Yes, so to summarize, it was created about 100 years ago in Japan as a symbol of accepting new culture," },
+            { id: 's84', speaker: '유나', kor: '그게 한국으로 전해져서 지금은 종교랑 상관없이 모두가 즐기는 문화가 된 거죠.', time: [331.201, 337.996], eng: "and it was passed on to Korea and now it has become a culture enjoyed by everyone regardless of religion." },
+            { id: 's85', speaker: '민호', kor: '우리가 그냥 당연하게 생각했던 크리스마스 문화가 사실은 거의 100년 동안 천천히 만들어진 거였네요.', time: [338.490, 346.579], eng: "The Christmas culture we just took for granted was actually created slowly over almost 100 years." },
+            { id: 's86', speaker: '유나', kor: '맞아요. 역사가 에릭 홉스봄(Eric Hobsbawm)은 이런 걸 만들어진 전통이라고 불렀어요.', time: [346.913, 353.873], eng: "That's right. Historian Eric Hobsbawm called this an 'invented tradition'." },
+            { id: 's87', speaker: '민호', kor: '만들어진 전통이요?', time: [354.000, 355.374], eng: "Invented tradition?" },
+            { id: 's88', speaker: '유나', kor: '네, 아주 오래된 것 같지만, 사실은 비교적 최근에 어떤 필요에 의해서 만들어진 것들이라는 뜻이에요.', time: [355.528, 364.475], eng: "Yes, it means things that seem very old, but were actually created relatively recently out of some necessity." },
+            { id: 's89', speaker: '민호', kor: '그렇게 생각하니까 우리가 아는 다른 전통들도 혹시 만들어진 게 아닐까 하는 생각이 드는데요.', time: [365.108, 371.835], eng: "Thinking like that makes me wonder if other traditions we know might also be invented." },
+            { id: 's90', speaker: '유나', kor: '그럴 수도 있죠.', time: [371.928, 373.030], eng: "That could be." },
+            { id: 's91', speaker: '유나', kor: '그래서 여러분의 나라에도 이렇게 당연하게 여기지만, 사실은 역사가 짧은 문화가 있는지 한번 생각해 보시는 것도 재미있을 거예요.', time: [373.856, 383.341], eng: "So it would be fun to think about if there are cultures in your country that are taken for granted but actually have a short history." },
+            { id: 's92', speaker: '민호', kor: '오늘 정말 재미있었어요.', time: [384.000, 385.673], eng: "Today was really fun." },
+            { id: 's93', speaker: '유나', kor: '저도요.', time: [385.701, 386.469], eng: "Me too." },
+            { id: 's94', speaker: '유나', kor: '다음에 더 재미있는 이야기로 만나요.', time: [386.623, 388.623], eng: "See you next time with more interesting stories." },
+            { id: 's95', speaker: '유나', kor: '안녕히 계세요.', time: [388.716, 389.880], eng: "Goodbye." }
+        ];
+
+        const DISCUSS_DATA = [
+            {
+                id: 'd1',
+                question: "여러분은 크리스마스에 어떤 이미지가 떠올라요? ‘딸기가 올라간 생크림 케이크’예요?",
+                translation: "What image comes to mind when you think of Christmas? Is it a 'whipped cream cake topped with strawberries'?",
+                keyVocab: [
+                    { term: "이미지가 떠오르다", meaning_eng: "come to mind" },
+                    { term: "딸기가 올라간", meaning_eng: "topped with strawberries" },
+                    { term: "생크림", meaning_eng: "whipped cream" }
+                ]
+            },
+            {
+                id: 'd2',
+                question: "여러분은 ‘딸기가 올라간 생크림 케이크’가 어디에서 시작했다고 생각해요? 유럽? 미국? 일본? 한국?",
+                translation: "Where do you think the 'whipped cream cake topped with strawberries' originated? Europe? USA? Japan? Korea?",
+                keyVocab: [
+                    { term: "딸기가 올라간", meaning_eng: "topped with strawberries" },
+                    { term: "생크림", meaning_eng: "whipped cream" },
+                    { term: "서양", meaning_eng: "the West" },
+                    { term: "-라고 생각하다", meaning_eng: "to think that ..." }
+                ]
+            },
+            {
+                id: 'd3',
+                question: "이제 ‘딸기가 올라간 생크림 케이크’가 한국의 전통이라고 말할 수 있을까요?",
+                translation: "Can we now say that the 'whipped cream cake topped with strawberries' is a Korean tradition?",
+                keyVocab: [
+                    { term: "딸기가 올라간", meaning_eng: "topped with strawberries" },
+                    { term: "생크림", meaning_eng: "whipped cream" },
+                    { term: "전통", meaning_eng: "tradition" },
+                    { term: "-이라고 말하다", meaning_eng: "to say that ..." }
+                ]
+            },
+            {
+                id: 'd4',
+                question: "여러분의 나라에서도 어떤 문화가 다른 나라에서 왔지만, 지금은 많은 사람들이 좋아하는 문화가 있어요?",
+                translation: "In your country, is there any culture that came from another country but is now loved by many people?",
+                keyVocab: [
+                    { term: "어떤 문화", meaning_eng: "a certain culture" },
+                    { term: "다른 나라에서 오다", meaning_eng: "to come from another country" },
+                    { term: "많은 사람들이 좋아하는 문화", meaning_eng: "a culture loved by many people" }
+                ]
+            },
+            {
+                id: 'd5',
+                question: "여러분의 나라에서는 어떤 문화가 널리 퍼졌어요? 그 사실을 어떻게 알 수 있어요? 비판이 어떤 문화가 널리 퍼졌다는 증거일까요?",
+                translation: "What culture has spread widely in your country? How can you tell? Is criticism evidence that a culture has spread widely?",
+                keyVocab: [
+                    { term: "어떤 문화", meaning_eng: "a certain culture" },
+                    { term: "널리 퍼지다", meaning_eng: "to spread widely" },
+                    { term: "알다", meaning_eng: "to know" },
+                    { term: "비판", meaning_eng: "criticism" },
+                    { term: "널리 퍼졌다는 증거", meaning_eng: "evidence that it has spread widely" }
+                ]
+            },
+            {
+                id: 'd6',
+                question: "근대화는 ‘옛날 방식에서 새로운 방식으로 바뀌는 것’을 의미해요. 그런데 한국에서 어떤 사람들은 ‘근대화’가 ‘서양을 따라 하는 것’이라고 말해요. 여러분에게 근대화는 무엇을 의미해요?",
+                translation: "Modernization means 'changing from old ways to new ways'. However, some people in Korea say that 'modernization' is 'copying the West'. What does modernization mean to you?",
+                keyVocab: [
+                    { term: "근대화", meaning_eng: "modernization" },
+                    { term: "옛날 방식에서 새로운 방식으로 바뀌는 것", meaning_eng: "changing from old ways to new ways" },
+                    { term: "의미하다", meaning_eng: "to mean" },
+                    { term: "서양을 따라 하는 것", meaning_eng: "copying the West" },
+                    { term: "-라고 말하다", meaning_eng: "to say that ..." }
+                ]
+            },
+            {
+                id: 'd7',
+                question: "여러분의 나라에서도 다른 나라 문화를 따라 하면, 앞서가는 사람이라고 생각해요?",
+                translation: "In your country, do people think that someone is ahead of the curve if they follow another country's culture?",
+                keyVocab: [
+                    { term: "다른 나라 문화", meaning_eng: "other country's culture" },
+                    { term: "따라 하다", meaning_eng: "to copy / follow" },
+                    { term: "앞서가는 사람", meaning_eng: "a trendsetter / someone ahead of the times" },
+                    { term: "-이라고 생각하다", meaning_eng: "to think that ..." }
+                ]
+            },
+            {
+                id: 'd8',
+                question: "‘전통’은 무엇일까요? 전통은 '아주 오래되어야' 한다고 생각해요?",
+                translation: "What is 'tradition'? Do you think tradition must be 'very old'?",
+                keyVocab: [
+                    { term: "전통", meaning_eng: "tradition" },
+                    { term: "아주 오래되다", meaning_eng: "to be very old" },
+                    { term: "-이어야 하다", meaning_eng: "must be ..." }
+                ]
+            },
+            {
+                id: 'd9',
+                question: "\"만들어진 전통\"은 무엇일까요? 그리고 ‘만들어진 전통’이 진짜라고 생각해요? 가짜라고 생각해요?",
+                translation: "What is an \"invented tradition\"? And do you think an 'invented tradition' is real? Or fake?",
+                keyVocab: [
+                    { term: "만들어진 전통", meaning_eng: "invented tradition" },
+                    { term: "진짜", meaning_eng: "real" },
+                    { term: "가짜", meaning_eng: "fake" },
+                    { term: "-라고 생각하다", meaning_eng: "to think that ..." }
+                ]
+            },
+            {
+                id: 'd10',
+                question: "여러분은 당연하다고 생각했는데, \"어? 이 문화는 어디에서 왔지?\"라고 궁금해진 적이 있어요?",
+                translation: "Have you ever taken something for granted, but then wondered, \"Huh? Where did this culture come from?\"",
+                keyVocab: [
+                    { term: "당연하다고 생각하다", meaning_eng: "to take for granted" },
+                    { term: "문화", meaning_eng: "culture" },
+                    { term: "-라고 궁금해지다", meaning_eng: "to wonder ..." },
+                    { term: "-ㄴ적이 있다", meaning_eng: "have done ... before (experience)" }
+                ]
+            }
+        ];
+
+        // --- Helpers ---
+        const getLevelTheme = (level) => {
+            switch (level) {
+                case 'A1': case 'A1+': return 'lime';
+                case 'A2': case 'A2+': return 'green';
+                case 'B1': return 'sky'; 
+                case 'B1+': return 'blue'; // Changed to blue
+                case 'B2': case 'B2+': return 'blue'; 
+                case 'C1': case 'C1+': case 'C2': return 'violet';
+                default: return 'green';
+            }
+        };
+
+        const LEVEL_STYLES = {
+            "A1": "bg-lime-50 text-lime-600 border-lime-100", 
+            "A1+": "bg-lime-50 text-lime-600 border-lime-100", 
+            "A2": "bg-green-50 text-green-600 border-green-100",    
+            "A2+": "bg-green-50 text-green-600 border-green-100",    
+            "B1": "bg-sky-50 text-sky-600 border-sky-100",        
+            "B1+": "bg-blue-50 text-blue-600 border-blue-100",        
+            "B2": "bg-blue-50 text-blue-600 border-blue-100", 
+            "B2+": "bg-blue-50 text-blue-600 border-blue-100", 
+            "C1": "bg-violet-50 text-violet-600 border-violet-100", 
+            "C1+": "bg-violet-50 text-violet-600 border-violet-100", 
+            "C2": "bg-violet-50 text-violet-600 border-violet-100",        
+        };
+
+        // --- Icons ---
+        const HomeIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <path d="M8 21h8" />
+                <path d="M12 17v4" />
+            </svg>
+        );
+        const LearnIcon = ({ className, filled }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect x="2" y="4" width="20" height="16" rx="4" fill={filled ? "currentColor" : "none"} />
+                <polygon points="10 8 16 12 10 16 10 8" stroke={filled ? "#fff" : "currentColor"} fill={filled ? "#fff" : "none"} />
+            </svg>
+        );
+        const VocabIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
+            </svg>
+        );
+        const QuizIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+        );
+        const DiscussIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                <path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+        );
+        const UserIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>);
+        const QuizHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+        );
+        const VocabHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
+            </svg>
+        );
+        const DiscussHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                <path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+        );
+        const LineIcon = ({ d, className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d} /></svg>);
+        const PlayIconLine = (props) => <LineIcon {...props} d="M5 3l14 9-14 9V3z" />;
+        const OpenBookSolidIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M2 6 C2 3 8 2 12 6 C16 2 22 3 22 6 V20 C22 17 16 16 12 20 C8 16 2 17 2 20 Z" />
+                <path d="M12 6 V20" /> 
+                <path d="M4.5 15 L7 9 L9.5 15" strokeWidth="1.5" />
+                <path d="M5.5 13 H8.5" strokeWidth="1.5" />
+                <path d="M15 10 H19" strokeWidth="1.5" />
+                <path d="M15 13 H19" strokeWidth="1.5" />
+                <path d="M15 16 H18" strokeWidth="1.5" />
+            </svg>
+        );
+        const TranslateIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+                <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.09-.02.67-.02zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+            </svg>
+        );
+        const ExternalLinkIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+        );
+        const ChevronLeft = ({ className }) => <LineIcon d="m15 18-6-6 6-6" className={className}/>;
+        const ChevronRight = ({ className }) => <LineIcon d="m9 18 6-6-6-6" className={className}/>;
+        const SpeedSolidIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44z"/><path d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg>);
+        const SparklesIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 00-1.423 1.423z" /></svg>);
+
+        // --- Components ---
+        // ... (LevelBadge, Sidebar, callGeminiWithBackoff, FeedbackSection, VocabCard, HomeView, VocabView, QuizView, DiscussView는 변경 없음) ...
+        const LevelBadge = ({ levelCode }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            const info = LEVEL_DEFINITIONS[levelCode] || LEVEL_DEFINITIONS["A2+"];
+            const getLevelStyle = (code) => {
+                if (LEVEL_STYLES[code]) return LEVEL_STYLES[code];
+                const base = code.substring(0, 2);
+                return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100";
+            };
+            const badgeStyle = getLevelStyle(levelCode);
+            return (
+                <div className="relative inline-flex items-center cursor-help z-50" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                    <span className={`px-2 py-0.5 rounded text-[0.625em] font-bold border uppercase tracking-wide shadow-sm font-sunflower ${badgeStyle}`}>Level: {info.title}</span>
+                    {isHovered && (<div className="absolute top-full left-0 mt-2 w-64 bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-xl z-[100] animate-fade-in text-left"><p className={`font-bold mb-1.5 text-sm ${badgeStyle.split(' ')[1]}`}>{levelCode} – {info.title}</p><p className="opacity-90 leading-relaxed font-medium">{info.desc}</p><div className="absolute -top-1 left-4 w-2 h-2 bg-slate-900/95 rotate-45"></div></div>)}
+                </div>
+            );
+        };
+
+        const Sidebar = ({ activeTab, setActiveTab, isCollapsed, toggleSidebar, userLevel, themeColor }) => {
+            const menus = [
+                { id: 'home', label: '시작 페이지', subLabel: 'Home Page', icon: HomeIcon },
+                { id: 'learn', label: '동영상 자료', subLabel: 'Video Resources', icon: LearnIcon },
+                { id: 'vocab', label: '핵심 어휘', subLabel: 'Key Vocabulary', icon: VocabIcon },
+                { id: 'quiz', label: '내용 확인 퀴즈', subLabel: 'Comprehension Quiz', icon: QuizIcon },
+                { id: 'discuss', label: '생각해 보기', subLabel: 'Food For Thought', icon: DiscussIcon },
+            ];
+            
+            const getLevelColor = (code) => {
+                if (LEVEL_STYLES[code]) return LEVEL_STYLES[code];
+                const base = code.substring(0, 2);
+                return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100";
+            };
+
+            const currentStyle = getLevelColor(userLevel);
+            const bgClass = currentStyle.split(' ')[0];
+            const textClass = currentStyle.split(' ')[1];
+
+            const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, info: null });
+
+            const handleLevelTextEnter = (e) => {
+                const rect = e.target.getBoundingClientRect();
+                setTooltip({
+                    show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel]
+                });
+            };
+
+            const handleLevelTextLeave = () => {
+                setTooltip(prev => ({ ...prev, show: false }));
+            };
+
+            // 사이드바 너비와 폰트 크기 동적 설정
+            // 펼쳐졌을 때: 1.15배 -> w-64(16rem) * 1.15 = 18.4rem
+            // 접혔을 때: 1.0배 -> w-[88px](5.5rem)
+            const sidebarStyle = isCollapsed 
+                ? { width: '5.5rem', fontSize: '1rem' } 
+                : { width: '18.4rem', fontSize: '1.15rem' };
+
+            const handleMenuClick = (menuId) => {
+                setActiveTab(menuId);
+                if (menuId === 'learn' && !isCollapsed) {
+                   toggleSidebar(); // '동영상 자료' 클릭 시 사이드바 접기 (토글 방식 사용)
+                } else if (menuId !== 'learn' && isCollapsed) {
+                   // 다른 메뉴 클릭 시 필요하다면 펼치기 등 로직 추가 가능 (현재는 유지)
+                }
+            };
+
+            return (
+                <aside className={`bg-white border-r border-gray-200 fixed h-full hidden md:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic`} style={sidebarStyle}>
+                    <div className={`p-6 flex items-center gap-3 relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
+                        <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[3rem] h-[3rem]' : 'w-[3.75rem] h-[3.75rem]'}`}/>
+                        {!isCollapsed && (
+                            <div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center">
+                                <span className="font-extrabold text-[1.25em] text-black leading-tight font-cafe24-deco">Open</span>
+                                <span className={`font-bold text-[0.6875em] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span>
+                            </div>
+                        )}
+                        <button onClick={toggleSidebar} className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-full p-1 shadow-sm text-slate-500 hover:text-slate-700 hover:bg-gray-50 transition-colors z-10">
+                            {isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
+                        </button>
+                    </div>
+                    
+                    <nav className={`flex-1 space-y-3 mt-4 ${isCollapsed ? 'px-3' : 'px-3'}`}>
+                        {menus.map((menu) => {
+                            const IconComp = menu.icon;
+                            const isActive = activeTab === menu.id;
+                            const activeFontClass = isActive ? "font-cafe24-surround" : "font-cafe24";
+                            return (
+                                <button key={menu.id} onClick={() => handleMenuClick(menu.id)} onDoubleClick={toggleSidebar} className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-14 rounded-2xl' : 'gap-3 px-3 py-4 rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}>
+                                    {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-1.5 h-8' : 'w-1 h-6'}`}></div>}
+                                    <IconComp className={`shrink-0 transition-all duration-200 ${isCollapsed ? 'w-8 h-8' : 'w-7 h-7'} ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
+                                    {!isCollapsed && (
+                                        <div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap">
+                                            <span className={`text-[0.875em] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span>
+                                            <span className="text-[0.625em] font-normal text-slate-400 mt-0.5 leading-tight">{menu.subLabel}</span>
+                                        </div>
+                                    )}
+                                    {isCollapsed && (
+                                        <div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl flex flex-col items-start">
+                                            <span className="text-xs font-bold">{menu.label}</span>
+                                            <span className="text-[10px] opacity-80">{menu.subLabel}</span>
+                                            <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></div>
+                                        </div>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </nav>
+
+                    <div className="p-2 border-t border-gray-100">
+                        <div className={`flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-gray-50 cursor-pointer ${isCollapsed ? 'justify-center' : ''}`}>
+                            <div className={`w-[2.75em] h-[2.75em] rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${bgClass} border ${currentStyle.split(' ')[2]}`}>
+                                <span className={`text-[1em] font-extrabold font-school-smile ${currentStyle.replace('bg-', 'text-').replace('50', '600')}`}>{userLevel}</span>
+                            </div>
+                            {!isCollapsed && (
+                                <div className="animate-fade-in overflow-hidden whitespace-nowrap flex-1">
+                                    <p className="text-[0.875em] font-bold text-slate-900 mb-[1px] font-basic">학습자(Learner)</p>
+                                    <div className="mt-[1px]">
+                                        <span className={`block w-fit px-[2px] py-0.5 rounded text-[0.625em] font-semibold border uppercase tracking-wide shadow-sm text-left cursor-help font-basic ${currentStyle}`} onMouseEnter={handleLevelTextEnter} onMouseLeave={handleLevelTextLeave}>
+                                            Level: {LEVEL_DEFINITIONS[userLevel].title}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    {tooltip.show && tooltip.info && createPortal(
+                        <div className="fixed z-[9999] pointer-events-none animate-fade-in" style={{ left: tooltip.x, top: tooltip.y }}>
+                            <div className="relative bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-2xl transform -translate-y-full -translate-x-6 -mt-3 w-64 border border-slate-700/50">
+                                <p className={`font-bold mb-1.5 text-sm text-${themeColor}-300`}>{userLevel} – {tooltip.info.title}</p>
+                                <p className="opacity-90 leading-relaxed font-medium text-slate-200">{tooltip.info.desc}</p>
+                                <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-slate-900/95 border-r border-b border-slate-700/50 rotate-45"></div>
+                            </div>
+                        </div>, document.body
+                    )}
+                </aside>
+            );
+        };
+
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i <= delays.length; i++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                    return await response.json();
+                } catch (error) { if (i === delays.length) throw error; await new Promise(resolve => setTimeout(resolve, delays[i])); }
+            }
+        };
+
+        const FeedbackSection = ({ value, onChange, placeholder, question, keyPhrases, themeColor }) => {
+            const [feedback, setFeedback] = useState(null);
+            const [isLoading, setIsLoading] = useState(false);
+            const [error, setError] = useState(null);
+
+            const checkSentence = async () => {
+                if (!value || value.trim() === '') { setError("문장을 입력해야 피드백을 받을 수 있어요."); setFeedback(null); return; }
+                setIsLoading(true); setError(null); setFeedback(null);
+                const systemPrompt = `You are an advanced Korean language tutor AI for A2 level learners...`; 
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: systemPrompt }, { text: `Question: "${question}"\nUser's Answer: "${value}"` }] }],
+                    generationConfig: { responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { "is_relevant": { "type": "BOOLEAN" }, "relevance_feedback_eng": { "type": "STRING", "nullable": true }, "is_correct": { "type": "BOOLEAN", "nullable": true }, "feedback_message_eng": { "type": "STRING", "nullable": true }, "corrected_sentence": { "type": "STRING", "nullable": true }, "explanation_eng": { "type": "STRING", "nullable": true } } } }
+                };
+                try {
+                    const result = await callGeminiWithBackoff(payload);
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) setFeedback(JSON.parse(result.candidates[0].content.parts[0].text));
+                    else setError("AI의 응답을 처리하는 데 문제가 발생했어요.");
+                } catch (err) { setError("문장 검사에 실패했어요. 다시 시도해 주세요."); } finally { setIsLoading(false); }
+            };
+
+            return (
+                <div>
+                    {keyPhrases}
+                    <div>
+                        <h4 className="font-bold text-slate-900 mb-3 text-[1em]" style={{ fontFamily: 'NanumSquareRound' }}>핵심 표현을 사용해서 질문에 대답해 보세요.</h4>
+                        <textarea value={value} onChange={onChange} placeholder={placeholder} className={`w-full p-4 rounded-xl border border-gray-200 focus:border-${themeColor}-500 focus:ring-1 focus:ring-${themeColor}-500 outline-none min-h-[120px] resize-none text-[1em] text-slate-800 placeholder-gray-400 mb-3`} style={{ fontFamily: 'NanumSquareRound' }}></textarea>
+                        <button onClick={checkSentence} disabled={!value.trim() || isLoading} className={`flex items-center gap-2 px-5 py-[6px] text-[0.75em] leading-[0.75em] rounded-xl font-bold transition-all shadow-sm ${!value.trim() || isLoading ? 'bg-gray-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md'}`} style={{ fontFamily: 'NanumSquareRound' }}>
+                            {isLoading ? <span>분석 중...</span> : <> <SparklesIcon className="w-5 h-5" /> <span>AI Feedback (피드백 받기)</span> </>}
+                        </button>
+                        {error && <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-xl border border-red-200 text-[0.875em] font-medium animate-fade-in">{error}</div>}
+                        {feedback && (
+                            <div className={`mt-6 rounded-2xl p-6 border animate-fade-in ${feedback.is_correct ? `bg-${themeColor}-50 border-${themeColor}-200` : 'bg-yellow-50 border-yellow-200'}`}>
+                                <div className="flex items-center gap-2 mb-4"><span className="text-2xl">🤖</span><h4 className="font-extrabold text-slate-900 text-[1.125em]" style={{ fontFamily: 'NanumSquareRound' }}>AI Tutor Feedback</h4></div>
+                                <div className="mb-4"><span className={`font-black text-[0.875em] px-3 py-1 rounded-full bg-white border shadow-sm ${feedback.is_correct ? `text-${themeColor}-600 border-${themeColor}-200` : 'text-yellow-600 border-yellow-200'}`} style={{ fontFamily: 'NanumSquareRound' }}>{feedback.is_correct ? '🎉 Great Job!' : '⚠️ Needs Improvement'}</span></div>
+                                <div className="space-y-4">
+                                    {feedback.feedback_message_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-[0.875em] sm:w-24 shrink-0" style={{ fontFamily: 'NanumSquareRound' }}>Feedback</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed" style={{ fontFamily: 'NanumSquareRound' }}>{feedback.feedback_message_eng}</p></div>}
+                                    {feedback.explanation_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-[0.875em] sm:w-24 shrink-0" style={{ fontFamily: 'NanumSquareRound' }}>Explanation</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed" style={{ fontFamily: 'NanumSquareRound' }}>{feedback.explanation_eng}</p></div>}
+                                    {feedback.corrected_sentence && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-[0.875em] sm:w-24 shrink-0" style={{ fontFamily: 'NanumSquareRound' }}>Correction</span><p className="text-slate-900 text-[1.125em] font-black leading-relaxed" style={{ fontFamily: 'NanumSquareRound' }}>{feedback.corrected_sentence}</p></div>}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabCard = ({ word, themeColor }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
+                    <div className="flex justify-between mb-4"><h3 className="text-[1.5em] font-ocarina font-extrabold text-slate-900">{word.term}</h3></div>
+                    <div className={`pl-4 border-l-4 border-${themeColor}-500 mb-6`}><p className="text-[1.3125em] font-diary font-medium text-slate-600">{word.mainDef}</p></div>
+                    <div className="flex-1 flex flex-col">
+                        <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all group border border-transparent hover:border-gray-200">
+                            <div className="flex items-center gap-2"><span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isOpen ? `bg-${themeColor}-500` : 'bg-gray-400'}`}></span><span className={`text-[0.75em] font-bold uppercase tracking-wider transition-colors duration-300 ${isOpen ? `text-${themeColor}-700` : 'text-slate-500'}`}>Examples (예문)</span></div>
+                            <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} />
+                        </button>
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                            <div className="bg-gray-50 rounded-xl p-4 space-y-3 border border-gray-100">{word.examples.map((ex, i) => (<div key={i}><p className="font-universe font-bold text-slate-800 text-[1.1875em] leading-relaxed">{ex.kor}</p><p className="font-gowoonbam text-slate-500 text-[1.0625em] mt-0.5">{ex.eng}</p></div>))}</div>
+                        </div>
+                        {word.subDefs && word.subDefs.length > 0 && (
+                            <div className={`bg-${themeColor}-50 rounded-xl p-5 space-y-2 border border-${themeColor}-100 mt-4`}>
+                                <h4 className={`font-bold text-${themeColor}-800 text-[0.75em] mb-2 flex items-center gap-2 uppercase tracking-wider`}><span className={`w-1.5 h-1.5 rounded-full bg-${themeColor}-400`}></span>Related & Grammar</h4>
+                                {word.subDefs.map((sub, i) => (<div key={i} className="flex flex-col"><span className={`font-mapo font-semibold text-${themeColor}-700 text-[1.25em]`}>{sub.subTerm}</span><span className={`font-dictation text-[1.1875em] text-${themeColor}-600`}>{sub.subDef}</span></div>))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const HomeView = ({ setActiveTab, progress, userLevel, themeColor }) => {
+            const completedCount = Object.values(progress).filter(val => val === true || (typeof val === 'number' && val > 0)).length;
+            const percentage = Math.round((completedCount / 4) * 100);
+            const quizScoreDisplay = typeof progress.quiz === 'number' ? `${progress.quiz}%` : (progress.quiz ? '100%' : '0%');
+            const quizColorClass = (progress.quiz === 100 || progress.quiz === true) ? `text-${themeColor}-600` : 'text-slate-900';
+            const quizIconBg = (progress.quiz === 100 || progress.quiz === true) ? `bg-${themeColor}-100 text-${themeColor}-600` : `bg-${themeColor}-50 text-${themeColor}-600`;
+
+            return (
+                <div className="space-y-10 animate-fade-in max-w-7xl mx-auto" style={{ fontSize: '1.3rem' }}>
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                            <span className={`px-2 py-1 bg-${themeColor}-100 text-${themeColor}-700 text-[0.8125em] font-extrabold rounded-md tracking-wider font-basic`}>팟캐스트 (Podcast)</span>
+                            <span className={`text-[0.8125em] font-bold text-${themeColor}-600 tracking-wide uppercase font-basic`}>이 주제로 이야기해 봐요! (Let's talk about this topic)</span>
+                        </div>
+                        <h1 className="text-[3em] font-black text-slate-900 tracking-tight font-cafe24-surround">한국의 크리스마스 케이크</h1>
+                        <p className="text-slate-500 text-[1.125em] font-normal font-cafe24-surround">Christmas Cakes in Korea</p>
+                    </div>
+                    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-80">
+                        <div className="md:w-5/12 relative group bg-black cursor-pointer overflow-hidden" onClick={() => setActiveTab('learn')}>
+                            <img src="https://img.youtube.com/vi/bZufTDKqQ8g/maxresdefault.jpg" alt="Thumbnail" className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+                            <div className="absolute top-6 left-6"><span className="bg-[#ea3323] text-white text-[0.625em] font-bold px-2 py-1 rounded border border-[#ea3323] shadow-sm tracking-wider">ON AIR</span></div>
+                            <div className="absolute inset-0 flex items-center justify-center"><div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"><PlayIconLine className={`w-6 h-6 text-${themeColor}-600 fill-current ml-1`} /></div></div>
+                        </div>
+                        <div className="md:w-7/12 p-8 md:p-10 flex flex-col justify-center">
+                            <div className="flex items-center gap-2 mb-4"><span className="px-2 py-1 bg-gray-100 text-slate-600 text-[0.625em] font-bold rounded uppercase tracking-wide">Listening</span><LevelBadge levelCode={userLevel} /></div>
+                            <div className="mb-3"><h2 className="text-[1.5em] font-black text-slate-900 font-cafe24-surround">동영상 자료</h2><span className="text-[0.875em] font-bold text-slate-400 font-cafe24-surround">Video Resources</span></div>
+                            <div className="text-slate-600 text-[0.875em] font-normal leading-relaxed mb-8 pr-4" style={{ fontFamily: 'NanumSquareRound' }}><p>팟캐스트를 듣고 한국의 크리스마스 케이크 문화에 대한 이야기를 들어보세요.</p><p className="mt-1 text-slate-400 text-[0.75em] font-normal">Listen to the podcast about Christmas cake culture in Korea.</p></div>
+                            <div className="flex items-center gap-3"><button onClick={() => setActiveTab('learn')} className="px-6 py-3 bg-[#111827] text-white rounded-xl hover:bg-black transition-colors shadow-md flex flex-col items-center leading-tight" style={{ fontFamily: 'NanumSquareRound' }}><span className="text-[0.875em] font-bold">동영상 보러 가기</span><span className="text-[0.625em] opacity-70 font-medium">Watch Video</span></button></div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">핵심 어휘</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Key Vocabulary</span></div><p className="text-[2.25em] font-black text-slate-900 mt-1 font-jua">{VOCAB_DATA.length}개</p></div><div className={`w-10 h-10 bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><VocabIcon className="w-5 h-5" /></div></div>
+                            <button onClick={() => setActiveTab('vocab')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600 font-basic`}>핵심 어휘 확인</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`} style={{ fontFamily: 'NanumSquareRound' }}>Check Vocabulary</span></div><span className={`text-lg leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">내용 확인 퀴즈</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Comprehension Quiz</span></div><p className={`text-[2.25em] font-black mt-1 transition-all duration-500 font-jua ${quizColorClass}`}>{quizScoreDisplay}</p></div><div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${quizIconBg}`}><QuizIcon className="w-5 h-5" /></div></div>
+                            <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600 font-basic`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`} style={{ fontFamily: 'NanumSquareRound' }}>Start Quiz</span></div><span className={`text-lg leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-3"><a href="https://gemini.google.com/share/f864029636f5" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-1 leading-tight`} style={{ fontFamily: 'NanumSquareRound' }}>Gemini AI Feedback<ExternalLinkIcon className="w-4 h-4" /></a></div></div><div className={`w-10 h-10 bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-5 h-5" /></div></div>
+                            <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600 font-basic">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium" style={{ fontFamily: 'NanumSquareRound' }}>Have a think about the following questions.</span></div><span className="text-lg leading-none text-slate-400 group-hover:text-blue-600 ml-1">→</span></button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const LearnView = ({ updateProgress, themeColor, autoScroll, showVocab, playbackRate }) => {
+            const [player, setPlayer] = useState(null);
+            const playerRef = useRef(null); 
+            const [currentTime, setCurrentTime] = useState(0);
+            const [activeLine, setActiveLine] = useState(null);
+            const [translations, setTranslations] = useState({});
+            // Updated popup state to hold rect info
+            const [popup, setPopup] = useState({ show: false, fixed: false, data: null, targetRect: null });
+            const [activeVocabTerm, setActiveVocabTerm] = useState(null);
+            const sidebarVocabRefs = useRef({});
+            const scriptRefs = useRef({});
+            const intervalRef = useRef(null);
+
+            useEffect(() => {
+                const loadVideo = () => {
+                    if (window.YT && window.YT.Player) {
+                        new window.YT.Player('youtube-player', {
+                            videoId: 'bZufTDKqQ8g', width: '100%', height: '100%', playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0 },
+                            events: {
+                                'onReady': (event) => { playerRef.current = event.target; setPlayer(event.target); },
+                                'onStateChange': (event) => { if (event.data === window.YT.PlayerState.PLAYING) { startInterval(); updateProgress('learn'); } else stopInterval(); }
+                            }
+                        });
+                    }
+                };
+                if (!window.YT) { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); window.onYouTubeIframeAPIReady = loadVideo; } else { loadVideo(); }
+                return () => stopInterval();
+            }, []);
+
+            useEffect(() => { if (player && player.setPlaybackRate) player.setPlaybackRate(playbackRate); }, [playbackRate, player]);
+            useEffect(() => {
+                const handleGlobalClick = () => { if (popup.fixed) setPopup(prev => ({ ...prev, show: false, fixed: false })); };
+                if (popup.fixed) window.addEventListener('click', handleGlobalClick);
+                return () => window.removeEventListener('click', handleGlobalClick);
+            }, [popup.fixed]);
+
+            const startInterval = () => { stopInterval(); intervalRef.current = setInterval(() => { const p = playerRef.current; if (p && p.getCurrentTime) { const time = p.getCurrentTime(); setCurrentTime(time); const currentLine = SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); if (currentLine) setActiveLine(currentLine.id); } }, 200); };
+            const stopInterval = () => clearInterval(intervalRef.current);
+            useEffect(() => { if (popup.show) return; if (activeLine && autoScroll && scriptRefs.current[activeLine]) scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); }, [activeLine, autoScroll, popup.show]);
+            const handleLineClick = (time) => { if (player) { player.seekTo(time); player.playVideo(); } };
+            const toggleTranslation = (id) => setTranslations(prev => ({...prev, [id]: !prev[id]}));
+            const scrollToVocab = (term) => { const element = sidebarVocabRefs.current[term]; if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+
+            // Updated Handlers for Position Logic
+            const handleVocabEnter = (e, wordData) => { 
+                if (popup.fixed) return; 
+                const rect = e.target.getBoundingClientRect();
+                setPopup({ show: true, fixed: false, data: wordData, targetRect: rect }); 
+                if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } 
+            };
+            const handleVocabLeave = () => { if (popup.fixed) return; setPopup(prev => ({ ...prev, show: false })); };
+            const handleVocabClick = (e, wordData) => { 
+                e.stopPropagation(); 
+                if (popup.fixed && popup.data && popup.data.term === wordData.term) { 
+                    setPopup(prev => ({ ...prev, show: false, fixed: false })); return; 
+                } 
+                const rect = e.target.getBoundingClientRect(); 
+                setPopup({ show: true, fixed: true, data: wordData, targetRect: rect }); 
+                if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } 
+            };
+
+            const renderTextWithVocab = (text) => {
+                let parts = [text];
+                VOCAB_DATA.forEach(vocab => {
+                    const searchTargets = [vocab.term];
+                    if (vocab.subDefs) vocab.subDefs.forEach(sub => searchTargets.push(sub.subTerm));
+                    
+                    // Apply Variant Logic: Add variants to search targets
+                    if (vocab.variants) vocab.variants.forEach(v => searchTargets.push(v));
+
+                    searchTargets.forEach(target => {
+                        const nextParts = [];
+                        parts.forEach(part => {
+                            if (typeof part === 'string') {
+                                const split = part.split(target);
+                                split.forEach((s, i) => {
+                                    if (s) nextParts.push(s);
+                                    if (i < split.length - 1) nextParts.push({ isVocab: true, ...vocab, displayText: target });
+                                });
+                            } else nextParts.push(part);
+                        });
+                        parts = nextParts;
+                    });
+                });
+                return parts.map((part, index) => {
+                    if (typeof part === 'string') return part;
+                    const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term);
+                    return <span key={index} className={`cursor-pointer border-b-2 transition-all duration-200 font-black inline-block leading-tight ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-0.5 mx-0.5` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} onMouseEnter={(e) => handleVocabEnter(e, part)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, part)}>{part.displayText || part.term}</span>;
+                });
+            };
+
+            // Calculate Popup Position
+            const getPopupStyle = () => {
+                if (!popup.targetRect) return {};
+                const popupWidth = 300; // Approx width of w-72 (18rem) + padding
+                const margin = 20; // Minimum margin from screen edge
+                const viewportWidth = window.innerWidth;
+                
+                const wordCenter = popup.targetRect.left + popup.targetRect.width / 2;
+                
+                // Calculate ideal left position (centered)
+                let left = wordCenter - popupWidth / 2;
+                
+                // Clamp position within viewport
+                left = Math.max(margin, Math.min(left, viewportWidth - popupWidth - margin));
+                
+                // Calculate arrow position relative to popup
+                const arrowLeft = wordCenter - left;
+
+                return {
+                    popupStyle: { 
+                        left: `${left}px`, 
+                        top: `${popup.targetRect.bottom + 12}px`,
+                        width: `${popupWidth}px` 
+                    },
+                    arrowStyle: {
+                        left: `${arrowLeft}px`
+                    }
+                };
+            };
+
+            const { popupStyle, arrowStyle } = getPopupStyle();
+
+            return (
+                <div className="flex h-[calc(100vh-4rem)] gap-4 animate-fade-in overflow-hidden relative w-full mx-auto" style={{ fontSize: '1rem' }}>
+                    {popup.show && popup.data && createPortal(
+                        <div className="fixed z-[9999] bg-white rounded-xl shadow-xl border border-gray-200 p-4 animate-fade-in pointer-events-none" style={popupStyle}>
+                            <div className="flex items-center justify-between mb-2"><h3 className="text-[1.25em] font-black text-slate-900 font-ocarina">{popup.data.term}</h3></div>
+                            <p className="text-[1.1875em] text-slate-700 font-medium mb-3 leading-snug font-diary">{popup.data.mainDef}</p>
+                            {popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (<div className="space-y-1 mt-2">{popup.data.subDefs.map((sub, idx) => (<div key={idx} className={`bg-${themeColor}-50 rounded-lg p-2 border border-${themeColor}-100`}><p className={`text-[1.125em] text-${themeColor}-900 font-bold font-school-free`}>{sub.subTerm}</p><p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}
+                            <div className="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45" style={arrowStyle}></div>
+                        </div>, document.body
+                    )}
+                    <div className={`bg-black rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${showVocab ? 'w-5/12' : 'flex-1'}`}><div id="youtube-player" className="w-full h-full"></div></div>
+                    <div className={`flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-300 ${showVocab ? 'w-4/12' : 'w-5/12'}`} style={{ fontSize: '1.3rem' }}>
+                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 rounded-xl">
+                            {SCRIPT_DATA.map(line => {
+                                const isActive = activeLine === line.id;
+                                return (
+                                    <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className="flex flex-col">
+                                        <div className="flex items-center gap-2 mb-1 ml-1"><span className="text-[0.75em] font-bold text-slate-600" style={{ fontFamily: 'NanumSquareRound' }}>{line.speaker}</span><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`text-[0.625em] text-${themeColor}-600 hover:underline flex items-center gap-0.5`}><PlayIconLine className="w-3 h-3 fill-current" /> <span style={{ fontFamily: 'NanumSquareRound' }}>재생 (Play)</span></button></div>
+                                        <div onClick={() => handleLineClick(line.time[0])} className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-100 border-yellow-400 shadow-md ring-1 ring-yellow-200 scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                                            <p className="text-[1.5625em] text-slate-800 leading-relaxed font-nanum-pen tracking-wide">{renderTextWithVocab(line.kor)}</p>
+                                            <div className="my-3 border-t border-dashed border-gray-200"></div>
+                                            {translations[line.id] ? <p className="text-[1.125em] text-slate-500 animate-fade-in font-nanum-pen tracking-wide">{line.eng}</p> : <button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-1 text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /> 번역 (Translation)</button>}
+                                            {translations[line.id] && <button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="absolute bottom-4 right-4 text-[0.625em] text-slate-300 hover:text-slate-500">접기</button>}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            <div className="h-32"></div>
+                        </div>
+                    </div>
+                    {showVocab && (
+                        <div className="w-3/12 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in" style={{ fontSize: '1.4rem' }}>
+                            <div className="p-4 border-b border-gray-100 flex items-center gap-2 bg-white rounded-t-xl"><VocabIcon className={`w-5 h-5 text-${themeColor}-600`} /><div className="flex flex-col leading-none"><h2 className="font-bold text-slate-900 text-[0.875em]" style={{ fontFamily: 'NanumSquareRound' }}>핵심 어휘</h2><span className="text-[0.625em] text-slate-400 font-medium" style={{ fontFamily: 'NanumSquareRound' }}>Key Vocabulary</span></div></div>
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                                {VOCAB_DATA.map((word, idx) => (
+                                    <div key={idx} ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-4 rounded-xl border transition-all duration-500 ${activeVocabTerm === word.term ? `border-${themeColor}-500 bg-${themeColor}-50 ring-2 ring-${themeColor}-200 shadow-md scale-105` : 'bg-white border-gray-200 shadow-sm'}`}>
+                                        <div className="flex justify-between items-start mb-2"><h3 className="text-[1.25em] font-extrabold text-slate-900 font-ocarina">{word.term}</h3></div>
+                                        <p className="text-[1.1875em] text-slate-700 font-medium mb-3 leading-snug font-diary">{word.mainDef}</p>
+                                        {word.subDefs && word.subDefs.length > 0 && (<div className={`space-y-2 bg-${themeColor}-50 p-2.5 rounded-lg border border-${themeColor}-100`}>{word.subDefs.map((sub, i) => (<div key={i}><p className={`font-mapo font-semibold text-${themeColor}-700 text-[18px]`}>{sub.subTerm}</p><p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const VocabView = ({ updateProgress, themeColor }) => {
+            useEffect(() => { updateProgress('vocab'); }, []);
+            return (
+            <div className="max-w-7xl animate-fade-in mx-auto" style={{ fontSize: '1.4rem' }}>
+                <div className="flex items-center gap-4 mb-8"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><VocabHeaderIcon className={`w-10 h-10 text-${themeColor}-600`} /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">핵심 어휘</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Key Vocabulary</span></div></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{VOCAB_DATA.map((word, idx) => (<VocabCard key={idx} word={word} themeColor={themeColor} />))}</div>
+            </div>
+            );
+        };
+
+        const QuizView = ({ updateProgress, themeColor }) => {
+            const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [firstAttempts, setFirstAttempts] = useState({}); 
+            const [showHint, setShowHint] = useState(false);
+            const [showTranslation, setShowTranslation] = useState(false);
+            const [isFinished, setIsFinished] = useState(false);
+            const currentQuestion = QUIZ_LIST[currentQuestionIndex];
+            const shuffledOptions = useMemo(() => [...currentQuestion.options].sort(() => Math.random() - 0.5), [currentQuestion]);
+            const selectedOption = answers[currentQuestionIndex] || null;
+            const isCorrect = selectedOption?.isCorrect;
+
+            const handleOptionClick = (option) => {
+                if (selectedOption?.isCorrect) return; 
+                if (firstAttempts[currentQuestionIndex] === undefined) setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option.isCorrect }));
+                setAnswers(prev => ({ ...prev, [currentQuestionIndex]: option }));
+                setShowHint(false); 
+            };
+            const handlePrev = () => { if (currentQuestionIndex > 0) { setCurrentQuestionIndex(prev => prev - 1); setShowHint(false); setShowTranslation(false); } };
+            const handleNext = () => { if (currentQuestionIndex < QUIZ_LIST.length - 1) { setCurrentQuestionIndex(prev => prev + 1); setShowHint(false); setShowTranslation(false); } else { finishQuiz(); } };
+            const finishQuiz = () => { setIsFinished(true); const totalQuestions = QUIZ_LIST.length; const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length; const finalScore = Math.round((correctCount / totalQuestions) * 100); updateProgress('quiz', finalScore); };
+            const handleRetry = () => { setCurrentQuestionIndex(0); setAnswers({}); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); };
+
+            if (isFinished) {
+                const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length;
+                return (
+                    <div className="max-w-7xl animate-fade-in mx-auto text-center py-10" style={{ fontSize: '1.6rem' }}>
+                        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-10">
+                            <div className={`w-20 h-20 bg-${themeColor}-100 text-${themeColor}-600 rounded-full flex items-center justify-center mx-auto mb-6`}><QuizIcon className="w-10 h-10" /></div>
+                            <h2 className="text-[1.875em] font-black text-slate-900 mb-2 font-cafe24-surround">퀴즈 완료!</h2>
+                            <p className="text-slate-500 mb-8">총 {QUIZ_LIST.length}문제 중 {correctCount}문제를 한 번에 맞혔습니다.</p>
+                            <div className={`text-[3em] font-black text-${themeColor}-600 mb-10 font-school-smile`}>{Math.round((correctCount / QUIZ_LIST.length) * 100)}%</div>
+                            <button onClick={handleRetry} className={`px-8 py-3 rounded-xl bg-${themeColor}-600 text-white font-bold hover:bg-${themeColor}-700 transition-colors`}>다시 풀기 (Try Again)</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-7xl animate-fade-in mx-auto" style={{ fontSize: '1.6rem' }}>
+                    <div className="flex items-center gap-4 mb-6"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><QuizHeaderIcon className="w-10 h-10 text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">내용 확인 퀴즈</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Comprehension Quiz ({currentQuestionIndex + 1}/{QUIZ_LIST.length})</span></div></div>
+                    <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200"><p className="font-bold text-slate-800" style={{ fontFamily: 'NanumSquareRound', fontSize: '1em' }}>다음 빈칸에 알맞은 말을 고르세요.</p><p className="text-slate-500 text-[0.875em]" style={{ fontFamily: 'NanumSquareRound' }}>Choose the correct word for the blank.</p></div>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
+                        <div className="flex items-start gap-3 p-4"><span className={`bg-${themeColor}-100 text-${themeColor}-700 font-black rounded-lg px-2 py-1 text-[0.875em] shrink-0`} style={{ fontFamily: 'NanumSquareRound' }}>Q{currentQuestion.id}</span><div className="flex flex-col"><h3 className="font-bold text-slate-900 text-[1.375em] leading-snug" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestion.questionKor}</h3><p className="text-slate-500 font-medium text-[0.875em] mt-1" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestion.questionEng}</p></div></div>
+                        <div className="bg-gray-50 rounded-xl p-4 mb-4 mx-1">
+                            <div>
+                                <div className="leading-relaxed">
+                                    <span className="text-[1.5em] font-bold text-slate-900" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestion.sentence_pre}</span>
+                                    <div className={`inline-flex items-center justify-center px-4 py-1 mx-2 rounded-md font-bold text-[1.5em] transition-all duration-300 min-w-[80px] text-center border-b-2 align-middle ${isCorrect ? `bg-${themeColor}-50 text-${themeColor}-700 border-${themeColor}-500` : (showHint ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : (selectedOption ? 'bg-red-50 text-red-700 border-red-500' : 'bg-yellow-100 text-transparent border-yellow-400 select-none'))}`} style={{ fontFamily: 'NanumSquareRound' }}>{isCorrect ? selectedOption.text : (showHint ? `[ ${currentQuestion.hint} ]` : (selectedOption ? selectedOption.text : "___"))}</div>
+                                    <span className="text-[1.5em] font-bold text-slate-900" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestion.sentence_post}{selectedOption && (<span className={`ml-2 text-lg ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}</span>
+                                </div>
+                                {showTranslation && (<div className="mt-4 pt-4 border-t border-gray-200 text-slate-500 italic text-[0.875em] animate-fade-in font-medium" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestion.translation}</div>)}
+                            </div>
+                        </div>
+                        <div className="flex gap-2 mb-4 px-2"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption?.isCorrect} className={`px-3 py-1.5 rounded-lg text-[0.75em] font-bold transition-colors ${selectedOption?.isCorrect ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`} style={{ fontFamily: 'NanumSquareRound' }}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-1 text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslation ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 px-2">{shuffledOptions.map((option, idx) => { const isSelected = selectedOption === option; let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; if (isSelected) { if (option.isCorrect) { btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; } else { btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; } } else if (selectedOption?.isCorrect) { btnClass = "bg-gray-50 border-gray-200 text-slate-400 cursor-not-allowed"; } return (<button key={idx} onClick={() => handleOptionClick(option)} disabled={selectedOption?.isCorrect} className={`py-3 px-4 rounded-xl border font-bold text-[1.25em] transition-all duration-200 ${btnClass}`} style={{ fontFamily: 'NanumSquareRound' }}>{option.text}</button>); })}</div>
+                        {selectedOption && (<div className="p-4 rounded-xl border-l-4 mb-4 mx-2 animate-fade-in transition-all bg-[#f8fafc] border-gray-300"><div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-4 rounded-lg border-l-4`}><h4 className={`font-bold text-[0.875em] mb-1 ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`} style={{ fontFamily: 'NanumSquareRound' }}>{isCorrect ? 'Correct!' : 'Try again.'}</h4><p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`} style={{ fontFamily: 'NanumSquareRound' }}>{selectedOption.feedback}</p></div></div>)}
+                        <div className="flex justify-between items-center mt-4 border-t border-gray-100 pt-4 px-2 pb-2"><button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`} style={{ fontFamily: 'NanumSquareRound', fontSize: '0.75em' }}><span className="text-lg">←</span><span>이전 문제 (Prev)</span></button><span className="text-[0.75em] font-bold text-slate-600" style={{ fontFamily: 'NanumSquareRound' }}>{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span><button onClick={handleNext} disabled={!isCorrect} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 shadow-md transition-colors ${!isCorrect ? 'bg-gray-300 text-slate-500 cursor-not-allowed' : 'bg-gray-900 text-white hover:bg-black'}`} style={{ fontFamily: 'NanumSquareRound', fontSize: '0.75em' }}><span>{currentQuestionIndex < QUIZ_LIST.length - 1 ? '다음 문제 (Next)' : '결과 보기 (Finish)'}</span><span className="text-lg">→</span></button></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DiscussView = ({ updateProgress, themeColor }) => {
+            const [answers, setAnswers] = useState({});
+            const [showTranslations, setShowTranslations] = useState({});
+            const handleTextChange = (id, value) => { setAnswers(prev => ({ ...prev, [id]: value })); };
+            const toggleTranslation = (id) => { setShowTranslations(prev => ({ ...prev, [id]: !prev[id] })); };
+            
+            return (
+                <div className="max-w-7xl mx-auto animate-fade-in" style={{ fontSize: '1.4rem' }}>
+                    <div className="flex items-center gap-4 mb-8"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussHeaderIcon className="w-10 h-10 text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
+                    <div className={`mb-8 p-4 rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed" style={{ fontFamily: 'NanumSquareRound' }}><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-1 mb-4">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-1">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/f864029636f5" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5 text-[0.75em]`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p><p className="text-slate-500 text-[0.75em] mt-1 flex flex-wrap items-center gap-1">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/f864029636f5" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5 text-[0.75em]`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p></div></div>
+                    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-10">
+                        {DISCUSS_DATA.map((item, index) => (
+                            <div key={item.id} className={index < DISCUSS_DATA.length - 1 ? "mb-12 border-b border-gray-100 pb-12" : "mb-8"}>
+                                <div className="mb-8"><h3 className="text-[1.5em] font-bold text-slate-900 mb-2" style={{ fontFamily: 'NanumSquareRound' }}>{index + 1}. {item.question}</h3>{showTranslations[item.id] && (<p className="text-slate-500 text-[0.875em] mb-3 animate-fade-in font-medium" style={{ fontFamily: 'NanumSquareRound' }}>{item.translation}</p>)}<button onClick={() => toggleTranslation(item.id)} className="inline-flex items-center gap-1 text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslations[item.id] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                                <FeedbackSection themeColor={themeColor} question={item.question} value={answers[item.id] || ''} onChange={(e) => handleTextChange(item.id, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={<div className="mb-10 space-y-4"><div className="flex items-center gap-2"><span className="text-red-500 text-[1.125em]">📍</span><h4 className="font-bold text-slate-900 text-[1.125em]" style={{ fontFamily: 'NanumSquareRound' }}>핵심 표현 (Essential phrases)</h4></div><div className="space-y-4 pl-1">{item.keyVocab.map((v, i) => (<div key={i} className={`pl-4 border-l-4 border-${themeColor}-500`}><p className="text-slate-700" style={{ fontFamily: 'NanumSquareRound' }}><span className={`text-${themeColor}-600 font-bold text-[1.125em] mr-2`}>{v.term}:</span><span className="text-[1em] font-normal">{v.meaning_eng}</span></p></div>))}</div></div>} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home');
+            const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+            const [userLevel, setUserLevel] = useState("B1+"); // Default level fixed to B1+ (Lower Intermediate)
+            
+            // --- State Lifted from LearnView ---
+            const [autoScroll, setAutoScroll] = useState(true);
+            const [showVocab, setShowVocab] = useState(false);
+            const [playbackRate, setPlaybackRate] = useState(1.0);
+
+            const [progress, setProgress] = useState({
+                learn: false,
+                vocab: false,
+                quiz: 0,
+                discuss: false
+            });
+
+            // Derive theme color from user level
+            const themeColor = useMemo(() => getLevelTheme(userLevel), [userLevel]);
+
+            // 테마 색상 이름(Tailwind class)을 HEX 코드로 매핑
+            const themeHexColors = {
+                'lime': '#84cc16',    // lime-500
+                'green': '#22c55e',   // green-500
+                'sky': '#0ea5e9',     // sky-500
+                'blue': '#3b82f6',    // blue-500
+                'violet': '#8b5cf6',  // violet-500
+                'fuchsia': '#d946ef', // fuchsia-500 (Legacy)
+                'purple': '#a855f7'   // purple-500 (Legacy)
+            };
+            const currentThemeHex = themeHexColors[themeColor] || '#22c55e';
+
+            const updateProgress = (key, value = true) => {
+                setProgress(prev => {
+                    if (prev[key] === value) return prev;
+                    return { ...prev, [key]: value };
+                });
+            };
+
+            const handleSpeedChange = (e) => {
+                const rate = parseFloat(e.target.value);
+                setPlaybackRate(rate);
+            };
+
+            // 탭별 패딩 설정 (Tab-specific padding settings)
+            const mainPaddingClass = useMemo(() => {
+                switch(activeTab) {
+                    case 'home': return 'p-[20px]';    // 홈: 20px
+                    case 'learn': return 'p-[2px]';    // 동영상 자료: 2px
+                    case 'vocab': return 'p-[16px]';   // 핵심 어휘: 16px
+                    case 'quiz': return 'p-[4px]';     // 내용 확인 퀴즈: 4px
+                    case 'discuss': return 'p-[2px]';  // 생각해 보기: 2px
+                    default: return 'p-[20px]';
+                }
+            }, [activeTab]);
+
+            useEffect(() => {
+                const handleResize = () => {
+                    if (window.innerWidth < 1024) {
+                        setIsSidebarCollapsed(true);
+                    } else {
+                        setIsSidebarCollapsed(false);
+                    }
+                };
+                window.addEventListener('resize', handleResize);
+                handleResize(); 
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            const toggleSidebar = () => {
+                setIsSidebarCollapsed(!isSidebarCollapsed);
+            };
+
+            const renderContent = () => {
+                switch(activeTab) {
+                    case 'home': return <HomeView setActiveTab={setActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                    case 'learn': return <LearnView 
+                                                updateProgress={updateProgress} 
+                                                themeColor={themeColor}
+                                                autoScroll={autoScroll}
+                                                showVocab={showVocab}
+                                                playbackRate={playbackRate}
+                                                />;
+                    case 'vocab': return <VocabView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'quiz': return <QuizView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'discuss': return <DiscussView updateProgress={updateProgress} themeColor={themeColor} />;
+                    default: return <HomeView setActiveTab={setActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                }
+            };
+
+            // 앱 바(Header) 렌더링 함수
+            const renderHeader = () => {
+                if (activeTab === 'learn') {
+                    // 동영상 자료 앱 바: 배율 1.0
+                    return (
+                        <div className="flex items-center justify-between h-full px-6 border-b border-gray-100 bg-white/90 backdrop-blur" style={{ fontSize: '1.0rem' }}>
+                            {/* Left: Title */}
+                            <div className="flex items-center gap-3">
+                                <div className={`p-2 rounded-lg bg-${themeColor}-50`}>
+                                    <LearnIcon className={`w-5 h-5 text-${themeColor}-600`} />
+                                </div>
+                                <div className="flex flex-col">
+                                    <h1 className="text-[1.125em] font-bold text-slate-900 font-cafe24-surround leading-none">동영상 & 스크립트</h1>
+                                    <span className="text-[0.6875em] font-bold text-slate-400 leading-none mt-1 font-cafe24-surround">Video & Transcript</span>
+                                </div>
+                            </div>
+
+                            {/* Right: Controls (Auto Scroll -> Speed -> Vocab) */}
+                            <div className="flex items-center gap-4">
+                                {/* 1. Auto Scroll */}
+                                <div className="flex items-center gap-2 cursor-pointer group" onClick={() => setAutoScroll(!autoScroll)}>
+                                    <div className={`w-9 h-5 rounded-full relative transition-colors duration-200 ease-in-out ${autoScroll ? `bg-${themeColor}-500` : 'bg-gray-300'}`}>
+                                        <div className={`absolute top-1 w-3 h-3 bg-white rounded-full shadow-sm transition-transform duration-200 ${autoScroll ? 'left-5' : 'left-1'}`}></div>
+                                    </div>
+                                    <span className="text-[0.875em] font-bold text-slate-600 group-hover:text-slate-800 transition-colors whitespace-nowrap hidden sm:inline" style={{ fontFamily: 'NanumSquareRound' }}>Auto Scroll</span>
+                                </div>
+
+                                {/* 2. Speed Control */}
+                                <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+                                    <SpeedSolidIcon className="w-4 h-4 text-slate-500" />
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[0.625em] font-medium text-slate-400" style={{ fontFamily: 'NanumSquareRound' }}>0.5x</span>
+                                        <input 
+                                            type="range" min="0.5" max="1.0" step="0.01" 
+                                            value={playbackRate} onChange={handleSpeedChange}
+                                            className="w-20 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                            style={{ '--thumb-color': currentThemeHex }}
+                                        />
+                                        <span className="text-[0.625em] font-medium text-slate-400" style={{ fontFamily: 'NanumSquareRound' }}>1.0x</span>
+                                    </div>
+                                    <span className={`text-[0.75em] font-bold text-${themeColor}-700 min-w-[2.5rem] text-center`} style={{ fontFamily: 'NanumSquareRound' }}>{playbackRate.toFixed(2)}x</span>
+                                </div>
+
+                                {/* 3. Vocabulary Toggle */}
+                                <button 
+                                    onClick={() => setShowVocab(!showVocab)}
+                                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all shadow-sm ${showVocab ? 'bg-gray-100 border-gray-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}
+                                >
+                                    <OpenBookSolidIcon className="w-4 h-4 text-slate-600" />
+                                    <span className="text-[0.875em] font-bold text-slate-700 whitespace-nowrap hidden sm:inline" style={{ fontFamily: 'NanumSquareRound' }}>Vocabulary</span>
+                                </button>
+                            </div>
+                        </div>
+                    );
+                } else {
+                    // 그 외 페이지의 앱 바: 배율 1.3
+                    let title = "";
+                    let subtitle = "";
+                    let icon = null;
+
+                    if (activeTab === 'home') return null; // 홈은 별도 헤더 없음 (본문 내 포함)
+
+                    if (activeTab === 'vocab') {
+                        title = "핵심 어휘";
+                        subtitle = "Key Vocabulary";
+                        icon = <VocabHeaderIcon className={`w-10 h-10 text-${themeColor}-600`} />;
+                    } else if (activeTab === 'quiz') {
+                        title = "내용 확인 퀴즈";
+                        subtitle = "Comprehension Quiz";
+                        icon = <QuizHeaderIcon className="w-10 h-10 text-current" />;
+                    } else if (activeTab === 'discuss') {
+                        title = "생각해 보기";
+                        subtitle = "Food For Thought";
+                        icon = <DiscussHeaderIcon className="w-10 h-10 text-current" />;
+                    }
+
+                    // 홈을 제외한 다른 탭의 상단 헤더 (배율 1.3 적용)
+                    // 실제로는 각 View 컴포넌트 내부 상단에 헤더가 포함되어 있으므로, 
+                    // 여기서는 '앱 바' 위치에 헤더를 렌더링하지 않고 null을 반환하여
+                    // View 컴포넌트 내의 헤더 스타일(이미 1.3배 이상 적용됨)을 따르게 합니다.
+                    // 다만, 일관된 UI를 위해 공통 앱 바 영역을 비워두거나 숨깁니다.
+                    return null; 
+                }
+            };
+
+            return (
+                <div className="flex min-h-screen bg-[#f9fafb]">
+                    <Sidebar 
+                        activeTab={activeTab} 
+                        setActiveTab={setActiveTab} 
+                        isCollapsed={isSidebarCollapsed} 
+                        toggleSidebar={toggleSidebar}
+                        userLevel={userLevel}
+                        themeColor={themeColor}
+                        // setUserLevel removed as level is fixed for this content
+                    />
+                    <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'md:ml-[5.5rem]' : 'md:ml-[18.4rem]'}`}>
+                        <header className={`h-16 bg-white sticky top-0 z-40 transition-all duration-300 ${isSidebarCollapsed ? 'md:left-[5.5rem]' : 'md:left-[18.4rem]'} ${activeTab !== 'learn' ? 'hidden' : ''}`}>
+                            {renderHeader()}
+                        </header>
+                        <main className={`flex-1 ${mainPaddingClass} overflow-hidden flex flex-col`}>{renderContent()}</main>
+                    </div>
+                    <nav className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-3 z-50">
+                        {['home','learn','vocab','quiz','discuss'].map(t=><button key={t} onClick={()=>setActiveTab(t)} className={`p-2 rounded-lg ${activeTab===t ? `text-${themeColor}-600 bg-${themeColor}-50` : 'text-slate-400'}`}>{t==='home'?<HomeIcon className="w-6 h-6"/>:t==='learn'?<LearnIcon className="w-6 h-6"/>:t==='vocab'?<VocabIcon className="w-6 h-6"/>:t==='quiz'?<QuizIcon className="w-6 h-6"/>:<DiscussIcon className="w-6 h-6"/>}</button>)}
+                    </nav>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
