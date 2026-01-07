@@ -1,1 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이 주제로 이야기해 봐요!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .level-badge {
+            font-size: 0.85rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 0.5rem;
+            min-width: 3.5rem;
+            text-align: center;
+        }
+        .level-a1 { background-color: #dbf4ff; color: #0077b6; }
+        .level-a2 { background-color: #d1fae5; color: #059669; }
+        .level-b1 { background-color: #ffedd5; color: #ea580c; }
+        .level-b1plus { background-color: #fce7f3; color: #be185d; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen p-4 sm:p-8">
 
+    <div class="max-w-3xl mx-auto">
+        
+        <!-- 헤더 섹션 -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">
+                이 주제로 이야기해 봐요!
+            </h1>
+            <p class="text-slate-500 text-lg">
+                Let's talk about this topic
+            </p>
+        </header>
+
+        <!-- 검색 및 필터 컨트롤 -->
+        <div class="bg-white rounded-xl shadow-sm p-4 mb-6 sticky top-4 z-10 border border-slate-200">
+            <div class="flex flex-col sm:flex-row gap-3 justify-between items-center">
+                <!-- 검색창 -->
+                <div class="relative w-full sm:w-1/2">
+                    <input type="text" id="searchInput" placeholder="제목 검색..." 
+                           class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                
+                <!-- 필터 버튼 -->
+                <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0" id="filterContainer">
+                    <button onclick="filterList('all')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-800 text-white hover:bg-slate-700 transition whitespace-nowrap filter-btn active" data-filter="all">전체</button>
+                    <button onclick="filterList('A1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-blue-100 transition whitespace-nowrap filter-btn" data-filter="A1">A1</button>
+                    <button onclick="filterList('A2+')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-green-100 transition whitespace-nowrap filter-btn" data-filter="A2+">A2+</button>
+                    <button onclick="filterList('B1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-orange-100 transition whitespace-nowrap filter-btn" data-filter="B1">B1</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리스트 섹션 -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+            <ul class="divide-y divide-slate-100" id="topicList">
+                
+                <!-- ▼▼▼ 아이템 목록 ▼▼▼ -->
+                
+                <!-- [B1+] 한국의 크리스마스 케이크 (새로 추가됨) -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="B1+">
+                    <a href="b1plus-korean-christmas-cake.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-b1plus">B1+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">한국의 크리스마스 케이크</span>
+                        </div>
+                    </a>
+                </li>
+                
+                <!-- [A2+] 마음에 들지 않는 선물 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-gift-not-liked.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">마음에 들지 않는 선물</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 드라마 시청 습관 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-drama-watching-habits.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">드라마 시청 습관: 몰아 보기 vs 매주 보기</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [B1] 왼손잡이에 대한 오해와 진실 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="B1">
+                    <a href="b1-left-handed.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-b1">B1</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">왼손잡이에 대한 오해와 진실</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 말차 라떼 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-matcha-latte.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">말차 라떼</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [B1+] 뇌 (Brain) -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="B1+">
+                    <a href="b1plus-brain.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-b1plus">B1+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">뇌 (Brain)</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [B1] 체크리스트 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="B1">
+                    <a href="b1-checklists-stupid.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-b1">B1</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">체크리스트가 사람들을 멍청하게 만들까요?</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 오늘 일을 다 못했어요 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-overtime.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 잘못 나온 음식 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-wrong-food.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">잘못 나온 음식</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 여름 에어컨 vs 겨울 보일러 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-summer-winter.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">여름 에어컨 고장 VS 겨울 보일러 고장</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 선크림 -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-sunscreen.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">선크림</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 주말에 보통 뭐 해요? -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
+                    <a href="a2plus-weekend.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a2">A2+</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">주말에 보통 뭐 해요?</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A1] 쉬운 한국어: 오늘 뭐 해요? -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A1">
+                    <a href="a1-easy-today-what-doing.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-a1">A1</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">쉬운 한국어로 이야기해 봐요: 오늘 뭐 해요?</span>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+            
+            <!-- 검색 결과 없음 메시지 -->
+            <div id="noResults" class="hidden p-8 text-center text-gray-500">
+                검색 결과가 없습니다.
+            </div>
+        </div>
+
+        <footer class="mt-10 text-center text-slate-400 text-sm pb-10">
+            <p class="mb-2">
+                &copy; 2025 - 2026 Sangbin Lee (OpenKoreanLearningLap). All rights reserved.
+            </p>
+            <a href="https://www.italki.com/ko/teacher/3553151" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-blue-500 transition-colors duration-200 underline decoration-1 underline-offset-4">
+                <span>Visit Sangbin's italki profile</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // 검색 및 필터링 로직
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const items = document.querySelectorAll('.topic-item');
+        const noResults = document.getElementById('noResults');
+
+        let currentFilter = 'all';
+
+        // 필터 버튼 클릭 이벤트
+        function filterList(filter) {
+            currentFilter = filter;
+            
+            // 버튼 스타일 업데이트
+            filterBtns.forEach(btn => {
+                if(btn.dataset.filter === filter) {
+                    btn.classList.add('bg-slate-800', 'text-white');
+                    btn.classList.remove('bg-slate-200', 'text-slate-700');
+                } else {
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    btn.classList.add('bg-slate-200', 'text-slate-700');
+                }
+            });
+
+            applyFilters();
+        }
+
+        // 검색어 입력 이벤트
+        searchInput.addEventListener('keyup', applyFilters);
+
+        function applyFilters() {
+            const searchText = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const title = item.querySelector('.text-lg').textContent.toLowerCase();
+                const level = item.getAttribute('data-level');
+                
+                // 필터 조건 확인 (전체이거나, 레벨이 포함되어 있거나)
+                // 주의: B1 선택 시 B1+도 보여줄지 결정해야 함. 여기서는 정확히 일치하거나 B1 검색시 B1+ 포함하도록 설정
+                const matchesFilter = (currentFilter === 'all') || 
+                                      (currentFilter === level) || 
+                                      (currentFilter === 'B1' && level === 'B1+'); 
+                                      
+                const matchesSearch = title.includes(searchText);
+
+                if (matchesFilter && matchesSearch) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // 결과 없음 메시지 표시
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
