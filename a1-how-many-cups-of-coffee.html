@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenKorean - 하루에 커피를 몇 잔 마셔요?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Font Setting: 1rem will be between 12px and 16px based on viewport width */
+        html { font-size: clamp(12px, 1vw, 16px); }
+        
+        /* 1. Base Font: NanumSquareRound */
+        @font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-display: swap; }
+        body { font-family: 'NanumSquareRound', sans-serif; background-color: #f9fafb; color: #334155; }
+        
+        /* 2. Sidebar Font: NoonnuBasicGothic */
+        @font-face { font-family: 'NoonnuBasicGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-basic { font-family: 'NoonnuBasicGothic', sans-serif; }
+
+        /* 3. Script Font: NanumBarunPen */
+        @font-face { font-family: 'NanumBarunPen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-barunpen { font-family: 'NanumBarunPen', sans-serif; }
+
+        .font-jua { font-family: 'Jua', sans-serif; }
+        .font-noto { font-family: 'Noto Sans KR', sans-serif; }
+        .font-sunflower { font-family: 'Sunflower', sans-serif; }
+        @font-face { font-family: 'Cafe24SurroundAir'; src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-cafe24 { font-family: 'Cafe24SurroundAir', sans-serif; }
+        @font-face { font-family: 'Cafe24Surround'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-cafe24-surround { font-family: 'Cafe24Surround', sans-serif; }
+        @font-face { font-family: 'Cafe24Decoshadow'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-cafe24-deco { font-family: 'Cafe24Decoshadow', sans-serif; }
+        @font-face { font-family: 'Cafe24Decoschool'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-cafe24-school { font-family: 'Cafe24Decoschool', sans-serif; }
+        @font-face { font-family: 'Cafe24Anemone'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-cafe24-anemone { font-family: 'Cafe24Anemone', sans-serif; }
+        @font-face { font-family: 'SchoolSafetyRoundedSmile'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        @font-face { font-family: 'SchoolSafetyRoundedSmile'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+        .font-school-smile { font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
+        @font-face { font-family: 'SchoolSafetyFreeTime'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/HakgyoansimJayusiganR.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+        .font-school-free { font-family: 'SchoolSafetyFreeTime', sans-serif; }
+        @font-face { font-family: 'Juache'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-juache { font-family: 'Juache', sans-serif; }
+        @font-face { font-family: 'SchoolSafetyOcarina'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-ocarina { font-family: 'SchoolSafetyOcarina', sans-serif; }
+        @font-face { font-family: 'SchoolSafetyPictureDiary'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-diary { font-family: 'SchoolSafetyPictureDiary', sans-serif; }
+        @font-face { font-family: 'SchoolSafeBoardMarker'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-marker { font-family: 'SchoolSafeBoardMarker', sans-serif; }
+        @font-face { font-family: 'SchoolSafeDictation'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-dictation { font-family: 'SchoolSafeDictation', sans-serif; }
+        @font-face { font-family: 'Cafe24Gowoonbam'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff'); font-weight: normal; font-display: swap; }
+        .font-gowoonbam { font-family: 'Cafe24Gowoonbam', sans-serif; }
+        @font-face { font-family: 'SchoolSafetyMustache'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+        .font-mustache { font-family: 'SchoolSafetyMustache', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--thumb-color, #22c55e); cursor: pointer; margin-top: -6px; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #e2e8f0; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
+        const { createPortal } = ReactDOM;
+
+        // --- Data Definitions (MUST BE BEFORE COMPONENTS) ---
+        const LEVEL_DEFINITIONS = {
+            "A1": { title: "Novice", desc: "Can use and understand very simple everyday expressions." },
+            "A1+": { title: "Pre-Beginner", desc: "Still beginner, but can handle slightly more." },
+            "A2": { title: "Beginner", desc: "Can understand frequently used sentences." },
+            "A2+": { title: "Upper Beginner", desc: "Between A2 and B1. Can speak a bit more smoothly." },
+            "B1": { title: "Pre-Intermediate", desc: "Can understand the main points of clear standard speech." },
+            "B1+": { title: "Lower Intermediate", desc: "Stronger B1. More comfortable carrying conversations." },
+            "B2": { title: "Intermediate", desc: "Can understand the main ideas of complex texts." },
+            "B2+": { title: "Upper Intermediate", desc: "Near C1. Can argue a point logically." },
+            "C1": { title: "Advanced", desc: "Can understand long, demanding texts and implied meanings." },
+            "C1+": { title: "Upper Advanced", desc: "Very strong C1, approaching native-like flexibility." },
+            "C2": { title: "Proficient", desc: "Can understand virtually everything heard or read." }
+        };
+
+        const VOCAB_DATA = [
+            {
+                term: '쉬운 한국어로 이야기해 봐요',
+                mainDef: 'Let\'s Chat in Easy Korean',
+                variants: ['쉬운 한국어로 이야기해 봐요'],
+                examples: [
+                    { kor: '쉬운 한국어로 말해요.', eng: 'Speak in easy Korean.' },
+                    { kor: '친구와 한국어로 이야기해 봐요.', eng: 'Try chatting with a friend in Korean.' }
+                ],
+                subDefs: [
+                    { subTerm: '쉬운', subDef: 'easy' },
+                    { subTerm: '한국어로 이야기하다', subDef: 'to speak in Korean' },
+                    { subTerm: '-아/어 보다 as in 이야기해 봐요', subDef: 'try doing' }
+                ]
+            },
+            {
+                term: '숫자',
+                mainDef: 'Number',
+                variants: ['숫자'],
+                examples: [
+                    { kor: '숫자를 세어 보세요.', eng: 'Try counting numbers.' },
+                    { kor: '좋아하는 숫자가 뭐예요?', eng: 'What is your favorite number?' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '자주',
+                mainDef: 'Often',
+                variants: ['자주'],
+                examples: [
+                    { kor: '저는 공원에 자주 가요.', eng: 'I go to the park often.' },
+                    { kor: '친구를 자주 만나요.', eng: 'I meet my friend often.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '마시다',
+                mainDef: 'To drink',
+                variants: ['마셔요', '마셨어요', '마시면'],
+                examples: [
+                    { kor: '물을 마셔요.', eng: 'Drink water.' },
+                    { kor: '우유를 마셨어요.', eng: 'I drank milk.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그럼요',
+                mainDef: 'Of course / Sure',
+                variants: ['그럼요'],
+                examples: [
+                    { kor: '그럼요, 할 수 있어요.', eng: 'Of course, I can do it.' },
+                    { kor: '그럼요, 맞아요.', eng: 'Sure, that\'s right.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '항상',
+                mainDef: 'Always',
+                variants: ['항상'],
+                examples: [
+                    { kor: '저는 항상 아침을 먹어요.', eng: 'I always eat breakfast.' },
+                    { kor: '그는 항상 웃어요.', eng: 'He always smiles.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '한 잔',
+                mainDef: 'One cup',
+                variants: ['한 잔', '한 잔을'],
+                examples: [
+                    { kor: '물 한 잔 주세요.', eng: 'Please give me one cup of water.' },
+                    { kor: '커피 한 잔 마셨어요.', eng: 'I drank one cup of coffee.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '정말요?',
+                mainDef: 'Really?',
+                variants: ['정말요'],
+                examples: [
+                    { kor: '정말요? 몰랐어요.', eng: 'Really? I didn\'t know.' },
+                    { kor: '정말요? 대단해요.', eng: 'Really? That\'s amazing.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '아침에',
+                mainDef: 'In the morning',
+                variants: ['아침에'],
+                examples: [
+                    { kor: '아침에 운동을 해요.', eng: 'I exercise in the morning.' },
+                    { kor: '아침에 일찍 일어나요.', eng: 'I wake up early in the morning.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '집',
+                mainDef: 'House / Home',
+                variants: ['집에서', '집에'],
+                examples: [
+                    { kor: '집에서 쉬어요.', eng: 'I rest at home.' },
+                    { kor: '일찍 집에 오세요.', eng: 'Please come home early.' }
+                ],
+                subDefs: [
+                    { subTerm: '집에서', subDef: 'at home' },
+                    { subTerm: '집에 오다', subDef: 'come home' }
+                ]
+            },
+            {
+                term: '잠시만요',
+                mainDef: 'Just a moment / Wait a second',
+                variants: ['잠시만요'],
+                examples: [
+                    { kor: '잠시만요, 제가 할게요.', eng: 'Wait a second, I will do it.' },
+                    { kor: '잠시만요, 전화 좀 받을게요.', eng: 'Just a moment, let me take this call.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '회사',
+                mainDef: 'Company / Office',
+                variants: ['회사에서', '회사에'],
+                examples: [
+                    { kor: '회사에서 일해요.', eng: 'I work at the company.' },
+                    { kor: '버스로 회사에 가요.', eng: 'I go to work by bus.' }
+                ],
+                subDefs: [
+                    { subTerm: '회사에서', subDef: 'at the office' },
+                    { subTerm: '회사에 가요', subDef: 'go to work' }
+                ]
+            },
+            {
+                term: '맞죠?',
+                mainDef: 'Right? / Isn\'t it?',
+                variants: ['맞죠'],
+                examples: [
+                    { kor: '이게 맞죠?', eng: 'This is correct, right?' },
+                    { kor: '오늘이 월요일 맞죠?', eng: 'Today is Monday, isn\'t it?' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '두 잔',
+                mainDef: 'Two cups',
+                variants: ['두 잔'],
+                examples: [
+                    { kor: '차 두 잔 주세요.', eng: 'Please give me two cups of tea.' },
+                    { kor: '우유 두 잔을 마셨어요.', eng: 'I drank two cups of milk.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '무슨 말이에요?',
+                mainDef: 'What do you mean?',
+                variants: ['무슨 말이에요'],
+                examples: [
+                    { kor: '그게 무슨 말이에요?', eng: 'What does that mean?' },
+                    { kor: '무슨 말이에요? 이해가 안 돼요.', eng: 'What do you mean? I don\'t understand.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '일어나다',
+                mainDef: 'To wake up / To get up',
+                variants: ['일어나요'],
+                examples: [
+                    { kor: '아침 7시에 일어나요.', eng: 'I wake up at 7 in the morning.' },
+                    { kor: '자리에서 일어나요.', eng: 'Stand up from the seat.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '일',
+                mainDef: 'Work',
+                variants: ['일을', '일이'],
+                examples: [
+                    { kor: '일을 마쳤어요.', eng: 'I finished work.' },
+                    { kor: '일이 많아요.', eng: 'I have a lot of work.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '시작하다',
+                mainDef: 'To start',
+                variants: ['시작해요'],
+                examples: [
+                    { kor: '수업을 시작해요.', eng: 'Start the class.' },
+                    { kor: '영화를 시작해요.', eng: 'Start the movie.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '이제',
+                mainDef: 'Now',
+                variants: ['이제'],
+                examples: [
+                    { kor: '이제 가야 해요.', eng: 'I have to go now.' },
+                    { kor: '이제 알겠어요.', eng: 'Now I understand.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '세 잔',
+                mainDef: 'Three cups',
+                variants: ['세 잔', '세 잔이에요'],
+                examples: [
+                    { kor: '주스 세 잔 샀어요.', eng: 'I bought three cups of juice.' },
+                    { kor: '모두 세 잔이에요.', eng: 'It is three cups in total.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '점심을 먹다',
+                mainDef: 'To eat lunch',
+                variants: ['점심을 먹어요'],
+                examples: [
+                    { kor: '친구와 점심을 먹어요.', eng: 'I eat lunch with a friend.' },
+                    { kor: '맛있는 점심을 먹어요.', eng: 'I eat a delicious lunch.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '네 잔',
+                mainDef: 'Four cups',
+                variants: ['네 잔'],
+                examples: [
+                    { kor: '커피 네 잔 주세요.', eng: 'Please give me four cups of coffee.' },
+                    { kor: '물 네 잔을 마셨어요.', eng: 'I drank four cups of water.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '회의',
+                mainDef: 'Meeting',
+                variants: ['회의를', '회의는', '회의가'],
+                examples: [
+                    { kor: '회의가 있어요.', eng: 'There is a meeting.' },
+                    { kor: '회의를 시작해요.', eng: 'Start the meeting.' }
+                ],
+                subDefs: [
+                    { subTerm: '회의를 하다', subDef: 'to have a meeting' }
+                ]
+            },
+            {
+                term: '힘들다',
+                mainDef: 'To be hard / exhausting',
+                variants: ['힘들어요'],
+                examples: [
+                    { kor: '운동은 힘들어요.', eng: 'Exercise is hard.' },
+                    { kor: '공부가 힘들어요.', eng: 'Studying is hard.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '그럼',
+                mainDef: 'Then',
+                variants: ['그럼'],
+                examples: [
+                    { kor: '그럼 내일 봐요.', eng: 'Then see you tomorrow.' },
+                    { kor: '그럼 같이 가요.', eng: 'Then let\'s go together.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '다섯 잔',
+                mainDef: 'Five cups',
+                variants: ['다섯 잔'],
+                examples: [
+                    { kor: '맥주 다섯 잔 마셨어요.', eng: 'I drank five glasses of beer.' },
+                    { kor: '다섯 잔 주세요.', eng: 'Give me five cups.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '끝나다',
+                mainDef: 'To end / To finish',
+                variants: ['끝났어요'],
+                examples: [
+                    { kor: '영화가 끝났어요.', eng: 'The movie ended.' },
+                    { kor: '수업이 끝났어요.', eng: 'The class finished.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '피곤하다',
+                mainDef: 'To be tired',
+                variants: ['피곤해요'],
+                examples: [
+                    { kor: '오늘 너무 피곤해요.', eng: 'I am so tired today.' },
+                    { kor: '피곤해서 자고 싶어요.', eng: 'I want to sleep because I am tired.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '여섯 잔',
+                mainDef: 'Six cups',
+                variants: ['여섯 잔'],
+                examples: [
+                    { kor: '물 여섯 잔을 마셔요.', eng: 'Drink six cups of water.' },
+                    { kor: '여섯 잔 남았어요.', eng: 'Six cups are left.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '행복하다',
+                mainDef: 'To be happy',
+                variants: ['행복해요'],
+                examples: [
+                    { kor: '저는 지금 행복해요.', eng: 'I am happy now.' },
+                    { kor: '가족과 함께라서 행복해요.', eng: 'I am happy because I am with my family.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '일곱 잔',
+                mainDef: 'Seven cups',
+                variants: ['일곱 잔'],
+                examples: [
+                    { kor: '커피 일곱 잔은 많아요.', eng: 'Seven cups of coffee is a lot.' },
+                    { kor: '일곱 잔을 주문했어요.', eng: 'I ordered seven cups.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '여덟 잔',
+                mainDef: 'Eight cups',
+                variants: ['여덟 잔'],
+                examples: [
+                    { kor: '물 여덟 잔을 마셔야 해요.', eng: 'You should drink eight cups of water.' },
+                    { kor: '여덟 잔이 필요해요.', eng: 'I need eight cups.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '저녁을 먹다',
+                mainDef: 'To eat dinner',
+                variants: ['저녁을 먹어요'],
+                examples: [
+                    { kor: '가족과 저녁을 먹어요.', eng: 'I eat dinner with my family.' },
+                    { kor: '맛있는 저녁을 먹어요.', eng: 'I eat a delicious dinner.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '배가 부르다',
+                mainDef: 'To be full (stomach)',
+                variants: ['배가 불러요'],
+                examples: [
+                    { kor: '많이 먹어서 배가 불러요.', eng: 'I am full because I ate a lot.' },
+                    { kor: '배가 불러서 못 먹겠어요.', eng: 'I can\'t eat because I am full.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '아홉 잔',
+                mainDef: 'Nine cups',
+                variants: ['아홉 잔'],
+                examples: [
+                    { kor: '아홉 잔 마셨어요.', eng: 'I drank nine cups.' },
+                    { kor: '아홉 잔은 너무 많아요.', eng: 'Nine cups is too much.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '침대',
+                mainDef: 'Bed',
+                variants: ['침대에'],
+                examples: [
+                    { kor: '침대에 누워요.', eng: 'Lie on the bed.' },
+                    { kor: '침대가 편해요.', eng: 'The bed is comfortable.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '바보',
+                mainDef: 'Fool / Idiot',
+                variants: ['바보예요', '바보'],
+                examples: [
+                    { kor: '저는 바보가 아니에요.', eng: 'I am not a fool.' },
+                    { kor: '바보처럼 행동하지 마세요.', eng: 'Don\'t act like a fool.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '열 잔',
+                mainDef: 'Ten cups',
+                variants: ['열 잔', '열 잔은'],
+                examples: [
+                    { kor: '열 잔을 다 마셨어요?', eng: 'Did you drink all ten cups?' },
+                    { kor: '열 잔은 무리예요.', eng: 'Ten cups is too much.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '하루',
+                mainDef: 'One day / A day',
+                variants: ['하루', '하루에'],
+                examples: [
+                    { kor: '하루 종일 공부해요.', eng: 'I study all day long.' },
+                    { kor: '하루에 세 번 먹어요.', eng: 'Eat three times a day.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '많다',
+                mainDef: 'To be many / much',
+                variants: ['많아요'],
+                examples: [
+                    { kor: '사람이 많아요.', eng: 'There are many people.' },
+                    { kor: '숙제가 많아요.', eng: 'There is a lot of homework.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '커피를 많이 마시면',
+                mainDef: 'If you drink a lot of coffee',
+                variants: ['커피를 많이 마시면'],
+                examples: [
+                    { kor: '물을 많이 마시면 좋아요.', eng: 'It is good if you drink a lot of water.' },
+                    { kor: '술을 많이 마시면 안 돼요.', eng: 'You shouldn\'t drink a lot of alcohol.' }
+                ],
+                subDefs: [
+                    { subTerm: '많이', subDef: 'a lot' },
+                    { subTerm: '-면/으면 as in 마시면', subDef: 'if' }
+                ]
+            },
+            {
+                term: '잠을 못 자다',
+                mainDef: 'Cannot sleep',
+                variants: ['잠을 못 자요'],
+                examples: [
+                    { kor: '어제 잠을 못 잤어요.', eng: 'I couldn\'t sleep yesterday.' },
+                    { kor: '걱정 때문에 잠을 못 자요.', eng: 'I can\'t sleep because of worry.' }
+                ],
+                subDefs: [
+                    { subTerm: '잠을 자다', subDef: 'to sleep' },
+                    { subTerm: '못', subDef: 'cannot' }
+                ]
+            },
+            {
+                term: '괜찮아요',
+                mainDef: 'It\'s okay',
+                variants: ['괜찮아요'],
+                examples: [
+                    { kor: '저는 괜찮아요.', eng: 'I am okay.' },
+                    { kor: '실수해도 괜찮아요.', eng: 'It\'s okay even if you make a mistake.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '사랑',
+                mainDef: 'Love',
+                variants: ['사랑이에요'],
+                examples: [
+                    { kor: '가족은 사랑이에요.', eng: 'Family is love.' },
+                    { kor: '이것은 사랑의 선물이에요.', eng: 'This is a gift of love.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '빨리',
+                mainDef: 'Quickly',
+                variants: ['빨리'],
+                examples: [
+                    { kor: '빨리 오세요.', eng: 'Come quickly.' },
+                    { kor: '밥을 빨리 먹어요.', eng: 'Eat rice quickly.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '오늘 배운 표현',
+                mainDef: 'Expressions learned today',
+                variants: ['오늘 배운 표현들을'],
+                examples: [
+                    { kor: '오늘 배운 표현을 복습해요.', eng: 'Review the expressions learned today.' },
+                    { kor: '새로운 표현을 배웠어요.', eng: 'I learned a new expression.' }
+                ],
+                subDefs: [
+                    { subTerm: '배우다', subDef: 'to learn' },
+                    { subTerm: '-ㄴ as in 배운', subDef: 'modifier' },
+                    { subTerm: '표현', subDef: 'expression' }
+                ]
+            },
+            {
+                term: '다시 확인해 보다',
+                mainDef: 'To check again',
+                variants: ['다시 확인해 봐요'],
+                examples: [
+                    { kor: '이메일을 다시 확인해 보세요.', eng: 'Try checking the email again.' },
+                    { kor: '정답을 다시 확인해 봐요.', eng: 'Try checking the answer again.' }
+                ],
+                subDefs: [
+                    { subTerm: '다시', subDef: 'again' },
+                    { subTerm: '확인하다', subDef: 'to check' },
+                    { subTerm: '-아/어 보다 as in 확인해 보다', subDef: 'try doing' }
+                ]
+            },
+            {
+                term: '여러분',
+                mainDef: 'Everyone',
+                variants: ['여러분은'],
+                examples: [
+                    { kor: '여러분, 안녕하세요.', eng: 'Hello, everyone.' },
+                    { kor: '여러분은 어떻게 생각해요?', eng: 'What do you think, everyone?' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '하루에 몇 잔',
+                mainDef: 'How many cups a day',
+                variants: ['하루에 커피를 몇 잔'],
+                examples: [
+                    { kor: '하루에 몇 잔 마셔요?', eng: 'How many cups do you drink a day?' },
+                    { kor: '물을 하루에 몇 잔 마셔야 해요?', eng: 'How many cups of water should I drink a day?' }
+                ],
+                subDefs: [
+                    { subTerm: '하루', subDef: 'day' },
+                    { subTerm: '몇', subDef: 'how many' },
+                    { subTerm: '잔', subDef: 'cup counter' }
+                ]
+            },
+            {
+                term: '하루에 한 잔',
+                mainDef: 'One cup a day',
+                variants: ['하루에 한 잔은'],
+                examples: [
+                    { kor: '하루에 한 잔만 마셔요.', eng: 'Drink only one cup a day.' },
+                    { kor: '하루에 한 잔이 적당해요.', eng: 'One cup a day is appropriate.' }
+                ],
+                subDefs: [
+                    { subTerm: '하루', subDef: 'day' },
+                    { subTerm: '잔', subDef: 'cup' }
+                ]
+            },
+            {
+                term: '건강에 좋다',
+                mainDef: 'Good for health',
+                variants: ['건강에 좋아요'],
+                examples: [
+                    { kor: '운동은 건강에 좋아요.', eng: 'Exercise is good for health.' },
+                    { kor: '야채는 건강에 좋아요.', eng: 'Vegetables are good for health.' }
+                ],
+                subDefs: [
+                    { subTerm: '건강', subDef: 'health' }
+                ]
+            },
+            {
+                term: '안 돼요',
+                mainDef: 'No / It\'s not allowed',
+                variants: ['안 돼요'],
+                examples: [
+                    { kor: '여기서 먹으면 안 돼요.', eng: 'You cannot eat here.' },
+                    { kor: '지각하면 안 돼요.', eng: 'You shouldn\'t be late.' }
+                ],
+                subDefs: []
+            },
+            {
+                term: '여기까지 할까요?',
+                mainDef: 'Shall we stop here?',
+                variants: ['여기까지 할까요'],
+                examples: [
+                    { kor: '오늘은 여기까지 할까요?', eng: 'Shall we stop here for today?' },
+                    { kor: '수업을 여기까지 할까요?', eng: 'Shall we end the class here?' }
+                ],
+                subDefs: [
+                    { subTerm: '여기까지 하다', subDef: 'do up to here' }
+                ]
+            }
+        ];
+
+        const QUIZ_LIST = [
+            {
+                id: 1,
+                questionKor: "조이가 우디에게 물어봐요.",
+                questionEng: "Joy asks Woody.",
+                sentence_pre: "\"커피를 ",
+                sentence_post: " 마셔요?\"",
+                correct_word: "자주",
+                translation: "\"Do you drink coffee often?\"",
+                hint: "Often",
+                options: [
+                    { text: "가끔", isCorrect: false, feedback: "'가끔' means 'sometimes'." },
+                    { text: "자주", isCorrect: true, feedback: "Correct! '자주' means 'often'." },
+                    { text: "매일", isCorrect: false, feedback: "'매일' means 'every day'." },
+                    { text: "항상", isCorrect: false, feedback: "'항상' means 'always'." }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "우디는 커피를 얼마나 자주 마셔요?",
+                questionEng: "How often does Woody drink coffee?",
+                sentence_pre: "네, 우디는 ",
+                sentence_post: " 커피를 마셔요.",
+                correct_word: "항상",
+                translation: "Yes, Woody always drinks coffee.",
+                hint: "Always",
+                options: [
+                    { text: "가끔", isCorrect: false, feedback: "'가끔' means 'sometimes'." },
+                    { text: "거의 안", isCorrect: false, feedback: "'거의 안' means 'rarely'." },
+                    { text: "전혀 안", isCorrect: false, feedback: "'전혀 안' means 'never'." },
+                    { text: "항상", isCorrect: true, feedback: "Correct! '항상' means 'always'." }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "우디는 언제 첫 번째 커피를 마셔요?",
+                questionEng: "When does Woody drink his first coffee?",
+                sentence_pre: "우디는 ",
+                sentence_post: ". 그리고 첫 번째 커피를 마셔요.",
+                correct_word: "일어나요",
+                translation: "Woody wakes up. Then he drinks his first coffee.",
+                hint: "To wake up",
+                options: [
+                    { text: "일어나요", isCorrect: true, feedback: "Correct! '일어나요' means 'to wake up'." },
+                    { text: "회사에 가요", isCorrect: false, feedback: "'회사에 가요' means 'go to work'." },
+                    { text: "점심을 먹어요", isCorrect: false, feedback: "'점심을 먹어요' means 'eat lunch'." },
+                    { text: "회의를 해요", isCorrect: false, feedback: "'회의를 해요' means 'have a meeting'." }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "우디는 언제 세 번째 커피를 마셔요?",
+                questionEng: "When does Woody drink his third coffee?",
+                sentence_pre: "우디는 ",
+                sentence_post: ". 그리고 세 번째 커피를 마셔요.",
+                correct_word: "일을 시작해요",
+                translation: "Woody starts work. Then he drinks his third coffee.",
+                hint: "To start work",
+                options: [
+                    { text: "일을 시작해요", isCorrect: true, feedback: "Correct! '일을 시작해요' means 'to start work'." },
+                    { text: "일어나요", isCorrect: false, feedback: "That's for the first cup." },
+                    { text: "점심을 먹어요", isCorrect: false, feedback: "That's for the fourth cup." },
+                    { text: "회의를 해요", isCorrect: false, feedback: "That's for the fifth cup." }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "우디는 아침에 커피를 모두 몇 잔 마셔요?",
+                questionEng: "How many cups of coffee does Woody drink in the morning in total?",
+                sentence_pre: "우디는 아침에 커피 ",
+                sentence_post: " 마셔요.",
+                correct_word: "세 잔",
+                translation: "Woody drinks three cups in the morning.",
+                hint: "3 cups (Wake up, Arrive, Start work)",
+                options: [
+                    { text: "한 잔", isCorrect: false, feedback: "Incorrect. He drinks one when he wakes up, but he drinks more later." },
+                    { text: "두 잔", isCorrect: false, feedback: "Incorrect. Remember: Wake up (1) + Arrive at work (1) + Start work (1)." },
+                    { text: "세 잔", isCorrect: true, feedback: "Correct! 1. He drinks a cup when he wakes up. 2. He drinks a cup when he gets to work. 3. He drinks a cup when he starts working." },
+                    { text: "네 잔", isCorrect: false, feedback: "Incorrect. That's too many for just the morning!" }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "우디는 회의를 해요. 회의가 어때요?",
+                questionEng: "Woody is in a meeting. How is the meeting?",
+                sentence_pre: "우디가 말해요. \"회의는 ",
+                sentence_post: ".\"",
+                correct_word: "힘들어요",
+                translation: "Woody says, \"The meeting is exhausting.\"",
+                hint: "Exhausting/Hard",
+                options: [
+                    { text: "힘들어요", isCorrect: true, feedback: "Correct! '힘들어요' means 'to be exhausting'." },
+                    { text: "쉬워요", isCorrect: false, feedback: "'쉬워요' means 'easy'." },
+                    { text: "재미있어요", isCorrect: false, feedback: "'재미있어요' means 'fun'." },
+                    { text: "좋아요", isCorrect: false, feedback: "'좋아요' means 'good'." }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "회의가 끝났어요. 우디는 어때요?",
+                questionEng: "The meeting is over. How does Woody feel?",
+                sentence_pre: "우디는 ",
+                sentence_post: ".",
+                correct_word: "피곤해요",
+                translation: "Woody is tired.",
+                hint: "Tired",
+                options: [
+                    { text: "피곤해요", isCorrect: true, feedback: "Correct! '피곤해요' means 'to be tired'." },
+                    { text: "행복해요", isCorrect: false, feedback: "'행복해요' means 'happy'." },
+                    { text: "무서워요", isCorrect: false, feedback: "'무서워요' means 'scared'." },
+                    { text: "심심해요", isCorrect: false, feedback: "'심심해요' means 'bored'." }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "우디는 저녁을 먹었어요. 우디는 어때요?",
+                questionEng: "Woody had dinner. How does he feel?",
+                sentence_pre: "우디는 ",
+                sentence_post: ".",
+                correct_word: "배가 불러요",
+                translation: "Woody is full (stuffed).",
+                hint: "Stuffed/Full",
+                options: [
+                    { text: "배가 불러요", isCorrect: true, feedback: "Correct! '배가 불러요' means 'to be full'." },
+                    { text: "배가 고파요", isCorrect: false, feedback: "'배가 고파요' means 'hungry'." },
+                    { text: "목이 말라요", isCorrect: false, feedback: "'목이 말라요' means 'thirsty'." },
+                    { text: "피곤해요", isCorrect: false, feedback: "'피곤해요' means 'tired'." }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "우디는 하루에 커피를 모두 몇 잔 마셔요?",
+                questionEng: "How many cups of coffee does Woody drink in a day in total?",
+                sentence_pre: "우디는 하루에 커피 ",
+                sentence_post: "을 마셔요.",
+                correct_word: "열 잔",
+                translation: "Woody drinks ten cups of coffee a day.",
+                hint: "10 cups",
+                options: [
+                    { text: "두 잔", isCorrect: false, feedback: "Too few!" },
+                    { text: "여섯 잔", isCorrect: false, feedback: "More than that!" },
+                    { text: "아홉 잔", isCorrect: false, feedback: "Almost!" },
+                    { text: "열 잔", isCorrect: true, feedback: "Correct! '열 잔' means 'ten cups'." }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "하루에 커피 몇 잔이 건강에 좋아요?",
+                questionEng: "How many cups of coffee a day are good for health?",
+                sentence_pre: "조이가 말해요. \"하루에 ",
+                sentence_post: "은 건강에 좋아요.\"",
+                correct_word: "한 잔",
+                translation: "Joy says, \"One cup a day is good for health.\"",
+                hint: "1 cup",
+                options: [
+                    { text: "한 잔", isCorrect: true, feedback: "Correct! '한 잔' means 'one cup'." },
+                    { text: "네 잔", isCorrect: false, feedback: "That might be too much." },
+                    { text: "여덟 잔", isCorrect: false, feedback: "Definitely too much." },
+                    { text: "열 잔", isCorrect: false, feedback: "Woody drinks this much, but it's not good!" }
+                ]
+            }
+        ];
+
+        const SCRIPT_DATA = [
+            { id: 's1', speaker: '조이', kor: '안녕하세요!', time: [11.500, 12.581], eng: "Hello!" },
+            { id: 's2', speaker: '조이', kor: '<쉬운 한국어로 이야기해 봐요> 팟캐스트예요.', time: [12.705, 19.552], eng: "This is the <Let’s Chat in Easy Korean> podcast." },
+            { id: 's3', speaker: '조이', kor: '저는 조이예요.', time: [19.923, 21.281], eng: "I'm Joy." },
+            { id: 's4', speaker: '우디', kor: '안녕하세요. 저는 우디예요.', time: [21.459, 24.306], eng: "Hello. I'm Woody." },
+            { id: 's5', speaker: '조이', kor: '오늘은 ☕️커피하고 🔢숫자 이야기를 해 봐요.', time: [25.500, 32.370], eng: "Today, let's talk about coffee and numbers." },
+            { id: 's6', speaker: '우디', kor: '😁 네, 좋아요!', time: [32.500, 33.410], eng: "Yes, sounds good!" },
+            { id: 's7', speaker: '우디', kor: '저는 커피를 아주 좋아해요.', time: [33.506, 35.375], eng: "I like coffee very much." },
+            { id: 's8', speaker: '조이', kor: '우디 씨는 커피를 자주 마셔요?', time: [35.553, 38.228], eng: "Do you drink coffee often, Woody?" },
+            { id: 's9', speaker: '조이', kor: "'자주'는 'often'이라는 뜻이에요.", time: [38.420, 40.505], eng: "'Jaju' means 'often'." },
+            { id: 's10', speaker: '우디', kor: '그럼요! 저는 항상 커피를 한 잔 마셔요.', time: [40.612, 44.302], eng: "Of course! I always drink one cup of coffee." },
+            { id: 's11', speaker: '우디', kor: "'항상'은 'always'라는 뜻이에요.", time: [44.439, 46.482], eng: "'Hangsang' means 'always'." },
+            { id: 's12', speaker: '우디', kor: "'한 잔'은 'one cup'이라는 뜻이에요.", time: [46.739, 48.439], eng: "'Han jan' means 'one cup'." },
+            { id: 's13', speaker: '조이', kor: '🤨 정말요?', time: [48.796, 50.069], eng: "Really?" },
+            { id: 's14', speaker: '우디', kor: '네! 아침에 집에서 ☕️ 커피 한 잔.', time: [50.151, 53.455], eng: "Yes! In the morning at home, one cup of coffee." },
+            { id: 's15', speaker: '조이', kor: '잠시만요.', time: [54.000, 57.636], eng: "Wait a second." },
+            { id: 's16', speaker: '조이', kor: '우디 씨, 오늘 아침에 회사에서 커피를 마셨어요. 맞죠?', time: [58.039, 62.486], eng: "Woody, you drank coffee at work this morning. Right?" },
+            { id: 's17', speaker: '우디', kor: '네, 회사에서 ☕️ 커피 한 잔을 마셨어요.', time: [62.600, 65.235], eng: "Yes, I drank one cup of coffee at work." },
+            { id: 's18', speaker: '조이', kor: '그럼, 우디 씨는 오늘 ☕️ 커피 두 잔 ☕️ 마셨어요.', time: [65.756, 69.920], eng: "Then, you drank two cups of coffee today." },
+            { id: 's19', speaker: '조이', kor: "'두 잔'은 'two cups'라는 뜻이에요.", time: [70.077, 72.336], eng: "'Du jan' means 'two cups'." },
+            { id: 's20', speaker: '우디', kor: '😖아니에요. 저는 항상 ☕️ "한 잔" 마셔요.', time: [72.404, 75.365], eng: "No. I always drink 'one cup'." },
+            { id: 's21', speaker: '조이', kor: '네? 무슨 말이에요? 🤨', time: [75.814, 77.628], eng: "What? What do you mean?" },
+            { id: 's22', speaker: '우디', kor: '자, 들어 보세요.', time: [77.710, 80.486], eng: "Look, listen to this." },
+            { id: 's23', speaker: '우디', kor: '아침에 일어나요.', time: [81.323, 82.669], eng: "I wake up in the morning." },
+            { id: 's24', speaker: '우디', kor: "'일어나요'는 'to wake up'이라는 뜻이에요.", time: [82.751, 84.388], eng: "'Ireonayo' means 'to wake up'." },
+            { id: 's25', speaker: '우디', kor: '커피 한 잔 ☕️ 마셔요.', time: [84.662, 86.109], eng: "I drink one cup of coffee." },
+            { id: 's26', speaker: '조이', kor: '커피 한 잔! ☕️', time: [86.186, 87.068], eng: "One cup of coffee!" },
+            { id: 's27', speaker: '우디', kor: '그리고 회사에 가요.', time: [87.178, 88.702], eng: "And I go to work." },
+            { id: 's28', speaker: '우디', kor: '회사에 왔어요.', time: [89.086, 90.149], eng: "I arrived at work." },
+            { id: 's29', speaker: '우디', kor: '커피 한 잔 ☕️ 마셔요.', time: [90.382, 91.886], eng: "I drink one cup of coffee." },
+            { id: 's30', speaker: '조이', kor: '커피 두 잔! ☕️☕️', time: [91.982, 93.663], eng: "Two cups of coffee!" },
+            { id: 's31', speaker: '우디', kor: '일을 시작해요.', time: [93.745, 94.846], eng: "I start working." },
+            { id: 's32', speaker: '우디', kor: "'시작해요'는 'to start'라는 뜻이에요.", time: [94.928, 96.401], eng: "'Sijakhaeyo' means 'to start'." },
+            { id: 's33', speaker: '우디', kor: '커피 한 잔 ☕️ 마셔요.', time: [96.401, 98.131], eng: "I drink one cup of coffee." },
+            { id: 's34', speaker: '조이', kor: '우디 씨 이제 커피 세 잔이에요. ☕️☕️☕️', time: [98.200, 101.719], eng: "Woody, that's three cups now." },
+            { id: 's35', speaker: '조이', kor: "'세 잔'은 'three cups'라는 뜻이에요.", time: [101.932, 104.081], eng: "'Se jan' means 'three cups'." },
+            { id: 's36', speaker: '우디', kor: '점심을 먹어요.', time: [104.163, 105.427], eng: "I eat lunch." },
+            { id: 's37', speaker: '우디', kor: '그리고 커피 한 잔 마셔요.', time: [105.523, 107.473], eng: "And I drink one cup of coffee." },
+            { id: 's38', speaker: '조이', kor: '커피 네 잔! ☕️☕️☕️☕️', time: [107.555, 110.279], eng: "Four cups of coffee!" },
+            { id: 's39', speaker: '조이', kor: "'네 잔'은 'four cups'라는 뜻이에요.", time: [110.403, 112.560], eng: "'Ne jan' means 'four cups'." },
+            { id: 's40', speaker: '우디', kor: '회의를 해요.', time: [113.190, 114.263], eng: "I have a meeting." },
+            { id: 's41', speaker: '우디', kor: '회의는 힘들어요.', time: [114.387, 115.692], eng: "Meetings are hard." },
+            { id: 's42', speaker: '우디', kor: "'힘들어요'는 'to be exhausting'이라는 뜻이에요.", time: [115.899, 118.248], eng: "'Himdeureoyo' means 'to be exhausting'." },
+            { id: 's43', speaker: '우디', kor: '그럼 커피를 한 잔 마셔요.', time: [118.471, 120.414], eng: "So I drink one cup of coffee." },
+            { id: 's44', speaker: '조이', kor: '😩 커피 다섯 잔! ☕️☕️☕️☕️☕️', time: [120.482, 123.408], eng: "Five cups of coffee!" },
+            { id: 's45', speaker: '조이', kor: "'다섯 잔'은 'five cups'라는 뜻이에요.", time: [123.532, 126.060], eng: "'Daseot jan' means 'five cups'." },
+            { id: 's46', speaker: '우디', kor: '회의가 끝났어요.', time: [126.718, 128.068], eng: "The meeting is over." },
+            { id: 's47', speaker: '우디', kor: "'피곤해요'는 'to be tired'라는 뜻이에요.", time: [128.232, 131.472], eng: "'Pigonhaeyo' means 'to be tired'." },
+            { id: 's48', speaker: '우디', kor: '그럼, 커피를 한 잔 ☕️ 마셔요.', time: [131.857, 133.900], eng: "So I drink one cup of coffee." },
+            { id: 's49', speaker: '조이', kor: '커피 여섯 잔! ☕️☕️☕️☕️☕️☕️', time: [133.969, 135.936], eng: "Six cups of coffee!" },
+            { id: 's50', speaker: '조이', kor: "'여섯 잔'은 'six cups'라는 뜻이에요.", time: [136.087, 138.208], eng: "'Yeoseot jan' means 'six cups'." },
+            { id: 's51', speaker: '우디', kor: '🥳 일이 끝났어요!', time: [138.949, 140.152], eng: "Work is done!" },
+            { id: 's52', speaker: '우디', kor: '너무 행복해요! 😁', time: [140.248, 141.494], eng: "I am so happy!" },
+            { id: 's53', speaker: '우디', kor: '그럼, 커피 한 잔 ☕️ 마셔요.', time: [141.562, 143.452], eng: "So I drink one cup of coffee." },
+            { id: 's54', speaker: '조이', kor: '커피 일곱 잔! ☕️☕️☕️☕️☕️☕️☕️', time: [143.563, 144.563], eng: "Seven cups of coffee!" },
+            { id: 's55', speaker: '조이', kor: "'일곱 잔'은 'seven cups'라는 뜻이에요.", time: [145.400, 147.935], eng: "'Ilgop jan' means 'seven cups'." },
+            { id: 's56', speaker: '우디', kor: '집에 가요.', time: [148.703, 149.725], eng: "I go home." },
+            { id: 's57', speaker: '우디', kor: '집에 왔어요.', time: [149.807, 150.834], eng: "I arrived home." },
+            { id: 's58', speaker: '우디', kor: '그럼, 커피 한 잔 ☕️ 마셔요.', time: [150.931, 153.131], eng: "So I drink one cup of coffee." },
+            { id: 's59', speaker: '조이', kor: '커피 여덟 잔! ☕️☕️☕️☕️☕️☕️☕️☕️', time: [153.200, 155.818], eng: "Eight cups of coffee!" },
+            { id: 's60', speaker: '조이', kor: "'여덟 잔'은 'eight cups'라는 뜻이에요.", time: [155.887, 158.208], eng: "'Yeodeol jan' means 'eight cups'." },
+            { id: 's61', speaker: '우디', kor: '저녁을 먹어요.', time: [158.825, 160.260], eng: "I have dinner." },
+            { id: 's62', speaker: '우디', kor: "'저녁을 먹어요'는 'to have dinner'라는 뜻이에요.", time: [160.329, 162.171], eng: "'Jeonyeogeul meogeoyo' means 'to have dinner'." },
+            { id: 's63', speaker: '우디', kor: '배가 불러요.', time: [162.391, 163.563], eng: "I'm full." },
+            { id: 's64', speaker: '우디', kor: "'배가 불러요'는 'to feel stuffed'라는 뜻이에요.", time: [163.659, 165.759], eng: "'Baega bulleoyo' means 'to feel stuffed'." },
+            { id: 's65', speaker: '우디', kor: '그럼, 커피 한 잔 ☕️ 마셔요.', time: [165.869, 168.000], eng: "So I drink one cup of coffee." },
+            { id: 's66', speaker: '조이', kor: '커피 아홉 잔! ☕️☕️☕️☕️☕️☕️☕️☕️☕️', time: [168.078, 170.767], eng: "Nine cups of coffee!" },
+            { id: 's67', speaker: '조이', kor: "'아홉 잔'은 'nine cups'라는 뜻이에요.", time: [170.822, 173.000], eng: "'Ahop jan' means 'nine cups'." },
+            { id: 's68', speaker: '우디', kor: '이제 침대에 가요.', time: [173.686, 175.260], eng: "Now I go to bed." },
+            { id: 's69', speaker: '우디', kor: '커피 한 잔 ☕️ 마셔요.', time: [175.342, 176.641], eng: "I drink one cup of coffee." },
+            { id: 's70', speaker: '우디', kor: '그리고 자요.', time: [176.737, 177.813], eng: "And I sleep." },
+            { id: 's71', speaker: '조이', kor: '🤯 우디 씨, 바보예요?', time: [177.900, 180.476], eng: "Woody, are you a fool?" },
+            { id: 's72', speaker: '조이', kor: "'바보'는 'idiot'이라는 뜻이에요.", time: [180.531, 182.257], eng: "'Babo' means 'idiot'." },
+            { id: 's73', speaker: '조이', kor: '우디 씨는 하루에 커피 열 잔 마셔요!', time: [182.312, 185.689], eng: "Woody, you drink ten cups of coffee a day!" },
+            { id: 's74', speaker: '조이', kor: "'열 잔'은 'ten cups'라는 뜻이에요.", time: [185.881, 188.449], eng: "'Yeol jan' means 'ten cups'." },
+            { id: 's75', speaker: '우디', kor: '하루? 그게 뭐예요?', time: [188.600, 190.496], eng: "A day? What's that?" },
+            { id: 's76', speaker: '조이', kor: '😮‍💨 하아... 우디 씨, 한국어 공부를 하세요!', time: [190.578, 195.557], eng: "Sigh... Woody, please study Korean!" },
+            { id: 's77', speaker: '조이', kor: "'하루'는 'a day'라는 뜻이에요.", time: [195.624, 198.508], eng: "'Haru' means 'a day'." },
+            { id: 's78', speaker: '우디', kor: '아하! 그럼, 저는 하루에 커피 열 잔 마셔요.', time: [198.590, 202.967], eng: "Aha! Then, I drink ten cups of coffee a day." },
+            { id: 's79', speaker: '조이', kor: '우디 씨, 하루에 커피 열 잔은 너무 많아요!', time: [203.036, 210.000], eng: "Woody, ten cups a day is too much!" },
+            { id: 's80', speaker: '조이', kor: '커피를 많이 마시면, 잠을 못 자요!', time: [210.082, 217.191], eng: "If you drink too much coffee, you can't sleep!" },
+            { id: 's81', speaker: '우디', kor: '에이~ 괜찮아요.', time: [217.287, 218.902], eng: "Ay~ It's okay." },
+            { id: 's82', speaker: '우디', kor: '☕️커피는 💕사랑이에요.', time: [219.191, 220.950], eng: "Coffee is love." },
+            { id: 's83', speaker: '조이', kor: '😩 우디 씨는 바보예요!', time: [221.005, 223.243], eng: "Woody is a fool!" },
+            { id: 's84', speaker: '조이', kor: '빨리 오늘 배운 표현들을 다시 확인해 봐요!', time: [223.575, 230.155], eng: "Let's hurry and review the expressions we learned today!" },
+            { id: 's85', speaker: '우디', kor: '좋아요!', time: [230.282, 231.145], eng: "Okay!" },
+            { id: 's86', speaker: '우디', kor: '한 잔 = a cup ☕️', time: [232.092, 233.459], eng: "Han jan = a cup" },
+            { id: 's87', speaker: '우디', kor: '두 잔 =  two cups ☕️☕️', time: [233.762, 235.401], eng: "Du jan = two cups" },
+            { id: 's88', speaker: '우디', kor: '세 잔 =  three cups ☕️☕️☕️', time: [235.606, 237.340], eng: "Se jan = three cups" },
+            { id: 's89', speaker: '우디', kor: '네 잔 =  four cups ☕️☕️☕️☕️', time: [237.491, 239.344], eng: "Ne jan = four cups" },
+            { id: 's90', speaker: '우디', kor: '다섯 잔 =  five cups ☕️☕️☕️☕️☕️', time: [239.564, 241.524], eng: "Daseot jan = five cups" },
+            { id: 's91', speaker: '우디', kor: '여섯 잔 =  six cups ☕️☕️☕️☕️☕️☕️', time: [241.661, 243.675], eng: "Yeoseot jan = six cups" },
+            { id: 's92', speaker: '우디', kor: '일곱 잔 =  seven cups ☕️☕️☕️☕️☕️☕️☕️', time: [243.771, 246.096], eng: "Ilgop jan = seven cups" },
+            { id: 's93', speaker: '우디', kor: '여덟 잔 =  eight cups ☕️☕️☕️☕️☕️☕️☕️☕️', time: [246.165, 248.250], eng: "Yeodeol jan = eight cups" },
+            { id: 's94', speaker: '우디', kor: '아홉 잔 =  nine cups ☕️☕️☕️☕️☕️☕️☕️☕️☕️', time: [248.346, 250.600], eng: "Ahop jan = nine cups" },
+            { id: 's95', speaker: '우디', kor: '열 잔 =  ten cups ☕️☕️☕️☕️☕️☕️☕️☕️☕️☕️', time: [250.714, 252.992], eng: "Yeol jan = ten cups" },
+            { id: 's96', speaker: '조이', kor: "'자주'는 'often'이라는 뜻이에요.", time: [253.912, 256.182], eng: "'Jaju' means 'often'." },
+            { id: 's97', speaker: '조이', kor: "'항상'은 'always'라는 뜻이에요.", time: [256.498, 259.171], eng: "'Hangsang' means 'always'." },
+            { id: 's98', speaker: '조이', kor: "'일어나요'는 'to wake up'이라는 뜻이에요.", time: [259.391, 262.276], eng: "'Ireonayo' means 'to wake up'." },
+            { id: 's99', speaker: '조이', kor: "'시작해요'는 'to start'라는 뜻이에요.", time: [262.633, 265.271], eng: "'Sijakhaeyo' means 'to start'." },
+            { id: 's100', speaker: '조이', kor: "'힘들어요'는 'to be exhausting'이라는 뜻이에요.", time: [265.600, 268.764], eng: "'Himdeureoyo' means 'to be exhausting'." },
+            { id: 's101', speaker: '조이', kor: "'피곤해요'는 'to be tired'이라는 뜻이에요.", time: [269.191, 272.094], eng: "'Pigonhaeyo' means 'to be tired'." },
+            { id: 's102', speaker: '조이', kor: "'저녁을 먹어요'는 'to have dinner'라는 뜻이에요.", time: [272.250, 275.672], eng: "'Jeonyeogeul meogeoyo' means 'to have dinner'." },
+            { id: 's103', speaker: '조이', kor: "'배가 불러요'는 'to feel stuffed'이라는 뜻이에요.", time: [275.888, 279.291], eng: "'Baega bulleoyo' means 'to feel stuffed'." },
+            { id: 's104', speaker: '조이', kor: "'바보'는 'idiot'이라는 뜻이에요.", time: [279.415, 282.484], eng: "'Babo' means 'idiot'." },
+            { id: 's105', speaker: '조이', kor: "'하루'는 'a day'라는 뜻이에요.", time: [282.714, 285.000], eng: "'Haru' means 'a day'." },
+            { id: 's106', speaker: '우디', kor: '여러분은 하루에 커피를 몇 잔 마셔요?', time: [286.000, 291.318], eng: "How many cups of coffee do you all drink a day?" },
+            { id: 's107', speaker: '조이', kor: '하루에 한 잔은 건강에 좋아요.', time: [291.373, 296.422], eng: "One cup a day is good for your health." },
+            { id: 's108', speaker: '조이', kor: '열 잔은 안 돼요!', time: [296.491, 300.500], eng: "Ten cups is a no-no!" },
+            { id: 's109', speaker: '우디', kor: '그럼 오늘은 오늘은 여기까지 할까요?', time: [300.569, 304.649], eng: "Shall we wrap it up here for today?" },
+            { id: 's110', speaker: '우디', kor: '안녕히 계세요!', time: [304.731, 305.808], eng: "Goodbye!" },
+            { id: 's111', speaker: '조이', kor: '안녕히 계세요! 다음에 만나요!', time: [305.863, 308.115], eng: "Goodbye! See you next time!" }
+        ];
+
+        const DISCUSS_DATA = [
+            {
+                id: 1,
+                question: "1. 여러분은 아침에 일어나요. 그리고 물을 마셔요? 커피를 마셔요?",
+                translation: "You wake up in the morning. And do you drink water? Do you drink coffee?",
+                keyVocab: [
+                    { term: "일어나요 (일어나다)", meaning_eng: "To wake up" },
+                    { term: "물", meaning_eng: "Water" },
+                    { term: "마셔요 (마시다)", meaning_eng: "To drink" }
+                ]
+            },
+            {
+                id: 2,
+                question: "2. 여러분은 하루에 물을 몇 잔 마셔요?",
+                translation: "How many cups of water do you drink a day?",
+                keyVocab: [
+                    { term: "하루", meaning_eng: "A day" },
+                    { term: "몇 잔", meaning_eng: "How many cups" }
+                ]
+            },
+            {
+                id: 3,
+                question: "3. 여러분은 하루에 커피를 몇 잔 마셔요?",
+                translation: "How many cups of coffee do you drink a day?",
+                keyVocab: [
+                    { term: "커피", meaning_eng: "Coffee" }
+                ]
+            },
+            {
+                id: 4,
+                question: "4. 여러분에게 하루에 커피 몇 잔이 괜찮아요?",
+                translation: "How many cups of coffee a day are okay for you?",
+                keyVocab: [
+                    { term: "괜찮아요 (괜찮다)", meaning_eng: "To be okay / fine" }
+                ]
+            },
+            {
+                id: 5,
+                question: "5. 여러분은 피곤해요. 그럼 뭐 해요?",
+                translation: "You are tired. Then what do you do?",
+                keyVocab: [
+                    { term: "피곤해요 (피곤하다)", meaning_eng: "To be tired" },
+                    { term: "그럼", meaning_eng: "Then" }
+                ]
+            },
+            {
+                id: 6,
+                question: "6. 여러분은 하루에 몇 번 밥을 먹어요?",
+                translation: "How many times a day do you eat (a meal)?",
+                keyVocab: [
+                    { term: "몇 번", meaning_eng: "How many times" },
+                    { term: "밥을 먹어요 (먹다)", meaning_eng: "To eat a meal" }
+                ]
+            },
+            {
+                id: 7,
+                question: "7. 여러분은 저녁을 먹어요. 그리고 항상 디저트를 먹어요?",
+                translation: "You eat dinner. And do you always eat dessert?",
+                keyVocab: [
+                    { term: "저녁", meaning_eng: "Dinner" },
+                    { term: "항상", meaning_eng: "Always" },
+                    { term: "디저트", meaning_eng: "Dessert" }
+                ]
+            },
+            {
+                id: 8,
+                question: "8. 여러분은 배가 불러요. 그래도 디저트를 먹어요?",
+                translation: "You are full. Even so, do you eat dessert?",
+                keyVocab: [
+                    { term: "배가 불러요 (부르다)", meaning_eng: "To feel stuffed/full" },
+                    { term: "그래도", meaning_eng: "Still / Even so" }
+                ]
+            },
+            {
+                id: 9,
+                question: "9. 여러분은 자주 파티를 해요?",
+                translation: "Do you have parties often?",
+                keyVocab: [
+                    { term: "자주", meaning_eng: "Often" },
+                    { term: "파티를 해요 (하다)", meaning_eng: "To have a party" }
+                ]
+            },
+            {
+                id: 10,
+                question: "10. 여러분은 파티를 해요. 그럼 술을 몇 잔 마셔요?",
+                translation: "You have a party. Then how many glasses of alcohol do you drink?",
+                keyVocab: [
+                    { term: "술", meaning_eng: "Alcohol" },
+                    { term: "몇 잔", meaning_eng: "How many cups/glasses" }
+                ]
+            }
+        ];
+
+        // --- Helpers ---
+        const getLevelTheme = (level) => {
+            switch (level) {
+                case 'A1': case 'A1+': return 'lime';
+                case 'A2': case 'A2+': return 'green';
+                case 'B1': case 'B1+': return 'sky';
+                case 'B2': case 'B2+': return 'blue';
+                case 'C1': case 'C1+': case 'C2': return 'violet';
+                default: return 'green';
+            }
+        };
+
+        const LEVEL_STYLES = {
+            "A1": "bg-lime-50 text-lime-600 border-lime-100", 
+            "A1+": "bg-lime-50 text-lime-600 border-lime-100", 
+            "A2": "bg-green-50 text-green-600 border-green-100",    
+            "A2+": "bg-green-50 text-green-600 border-green-100",    
+            "B1": "bg-sky-50 text-sky-600 border-sky-100",        
+            "B1+": "bg-sky-50 text-sky-600 border-sky-100",        
+            "B2": "bg-blue-50 text-blue-600 border-blue-100", 
+            "B2+": "bg-blue-50 text-blue-600 border-blue-100", 
+            "C1": "bg-violet-50 text-violet-600 border-violet-100", 
+            "C1+": "bg-violet-50 text-violet-600 border-violet-100", 
+            "C2": "bg-violet-50 text-violet-600 border-violet-100",        
+        };
+
+        // --- Icons (Sized with em to scale with font-size) ---
+        const HomeIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <path d="M8 21h8" />
+                <path d="M12 17v4" />
+            </svg>
+        );
+        const LearnIcon = ({ className, filled }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect x="2" y="4" width="20" height="16" rx="4" fill={filled ? "currentColor" : "none"} />
+                <polygon points="10 8 16 12 10 16 10 8" stroke={filled ? "#fff" : "currentColor"} fill={filled ? "#fff" : "none"} />
+            </svg>
+        );
+        const VocabIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
+            </svg>
+        );
+        const QuizIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+        );
+        const DiscussIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                <path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+        );
+        const UserIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>);
+        const QuizHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+        );
+        const VocabHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/>
+                <path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
+            </svg>
+        );
+        const DiscussHeaderIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" className={className}>
+                <path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                <path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+        );
+        const LineIcon = ({ d, className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d} /></svg>);
+        const PlayIconLine = (props) => <LineIcon {...props} d="M5 3l14 9-14 9V3z" />;
+        const OpenBookSolidIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M2 6 C2 3 8 2 12 6 C16 2 22 3 22 6 V20 C22 17 16 16 12 20 C8 16 2 17 2 20 Z" />
+                <path d="M12 6 V20" /> 
+                <path d="M4.5 15 L7 9 L9.5 15" strokeWidth="1.5" />
+                <path d="M5.5 13 H8.5" strokeWidth="1.5" />
+                <path d="M15 10 H19" strokeWidth="1.5" />
+                <path d="M15 13 H19" strokeWidth="1.5" />
+                <path d="M15 16 H18" strokeWidth="1.5" />
+            </svg>
+        );
+        const TranslateIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+                <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.09-.02.67-.02zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+            </svg>
+        );
+        const ExternalLinkIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+        );
+        const ChevronLeft = ({ className }) => <LineIcon d="m15 18-6-6 6-6" className={className}/>;
+        const ChevronRight = ({ className }) => <LineIcon d="m9 18 6-6-6-6" className={className}/>;
+        const SpeedSolidIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44z"/><path d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg>);
+        const SparklesIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 00-1.423 1.423z" /></svg>);
+
+        // --- Components ---
+        const LevelBadge = ({ levelCode }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            const info = LEVEL_DEFINITIONS[levelCode] || LEVEL_DEFINITIONS["A1"];
+            const getLevelStyle = (code) => {
+                if (LEVEL_STYLES[code]) return LEVEL_STYLES[code];
+                const base = code.substring(0, 2);
+                return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100";
+            };
+            const badgeStyle = getLevelStyle(levelCode);
+            // Used em units for padding and margin to allow scaling
+            return (
+                <div className="relative inline-flex items-center cursor-help z-50" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                    <span className={`px-[0.5em] py-[0.125em] rounded text-[0.625em] font-bold border uppercase tracking-wide shadow-sm font-basic ${badgeStyle}`}>Level: {info.title}</span>
+                    {isHovered && (<div className="absolute top-full left-0 mt-[0.5em] w-[16em] bg-slate-900/95 backdrop-blur text-white text-[0.75em] rounded-xl p-[1em] shadow-xl z-[100] animate-fade-in text-left"><p className={`font-bold mb-[0.375em] text-[1.15em] ${badgeStyle.split(' ')[1]}`}>{levelCode} – {info.title}</p><p className="opacity-90 leading-relaxed font-medium">{info.desc}</p><div className="absolute -top-[0.25em] left-[1em] w-[0.5em] h-[0.5em] bg-slate-900/95 rotate-45"></div></div>)}
+                </div>
+            );
+        };
+
+        const Sidebar = ({ activeTab, setActiveTab, isCollapsed, toggleSidebar, userLevel, themeColor }) => {
+            const menus = [
+                { id: 'home', label: '시작 페이지', subLabel: 'Home Page', icon: HomeIcon },
+                { id: 'learn', label: '동영상 자료', subLabel: 'Video Resources', icon: LearnIcon },
+                { id: 'vocab', label: '핵심 어휘', subLabel: 'Key Vocabulary', icon: VocabIcon },
+                { id: 'quiz', label: '내용 확인 퀴즈', subLabel: 'Comprehension Quiz', icon: QuizIcon },
+                { id: 'discuss', label: '생각해 보기', subLabel: 'Food For Thought', icon: DiscussIcon },
+            ];
+            
+            const getLevelColor = (code) => {
+                if (LEVEL_STYLES[code]) return LEVEL_STYLES[code];
+                const base = code.substring(0, 2);
+                return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100";
+            };
+
+            const currentStyle = getLevelColor(userLevel);
+            const bgClass = currentStyle.split(' ')[0];
+            const textClass = currentStyle.split(' ')[1];
+
+            const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, info: null });
+
+            const handleLevelTextEnter = (e) => {
+                const rect = e.target.getBoundingClientRect();
+                setTooltip({
+                    show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel]
+                });
+            };
+
+            const handleLevelTextLeave = () => {
+                setTooltip(prev => ({ ...prev, show: false }));
+            };
+
+            // Dynamic style for Sidebar Scaling
+            const sidebarStyle = {
+                fontSize: isCollapsed ? '1.0rem' : '1.15rem',
+                width: isCollapsed ? '5.5em' : '16em' // scaled width based on font-size
+            };
+
+            return (
+                <aside style={sidebarStyle} className={`bg-white border-r border-gray-200 fixed h-full hidden md:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic`}>
+                    <div className={`p-[1.5em] flex items-center gap-[0.75em] relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
+                        <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[3em] h-[3em]' : 'w-[3.75em] h-[3.75em]'}`}/>
+                        {!isCollapsed && (
+                            <div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center">
+                                <span className="font-extrabold text-[1.25em] text-black leading-tight font-cafe24-deco">Open</span>
+                                <span className={`font-bold text-[0.6875em] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span>
+                            </div>
+                        )}
+                        <button onClick={toggleSidebar} className="absolute -right-[0.75em] top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-full p-[0.25em] shadow-sm text-slate-500 hover:text-slate-700 hover:bg-gray-50 transition-colors z-10">
+                            {isCollapsed ? <ChevronRight className="w-[0.75em] h-[0.75em]" /> : <ChevronLeft className="w-[0.75em] h-[0.75em]" />}
+                        </button>
+                    </div>
+                    
+                    <nav className={`flex-1 space-y-[0.75em] mt-[1em] ${isCollapsed ? 'px-[0.75em]' : 'px-[0.75em]'}`}>
+                        {menus.map((menu) => {
+                            const IconComp = menu.icon;
+                            const isActive = activeTab === menu.id;
+                            const activeFontClass = isActive ? "font-cafe24-surround" : "font-cafe24";
+                            return (
+                                <button key={menu.id} onClick={() => { setActiveTab(menu.id); /* Logic moved to App for collapse */ }} className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-[3.5em] rounded-2xl' : 'gap-[0.75em] px-[0.75em] py-[1em] rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}>
+                                    {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-[0.375em] h-[2em]' : 'w-[0.25em] h-[1.5em]'}`}></div>}
+                                    <IconComp className={`shrink-0 transition-all duration-200 ${isCollapsed ? 'w-[2em] h-[2em]' : 'w-[1.75em] h-[1.75em]'} ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
+                                    {!isCollapsed && (
+                                        <div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap">
+                                            <span className={`text-[0.875em] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span>
+                                            <span className="text-[0.625em] font-normal text-slate-400 mt-[0.125em] leading-tight">{menu.subLabel}</span>
+                                        </div>
+                                    )}
+                                    {isCollapsed && (
+                                        <div className="absolute left-full ml-[0.75em] px-[0.75em] py-[0.375em] bg-slate-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl flex flex-col items-start">
+                                            <span className="text-[0.75em] font-bold">{menu.label}</span>
+                                            <span className="text-[0.625em] opacity-80">{menu.subLabel}</span>
+                                            <div className="absolute top-1/2 -left-[0.25em] -translate-y-1/2 w-[0.5em] h-[0.5em] bg-slate-900 rotate-45"></div>
+                                        </div>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </nav>
+
+                    <div className="p-[0.5em] border-t border-gray-100">
+                        <div className={`flex items-center gap-[0.75em] p-[0.5em] rounded-xl transition-colors hover:bg-gray-50 cursor-pointer ${isCollapsed ? 'justify-center' : ''}`}>
+                            <div className={`w-[2.75em] h-[2.75em] rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${bgClass} border ${currentStyle.split(' ')[2]}`}>
+                                <span className={`text-[1em] font-extrabold font-school-smile ${currentStyle.replace('bg-', 'text-').replace('50', '600')}`}>{userLevel}</span>
+                            </div>
+                            {!isCollapsed && (
+                                <div className="animate-fade-in overflow-hidden whitespace-nowrap flex-1">
+                                    <p className="text-[0.875em] font-bold text-slate-900 mb-[0.1em] font-basic">학습자(Learner)</p>
+                                    <div className="mt-[0.1em]">
+                                        <span className={`block w-fit px-[0.125em] py-[0.125em] rounded text-[0.625em] font-semibold border uppercase tracking-wide shadow-sm text-left cursor-help font-basic ${currentStyle}`} onMouseEnter={handleLevelTextEnter} onMouseLeave={handleLevelTextLeave}>
+                                            Level: {LEVEL_DEFINITIONS[userLevel].title}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    {tooltip.show && tooltip.info && createPortal(
+                        <div className="fixed z-[9999] pointer-events-none animate-fade-in" style={{ left: tooltip.x, top: tooltip.y }}>
+                            <div className="relative bg-slate-900/95 backdrop-blur text-white text-[0.75em] rounded-xl p-[1em] shadow-2xl transform -translate-y-full -translate-x-[1.5em] -mt-[0.75em] w-[16em] border border-slate-700/50">
+                                <p className={`font-bold mb-[0.375em] text-[0.875em] text-${themeColor}-300`}>{userLevel} – {tooltip.info.title}</p>
+                                <p className="opacity-90 leading-relaxed font-medium text-slate-200">{tooltip.info.desc}</p>
+                                <div className="absolute -bottom-[0.375em] left-[1em] w-[0.75em] h-[0.75em] bg-slate-900/95 border-r border-b border-slate-700/50 rotate-45"></div>
+                            </div>
+                        </div>, document.body
+                    )}
+                </aside>
+            );
+        };
+
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i <= delays.length; i++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                    return await response.json();
+                } catch (error) { if (i === delays.length) throw error; await new Promise(resolve => setTimeout(resolve, delays[i])); }
+            }
+        };
+
+        const FeedbackSection = ({ value, onChange, placeholder, question, keyPhrases, themeColor }) => {
+            const [feedback, setFeedback] = useState(null);
+            const [isLoading, setIsLoading] = useState(false);
+            const [error, setError] = useState(null);
+
+            const checkSentence = async () => {
+                if (!value || value.trim() === '') { setError("문장을 입력해야 피드백을 받을 수 있어요."); setFeedback(null); return; }
+                setIsLoading(true); setError(null); setFeedback(null);
+                const systemPrompt = `You are an advanced Korean language tutor AI for A1 level learners...`; 
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: systemPrompt }, { text: `Question: "${question}"\nUser's Answer: "${value}"` }] }],
+                    generationConfig: { responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { "is_relevant": { "type": "BOOLEAN" }, "relevance_feedback_eng": { "type": "STRING", "nullable": true }, "is_correct": { "type": "BOOLEAN", "nullable": true }, "feedback_message_eng": { "type": "STRING", "nullable": true }, "corrected_sentence": { "type": "STRING", "nullable": true }, "explanation_eng": { "type": "STRING", "nullable": true } } } }
+                };
+                try {
+                    const result = await callGeminiWithBackoff(payload);
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) setFeedback(JSON.parse(result.candidates[0].content.parts[0].text));
+                    else setError("AI의 응답을 처리하는 데 문제가 발생했어요.");
+                } catch (err) { setError("문장 검사에 실패했어요. 다시 시도해 주세요."); } finally { setIsLoading(false); }
+            };
+
+            return (
+                <div>
+                    {keyPhrases}
+                    <div>
+                        <h4 className="font-bold text-slate-900 mb-[0.75em] text-[1em]">핵심 표현을 사용해서 질문에 대답해 보세요.</h4>
+                        <textarea value={value} onChange={onChange} placeholder={placeholder} className={`w-full p-[1em] rounded-xl border border-gray-200 focus:border-${themeColor}-500 focus:ring-1 focus:ring-${themeColor}-500 outline-none min-h-[7.5em] resize-none text-[1em] text-slate-800 placeholder-gray-400 mb-[0.75em]`}></textarea>
+                        <button onClick={checkSentence} disabled={!value.trim() || isLoading} className={`flex items-center gap-[0.5em] px-[1.25em] py-[0.375em] text-[0.75em] leading-[1em] rounded-xl font-bold transition-all shadow-sm ${!value.trim() || isLoading ? 'bg-gray-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md'}`}>
+                            {isLoading ? <span>분석 중...</span> : <> <SparklesIcon className="w-[1.25em] h-[1.25em]" /> <span>AI Feedback (피드백 받기)</span> </>}
+                        </button>
+                        {error && <div className="mt-[1em] p-[1em] bg-red-50 text-red-600 rounded-xl border border-red-200 text-[0.875em] font-medium animate-fade-in">{error}</div>}
+                        {feedback && (
+                            <div className={`mt-[1.5em] rounded-2xl p-[1.5em] border animate-fade-in ${feedback.is_correct ? `bg-${themeColor}-50 border-${themeColor}-200` : 'bg-yellow-50 border-yellow-200'}`}>
+                                <div className="flex items-center gap-[0.5em] mb-[1em]"><span className="text-[1.5em]">🤖</span><h4 className="font-extrabold text-slate-900 text-[1.125em]">AI Tutor Feedback</h4></div>
+                                <div className="mb-[1em]"><span className={`font-black text-[0.875em] px-[0.75em] py-[0.25em] rounded-full bg-white border shadow-sm ${feedback.is_correct ? `text-${themeColor}-600 border-${themeColor}-200` : 'text-yellow-600 border-yellow-200'}`}>{feedback.is_correct ? '🎉 Great Job!' : '⚠️ Needs Improvement'}</span></div>
+                                <div className="space-y-[1em]">
+                                    {feedback.feedback_message_eng && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Feedback</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed">{feedback.feedback_message_eng}</p></div>}
+                                    {feedback.explanation_eng && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Explanation</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed">{feedback.explanation_eng}</p></div>}
+                                    {feedback.corrected_sentence && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Correction</span><p className="text-slate-900 text-[1.125em] font-black leading-relaxed">{feedback.corrected_sentence}</p></div>}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabCard = ({ word, themeColor }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <div className="bg-white p-[1.5em] rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
+                    <div className="flex justify-between mb-[1em]"><h3 className="text-[1.5em] font-extrabold text-slate-900">{word.term}</h3></div>
+                    <div className={`pl-[1em] border-l-4 border-${themeColor}-500 mb-[1.5em]`}><p className="text-[1.3125em] text-slate-600 font-medium font-diary">{word.mainDef}</p></div>
+                    <div className="flex-1 flex flex-col">
+                        <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-[1em] bg-gray-50 hover:bg-gray-100 rounded-xl transition-all group border border-transparent hover:border-gray-200">
+                            <div className="flex items-center gap-[0.5em]"><span className={`w-[0.375em] h-[0.375em] rounded-full transition-colors duration-300 ${isOpen ? `bg-${themeColor}-500` : 'bg-gray-400'}`}></span><span className={`text-[0.75em] font-bold uppercase tracking-wider transition-colors duration-300 ${isOpen ? `text-${themeColor}-700` : 'text-slate-500'}`}>Examples (예문)</span></div>
+                            <ChevronRight className={`w-[1em] h-[1em] text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} />
+                        </button>
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[24em] opacity-100 mt-[0.5em]' : 'max-h-0 opacity-0'}`}>
+                            <div className="bg-gray-50 rounded-xl p-[1em] space-y-[0.75em] border border-gray-100">{word.examples.map((ex, i) => (<div key={i}><p className="font-bold text-slate-800 text-[1.1875em] leading-relaxed font-marker">{ex.kor}</p><p className="text-slate-500 text-[1.0625em] mt-[0.125em] font-gowoonbam">{ex.eng}</p></div>))}</div>
+                        </div>
+                        {word.subDefs && word.subDefs.length > 0 && (
+                            <div className={`bg-${themeColor}-50 rounded-xl p-[1.25em] space-y-[0.5em] border border-${themeColor}-100 mt-[1em]`}>
+                                <h4 className={`font-bold text-${themeColor}-800 text-[0.75em] mb-[0.5em] flex items-center gap-[0.5em] uppercase tracking-wider`}><span className={`w-[0.375em] h-[0.375em] rounded-full bg-${themeColor}-400`}></span>Related & Grammar</h4>
+                                {word.subDefs.map((sub, i) => (<div key={i} className="flex flex-col"><span className={`font-bold text-${themeColor}-900 text-[1.25em] font-school-free`}>{sub.subTerm}</span><span className={`text-[1.1875em] text-${themeColor}-600 font-dictation`}>{sub.subDef}</span></div>))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const HomeView = ({ setActiveTab, progress, userLevel, themeColor }) => {
+            const completedCount = Object.values(progress).filter(val => val === true || (typeof val === 'number' && val > 0)).length;
+            const percentage = Math.round((completedCount / 4) * 100);
+            const quizScoreDisplay = typeof progress.quiz === 'number' ? `${progress.quiz}%` : (progress.quiz ? '100%' : '0%');
+            const quizColorClass = (progress.quiz === 100 || progress.quiz === true) ? `text-${themeColor}-600` : 'text-slate-900';
+            const quizIconBg = (progress.quiz === 100 || progress.quiz === true) ? `bg-${themeColor}-100 text-${themeColor}-600` : `bg-${themeColor}-50 text-${themeColor}-600`;
+
+            return (
+                <div style={{ fontSize: '1.3rem' }} className="space-y-[2.5em] animate-fade-in max-w-7xl mx-auto">
+                    <div className="space-y-[0.75em]">
+                        <div className="flex items-center gap-[0.5em]">
+                            <span className={`px-[0.5em] py-[0.25em] bg-${themeColor}-100 text-${themeColor}-700 text-[0.75em] font-extrabold rounded-md tracking-wider font-juache`}>팟캐스트 (Podcast)</span>
+                            <span className={`text-[0.75em] font-bold text-${themeColor}-600 tracking-wide uppercase font-school-smile`}>쉬운 한국어로 이야기해 봐요 (Let's Chat in Easy Korea)</span>
+                        </div>
+                        <h1 className="text-[3.125em] font-black text-slate-900 tracking-tight font-cafe24-surround">하루에 커피를 몇 잔 마셔요?</h1>
+                        <p className="text-slate-500 text-[1.125em] font-cafe24-surround">How many cups of coffee do you drink a day?</p>
+                    </div>
+                    <div className="bg-white rounded-[1.5em] border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-[20em]">
+                        <div className="md:w-5/12 relative group bg-black cursor-pointer overflow-hidden" onClick={() => setActiveTab('learn')}>
+                            <img src="https://img.youtube.com/vi/ZjnRIXjJU7Y/maxresdefault.jpg" alt="Thumbnail" className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+                            <div className="absolute top-[1.5em] left-[1.5em]"><span className="bg-[#ea3323] text-white text-[0.625em] font-bold px-[0.5em] py-[0.25em] rounded border border-[#ea3323] shadow-sm tracking-wider">ON AIR</span></div>
+                            <div className="absolute inset-0 flex items-center justify-center"><div className="w-[3.5em] h-[3.5em] bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"><PlayIconLine className={`w-[1.5em] h-[1.5em] text-${themeColor}-600 fill-current ml-[0.25em]`} /></div></div>
+                        </div>
+                        <div className="md:w-7/12 p-[2em] md:p-[2.5em] flex flex-col justify-center">
+                            <div className="flex items-center gap-[0.5em] mb-[1em]"><span className="px-[0.5em] py-[0.25em] bg-gray-100 text-slate-600 text-[0.625em] font-bold rounded uppercase tracking-wide">Listening</span><LevelBadge levelCode={userLevel} /></div>
+                            <div className="mb-[0.75em]"><h2 className="text-[1.5em] font-black text-slate-900 font-cafe24-surround">동영상 자료</h2><span className="text-[0.875em] font-bold text-slate-400 font-cafe24-surround">Video Resources</span></div>
+                            <div className="text-slate-600 text-[0.875em] leading-relaxed mb-[2em] pr-[1em]"><p>팟캐스트를 듣고 커피 습관에 대한 이야기를 들어보세요.</p><p className="mt-[0.25em] text-slate-400 text-[0.75em]">Listen to the podcast about coffee habits.</p></div>
+                            <div className="flex items-center gap-[0.75em]"><button onClick={() => setActiveTab('learn')} className="px-[1.5em] py-[0.75em] bg-[#111827] text-white rounded-xl hover:bg-black transition-colors shadow-md flex flex-col items-center leading-tight"><span className="text-[0.875em] font-bold">동영상 보러 가기</span><span className="text-[0.625em] opacity-70 font-medium">Watch Video</span></button></div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5em]">
+                        <div className="bg-white p-[1.5em] rounded-[1.5em] border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">핵심 어휘</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Key Vocabulary</span></div><p className="text-[2.25em] font-black text-slate-900 mt-[0.25em] font-jua">{VOCAB_DATA.length}개</p></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><VocabIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('vocab')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>핵심 어휘 확인</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Check Vocabulary</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-[1.5em] rounded-[1.5em] border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">내용 확인 퀴즈</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Comprehension Quiz</span></div><p className={`text-[2.25em] font-black mt-[0.25em] transition-all duration-500 font-jua ${quizColorClass}`}>{quizScoreDisplay}</p></div><div className={`w-[2.5em] h-[2.5em] rounded-xl flex items-center justify-center transition-colors ${quizIconBg}`}><QuizIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-[1.5em] rounded-[1.5em] border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/ec6afc8f9f5d" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-[0.25em]">→</span></button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const LearnView = ({ updateProgress, themeColor, autoScroll, showVocab, playbackRate }) => {
+            const [player, setPlayer] = useState(null);
+            const playerRef = useRef(null); 
+            const [currentTime, setCurrentTime] = useState(0);
+            const [activeLine, setActiveLine] = useState(null);
+            const [translations, setTranslations] = useState({});
+            const [popup, setPopup] = useState({ show: false, fixed: false, data: null, x: 0, y: 0 });
+            const [activeVocabTerm, setActiveVocabTerm] = useState(null);
+            const sidebarVocabRefs = useRef({});
+            const scriptRefs = useRef({});
+            const intervalRef = useRef(null);
+
+            useEffect(() => {
+                const loadVideo = () => {
+                    if (window.YT && window.YT.Player) {
+                        new window.YT.Player('youtube-player', {
+                            videoId: 'ZjnRIXjJU7Y', width: '100%', height: '100%', playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0 },
+                            events: {
+                                'onReady': (event) => { playerRef.current = event.target; setPlayer(event.target); },
+                                'onStateChange': (event) => { if (event.data === window.YT.PlayerState.PLAYING) { startInterval(); updateProgress('learn'); } else stopInterval(); }
+                            }
+                        });
+                    }
+                };
+                if (!window.YT) { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); window.onYouTubeIframeAPIReady = loadVideo; } else { loadVideo(); }
+                return () => stopInterval();
+            }, []);
+
+            useEffect(() => { if (player && player.setPlaybackRate) player.setPlaybackRate(playbackRate); }, [playbackRate, player]);
+            useEffect(() => {
+                const handleGlobalClick = () => { if (popup.fixed) setPopup(prev => ({ ...prev, show: false, fixed: false })); };
+                if (popup.fixed) window.addEventListener('click', handleGlobalClick);
+                return () => window.removeEventListener('click', handleGlobalClick);
+            }, [popup.fixed]);
+
+            const startInterval = () => { stopInterval(); intervalRef.current = setInterval(() => { const p = playerRef.current; if (p && p.getCurrentTime) { const time = p.getCurrentTime(); setCurrentTime(time); const currentLine = SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); if (currentLine) setActiveLine(currentLine.id); } }, 200); };
+            const stopInterval = () => clearInterval(intervalRef.current);
+            useEffect(() => { if (popup.show) return; if (activeLine && autoScroll && scriptRefs.current[activeLine]) scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); }, [activeLine, autoScroll, popup.show]);
+            const handleLineClick = (time) => { if (player) { player.seekTo(time); player.playVideo(); } };
+            const toggleTranslation = (id) => setTranslations(prev => ({...prev, [id]: !prev[id]}));
+            const scrollToVocab = (term) => { const element = sidebarVocabRefs.current[term]; if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+
+            const handleVocabEnter = (e, wordData) => { if (popup.fixed) return; const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: false, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+            const handleVocabLeave = () => { if (popup.fixed) return; setPopup(prev => ({ ...prev, show: false })); };
+            const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+
+            const renderTextWithVocab = (text) => {
+                let parts = [text];
+                VOCAB_DATA.forEach(vocab => {
+                    const searchTargets = [vocab.term];
+                    if (vocab.subDefs) vocab.subDefs.forEach(sub => searchTargets.push(sub.subTerm));
+                    if (vocab.variants) vocab.variants.forEach(v => searchTargets.push(v));
+                    searchTargets.sort((a, b) => b.length - a.length);
+                    searchTargets.forEach(target => {
+                        const nextParts = [];
+                        parts.forEach(part => {
+                            if (typeof part === 'string') {
+                                const split = part.split(target);
+                                split.forEach((s, i) => {
+                                    if (s) nextParts.push(s);
+                                    if (i < split.length - 1) {
+                                        nextParts.push({ isVocab: true, ...vocab, displayText: target });
+                                    }
+                                });
+                            } else {
+                                nextParts.push(part);
+                            }
+                        });
+                        parts = nextParts;
+                    });
+                });
+                return parts.map((part, index) => {
+                    if (typeof part === 'string') return part;
+                    const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term);
+                    return (
+                        <span 
+                            key={index} 
+                            className={`cursor-pointer border-b-2 transition-all duration-200 font-black inline-block leading-tight font-barunpen tracking-wide text-[1.5625rem] ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-[0.125em] mx-[0.125em]` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} 
+                            onMouseEnter={(e) => handleVocabEnter(e, part)} 
+                            onMouseLeave={handleVocabLeave} 
+                            onClick={(e) => handleVocabClick(e, part)}
+                        >
+                            {part.displayText || part.term}
+                        </span>
+                    );
+                });
+            };
+
+            const getSmartPosition = () => {
+                if (!popup.show || !popup.data) return { left: 0, arrowLeft: 0 };
+                const POPUP_WIDTH = 288;
+                const SCREEN_PADDING = 16;
+                const screenW = window.innerWidth;
+                let leftPos = popup.x - (POPUP_WIDTH / 2);
+                if (leftPos < SCREEN_PADDING) { leftPos = SCREEN_PADDING; } else if (leftPos + POPUP_WIDTH > screenW - SCREEN_PADDING) { leftPos = screenW - POPUP_WIDTH - SCREEN_PADDING; }
+                let arrowLeft = popup.x - leftPos;
+                if (arrowLeft < 12) arrowLeft = 12;
+                if (arrowLeft > POPUP_WIDTH - 12) arrowLeft = POPUP_WIDTH - 12;
+                return { left: leftPos, arrowLeft };
+            };
+
+            const { left: popupLeft, arrowLeft } = getSmartPosition();
+
+            return (
+                <div className="flex h-[calc(100vh-4rem)] gap-[1em] animate-fade-in overflow-hidden relative w-full mx-auto">
+                    {popup.show && popup.data && createPortal(
+                        <div 
+                            className="fixed z-[9999] bg-white rounded-xl shadow-xl border border-gray-200 p-[1em] w-[18em] animate-fade-in pointer-events-none" 
+                            style={{ left: popupLeft, top: popup.y + 12 }}
+                        >
+                            <div className="flex items-center justify-between mb-[0.5em]">
+                                <h3 className="text-[1.25em] font-black text-slate-900 font-ocarina">{popup.data.term}</h3>
+                            </div>
+                            <p className="text-[1.1875em] text-slate-700 font-medium mb-[0.75em] leading-snug font-diary">{popup.data.mainDef}</p>
+                            {popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (
+                                <div className="space-y-[0.25em] mt-[0.5em]">
+                                    {popup.data.subDefs.map((sub, idx) => (
+                                        <div key={idx} className={`bg-${themeColor}-50 rounded-lg p-[0.5em] border border-${themeColor}-100`}>
+                                            <p className={`text-[1.125em] text-${themeColor}-900 font-bold font-school-free`}>{sub.subTerm}</p>
+                                            <p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <div className="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-[0.75em] h-[0.75em] bg-white border-l border-t border-gray-200 rotate-45" style={{ left: arrowLeft }}></div>
+                        </div>, 
+                        document.body
+                    )}
+                    <div className={`bg-black rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${showVocab ? 'w-5/12' : 'flex-1'}`}><div id="youtube-player" className="w-full h-full"></div></div>
+                    {/* Script Container with 1.3x Font Size */}
+                    <div style={{ fontSize: '1.3rem' }} className={`flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-300 ${showVocab ? 'w-4/12' : 'w-5/12'}`}>
+                        <div className="flex-1 overflow-y-auto p-[1em] space-y-[1em] bg-gray-50 rounded-xl">
+                            {SCRIPT_DATA.map(line => {
+                                const isActive = activeLine === line.id;
+                                return (
+                                    <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className="flex flex-col">
+                                        <div className="flex items-center gap-[0.5em] mb-[0.25em] ml-[0.25em]"><span className="text-[0.75em] font-bold text-slate-600">{line.speaker}</span><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`text-[0.625em] text-${themeColor}-600 hover:underline flex items-center gap-[0.125em]`}><PlayIconLine className="w-[1em] h-[1em] fill-current" /> 재생 (Play)</button></div>
+                                        <div onClick={() => handleLineClick(line.time[0])} className={`p-[1.25em] rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-100 border-yellow-400 shadow-md ring-1 ring-yellow-200 scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                                            <p className="font-barunpen tracking-wide text-[1.5625rem] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>
+                                            <div className="my-[0.75em] border-t border-dashed border-gray-200"></div>
+                                            {translations[line.id] ? <p className="text-[1.125rem] text-slate-500 animate-fade-in">{line.eng}</p> : <button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[1.25em] h-[1.25em]" /> 번역 (Translation)</button>}
+                                            {translations[line.id] && <button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="absolute bottom-[1em] right-[1em] text-[0.625em] text-slate-300 hover:text-slate-500">접기</button>}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            <div className="h-[8em]"></div>
+                        </div>
+                    </div>
+                    {showVocab && (
+                        <div style={{ fontSize: '1.3rem' }} className="w-3/12 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                            <div className="p-[1em] border-b border-gray-100 flex items-center gap-[0.5em] bg-white rounded-t-xl"><VocabIcon className={`w-[1.25em] h-[1.25em] text-${themeColor}-600`} /><div className="flex flex-col leading-none"><h2 className="font-bold text-slate-900 text-[0.875em]">핵심 어휘</h2><span className="text-[0.625em] text-slate-400 font-medium">Key Vocabulary</span></div></div>
+                            <div className="flex-1 overflow-y-auto p-[1em] space-y-[1em] bg-gray-50">
+                                {VOCAB_DATA.map((word, idx) => (
+                                    <div key={idx} ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-[1em] rounded-xl border transition-all duration-500 ${activeVocabTerm === word.term ? `border-${themeColor}-500 bg-${themeColor}-50 ring-2 ring-${themeColor}-200 shadow-md scale-105` : 'bg-white border-gray-200 shadow-sm'}`}>
+                                        <div className="flex justify-between items-start mb-[0.5em]"><h3 className="text-[1.25em] font-extrabold text-slate-900 font-ocarina">{word.term}</h3></div>
+                                        <p className="text-[1.1875em] text-slate-600 mb-[0.75em] font-medium font-diary">{word.mainDef}</p>
+                                        {word.subDefs && word.subDefs.length > 0 && (<div className={`space-y-[0.5em] bg-${themeColor}-50 p-[0.625em] rounded-lg border border-${themeColor}-100`}>{word.subDefs.map((sub, i) => (<div key={i}><p className={`text-[1.125em] text-${themeColor}-900 font-bold leading-snug font-school-free`}>{sub.subTerm}</p><p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const VocabView = ({ updateProgress, themeColor }) => {
+            useEffect(() => { updateProgress('vocab'); }, []);
+            return (
+            <div style={{ fontSize: '1.4rem' }} className="max-w-7xl animate-fade-in mx-auto">
+                <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><VocabHeaderIcon className={`w-[2.5em] h-[2.5em] text-${themeColor}-600`} /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">핵심 어휘</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Key Vocabulary</span></div></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5em]">{VOCAB_DATA.map((word, idx) => (<VocabCard key={idx} word={word} themeColor={themeColor} />))}</div>
+            </div>
+            );
+        };
+
+        const QuizView = ({ updateProgress, themeColor }) => {
+            const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [firstAttempts, setFirstAttempts] = useState({}); 
+            const [showHint, setShowHint] = useState(false);
+            const [showTranslation, setShowTranslation] = useState(false);
+            const [isFinished, setIsFinished] = useState(false);
+            const currentQuestion = QUIZ_LIST[currentQuestionIndex];
+            const shuffledOptions = useMemo(() => [...currentQuestion.options].sort(() => Math.random() - 0.5), [currentQuestion]);
+            const selectedOption = answers[currentQuestionIndex] || null;
+            const isCorrect = selectedOption?.isCorrect;
+
+            const handleOptionClick = (option) => {
+                if (selectedOption?.isCorrect) return; 
+                if (firstAttempts[currentQuestionIndex] === undefined) setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option.isCorrect }));
+                setAnswers(prev => ({ ...prev, [currentQuestionIndex]: option }));
+                setShowHint(false); 
+            };
+            const handlePrev = () => { if (currentQuestionIndex > 0) { setCurrentQuestionIndex(prev => prev - 1); setShowHint(false); setShowTranslation(false); } };
+            const handleNext = () => { if (currentQuestionIndex < QUIZ_LIST.length - 1) { setCurrentQuestionIndex(prev => prev + 1); setShowHint(false); setShowTranslation(false); } else { finishQuiz(); } };
+            const finishQuiz = () => { setIsFinished(true); const totalQuestions = QUIZ_LIST.length; const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length; const finalScore = Math.round((correctCount / totalQuestions) * 100); updateProgress('quiz', finalScore); };
+            const handleRetry = () => { setCurrentQuestionIndex(0); setAnswers({}); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); };
+
+            if (isFinished) {
+                const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length;
+                return (
+                    <div style={{ fontSize: '1.65rem' }} className="max-w-7xl animate-fade-in mx-auto text-center py-[2.5em]">
+                        <div className="bg-white rounded-[2em] border border-gray-200 shadow-sm p-[2.5em]">
+                            <div className={`w-[5em] h-[5em] bg-${themeColor}-100 text-${themeColor}-600 rounded-full flex items-center justify-center mx-auto mb-[1.5em]`}><QuizIcon className="w-[2.5em] h-[2.5em]" /></div>
+                            <h2 className="text-[1.875em] font-black text-slate-900 mb-[0.5em] font-cafe24-surround">퀴즈 완료!</h2>
+                            <p className="text-slate-500 mb-[2em]">총 {QUIZ_LIST.length}문제 중 {correctCount}문제를 한 번에 맞혔습니다.</p>
+                            <div className={`text-[3.125em] font-black text-${themeColor}-600 mb-[2.5em] font-school-smile`}>{Math.round((correctCount / QUIZ_LIST.length) * 100)}%</div>
+                            <button onClick={handleRetry} className={`px-[2em] py-[0.75em] rounded-xl bg-${themeColor}-600 text-white font-bold hover:bg-${themeColor}-700 transition-colors`}>다시 풀기 (Try Again)</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div style={{ fontSize: '1.65rem' }} className="max-w-7xl animate-fade-in mx-auto">
+                    <div className="flex items-center gap-[1em] mb-[1.5em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><QuizHeaderIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">내용 확인 퀴즈</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Comprehension Quiz ({currentQuestionIndex + 1}/{QUIZ_LIST.length})</span></div></div>
+                    <div className="mb-[1.5em] p-[1em] bg-gray-50 rounded-xl border border-gray-200"><p className="font-bold text-slate-800">다음 빈칸에 알맞은 말을 고르세요.</p><p className="text-slate-500 text-[0.875em]">Choose the correct word for the blank.</p></div>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-[0.5em]">
+                        <div className="flex items-start gap-[0.75em] p-[1em]"><span className={`bg-${themeColor}-100 text-${themeColor}-700 font-black rounded-lg px-[0.5em] py-[0.25em] text-[0.875em] shrink-0`}>Q{currentQuestion.id}</span><div className="flex flex-col"><h3 className="font-bold text-slate-900 text-[1.125em] leading-snug">{currentQuestion.questionKor}</h3><p className="text-slate-500 font-medium text-[0.875em] mt-[0.25em]">{currentQuestion.questionEng}</p></div></div>
+                        <div className="bg-gray-50 rounded-xl p-[1em] mb-[1em] mx-[0.25em]">
+                            <div>
+                                <div className="flex items-center flex-wrap gap-[0.5em] leading-relaxed">
+                                    <span className="text-[1.25em] font-bold text-slate-900">{currentQuestion.sentence_pre}</span>
+                                    <div className={`px-[1em] py-[0.25em] rounded-md font-bold text-[1.25em] transition-all duration-300 min-w-[5em] text-center border-b-2 ${isCorrect ? `bg-${themeColor}-50 text-${themeColor}-700 border-${themeColor}-500` : (showHint ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : (selectedOption ? 'bg-red-50 text-red-700 border-red-500' : 'bg-yellow-100 text-transparent border-yellow-400 select-none'))}`}>{isCorrect ? selectedOption.text : (showHint ? `[ ${currentQuestion.hint} ]` : (selectedOption ? selectedOption.text : "___"))}</div>
+                                    <span className="text-[1.25em] font-bold text-slate-900">{currentQuestion.sentence_post}{selectedOption && (<span className={`ml-[0.5em] text-[1.125em] ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}</span>
+                                </div>
+                                {showTranslation && (<div className="mt-[1em] pt-[1em] border-t border-gray-200 text-slate-500 italic text-[0.875em] animate-fade-in font-medium">{currentQuestion.translation}</div>)}
+                            </div>
+                        </div>
+                        <div className="flex gap-[0.5em] mb-[1em] px-[0.5em]"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption?.isCorrect} className={`px-[0.75em] py-[0.375em] rounded-lg text-[0.75em] font-bold transition-colors ${selectedOption?.isCorrect ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[1em] h-[1em]" /><span>{showTranslation ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-[0.75em] mb-[1em] px-[0.5em]">{shuffledOptions.map((option, idx) => { const isSelected = selectedOption === option; let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; if (isSelected) { if (option.isCorrect) { btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; } else { btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; } } else if (selectedOption?.isCorrect) { btnClass = "bg-gray-50 border-gray-200 text-slate-400 cursor-not-allowed"; } return (<button key={idx} onClick={() => handleOptionClick(option)} disabled={selectedOption?.isCorrect} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option.text}</button>); })}</div>
+                        {selectedOption && (<div className="p-[1em] rounded-xl border-l-4 mb-[1em] mx-[0.5em] animate-fade-in transition-all bg-[#f8fafc] border-gray-300"><div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-[1em] rounded-lg border-l-4`}><h4 className={`font-bold text-[0.875em] mb-[0.25em] ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Try again.'}</h4><p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{selectedOption.feedback}</p></div></div>)}
+                        <div className="flex justify-between items-center mt-[1em] border-t border-gray-100 pt-[1em] px-[0.5em] pb-[0.5em]"><button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-[1.125em]">←</span><span className="text-[0.75em]">이전 문제 (Prev)</span></button><span className="text-[0.75em] font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span><button onClick={handleNext} disabled={!isCorrect} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] shadow-md transition-colors ${!isCorrect ? 'bg-gray-300 text-slate-500 cursor-not-allowed' : 'bg-gray-900 text-white hover:bg-black'}`}><span className="text-[0.75em]">{currentQuestionIndex < QUIZ_LIST.length - 1 ? '다음 문제 (Next)' : '결과 보기 (Finish)'}</span><span className="text-[1.125em]">→</span></button></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DiscussView = ({ updateProgress, themeColor }) => {
+            const [answers, setAnswers] = useState({});
+            const [showTranslations, setShowTranslations] = useState({});
+            const handleTextChange = (id, value) => { setAnswers(prev => ({ ...prev, [id]: value })); };
+            const toggleTranslation = (id) => { setShowTranslations(prev => ({ ...prev, [id]: !prev[id] })); };
+            
+            return (
+                <div style={{ fontSize: '1.45rem' }} className="max-w-7xl mx-auto animate-fade-in">
+                    <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussHeaderIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
+                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/ec6afc8f9f5d" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-[0.125em]`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/ec6afc8f9f5d" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-[0.125em]`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
+                    <div className="bg-white rounded-[2em] border border-gray-200 shadow-sm p-[2em] md:p-[2.5em]">
+                        {DISCUSS_DATA.map((item, index) => (
+                            <div key={item.id} className={index < DISCUSS_DATA.length - 1 ? "mb-[3em] border-b border-gray-100 pb-[3em]" : "mb-[2em]"}>
+                                <div className="mb-[2em]"><h3 className="text-[1.25em] font-bold text-slate-900 mb-[0.5em]">{item.question}</h3>{showTranslations[item.id] && (<p className="text-slate-500 text-[0.875em] mb-[0.75em] animate-fade-in font-medium">{item.translation}</p>)}<button onClick={() => toggleTranslation(item.id)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[1em] h-[1em]" /><span>{showTranslations[item.id] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                                <FeedbackSection themeColor={themeColor} question={item.question} value={answers[item.id] || ''} onChange={(e) => handleTextChange(item.id, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={<div className="mb-[2.5em] space-y-[1em]"><div className="flex items-center gap-[0.5em]"><span className="text-red-500 text-[1.125em]">📍</span><h4 className="font-bold text-slate-900 text-[1.125em]">핵심 표현 (Essential phrases)</h4></div><div className="space-y-[1em] pl-[0.25em]">{item.keyVocab.map((v, i) => (<div key={i} className={`pl-[1em] border-l-4 border-${themeColor}-500`}><p className="text-slate-700"><span className={`text-${themeColor}-600 font-bold text-[1.125em] mr-[0.5em]`}>{v.term}:</span><span>{v.meaning_eng}</span></p></div>))}</div></div>} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home');
+            const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+            const [userLevel, setUserLevel] = useState("A1"); 
+            
+            const [autoScroll, setAutoScroll] = useState(true);
+            const [showVocab, setShowVocab] = useState(false);
+            const [playbackRate, setPlaybackRate] = useState(1.0);
+
+            const [progress, setProgress] = useState({
+                learn: false, vocab: false, quiz: 0, discuss: false
+            });
+
+            const themeColor = useMemo(() => getLevelTheme(userLevel), [userLevel]);
+
+            const themeHexColors = {
+                'lime': '#84cc16', 'green': '#22c55e', 'sky': '#0ea5e9', 'blue': '#3b82f6', 'violet': '#8b5cf6', 'fuchsia': '#d946ef', 'purple': '#a855f7'
+            };
+            const currentThemeHex = themeHexColors[themeColor] || '#22c55e';
+
+            const updateProgress = (key, value = true) => {
+                setProgress(prev => {
+                    if (prev[key] === value) return prev;
+                    return { ...prev, [key]: value };
+                });
+            };
+
+            const handleSpeedChange = (e) => {
+                const rate = parseFloat(e.target.value);
+                setPlaybackRate(rate);
+            };
+
+            // Enhanced tab switching logic with auto-collapse for 'learn'
+            const handleSetActiveTab = (tab) => {
+                setActiveTab(tab);
+                if (tab === 'learn') {
+                    setIsSidebarCollapsed(true);
+                }
+            };
+
+            // Main Padding Logic based on Tab
+            const mainPaddingClass = useMemo(() => {
+                switch(activeTab) {
+                    case 'home': return 'p-[20px]';    
+                    case 'learn': return 'p-[2px]';    
+                    case 'vocab': return 'p-[16px]';   
+                    case 'quiz': return 'p-[4px]';     
+                    case 'discuss': return 'p-[2px]';  
+                    default: return 'p-[20px]';
+                }
+            }, [activeTab]);
+
+            useEffect(() => {
+                const handleResize = () => {
+                    if (window.innerWidth < 1024) {
+                        setIsSidebarCollapsed(true);
+                    } else {
+                        // Only auto-expand if NOT in learn tab, to respect the auto-collapse rule
+                        if (activeTab !== 'learn') {
+                            setIsSidebarCollapsed(false);
+                        }
+                    }
+                };
+                window.addEventListener('resize', handleResize);
+                handleResize(); 
+                return () => window.removeEventListener('resize', handleResize);
+            }, [activeTab]); // Added activeTab dependency to respect current tab state on resize
+
+            const toggleSidebar = () => {
+                setIsSidebarCollapsed(!isSidebarCollapsed);
+            };
+
+            const renderContent = () => {
+                switch(activeTab) {
+                    case 'home': return <HomeView setActiveTab={handleSetActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                    case 'learn': return <LearnView updateProgress={updateProgress} themeColor={themeColor} autoScroll={autoScroll} showVocab={showVocab} playbackRate={playbackRate} />;
+                    case 'vocab': return <VocabView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'quiz': return <QuizView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'discuss': return <DiscussView updateProgress={updateProgress} themeColor={themeColor} />;
+                    default: return <HomeView setActiveTab={handleSetActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                }
+            };
+
+            // App Bar Rendering
+            const renderHeader = () => {
+                if (activeTab === 'learn') {
+                    return (
+                        <div style={{ fontSize: '1.0rem' }} className="flex items-center justify-between h-full px-[1.5em] border-b border-gray-100 bg-white/90 backdrop-blur">
+                            <div className="flex items-center gap-[0.75em]">
+                                <div className={`p-[0.5em] rounded-lg bg-${themeColor}-50`}>
+                                    <LearnIcon className={`w-[1.25em] h-[1.25em] text-${themeColor}-600`} />
+                                </div>
+                                <div className="flex flex-col">
+                                    <h1 className="text-[1.125em] font-bold text-slate-900 font-cafe24-surround leading-none">동영상 & 스크립트</h1>
+                                    <span className="text-[0.6875em] font-bold text-slate-400 leading-none mt-[0.25em] font-cafe24-surround">Video & Transcript</span>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-[1em]">
+                                <div className="flex items-center gap-[0.5em] cursor-pointer group" onClick={() => setAutoScroll(!autoScroll)}>
+                                    <div className={`w-[2.25em] h-[1.25em] rounded-full relative transition-colors duration-200 ease-in-out ${autoScroll ? `bg-${themeColor}-500` : 'bg-gray-300'}`}>
+                                        <div className={`absolute top-[0.25em] w-[0.75em] h-[0.75em] bg-white rounded-full shadow-sm transition-transform duration-200 ${autoScroll ? 'left-[1.25em]' : 'left-[0.25em]'}`}></div>
+                                    </div>
+                                    <span className="text-[0.875em] font-bold text-slate-600 group-hover:text-slate-800 transition-colors whitespace-nowrap hidden sm:inline">Auto Scroll</span>
+                                </div>
+                                <div className="flex items-center gap-[0.5em] bg-gray-50 px-[0.75em] py-[0.375em] rounded-lg border border-gray-200">
+                                    <SpeedSolidIcon className="w-[1em] h-[1em] text-slate-500" />
+                                    <div className="flex items-center gap-[0.5em]">
+                                        <span className="text-[0.625em] font-medium text-slate-400">0.5x</span>
+                                        <input type="range" min="0.5" max="1.0" step="0.01" value={playbackRate} onChange={handleSpeedChange} className="w-[5em] h-[0.375em] bg-gray-200 rounded-lg appearance-none cursor-pointer" style={{ '--thumb-color': currentThemeHex }} />
+                                        <span className="text-[0.625em] font-medium text-slate-400">1.0x</span>
+                                    </div>
+                                    <span className={`text-[0.75em] font-bold text-${themeColor}-700 min-w-[2.5em] text-center`}>{playbackRate.toFixed(2)}x</span>
+                                </div>
+                                <button onClick={() => setShowVocab(!showVocab)} className={`flex items-center gap-[0.5em] px-[0.75em] py-[0.375em] rounded-lg border transition-all shadow-sm ${showVocab ? 'bg-gray-100 border-gray-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
+                                    <OpenBookSolidIcon className="w-[1em] h-[1em] text-slate-600" />
+                                    <span className="text-[0.875em] font-bold text-slate-700 whitespace-nowrap hidden sm:inline">Vocabulary</span>
+                                </button>
+                            </div>
+                        </div>
+                    );
+                } else {
+                     // Empty header for other tabs to maintain layout structure but with 1.3x scaling potential if needed
+                     // The logic below ensures 'header' tag exists with proper height and scaling even if empty
+                    return (
+                        <div style={{ fontSize: '1.3rem' }} className="h-full flex items-center px-[1.5em]">
+                            {/* Placeholder or Global Header Content if desired */}
+                        </div>
+                    );
+                }
+            };
+            
+            // Dynamic margin calculation based on Sidebar state and scaling
+            // Sidebar Expanded: 16em * 1.15 = 18.4rem
+            // Sidebar Collapsed: 5.5em * 1.0 = 5.5rem
+            // Since we cannot easily mix units in Tailwind class names dynamically with variables in this setup without complex CSS, 
+            // we use inline styles for the main content margin.
+            // const sidebarWidthRem = isCollapsed ? 5.5 : (16 * 1.15); // Unused, removing or fixing.
+
+            return (
+                <div className="flex min-h-screen bg-[#f9fafb]">
+                    <Sidebar activeTab={activeTab} setActiveTab={handleSetActiveTab} isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} userLevel={userLevel} themeColor={themeColor} />
+                    
+                    <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out`} style={{ marginLeft: isSidebarCollapsed ? '5.5rem' : '18.4rem' }}>
+                        <header className={`h-16 bg-white sticky top-0 z-40 transition-all duration-300`}>
+                            {renderHeader()}
+                        </header>
+                        <main className={`flex-1 ${mainPaddingClass} overflow-hidden flex flex-col`}>{renderContent()}</main>
+                    </div>
+                    
+                    <nav className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-3 z-50">
+                        {['home','learn','vocab','quiz','discuss'].map(t=><button key={t} onClick={()=>handleSetActiveTab(t)} className={`p-2 rounded-lg ${activeTab===t ? `text-${themeColor}-600 bg-${themeColor}-50` : 'text-slate-400'}`}>{t==='home'?<HomeIcon className="w-6 h-6"/>:t==='learn'?<LearnIcon className="w-6 h-6"/>:t==='vocab'?<VocabIcon className="w-6 h-6"/>:t==='quiz'?<QuizIcon className="w-6 h-6"/>:<DiscussIcon className="w-6 h-6"/>}</button>)}
+                    </nav>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
