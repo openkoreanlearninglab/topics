@@ -149,9 +149,9 @@
                 ]
             },
             {
-                term: '반죽을 감싸서 만든 디저트인데요',
-                mainDef: 'It is a dessert made by wrapping the dough',
-                variants: ['반죽을 감싸서 만든 디저트인데요'],
+                term: '감싸서 만든 디저트인데요',
+                mainDef: 'It is a dessert made by wrapping (it)',
+                variants: ['감싸서 만든 디저트인데요'],
                 examples: [{ kor: '종이로 감싸서 선물했어요.', eng: 'I wrapped it in paper and gave it as a gift.' }],
                 subDefs: [
                     { subTerm: '감싸서 만들다', subDef: 'to wrap and make' },
@@ -526,7 +526,7 @@
             {
                 term: '논쟁이 불거지다',
                 mainDef: 'Controversy flares up',
-                variants: ['논쟁도 불거지고 있습니다'],
+                variants: ['불거지고 있습니다'],
                 examples: [{ kor: '문제가 불거졌어요.', eng: 'The problem flared up.' }],
                 subDefs: []
             },
@@ -1263,7 +1263,14 @@
             const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); const el = sidebarVocabRefs.current[wordData.term]; if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } };
 
             const renderTextWithVocab = (text) => {
-                const allTerms = VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); return terms.map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length);
+                // 수정된 로직: subDefs는 하이라이트 매칭에서 제외하고, term과 variants만 포함
+                const allTerms = VOCAB_DATA.flatMap(vocab => { 
+                    const terms = [vocab.term]; 
+                    if (vocab.variants) terms.push(...vocab.variants);
+                    // subDefs 매핑 코드 제거됨: 스크립트 내 부분 단어 하이라이트 방지
+                    return terms.map(term => ({ term, vocab })); 
+                }).sort((a, b) => b.term.length - a.term.length);
+
                 const matches = []; allTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; if (!matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end))) matches.push({ start: index, end, term, vocab }); index = end; } }); matches.sort((a, b) => a.start - b.start);
                 const result = []; let lastIndex = 0; matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); result.push({ isVocab: true, ...match.vocab, displayText: match.term, key: idx }); lastIndex = match.end; }); if (lastIndex < text.length) result.push(text.substring(lastIndex));
                 return result.map((part, index) => { if (typeof part === 'string') return part; const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term); return (<span key={part.key} className={`cursor-pointer border-b-2 transition-all duration-200 inline-block leading-tight text-[1.5625rem] font-black font-barun-pen tracking-wide ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-0.5 mx-0.5` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} onMouseEnter={(e) => handleVocabEnter(e, part)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, part)}>{part.displayText}</span>); });
