@@ -25,6 +25,7 @@
         .level-a2 { background-color: #d1fae5; color: #059669; }
         .level-b1 { background-color: #ffedd5; color: #ea580c; }
         .level-b1plus { background-color: #fce7f3; color: #be185d; }
+        .level-b2 { background-color: #f3e8ff; color: #7e22ce; } /* B2 레벨 스타일 추가 (보라색) */
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen p-4 sm:p-8">
@@ -59,6 +60,7 @@
                     <button onclick="filterList('A1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-blue-100 transition whitespace-nowrap filter-btn" data-filter="A1">A1</button>
                     <button onclick="filterList('A2+')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-green-100 transition whitespace-nowrap filter-btn" data-filter="A2+">A2+</button>
                     <button onclick="filterList('B1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-orange-100 transition whitespace-nowrap filter-btn" data-filter="B1">B1</button>
+                    <button onclick="filterList('B2')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-purple-100 transition whitespace-nowrap filter-btn" data-filter="B2">B2</button>
                 </div>
             </div>
         </div>
@@ -69,7 +71,17 @@
                 
                 <!-- ▼▼▼ 아이템 목록 ▼▼▼ -->
 
-                <!-- [A2+] 보통 어떤 음악을 들어요? (새로 추가됨) -->
+                <!-- [B2] 조상 찾기 DNA 검사 (새로 추가됨) -->
+                <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="B2">
+                    <a href="b2-ancestry-dna-test.html" class="block p-5 sm:p-6 group">
+                        <div class="flex items-center">
+                            <span class="level-badge level-b2">B2</span>
+                            <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">조상 찾기 DNA 검사</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- [A2+] 보통 어떤 음악을 들어요? -->
                 <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A2+">
                     <a href="a2plus-what-music-do-you-listen-to.html" class="block p-5 sm:p-6 group">
                         <div class="flex items-center">
