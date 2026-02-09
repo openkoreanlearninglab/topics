@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenKorean - 조상 찾기 DNA 검사</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <style>
+        @font-face{font-family:'NoonnuBasicGothic';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');font-weight:normal;font-display:swap}body{font-family:'NoonnuBasicGothic',sans-serif;background-color:#f9fafb;color:#334155}.font-basic{font-family:'NoonnuBasicGothic',sans-serif}.font-jua{font-family:'Jua',sans-serif}.font-noto{font-family:'Noto Sans KR',sans-serif}.font-sunflower{font-family:'Sunflower',sans-serif}.font-nanum-round{font-family:'NanumSquareRound',sans-serif}@font-face{font-family:'Cafe24SurroundAir';src:url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24{font-family:'Cafe24SurroundAir',sans-serif}@font-face{font-family:'Cafe24Surround';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-surround{font-family:'Cafe24Surround',sans-serif}@font-face{font-family:'Cafe24Decoshadow';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-deco{font-family:'Cafe24Decoshadow',sans-serif}@font-face{font-family:'Cafe24Decoschool';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-school{font-family:'Cafe24Decoschool',sans-serif}@font-face{font-family:'Cafe24Anemone';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-anemone{font-family:'Cafe24Anemone',sans-serif}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');font-weight:700;font-display:swap}.font-school-smile{font-family:'SchoolSafetyRoundedSmile',sans-serif}@font-face{font-family:'SchoolSafetyFreeTime';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/HakgyoansimJayusiganR.woff2') format('woff2');font-weight:normal;font-style:normal}.font-school-free{font-family:'SchoolSafetyFreeTime',sans-serif}@font-face{font-family:'Juache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');font-weight:normal;font-display:swap}.font-juache{font-family:'Juache',sans-serif}@font-face{font-family:'SchoolSafetyOcarina';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-ocarina{font-family:'SchoolSafetyOcarina',sans-serif}@font-face{font-family:'SchoolSafetyPictureDiary';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}.font-diary{font-family:'SchoolSafetyPictureDiary',sans-serif}@font-face{font-family:'SchoolSafeBoardMarker';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-marker{font-family:'SchoolSafeBoardMarker',sans-serif}@font-face{font-family:'SchoolSafeDictation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');font-weight:normal;font-display:swap}.font-dictation{font-family:'SchoolSafeDictation',sans-serif}@font-face{font-family:'Cafe24Gowoonbam';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');font-weight:normal;font-display:swap}.font-gowoonbam{font-family:'Cafe24Gowoonbam',sans-serif}@font-face{font-family:'SchoolSafetyMustache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-mustache{font-family:'SchoolSafetyMustache',sans-serif}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#94a3b8}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.animate-fade-in{animation:fadeIn 0.3s ease-out forwards}input[type=range]{-webkit-appearance:none;background:transparent}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:12px;width:12px;border-radius:50%;background:var(--thumb-color,#22c55e);cursor:pointer;margin-top:-4px;border:1px solid white;box-shadow:0 1px 2px rgba(0,0,0,0.15)}input[type=range]::-webkit-slider-runnable-track{width:100%;height:4px;cursor:pointer;background:#e2e8f0;border-radius:2px}
+
+        /* --- Scalable Base Settings --- */
+        :root {
+            --base-size: clamp(12px, 1vw, 16px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-expanded-style {
+            font-size: calc(var(--base-size) * 1.15);
+            width: calc(256px * 1.15) !important; /* 294.4px approx */
+        }
+        .sidebar-expanded-style svg { width: 1.5em; height: 1.5em; }
+        .sidebar-collapsed-style {
+            font-size: calc(var(--base-size) * 1.0);
+            width: 88px !important;
+        }
+        .sidebar-collapsed-style svg { width: 2em; height: 2em; } /* Icon bigger in collapsed */
+
+        /* Header Styles */
+        .header-learn-style {
+            font-size: calc(var(--base-size) * 1.0);
+        }
+        .header-learn-style svg { width: 1.5em; height: 1.5em; }
+        .header-global-style {
+            font-size: calc(var(--base-size) * 1.3);
+        }
+        .header-global-style svg { width: 1.5em; height: 1.5em; }
+
+        /* Body/Content Styles */
+        .view-home-style {
+            font-size: calc(var(--base-size) * 1.25);
+        }
+        .view-home-style svg { width: 1.5em; height: 1.5em; }
+        .view-home-style .icon-lg { width: 2.5em; height: 2.5em; } /* For large icons */
+
+        .view-learn-script-style {
+            font-size: calc(var(--base-size) * 1.3);
+        }
+        .view-learn-script-style svg { width: 1.2em; height: 1.2em; }
+
+        .view-vocab-style {
+            font-size: calc(var(--base-size) * 1.4);
+        }
+        .view-vocab-style svg { width: 1.5em; height: 1.5em; }
+
+        .view-quiz-style {
+            font-size: calc(var(--base-size) * 1.55);
+        }
+        .view-quiz-style svg { width: 1.5em; height: 1.5em; }
+
+        .view-discuss-style {
+            font-size: calc(var(--base-size) * 1.35);
+        }
+        .view-discuss-style svg { width: 1.5em; height: 1.5em; }
+
+        /* Helper for replacing fixed w/h classes */
+        .icon-base { width: 1.5em; height: 1.5em; }
+        .icon-lg { width: 2em; height: 2em; }
+        .icon-xl { width: 3em; height: 3em; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
+        const { createPortal } = ReactDOM;
+
+        // --- Data Definitions ---
+        const LEVEL_DEFINITIONS = {
+            "A1": { title: "Novice", desc: "Can use and understand very simple everyday expressions. Can introduce themselves, ask and answer basic questions." },
+            "A1+": { title: "Pre-Beginner", desc: "Still beginner, but can handle slightly more than A1." },
+            "A2": { title: "Beginner", desc: "Can understand frequently used sentences (family, shopping, work, hobbies)." },
+            "A2+": { title: "Upper Beginner", desc: "Between A2 and B1. Can speak a bit more smoothly about daily life." },
+            "B1": { title: "Pre-Intermediate", desc: "Can understand the main points of clear standard speech or texts on familiar topics." },
+            "B1+": { title: "Lower Intermediate", desc: "Stronger B1. More comfortable carrying conversations." },
+            "B2": { title: "Intermediate", desc: "Can understand the main ideas of complex texts." },
+            "B2+": { title: "Upper Intermediate", desc: "Near C1. Can argue a point logically." },
+            "C1": { title: "Advanced", desc: "Can understand long, demanding texts and implied meanings." },
+            "C1+": { title: "Upper Advanced", desc: "Very strong C1, approaching native-like flexibility." },
+            "C2": { title: "Proficient", desc: "Can understand virtually everything heard or read." }
+        };
+
+        const VOCAB_DATA = [
+            { term: 'DNA 검사', mainDef: 'DNA test', definition: '' },
+            { term: '정보', mainDef: 'information', definition: '' },
+            { term: '가지고 있는 거', mainDef: '(the thing that one) has/possesses', definition: '• 가지고 있다: to have, possess\n• -는 거: A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' },
+            { term: '머리카락', mainDef: 'hair', definition: '' },
+            { term: '있잖아요', mainDef: 'you know / as you know', definition: '• 있다: to exist\n• -잖아요: used to remind the listener of shared or obvious information, or to emphasize that something is already known' },
+            { term: '뽑아서', mainDef: 'to pull out and then...', definition: '• 뽑다: to pull out, pluck\n• -아서/어서: connects two actions in sequence, where the first is a necessary step for the second.' },
+            { term: '연구소', mainDef: 'laboratory, research institute', definition: '' },
+            { term: '조상', mainDef: 'ancestor', definition: '' },
+            { term: '어디서 왔는지 알려줘요', mainDef: '(it) tells where (they) came from', definition: '• 어디서: from where\n• 왔는지: where (one) came from (embedded question)\n• 알려주다: to let know, inform' },
+            { term: '재밌겠다', mainDef: 'it sounds fun / it must be fun', definition: '• 재미있다: to be fun/interesting\n• -겠다: expresses assumption or supposition.' },
+            { term: '조심해야 할 것', mainDef: 'thing to be careful about', definition: '• 조심하다: to be careful\n• -야 하다: "have to…" or "must…"; used to express necessity or obligation\n• -ㄹ 것: the thing that will/should be...' },
+            { term: '확률', mainDef: 'probability', definition: '' },
+            { term: '알려주거든요', mainDef: 'because it tells/informs', definition: '• 알려주다: to let know, inform\n• -거든요: provides a reason the listener may not know.' },
+            { term: '아마도', mainDef: 'maybe, probably', definition: '' },
+            { term: '뜻이에요', mainDef: 'it means...', definition: '• 뜻: meaning\n• -이에요: is (polite ending)' },
+            { term: '당신', mainDef: 'you (formal)', definition: '' },
+            { term: '확실한 건', mainDef: 'the certain thing is...', definition: '• 확실하다: to be certain\n• -ㄴ 건: A colloquial form of -ㄴ/은 것은, used to nominalize by turning a descriptive verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' },
+            { term: '추측', mainDef: 'guess, speculation', definition: '' },
+            { term: '같은 거네요', mainDef: 'it seems like... / it\'s like...', definition: '• 같은 거: a thing like...\n• -네요: sentence ending expressing surprise or realization.' },
+            { term: '똑같다', mainDef: 'to be exactly the same', definition: '' },
+            { term: '비슷한 거네요', mainDef: 'it seems similar', definition: '• 비슷하다: to be similar\n• -ㄴ 거: A colloquial form of -ㄴ/은 것, used to nominalize by turning a descriptive verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”\n• -네요: sentence ending expressing surprise or realization.' },
+            { term: '인종', mainDef: 'race', definition: '' },
+            { term: '말도요', mainDef: 'the word too / also the topic of...', definition: '• 말: word, speech, topic\n• -도: also, too, even' },
+            { term: '흑인', mainDef: 'Black person', definition: '' },
+            { term: '백인', mainDef: 'White person', definition: '' },
+            { term: '아시아인', mainDef: 'Asian person', definition: '' },
+            { term: '나누는 거요', mainDef: 'the act of dividing', definition: '• 나누다: to divide\n• -는 거: A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' },
+            { term: '과학적으로', mainDef: 'scientifically', definition: '' },
+            { term: '정확한 건', mainDef: 'the accurate thing is...', definition: '• 정확하다: to be accurate\n• -ㄴ 건: A colloquial form of -ㄴ/은 것은, used to nominalize by turning a descriptive verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' },
+            { term: '뭐랄까', mainDef: 'how should I say... / let\'s see...', definition: '' },
+            { term: '겉모습만 보고', mainDef: 'looking only at the appearance', definition: '• 겉모습: appearance\n• -만: only, just\n• 보다: to see, look\n• -고: and (connective)' },
+            { term: '막', mainDef: 'carelessly, just, recklessly', definition: '' },
+            { term: '나눈 거예요', mainDef: 'it\'s that (they) divided', definition: '• 나누다: to divide\n• -ㄴ 거예요: A colloquial form of -ㄴ 것이다, used to state or explain a fact.' },
+            { term: '같은데 말이죠', mainDef: 'it\'s the same, but... / even though it\'s the same...', definition: '• 같다: to be the same\n• -는데: used to set up background, contrast, or cause\n• 말이죠: you know / I mean (for emphasis)' },
+            { term: '중에서', mainDef: 'among, out of', definition: '' },
+            { term: '혹시', mainDef: 'by any chance, perhaps', definition: '' },
+            { term: '검사한 사람', mainDef: 'person who tested', definition: '• 검사하다: to test, examine\n• -ㄴ/은: used to turn a past-tense verb into an "adjective-ish" phrase that describes the following noun' },
+            { term: '인도 사람', mainDef: 'Indian person', definition: '' },
+            { term: '보이셨대요', mainDef: '(they say) he looked like...', definition: '• 보이시다: to look, appear (honorific)\n• -었대요: reported past tense' },
+            { term: '검사를 해봤는데', mainDef: '(I) tried testing, and/but...', definition: '• 검사를 하다: to do a test\n• -아/어 보다: to try doing...\n• -는데: used to set up background, contrast, or cause' },
+            { term: '결과', mainDef: 'result', definition: '' },
+            { term: '겉모습', mainDef: 'appearance', definition: '' },
+            { term: '다를 수 있는 거죠', mainDef: 'it can be different, you know', definition: '• 다르다: to be different\n• -ㄹ 수 있다: can...\n• -는 거죠: it is that... (confirming a fact)' },
+            { term: '신기하다', mainDef: 'to be amazing, fascinating', definition: '' },
+            { term: '나왔대요', mainDef: '(they say) it came out', definition: '• 나오다: to come out\n• -았대요: reported past tense' },
+            { term: '조금이네요', mainDef: 'it\'s a little bit!', definition: '• 조금: a little\n• -네요: sentence ending expressing surprise or realization.' },
+            { term: '조금이죠', mainDef: 'it\'s a little bit, of course', definition: '• 조금: a little\n• -이죠: for confirmation or emphasis' },
+            { term: '가 보고 싶다고 했는데', mainDef: '(she) said she wanted to try going, and/but...', definition: '• 가다: to go\n• -아/어 보다: to try doing\n• -고 싶다: want to\n• -고 하다: to say that...\n• -는데: used to set up background, contrast, or cause' },
+            { term: '그렇겠네요', mainDef: 'I guess so / That must be right', definition: '' },
+            { term: '시베리아', mainDef: 'Siberia', definition: '' },
+            { term: '나왔다고 했어요', mainDef: '(he) said it came out', definition: '• 나오다: to come out\n• -다고 하다: indirect quotation' },
+            { term: '검사하고 나서', mainDef: 'after testing', definition: '• 검사하다: to test\n• -고 나서: after doing...' },
+            { term: '순수한', mainDef: 'pure', definition: '' },
+            { term: '무슨 뜻이죠?', mainDef: 'What does it mean?', definition: '' },
+            { term: '다른 게 안 섞였다', mainDef: 'something else is not mixed', definition: '• 다른 게: something else\n• 섞이다: to be mixed' },
+            { term: '는 뜻이에요', mainDef: 'it means...', definition: '' },
+            { term: '쭉 따라가면', mainDef: 'if you follow all the way', definition: '• 쭉: straight, all the way\n• 따라가다: to follow\n• -면: if, when' },
+            { term: '여기저기서', mainDef: 'from here and there', definition: '' },
+            { term: '섞여 있어요', mainDef: 'is mixed', definition: '• 섞이다: to be mixed\n• -아/어 있다: used to show a state that continues as the result of an action.' },
+            { term: '당연한 거예요', mainDef: 'it\'s a natural thing / of course', definition: '• 당연하다: to be natural, obvious\n• -ㄴ 거예요: a colloquial form of -ㄴ 것이다, which is used to state or explain a fact or essence.' },
+            { term: '그렇구나', mainDef: 'I see / Oh, is that so', definition: '' },
+            { term: '검사', mainDef: 'test, examination', definition: '' },
+            { term: '안 좋은 점', mainDef: 'bad point, downside', definition: '• 점: point, aspect' },
+            { term: '생각해 볼 점', mainDef: 'point to think about', definition: '• 생각하다: to think\n• -아/어 보다: to try doing\n• -ㄹ 점: point to...' },
+            { term: '결정하다', mainDef: 'to decide, determine', definition: '' },
+            { term: '성격이나 능력 같은 거요', mainDef: 'things like personality or ability', definition: '• 성격: personality\n• 능력: ability\n• 같은 거: things like...' },
+            { term: '아니거든요', mainDef: 'it\'s not (like that), you see', definition: '• 아니다: to not be\n• -거든요: used to emphasize what you say, or give an extra explanation (background information, reason, clarification).' },
+            { term: '개인정보', mainDef: 'personal information', definition: '' },
+            { term: '나만 아는 비밀 정보잖아요', mainDef: 'it\'s secret information that only I know, you know', definition: '• 알다: to know\n• -는: used to turn a present-tense verb into an “adjective-ish” phrase that describes the following noun\n• 비밀: secret\n• 정보: information\n• -잖아요: used to remind the listener of shared or obvious information.' },
+            { term: '실제로', mainDef: 'actually, in reality', definition: '' },
+            { term: '도둑맞기도 했어요', mainDef: 'it was also stolen', definition: '• 도둑맞다: to be stolen\n• -기도 하다: used when showing that something happens too or sometimes happens in addition to other things.' },
+            { term: '헐', mainDef: 'Whoa / OMG (slang)', definition: '' },
+            { term: '무서운데요', mainDef: 'it\'s scary...', definition: '• 무섭다: to be scary\n• -ㄴ데요: used to give background information, show contrast, hint at something without saying it directly, soften a statement or lead into another idea' },
+            { term: '인종차별', mainDef: 'racial discrimination', definition: '' },
+            { term: '이어지다', mainDef: 'to be connected, to lead to', definition: '' },
+            { term: '다는 거예요', mainDef: 'it means that... / the thing is that...', definition: '' },
+            { term: '나누고', mainDef: 'divide and...', definition: '• 나누다: to divide\n• -고: and (connective)' },
+            { term: '나쁘게 생각하는 거예요', mainDef: 'it is to think badly of...', definition: '• 나쁘게: badly\n• 생각하다: to think\n• -는 거예요: a colloquial form of -는 것이다, which is used to state or explain a fact or essence.' },
+            { term: '받아들여야 할까요?', mainDef: 'how should I accept/interpret?', definition: '• 받아들이다: to accept, receive\n• -야 할까요?: should I...?' },
+            { term: '재미로 보는 건', mainDef: 'the act of watching for fun', definition: '• 재미로: for fun\n• -ㄴ 건: A colloquial form of -ㄴ/은 것은, used to nominalize by turning a descriptive verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that ….”' },
+            { term: '기억해야 할 게', mainDef: 'thing to remember', definition: '• 기억하다: to remember\n• -야 하다: must, have to\n• -ㄹ 게: thing to... (colloquial)' },
+            { term: '정체성', mainDef: 'identity', definition: '' },
+            { term: '하는 거예요', mainDef: 'it is the act of doing...', definition: '' },
+            { term: '답', mainDef: 'answer', definition: '' },
+            { term: 'DNA에만 있는 게 아니에요', mainDef: 'it\'s not only in DNA', definition: '• -에만 있다: to exist only in...\n• -는 게 아니다: it is not that...' },
+            { term: 'DNA가 다가 아니군요', mainDef: 'So DNA isn\'t everything!', definition: '• -이/가 다가 아니다: is not everything\n• -군요: expresses new realization' },
+            { term: '문화', mainDef: 'culture', definition: '' },
+            { term: '말을 쓰다', mainDef: 'to use words/language', definition: '• 말: word, language\n• 쓰다: to use' },
+            { term: '경험', mainDef: 'experience', definition: '' },
+            { term: '이런 게', mainDef: 'things like this (colloquial)', definition: '' },
+            { term: '훨씬', mainDef: 'much more', definition: '' },
+            { term: '내가 어떤 사람이고 싶은지', mainDef: 'who I want to be', definition: '• -고 싶다: want to...\n• 어떤 -인지: what kind of... (embedded question)' },
+            { term: '뭘 좋아하고 어떻게 사는지', mainDef: 'what I like and how I live', definition: '• 뭘 좋아하다: what (I) like\n• 어떻게 사는지: how (I) live (embedded question)' },
+            { term: '만드는 거예요', mainDef: 'it\'s the thing that makes...', definition: '• 만들다: to make\n• -는 거예요: a colloquial form of -는 것이다, which is used to state or explain a fact or essence.' },
+            { term: '맞는 말이네요', mainDef: 'That\'s a correct statement! / That makes sense!', definition: '• 맞다: to be correct\n• -는: modifier\n• 말: word, statement\n• -이네요: expresses realization' },
+            { term: '같다는 거', mainDef: 'the fact that it\'s the same', definition: '• 같다: to be the same\n• -는 거: A colloquial form of -는 것, used to nominalize a verb.' },
+            { term: '기억하면 좋구요', mainDef: 'it\'s good if you remember, and...', definition: '• 기억하다: to remember\n• -면 좋다: it\'s good if...\n• -구요: (informal addressee-raising) An expression used to ask something discussed already or known to both parties.' },
+            { term: '소중하다', mainDef: 'to be precious, valuable', definition: '' },
+            { term: '흥미로운 주제', mainDef: 'interesting topic', definition: '• 흥미로운: interesting\n• 주제: topic, subject' },
+            { term: '찾아올게요', mainDef: 'I will come back / visit again', definition: '• 찾아오다: to come, visit\n• -게요: I will... (expresses speaker\'s intention)' }
+        ];
+
+        const QUIZ_LIST = [
+            { id: 1, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "DNA는 우리 몸 안에 있는 ", sentence_post: "예요.", correct_word: "정보", translation: "DNA is the information inside our bodies.", hint: "information", options: [{ text: "성격", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "정체성", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "능력", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "정보", isCorrect: true, feedback: "The dialogue begins by defining DNA as the information contained within our bodies." }] },
+            { id: 2, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "DNA 검사는 우리의 아주 옛날 가족인 ", sentence_post: "이/가 어디서 왔는지 알려줘요.", correct_word: "조상", translation: "A DNA test tells us where our very old family, our ancestors, came from.", hint: "ancestors", options: [{ text: "조상", isCorrect: true, feedback: "The main purpose of the test, as explained in the dialogue, is to find out where one's ancestors came from." }, { text: "자신", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "친구", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "이웃", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 3, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "DNA 검사 결과는 100% 확실한 것이 아니라 ", sentence_post: "으로만 결과를 알려줘요.", correct_word: "확률", translation: "DNA test results are not 100% certain and only provide results as a probability.", hint: "probability", options: [{ text: "확률", isCorrect: true, feedback: "Yuna explains that the results are not certain and are provided only as probabilities." }, { text: "거짓말", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "비밀", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "사실", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 4, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "", sentence_post: "은 겉모습만 보고 나눈 것으로 과학적으로 정확하지 않아요.", correct_word: "인종", translation: "'Race' is something divided based only on appearance and is not scientifically accurate.", hint: "Race", options: [{ text: "조상", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "DNA", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "문화", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "인종", isCorrect: true, feedback: "The dialogue discusses how the concept of 'race' isn't scientifically precise due to genetic similarity among humans." }] },
+            { id: 5, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "모든 사람의 DNA는 99.9% 똑같기 때문에 ", sentence_post: " 인종이라는 말은 과학적으로 정확하지 않아요.", correct_word: "순수한", translation: "Because everyone's DNA is 99.9% the same, the term 'pure' race is not scientifically accurate.", hint: "pure", options: [{ text: "순수한", isCorrect: true, feedback: "Yuna explains that because all DNA is so similar, the idea of a 'pure' race is not scientifically valid." }, { text: "비슷한", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "유명한", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "특별한", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 6, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "DNA가 성격이나 능력 같은 모든 것을 ", sentence_post: " 것은 아니에요.", correct_word: "결정하는", translation: "It's not that DNA determines everything like personality or abilities.", hint: "determining", options: [{ text: "보여주는", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "결정하는", isCorrect: true, feedback: "One of the concerns raised is that people might mistakenly believe DNA determines everything about a person." }, { text: "만드는", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "바꾸는", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 7, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "DNA 검사 결과를 가지고, \"A나라 사람들이 B나라 사람들보다 더 똑똑해\"라고 말하면 ", sentence_post: "으로 이어질 수 있어요.", correct_word: "인종차별", translation: "If you say, 'People from country A are smarter than people from country B' based on DNA results, it can lead to racial discrimination.", hint: "racial discrimination", options: [{ text: "과학", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "남녀차별", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "인종차별", isCorrect: true, feedback: "The dialogue warns that DNA results could be misused to create prejudice and lead to racial discrimination." }, { text: "정체성", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 8, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "", sentence_post: " DNA 검사를 해보는 건 괜찮지만, \"내가 누구인지\"는 DNA만 있지 않아요.", correct_word: "재미로", translation: "It's okay to take a DNA test for fun, but 'who I am' is not just in the DNA.", hint: "For fun", options: [{ text: "실수로", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "재미로", isCorrect: true, feedback: "Yuna suggests that the results should be viewed for fun and not as the sole definition of a person." }, { text: "게임으로", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "인터넷으로", isCorrect: false, feedback: "다시 시도해 보세요." }] },
+            { id: 9, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "나의 ", sentence_post: "은 내가 어떤 사람이고 싶은지, 뭘 좋아하고 어떻게 사는지, 어떤 경험을 했는지가 만들어요.", correct_word: "정체성", translation: "My identity is made by who I want to be, what I like, how I live, and what experiences I've had.", hint: "identity", options: [{ text: "성격", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "능력", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "겉모습", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "정체성", isCorrect: true, feedback: "The main conclusion of the dialogue is that a person's identity is shaped by many factors beyond DNA." }] },
+            { id: 10, questionKor: "빈칸에 알맞은 말을 고르세요.", questionEng: "Choose the correct word for the blank.", sentence_pre: "또한, DNA 검사 연구소가 여러분의 ", sentence_post: "을/를 가져가지 못하게 해야 해요.", correct_word: "개인 정보", translation: "Also, you must prevent DNA testing labs from taking your personal information.", hint: "personal information", options: [{ text: "돈", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "개인 정보", isCorrect: true, feedback: "A major issue discussed is the risk of personal information being leaked or stolen by companies that provide DNA tests." }, { text: "정체성", isCorrect: false, feedback: "다시 시도해 보세요." }, { text: "머리카락", isCorrect: false, feedback: "다시 시도해 보세요." }] }
+        ];
+
+        const SCRIPT_DATA = [
+            { id: 's1', speaker: '민호', kor: '안녕하세요. <이 주제로 이야기해봐요> 팟캐스트예요.', time: [0, 4.5], eng: "Hello. This is the <Let's Talk About This Topic> podcast." },
+            { id: 's2', speaker: '민호', kor: '저는 민호예요.', time: [4.5, 6.5], eng: "I'm Minho." },
+            { id: 's3', speaker: '유나', kor: '안녕하세요. 저는 유나예요.', time: [6.5, 9.0], eng: "Hello. I'm Yuna." },
+            { id: 's4', speaker: '유나', kor: '오늘은 그 ‘DNA 검사’ 그거 이야기해 봐요.', time: [9.0, 13.0], eng: "Today, let's talk about 'DNA tests'." },
+            { id: 's5', speaker: '민호', kor: '아, DNA요? 저기 DNA는 뭐예요?', time: [13.0, 17.0], eng: "Ah, DNA? What is DNA?" },
+            { id: 's6', speaker: '유나', kor: 'DNA는 우리 몸 안에 있는 정보예요.', time: [17.0, 20.5], eng: "DNA is information inside our bodies." },
+            { id: 's7', speaker: '유나', kor: '음, 우리 모두 가지고 있는 거예요.', time: [20.5, 24.0], eng: "Hmm, it's something we all have." },
+            { id: 's8', speaker: '민호', kor: '아, 정보요? 그럼 DNA 검사는 뭐예요?', time: [24.0, 28.5], eng: "Ah, information? Then what is a DNA test?" },
+            { id: 's9', speaker: '유나', kor: '예를 들면, 머리카락 같은 거 있잖아요.', time: [28.5, 32.0], eng: "For example, you have hair, right?" },
+            { id: 's10', speaker: '유나', kor: '그걸 조금 뽑아서 연구소에 보내요.', time: [32.0, 36.0], eng: "You pull out a little and send it to a lab." },
+            { id: 's11', speaker: '유나', kor: '그러면 그 연구소에서 그 조상, 조상이 어디서 왔는지 알려줘요.', time: [36.0, 42.0], eng: "Then the lab tells you where your ancestors came from." },
+            { id: 's12', speaker: '민호', kor: '조상이요?', time: [42.0, 44.0], eng: "Ancestors?" },
+            { id: 's13', speaker: '유나', kor: '네, ‘조상’ 아주 옛날 할아버지 할아버지, 네 그런 옛날 가족들이요.', time: [44.0, 50.0], eng: "Yes, 'ancestors,' very old grandfathers, grandfathers, yes, family from long ago." },
+            { id: 's14', speaker: '민호', kor: '와 재밌겠다. 내 조상이 어디서 왔는지 아는 거예요?', time: [50.0, 55.0], eng: "Wow, that sounds fun. I can find out where my ancestors came from?" },
+            { id: 's15', speaker: '유나', kor: '네, 재밌죠. 근데 이게 조심해야 할 것도 있어요.', time: [55.0, 59.0], eng: "Yes, it's fun. But there are things to be careful about." },
+            { id: 's16', speaker: '유나', kor: '100% 다 맞는 건 아니에요.', time: [59.0, 62.0], eng: "It's not 100% correct." },
+            { id: 's17', speaker: '민호', kor: '아 정말요? 왜 100%는 아니에요?', time: [62.0, 66.0], eng: "Ah, really? Why isn't it 100%?" },
+            { id: 's18', speaker: '유나', kor: '그게 확률로만 알려주거든요.', time: [66.0, 69.5], eng: "That's because it only tells you in probabilities." },
+            { id: 's19', speaker: '유나', kor: '’확률’이라는 게 ‘아마도’ 그런 뜻이에요.', time: [69.5, 74.0], eng: "'Probability' means something like 'maybe'." },
+            { id: 's20', speaker: '민호', kor: '아마도.', time: [74.0, 75.5], eng: "Maybe." },
+            { id: 's21', speaker: '유나', kor: '네, “아마도 당신 조상은 여기 사람일 거예요” 이렇게요.', time: [75.5, 80.0], eng: "Yes, like, \"Maybe your ancestors were from here.\"" },
+            { id: 's22', speaker: '유나', kor: '확실한 건 아니구요.', time: [80.0, 82.0], eng: "It's not certain." },
+            { id: 's23', speaker: '민호', kor: '그럼 그냥 추측 같은 거네요.', time: [82.0, 85.0], eng: "Then it's just like a guess." },
+            { id: 's24', speaker: '유나', kor: '맞아요. 그리고 더 중요한 게, 있잖아요, 모든 사람 DNA는 99.9% 똑같아요.', time: [85.0, 92.0], eng: "That's right. And more importantly, you know, everyone's DNA is 99.9% the same." },
+            { id: 's25', speaker: '민호', kor: '99.9%요 진짜요?', time: [92.0, 94.5], eng: "99.9%? Really?" },
+            { id: 's26', speaker: '민호', kor: '와, 그럼 우리 다 정말 비슷한 거네요.', time: [94.5, 98.0], eng: "Wow, then we are all really similar." },
+            { id: 's27', speaker: '유나', kor: '네 맞아요. 정말 조금만 달라요.', time: [98.0, 101.5], eng: "Yes, that's right. It's only a very little bit different." },
+            { id: 's28', speaker: '유나', kor: '그래서 그 인종이란 말도요.', time: [101.5, 104.0], eng: "That's why the word 'race'..." },
+            { id: 's29', speaker: '민호', kor: '‘인종’이요?', time: [104.0, 106.0], eng: "'Race'?" },
+            { id: 's30', speaker: '유나', kor: '네, 뭐 흑인, 백인, 아시아인 이렇게 나누는 거요.', time: [106.0, 110.0], eng: "Yes, like dividing people into Black, White, Asian." },
+            { id: 's31', speaker: '유나', kor: '그게 사실 과학적으로는 음… 아주 정확한 건 아니에요.', time: [110.0, 115.0], eng: "Scientifically, that's... um... not very accurate." },
+            { id: 's32', speaker: '민호', kor: '아 그래요?', time: [115.0, 116.5], eng: "Oh, is that so?" },
+            { id: 's33', speaker: '유나', kor: '네, 그냥 옛날 사람들이 뭐랄까… 겉모습만 보고 막 나눈 거예요.', time: [116.5, 122.0], eng: "Yes, people in the past just... how should I say... divided people based only on their appearance." },
+            { id: 's34', speaker: '유나', kor: 'DNA는 거의 같은데 말이죠.', time: [122.0, 125.0], eng: "Even though their DNA is almost the same." },
+            { id: 's35', speaker: '민호', kor: '혹시, 한국 연예인 중에서도 이 검사한 사람 있어요?', time: [125.0, 129.5], eng: "By any chance, are there any Korean celebrities who have done this test?" },
+            { id: 's36', speaker: '유나', kor: '네, 네, 있어요. 그 유튜버 조민 씨 알아요?', time: [129.5, 134.0], eng: "Yes, yes, there are. Do you know the YouTuber Jo Min?" },
+            { id: 's37', speaker: '민호', kor: '아, 네 들어봤어요.', time: [134.0, 136.0], eng: "Ah, yes, I've heard of him." },
+            { id: 's38', speaker: '유나', kor: '그분 할아버지가 약간 인도 사람처럼 보이셨대요.', time: [136.0, 140.0], eng: "His grandfather apparently looked a bit like an Indian person." },
+            { id: 's39', speaker: '유나', kor: '그래서 “혹시 나도” 하고 검사를 해봤는데', time: [140.0, 144.0], eng: "So he thought, \"Maybe me too?\" and got tested." },
+            { id: 's40', speaker: '민호', kor: '결과가 어떻게 나왔어요?', time: [144.0, 146.5], eng: "How did the results come out?" },
+            { id: 's41', speaker: '유나', kor: '100% 한국 사람이었어요.', time: [146.5, 149.0], eng: "He was 100% Korean." },
+            { id: 's42', speaker: '유나', kor: '그러니까 겉모습이랑 DNA는 다를 수 있는 거죠.', time: [149.0, 153.0], eng: "So, appearance and DNA can be different." },
+            { id: 's43', speaker: '민호', kor: '와 신기하다. 또 다른 사람도 있어요?', time: [153.0, 156.5], eng: "Wow, that's fascinating. Are there any other people?" },
+            { id: 's44', speaker: '유나', kor: '가수 솔라 씨는 아프리카 DNA가 0.05% 나왔대요.', time: [156.5, 161.0], eng: "Singer Solar apparently had 0.05% African DNA." },
+            { id: 's45', speaker: '민호', kor: '0.05%요? 엄청 조금이네요.', time: [161.0, 164.0], eng: "0.05%? That's a tiny amount." },
+            { id: 's46', speaker: '유나', kor: '네, 정말 조금이죠.', time: [164.0, 166.0], eng: "Yes, it's very little." },
+            { id: 's47', speaker: '유나', kor: '그래서 아프리카 가 보고 싶다고 했는데, 사실 0.05% 가지고 “나는 아프리카 사람” 이렇게 말하기는 좀 어렵죠.', time: [166.0, 175.0], eng: "She said she wanted to visit Africa, but with 0.05%, it's a bit difficult to say, \"I am an African person.\"" },
+            { id: 's48', speaker: '민호', kor: '그렇겠네요. 아 배우 이동욱 씨도 하지 않았어요?', time: [175.0, 179.0], eng: "I see. Ah, didn't actor Lee Dong-wook do it too?" },
+            { id: 's49', speaker: '유나', kor: '맞아요. 이동욱 씨는 시베리아 사람 DNA 나왔다고 했어요.', time: [179.0, 184.0], eng: "That's right. Lee Dong-wook said he got Siberian DNA results." },
+            { id: 's50', speaker: '유나', kor: '그것도 신기하죠.', time: [184.0, 186.0], eng: "That's fascinating too." },
+            { id: 's51', speaker: '민호', kor: '네, 코미디언 박미선 씨는요?', time: [186.0, 189.0], eng: "Yes, and what about comedian Park Mi-sun?" },
+            { id: 's52', speaker: '유나', kor: '네, 박미선 씨도 검사하고 나서 “순수한 한국 사람은 아닌 것 같다”고 말했어요.', time: [189.0, 195.0], eng: "Yes, after Park Mi-sun got tested, she said, \"I don't think I'm a 'pure' Korean person.\"" },
+            { id: 's53', speaker: '민호', kor: '‘순수한’이요? 그게 무슨 뜻이죠?', time: [195.0, 198.0], eng: "'Pure'? What does that mean?" },
+            { id: 's54', speaker: '유나', kor: '‘순수한’은 ‘다른 게 안 섞였다’는 뜻이에요.', time: [198.0, 202.0], eng: "'Pure' means 'not mixed with anything else.'" },
+            { id: 's55', speaker: '유나', kor: '근데 있잖아요. 순수한 사람은 없어요.', time: [202.0, 205.0], eng: "But you know what? There's no such thing as a pure person." },
+            { id: 's56', speaker: '민호', kor: '아, 정말요?', time: [205.0, 206.5], eng: "Oh, really?" },
+            { id: 's57', speaker: '유나', kor: '우리 조상들 쭉 따라가면, 다 여기저기서 왔어요.', time: [206.5, 210.5], eng: "If you trace our ancestors way back, they all came from various places." },
+            { id: 's58', speaker: '유나', kor: '우리 DNA는 다 섞여 있어요.', time: [210.5, 213.0], eng: "Our DNA is all mixed." },
+            { id: 's59', speaker: '유나', kor: '그게 당연한 거예요.', time: [213.0, 215.0], eng: "That's natural." },
+            { id: 's60', speaker: '민호', kor: '그렇구나. 근데 이 검사 뭐 안 좋은 점도 있어요?', time: [215.0, 219.0], eng: "I see. But are there any downsides to this test?" },
+            { id: 's61', speaker: '유나', kor: '음… 생각해 볼 점들이 좀 있죠.', time: [219.0, 222.0], eng: "Hmm... there are a few points to consider." },
+            { id: 's62', speaker: '유나', kor: '첫째는 사람들이 “DNA가 모든 걸 결정해요” 이렇게 생각할 수 있어요.', time: [222.0, 227.0], eng: "First, people might think, \"DNA decides everything.\"" },
+            { id: 's63', speaker: '민호', kor: '결정해요?', time: [227.0, 228.5], eng: "Decides?" },
+            { id: 's64', speaker: '유나', kor: '네, 뭐 내 성격이나 능력 같은 거요', time: [228.5, 231.5], eng: "Yes, things like my personality or abilities." },
+            { id: 's65', speaker: '유나', kor: '“DNA가 다 결정해요” 이건 아니거든요.', time: [231.5, 235.0], eng: "It's not true that \"DNA decides everything.\"" },
+            { id: 's66', speaker: '민호', kor: '아~ 또 있어요?', time: [235.0, 237.0], eng: "Ah~ Are there more?" },
+            { id: 's67', speaker: '유나', kor: '둘째는 개인정보 문제요.', time: [237.0, 240.0], eng: "Second is the issue of personal information." },
+            { id: 's68', speaker: '유나', kor: '개인정보는 나만 아는 비밀 정보잖아요.', time: [240.0, 244.0], eng: "Personal information is secret information that only I should know." },
+            { id: 's69', speaker: '민호', kor: '그렇죠.', time: [244.0, 245.5], eng: "That's right." },
+            { id: 's70', speaker: '유나', kor: '근데 이 DNA 정보가 나쁜 사람들한테 갈 수도 있어요.', time: [245.5, 249.5], eng: "But this DNA information could get into the hands of bad people." },
+            { id: 's71', speaker: '유나', kor: '실제로 23andMe라는 회사에서 정보가 막 도둑맞기도 했어요.', time: [249.5, 255.0], eng: "Actually, a company called 23andMe had information stolen." },
+            { id: 's72', speaker: '민호', kor: '헐 진짜요? 그건 좀 무서운데요.', time: [255.0, 258.0], eng: "Whoa, really? That's a bit scary." },
+            { id: 's73', speaker: '유나', kor: '네, 그리고 셋째는 이게 인종차별로 이어질 수도 있다는 거예요.', time: [258.0, 263.0], eng: "Yes, and third, it could lead to racial discrimination." },
+            { id: 's74', speaker: '민호', kor: '인종차별이요?', time: [263.0, 265.0], eng: "Racial discrimination?" },
+            { id: 's75', speaker: '유나', kor: '네 DNA 결과 보고, “아, 저 인종은 어떻고, 이 인종은 어떻고” 이렇게 사람들을 나누고 나쁘게 생각하는 거예요.', time: [265.0, 273.0], eng: "Yes, looking at DNA results and thinking, \"Ah, that race is like this, and this race is like that,\" dividing people and thinking negatively." },
+            { id: 's76', speaker: '유나', kor: '이건 정말 안 좋은 거죠.', time: [273.0, 275.5], eng: "This is really not good." },
+            { id: 's77', speaker: '민호', kor: '그럼 이 DNA 검사 결과를 어떻게 받아들여야 할까요?', time: [275.5, 279.5], eng: "Then how should we interpret these DNA test results?" },
+            { id: 's78', speaker: '유나', kor: '그냥 재미로 보는 건 괜찮아요.', time: [279.5, 282.0], eng: "It's fine to see it just for fun." },
+            { id: 's79', speaker: '유나', kor: '근데 꼭 기억해야 할 게 있어요.', time: [282.0, 284.5], eng: "But there's something you must remember." },
+            { id: 's80', speaker: '유나', kor: '나의 ‘정체성’ 있잖아요.', time: [284.5, 287.0], eng: "You know, my 'identity'." },
+            { id: 's81', speaker: '민호', kor: '‘정체성’이요?', time: [287.0, 288.5], eng: "'Identity'?" },
+            { id: 's82', speaker: '유나', kor: '‘나는 누군가’ 하는 거예요.', time: [288.5, 291.5], eng: "It's the question of 'Who am I?'." },
+            { id: 's83', speaker: '유나', kor: '그 답은 DNA에만 있는 게 아니에요.', time: [291.5, 294.0], eng: "The answer isn't only in DNA." },
+            { id: 's84', speaker: '민호', kor: '아, DNA가 다가 아니군요.', time: [294.0, 296.5], eng: "Ah, so DNA isn't everything." },
+            { id: 's85', speaker: '유나', kor: '그럼요. 내가 어떤 문화를 좋아하고, 어떤 말을 쓰고, 또 어떤 경험을 했는지 이런 게 훨씬 중요해요.', time: [296.5, 303.0], eng: "Of course. What culture I like, what language I use, and what experiences I've had—these things are much more important." },
+            { id: 's86', speaker: '민호', kor: '아하.', time: [303.0, 304.0], eng: "Aha." },
+            { id: 's87', speaker: '유나', kor: '내가 어떤 사람이고 싶은지, 뭘 좋아하고 어떻게 사는지, 이게 바로 나의 정체성을 만드는 거예요.', time: [304.0, 310.0], eng: "Who I want to be, what I like, and how I live—this is what creates my identity." },
+            { id: 's88', speaker: '민호', kor: '네, 맞는 말이네요.', time: [310.0, 312.0], eng: "Yes, that makes sense." },
+            { id: 's89', speaker: '유나', kor: '그리고 우리는 모두 DNA가 99.9% 같다는 거 이것도 기억하면 좋구요.', time: [312.0, 316.5], eng: "And it's also good to remember that we are all 99.9% the same." },
+            { id: 's90', speaker: '유나', kor: '결과가 어떻든 사람은 다 소중해요.', time: [316.5, 319.0], eng: "Whatever the results, everyone is precious." },
+            { id: 's91', speaker: '민호', kor: '오늘 이야기 정말 잘 들었어요. 고마워요.', time: [319.0, 322.0], eng: "I really enjoyed today's talk. Thank you." },
+            { id: 's92', speaker: '유나', kor: '네, DNA 검사 재미있지만 너무 막 믿지는 마세요.', time: [322.0, 326.0], eng: "Yes, DNA tests are fun, but don't just believe them blindly." },
+            { id: 's93', speaker: '유나', kor: '오늘 좀 어려운 단어 있었죠.', time: [326.0, 328.5], eng: "There were some difficult words today, right?" },
+            { id: 's94', speaker: '유나', kor: 'DNA, 조상, 확률, 인종, 순수한, 결정해요, 개인정보, 인종차별, 정체성.', time: [328.5, 338.0], eng: "DNA, ancestors, probability, race, pure, decides, personal information, racial discrimination, identity." },
+            { id: 's95', speaker: '유나', kor: '한번 다시 생각해 보세요.', time: [338.0, 340.5], eng: "Please think about them again." },
+            { id: 's96', speaker: '민호', kor: '네, 알겠어요. <오늘 이 주제로 이야기해 봐요> 여기까지예요.', time: [340.5, 344.0], eng: "Yes, I will. This has been <Let's Talk About This Topic>." },
+            { id: 's97', speaker: '민호', kor: '다음 시간에도 흥미로운 주제로 다시 찾아올게요.', time: [344.0, 347.0], eng: "We'll be back next time with another interesting topic." },
+            { id: 's98', speaker: '민호', kor: '안녕히 계세요.', time: [347.0, 349.0], eng: "Goodbye." },
+            { id: 's99', speaker: '유나', kor: '안녕히 계세요. 다음 시간에 또 만나요?', time: [349.0, 352.0], eng: "Goodbye. See you again next time." }
+        ];
+
+        // --- UPDATED DISCUSS DATA ---
+        const DISCUSS_DATA = [
+            {
+                id: 1,
+                question: "1. DNA 검사를 해 봤어요? 또는 해 보고 싶어요? 왜요?",
+                translation: "Have you ever taken a DNA test? Or do you want to try one? Why?",
+                keyVocab: [
+                    { term: "DNA 검사", meaning_eng: "DNA test", context: "유나: 오늘은 그 ‘DNA 검사’ 그거 이야기해 봐요.", context_eng: "Yuna: Today, let's talk about 'DNA tests'." }
+                ]
+            },
+            {
+                id: 2,
+                question: "2. 자신의 조상이 어디에서 왔는지 알게 되면 기분이 어떨 것 같아요?",
+                translation: "How do you think you would feel if you found out where your ancestors came from?",
+                keyVocab: [
+                    { term: "조상", meaning_eng: "ancestor", context: "유나: 그 연구소에서 그 조상, 조상이 어디서 왔는지 알려줘요.", context_eng: "Yuna: Then the lab tells you where your ancestors came from." }
+                ]
+            },
+            {
+                id: 3,
+                question: "3. 가수 솔라 씨는 DNA 검사하고 나서 결과를 보고 “그 지역에 가 보고 싶다”고 말했는데, 여러분이라면 실제로 갈 계획이 있나요?",
+                translation: "After taking a DNA test, singer Solar saw her results and said she'd like to visit that region. If it were you, would you actually plan to go?",
+                keyVocab: [
+                    { term: "결과", meaning_eng: "result", context: "민호: 결과가 어떻게 나왔어요?", context_eng: "Minho: How did the results come out?" },
+                    { term: "가 보고 싶다고 했는데", meaning_eng: "(she) said she wanted to try going, and/but...", context: "유나: 그래서 아프리카 가 보고 싶다고 했는데...", context_eng: "Yuna: She said she wanted to visit Africa, but..." }
+                ]
+            },
+            {
+                id: 4,
+                question: "4. 만약 DNA 검사 결과가 여러분의 겉모습과 아주 다르게 나오면, 기분이 어떨 것 같아요?",
+                translation: "If your DNA test result comes out very different from your appearance, how would you feel?",
+                keyVocab: [
+                    { term: "결과", meaning_eng: "result", context: "민호: 결과가 어떻게 나왔어요?", context_eng: "Minho: How did the results come out?" },
+                    { term: "겉모습", meaning_eng: "appearance", context: "유나: 겉모습만 보고 막 나눈 거예요.", context_eng: "Yuna: ...divided people based only on their appearance." }
+                ]
+            },
+            {
+                id: 5,
+                question: "5. DNA 검사에서 예상하지 못한 결과가 나오면 심각하게 받아들일 것 같아요? 아니면 DNA 검사 재미로 볼 거예요?",
+                translation: "If you got an unexpected result from a DNA test, do you think you would take it seriously? Or would you see it just for fun?",
+                keyVocab: [
+                    { term: "결과", meaning_eng: "result", context: "민호: 결과가 어떻게 나왔어요?", context_eng: "Minho: How did the results come out?" },
+                    { term: "재미로 보는 건", meaning_eng: "the act of watching for fun", context: "유나: 그냥 재미로 보는 건 괜찮아요.", context_eng: "Yuna: It's fine to see it just for fun." }
+                ]
+            },
+            {
+                id: 6,
+                question: "6. ‘순수한’ 인종이 있다고 생각해요? 아니면 사람들의 DNA는 모두 섞여 있어서 '순수한' 인종이 없다고 생각해요?",
+                translation: "Do you think there is such a thing as a 'pure' race? Or do you think that because everyone's DNA is mixed, there is no 'pure' race?",
+                keyVocab: [
+                    { term: "순수한", meaning_eng: "pure", context: "유나: “순수한 한국 사람은 아닌 것 같다”고 말했어요.", context_eng: "Yuna: ...she said, \"I don't think I'm a 'pure' Korean person.\"" },
+                    { term: "인종", meaning_eng: "race", context: "민호: ‘인종’이요?", context_eng: "Minho: 'Race'?" },
+                    { term: "섞여 있어요", meaning_eng: "is mixed", context: "유나: 우리 DNA는 다 섞여 있어요.", context_eng: "Yuna: Our DNA is all mixed." }
+                ]
+            },
+            {
+                id: 7,
+                question: "7. DNA 검사가 인종차별을 더 심하게 만들 수 있을까요? 아니면 줄일 수 있을까요?",
+                translation: "Could DNA tests make racial discrimination worse? Or could they reduce it?",
+                keyVocab: [
+                    { term: "인종차별", meaning_eng: "racial discrimination", context: "유나: 이게 인종차별로 이어질 수도 있다는 거예요.", context_eng: "Yuna: ...it could lead to racial discrimination." }
+                ]
+            },
+            {
+                id: 8,
+                question: "8. DNA가 우리의 성격이나 능력을 결정한다고 생각하는 사람들도 있어요. 이 의견에 동의해요? 왜 그렇게 생각해요?",
+                translation: "Some people think that DNA determines our personality and abilities. Do you agree with this opinion? Why do you think so?",
+                keyVocab: [
+                    { term: "결정하다", meaning_eng: "to decide, determine", context: "유나: “DNA가 모든 걸 결정해요” 이렇게 생각할 수 있어요.", context_eng: "Yuna: ...people might think, \"DNA decides everything.\"" },
+                    { term: "성격", meaning_eng: "personality", context: "유나: 네, 뭐 내 성격이나 능력 같은 거요", context_eng: "Yuna: Yes, things like my personality or abilities." },
+                    { term: "능력", meaning_eng: "ability", context: "유나: 네, 뭐 내 성격이나 능력 같은 거요", context_eng: "Yuna: Yes, things like my personality or abilities." }
+                ]
+            },
+            {
+                id: 9,
+                question: "9. 유나는 ‘정체성’은 DNA, 문화, 언어, 경험으로 만들어진다고 했어요. 여러분의 정체성을 만드는 가장 중요한 것은 무엇이라고 생각해요?",
+                translation: "Yuna said 'identity' is made of DNA, culture, language, and experiences. What do you think is the most important thing that creates your identity?",
+                keyVocab: [
+                    { term: "정체성", meaning_eng: "identity", context: "유나: 나의 ‘정체성’ 있잖아요.", context_eng: "Yuna: You know, my 'identity'." },
+                    { term: "문화", meaning_eng: "culture", context: "유나: 내가 어떤 문화를 좋아하고...", context_eng: "Yuna: What culture I like..." },
+                    { term: "경험", meaning_eng: "experience", context: "유나: 또 어떤 경험을 했는지 이런 게 훨씬 중요해요.", context_eng: "Yuna: ...and what experiences I've had—these things are much more important." }
+                ]
+            },
+            {
+                id: 10,
+                question: "10. DNA 검사를 할 때, 개인정보가 도둑맞을 수도 있어요. 어떻게 해야 개인정보를 지킬 수 있을까요?",
+                translation: "When you do a DNA test, your personal information could be stolen. How can you protect your personal information?",
+                keyVocab: [
+                    { term: "개인정보", meaning_eng: "personal information", context: "유나: 둘째는 개인정보 문제요.", context_eng: "Yuna: Second is the issue of personal information." },
+                    { term: "도둑맞다", meaning_eng: "to have something stolen", context: "유나: 정보가 막 도둑맞기도 했어요.", context_eng: "Yuna: ...information was stolen." }
+                ]
+            }
+        ];
+
+        const LEVEL_STYLES = { "A1": "bg-lime-50 text-lime-600 border-lime-100", "A1+": "bg-lime-50 text-lime-600 border-lime-100", "A2": "bg-green-50 text-green-600 border-green-100", "A2+": "bg-green-50 text-green-600 border-green-100", "B1": "bg-sky-50 text-sky-600 border-sky-100", "B1+": "bg-sky-50 text-sky-600 border-sky-100", "B2": "bg-blue-50 text-blue-600 border-blue-100", "B2+": "bg-blue-50 text-blue-600 border-blue-100", "C1": "bg-violet-50 text-violet-600 border-violet-100", "C1+": "bg-violet-50 text-violet-600 border-violet-100", "C2": "bg-violet-50 text-violet-600 border-violet-100" };
+        const getLevelTheme = (l) => { const c = l.charAt(0); if(c==='A')return l==='A1'||l==='A1+'?'lime':'green'; if(c==='B')return l==='B1'||l==='B1+'?'sky':'blue'; return 'violet'; };
+
+        // --- Icons ---
+        const HomeIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>);
+        const LearnIcon = ({ className, filled }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="4" width="20" height="16" rx="4" fill={filled ? "currentColor" : "none"} /><polygon points="10 8 16 12 10 16 10 8" stroke={filled ? "#fff" : "currentColor"} fill={filled ? "#fff" : "none"} /></svg>);
+        const VocabIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/><path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/></svg>);
+        const QuizIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+        const DiscussIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>);
+        const UserIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>);
+        const LineIcon = ({ d, className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d} /></svg>);
+        const PlayIconLine = (props) => <LineIcon {...props} d="M5 3l14 9-14 9V3z" />;
+        const PlayIconSolid = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M8 5v14l11-7z" /></svg>);
+        const PauseIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>);
+        const OpenBookSolidIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 6 C2 3 8 2 12 6 C16 2 22 3 22 6 V20 C22 17 16 16 12 20 C8 16 2 17 2 20 Z" /><path d="M12 6 V20" /><path d="M4.5 15 L7 9 L9.5 15" strokeWidth="1.5" /><path d="M5.5 13 H8.5" strokeWidth="1.5" /><path d="M15 10 H19" strokeWidth="1.5" /><path d="M15 13 H19" strokeWidth="1.5" /><path d="M15 16 H18" strokeWidth="1.5" /></svg>);
+        const TranslateIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.09-.02.67-.02zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" /></svg>);
+        const ExternalLinkIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>);
+        const ChevronLeft = ({ className }) => <LineIcon d="m15 18-6-6 6-6" className={className}/>;
+        const ChevronRight = ({ className }) => <LineIcon d="m9 18 6-6-6-6" className={className}/>;
+        const SpeedSolidIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44z"/><path d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg>);
+        const SparklesIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 00-1.423 1.423z" /></svg>);
+        const RewindIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="11 19 2 12 11 5 11 19" /><polygon points="22 19 13 12 22 5 22 19" /></svg>);
+        const ForwardIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 19 22 12 13 5 13 19" /><polygon points="2 19 11 12 2 5 2 19" /></svg>);
+        const PlayCircleIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" /><path d="M10 8L16 12L10 16V8Z" fill="currentColor" /></svg>);
+
+        // --- Sidebar Component ---
+        const Sidebar = ({ activeTab, setActiveTab, isCollapsed, toggleSidebar, userLevel, themeColor }) => {
+            const menus = [
+                { id: 'home', label: '시작 페이지', subLabel: 'Home Page', icon: HomeIcon },
+                { id: 'learn', label: '동영상 자료', subLabel: 'Video Resources', icon: LearnIcon },
+                { id: 'vocab', label: '핵심 어휘', subLabel: 'Key Vocabulary', icon: VocabIcon },
+                { id: 'quiz', label: '내용 확인 퀴즈', subLabel: 'Comprehension Quiz', icon: QuizIcon },
+                { id: 'discuss', label: '생각해 보기', subLabel: 'Food For Thought', icon: DiscussIcon },
+            ];
+            const getLevelColor = (code) => { if (LEVEL_STYLES[code]) return LEVEL_STYLES[code]; const base = code.substring(0, 2); return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100"; };
+            const currentStyle = getLevelColor(userLevel);
+            const bgClass = currentStyle.split(' ')[0];
+            const textClass = currentStyle.split(' ')[1];
+            const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, info: null });
+            const handleLevelTextEnter = (e) => { const rect = e.target.getBoundingClientRect(); setTooltip({ show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel] }); };
+            const handleLevelTextLeave = () => { setTooltip(prev => ({ ...prev, show: false })); };
+
+            return (
+                <aside className={`bg-white border-r border-gray-200 fixed h-full hidden lg:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic ${isCollapsed ? 'sidebar-collapsed-style' : 'sidebar-expanded-style'}`}>
+                    <div className={`p-6 flex items-center gap-3 relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
+                        <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[48px] h-[48px]' : 'w-[60px] h-[60px]'}`}/>
+                        {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center"><span className="font-extrabold text-[1.2em] text-black leading-tight font-cafe24-deco">Open</span><span className={`font-bold text-[0.7em] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span></div>)}
+                        <button onClick={toggleSidebar} className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-full p-1 shadow-sm text-slate-500 hover:text-slate-700 hover:bg-gray-50 transition-colors z-10">{isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}</button>
+                    </div>
+                    <nav className={`flex-1 space-y-3 mt-4 ${isCollapsed ? 'px-3' : 'px-3'}`}>
+                        {menus.map((menu) => {
+                            const IconComp = menu.icon; const isActive = activeTab === menu.id; const activeFontClass = isActive ? "font-cafe24-surround" : "font-cafe24";
+                            return (
+                                <button key={menu.id} onClick={() => { setActiveTab(menu.id); if (menu.id === 'learn' && !isCollapsed) toggleSidebar(); else if (menu.id !== 'learn' && isCollapsed) toggleSidebar(); }} onDoubleClick={toggleSidebar} className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-[3.5em] rounded-2xl' : 'gap-3 px-3 py-4 rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}>
+                                    {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-1.5 h-8' : 'w-1 h-6'}`}></div>}
+                                    <IconComp className={`shrink-0 transition-all duration-200 ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
+                                    {!isCollapsed && (<div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap"><span className={`text-[0.9em] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span><span className="text-[0.65em] font-normal text-slate-400 mt-0.5 leading-tight">{menu.subLabel}</span></div>)}
+                                    {isCollapsed && (<div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl flex flex-col items-start"><span className="text-xs font-bold">{menu.label}</span><span className="text-[10px] opacity-80">{menu.subLabel}</span><div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></div></div>)}
+                                </button>
+                            );
+                        })}
+                    </nav>
+                    <div className="p-2 border-t border-gray-100">
+                        <div className={`flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-gray-50 cursor-pointer ${isCollapsed ? 'justify-center' : ''}`}>
+                            <div className={`w-[2.75em] h-[2.75em] rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${bgClass} border ${currentStyle.split(' ')[2]}`}><span className={`text-[1em] font-extrabold font-school-smile ${currentStyle.replace('bg-', 'text-').replace('50', '600')}`}>{userLevel}</span></div>
+                            {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex-1"><p className="text-[0.875em] font-bold text-slate-900 mb-[1px] font-basic">학습자(Learner)</p><div className="mt-[1px]"><span className={`block w-fit px-[2px] py-0.5 rounded text-[0.625em] font-semibold border uppercase tracking-wide shadow-sm text-left cursor-help font-basic ${currentStyle}`} onMouseEnter={handleLevelTextEnter} onMouseLeave={handleLevelTextLeave}>Level: {LEVEL_DEFINITIONS[userLevel].title}</span></div></div>)}
+                        </div>
+                    </div>
+                    {tooltip.show && tooltip.info && createPortal(<div className="fixed z-[9999] pointer-events-none animate-fade-in" style={{ left: tooltip.x, top: tooltip.y }}><div className="relative bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-2xl transform -translate-y-full -translate-x-6 -mt-3 w-64 border border-slate-700/50"><p className={`font-bold mb-1.5 text-sm text-${themeColor}-300`}>{userLevel} – {tooltip.info.title}</p><p className="opacity-90 leading-relaxed font-medium text-slate-200">{tooltip.info.desc}</p><div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-slate-900/95 border-r border-b border-slate-700/50 rotate-45"></div></div></div>, document.body)}
+                </aside>
+            );
+        };
+
+        const LevelBadge = ({ levelCode }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            const info = LEVEL_DEFINITIONS[levelCode] || LEVEL_DEFINITIONS["A2+"];
+            const getLevelStyle = (code) => { if (LEVEL_STYLES[code]) return LEVEL_STYLES[code]; const base = code.substring(0, 2); return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100"; };
+            const badgeStyle = getLevelStyle(levelCode);
+            return (
+                <div className="relative inline-flex items-center cursor-help z-50" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><span className={`px-2 py-0.5 rounded text-[0.7em] font-bold border uppercase tracking-wide shadow-sm font-sunflower ${badgeStyle}`}>Level: {info.title}</span>{isHovered && (<div className="absolute top-full left-0 mt-2 w-64 bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-xl z-[100] animate-fade-in text-left"><p className={`font-bold mb-1.5 text-sm ${badgeStyle.split(' ')[1]}`}>{levelCode} – {info.title}</p><p className="opacity-90 leading-relaxed font-medium">{info.desc}</p><div className="absolute -top-1 left-4 w-2 h-2 bg-slate-900/95 rotate-45"></div></div>)}</div>
+            );
+        };
+
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`; const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i <= delays.length; i++) { try { const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error(`API error: ${response.statusText}`); return await response.json(); } catch (error) { if (i === delays.length) throw error; await new Promise(resolve => setTimeout(resolve, delays[i])); } }
+        };
+
+        const FeedbackSection = ({ value, onChange, placeholder, question, keyPhrases, themeColor }) => {
+            const [feedback, setFeedback] = useState(null); const [isLoading, setIsLoading] = useState(false); const [error, setError] = useState(null);
+            const checkSentence = async () => {
+                if (!value || value.trim() === '') { setError("문장을 입력해야 피드백을 받을 수 있어요."); setFeedback(null); return; }
+                setIsLoading(true); setError(null); setFeedback(null);
+                const systemPrompt = `You are an advanced Korean language tutor AI for A2 level learners...`;
+                const payload = { contents: [{ role: "user", parts: [{ text: systemPrompt }, { text: `Question: "${question}"\nUser's Answer: "${value}"` }] }], generationConfig: { responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { "is_relevant": { "type": "BOOLEAN" }, "relevance_feedback_eng": { "type": "STRING", "nullable": true }, "is_correct": { "type": "BOOLEAN", "nullable": true }, "feedback_message_eng": { "type": "STRING", "nullable": true }, "corrected_sentence": { "type": "STRING", "nullable": true }, "explanation_eng": { "type": "STRING", "nullable": true } } } } };
+                try { const result = await callGeminiWithBackoff(payload); if (result.candidates?.[0]?.content?.parts?.[0]?.text) setFeedback(JSON.parse(result.candidates[0].content.parts[0].text)); else setError("AI의 응답을 처리하는 데 문제가 발생했어요."); } catch (err) { setError("문장 검사에 실패했어요. 다시 시도해 주세요."); } finally { setIsLoading(false); }
+            };
+            return (
+                <div>
+                    {keyPhrases}
+                    <div>
+                        <h4 className="font-bold text-slate-900 mb-3 text-[1em]">핵심 표현을 사용해서 질문에 대답해 보세요.</h4>
+                        <textarea value={value} onChange={onChange} placeholder={placeholder} className={`w-full p-4 rounded-xl border border-gray-200 focus:border-${themeColor}-500 focus:ring-1 focus:ring-${themeColor}-500 outline-none min-h-[120px] resize-none text-[1em] text-slate-800 placeholder-gray-400 mb-3`}></textarea>
+                        <button onClick={checkSentence} disabled={!value.trim() || isLoading} className={`flex items-center gap-2 px-5 py-[6px] text-[0.8em] leading-tight rounded-xl font-bold transition-all shadow-sm ${!value.trim() || isLoading ? 'bg-gray-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md'}`}>{isLoading ? <span>분석 중...</span> : <> <SparklesIcon className="icon-base" /> <span>AI Feedback (피드백 받기)</span> </>}</button>
+                        {error && <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-xl border border-red-200 text-sm font-medium animate-fade-in">{error}</div>}
+                        {feedback && (
+                            <div className={`mt-6 rounded-2xl p-6 border animate-fade-in ${feedback.is_correct ? `bg-${themeColor}-50 border-${themeColor}-200` : 'bg-yellow-50 border-yellow-200'}`}>
+                                <div className="flex items-center gap-2 mb-4"><span className="text-2xl">🤖</span><h4 className="font-extrabold text-slate-900 text-lg">AI Tutor Feedback</h4></div>
+                                <div className="mb-4"><span className={`font-black text-sm px-3 py-1 rounded-full bg-white border shadow-sm ${feedback.is_correct ? `text-${themeColor}-600 border-${themeColor}-200` : 'text-yellow-600 border-yellow-200'}`}>{feedback.is_correct ? '🎉 Great Job!' : '⚠️ Needs Improvement'}</span></div>
+                                <div className="space-y-4">{feedback.feedback_message_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Feedback</span><p className="text-slate-800 text-sm font-medium leading-relaxed">{feedback.feedback_message_eng}</p></div>}{feedback.explanation_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Explanation</span><p className="text-slate-800 text-sm font-medium leading-relaxed">{feedback.explanation_eng}</p></div>}{feedback.corrected_sentence && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Correction</span><p className="text-slate-900 text-lg font-black leading-relaxed">{feedback.corrected_sentence}</p></div>}</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabCard = ({ word, themeColor }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const hasDetails = word.definition && word.definition.length > 0;
+
+            return (
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
+                    <div className="flex justify-between mb-4"><h3 className="text-[1.5em] font-extrabold text-slate-900">{word.term}</h3></div>
+                    <div className={`pl-4 border-l-4 border-${themeColor}-500 mb-6`}><p className="text-[1.3em] text-slate-600 font-medium font-diary">{word.mainDef}</p></div>
+                    
+                    {hasDetails && (
+                        <div className="flex-1 flex flex-col">
+                            <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all group border border-transparent hover:border-gray-200">
+                                <div className="flex items-center gap-2">
+                                    <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isOpen ? `bg-${themeColor}-500` : 'bg-gray-400'}`}></span>
+                                    <span className={`text-[0.75em] font-bold uppercase tracking-wider transition-colors duration-300 ${isOpen ? `text-${themeColor}-700` : 'text-slate-500'}`}>Details & Grammar</span>
+                                </div>
+                                <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} />
+                            </button>
+                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                                <div className="bg-gray-50 rounded-xl p-4 space-y-3 border border-gray-100">
+                                    {word.definition.split('\n').map((line, i) => (
+                                        <div key={i}><p className="font-bold text-slate-800 text-[1.1em] leading-relaxed font-marker">{line}</p></div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const HomeView = ({ setActiveTab, progress, userLevel, themeColor }) => {
+            const completedCount = Object.values(progress).filter(val => val === true || (typeof val === 'number' && val > 0)).length;
+            const percentage = Math.round((completedCount / 4) * 100);
+            const quizScoreDisplay = typeof progress.quiz === 'number' ? `${progress.quiz}%` : (progress.quiz ? '100%' : '0%');
+            const quizColorClass = (progress.quiz === 100 || progress.quiz === true) ? `text-${themeColor}-600` : 'text-slate-900';
+            const quizIconBg = (progress.quiz === 100 || progress.quiz === true) ? `bg-${themeColor}-100 text-${themeColor}-600` : `bg-${themeColor}-50 text-${themeColor}-600`;
+
+            return (
+                <div className="space-y-10 animate-fade-in max-w-7xl mx-auto view-home-style">
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2"><span className={`px-2 py-1 bg-${themeColor}-100 text-${themeColor}-700 text-[0.75em] font-extrabold rounded-md tracking-wider font-juache`}>팟캐스트 (Podcast)</span><span className={`text-[0.75em] font-bold text-${themeColor}-600 tracking-wide uppercase font-school-smile`}>이 주제로 이야기해 봐요! (Let's talk about this topic)</span></div>
+                        <h1 className="text-[3em] font-black text-slate-900 tracking-tight font-cafe24-surround">조상 찾기 DNA 검사</h1>
+                        <p className="text-slate-500 text-[1.125em] font-cafe24-surround">Ancestry DNA Tests: Fun, Facts, and What to Consider</p>
+                    </div>
+                    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-80">
+                        <div className="md:w-5/12 relative group bg-black cursor-pointer overflow-hidden" onClick={() => setActiveTab('learn')}>
+                            <img src="https://img.youtube.com/vi/yG728zOrtl0/maxresdefault.jpg" alt="Thumbnail" className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+                            <div className="absolute top-6 left-6"><span className="bg-[#ea3323] text-white text-[0.625em] font-bold px-2 py-1 rounded border border-[#ea3323] shadow-sm tracking-wider">ON AIR</span></div>
+                            <div className="absolute inset-0 flex items-center justify-center"><div className="w-[3.5em] h-[3.5em] bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"><PlayIconLine className={`w-[1.5em] h-[1.5em] text-${themeColor}-600 fill-current ml-1`} /></div></div>
+                        </div>
+                        <div className="md:w-7/12 p-8 md:p-10 flex flex-col justify-center">
+                            <div className="flex items-center gap-2 mb-4"><span className="px-2 py-1 bg-gray-100 text-slate-600 text-[0.625em] font-bold rounded uppercase tracking-wide">Listening</span><LevelBadge levelCode={userLevel} /></div>
+                            <div className="mb-3"><h2 className="text-[1.5em] font-black text-slate-900 font-cafe24-surround">동영상 자료</h2><span className="text-[0.875em] font-bold text-slate-400 font-cafe24-surround">Video Resources</span></div>
+                            <div className="text-slate-600 text-[0.875em] leading-relaxed mb-8 pr-4"><p>팟캐스트를 듣고 DNA 검사에 대한 이야기를 들어보세요.</p><p className="mt-1 text-slate-400 text-[0.75em]">Listen to the podcast about DNA tests.</p></div>
+                            <div className="flex items-center gap-3"><button onClick={() => setActiveTab('learn')} className="px-6 py-3 bg-[#111827] text-white rounded-xl hover:bg-black transition-colors shadow-md flex flex-col items-center leading-tight"><span className="text-[0.875em] font-bold">동영상 보러 가기</span><span className="text-[0.625em] opacity-70 font-medium">Watch Video</span></button></div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">핵심 어휘</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Key Vocabulary</span></div><p className="text-[2.25em] font-black text-slate-900 mt-1 font-jua">{VOCAB_DATA.length}개</p></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><VocabIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('vocab')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>핵심 어휘 확인</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Check Vocabulary</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">내용 확인 퀴즈</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Comprehension Quiz</span></div><p className={`text-[2.25em] font-black mt-1 transition-all duration-500 font-jua ${quizColorClass}`}>{quizScoreDisplay}</p></div><div className={`w-[2.5em] h-[2.5em] rounded-xl flex items-center justify-center transition-colors ${quizIconBg}`}><QuizIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                        </div>
+                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-3"><a href="https://gemini.google.com/share/c7a67d41d89d" target="_blank" rel="noopener noreferrer" className={`text-[1.05em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-1 leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-4 h-4" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-1">→</span></button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabView = ({ updateProgress, themeColor }) => {
+            useEffect(() => { updateProgress('vocab'); }, []);
+            return (
+            <div className="max-w-7xl animate-fade-in mx-auto view-vocab-style">
+                <div className="flex items-center gap-4 mb-8"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><VocabIcon className={`icon-lg text-${themeColor}-600`} /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">핵심 어휘</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Key Vocabulary</span></div></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{VOCAB_DATA.map((word, idx) => (<VocabCard key={idx} word={word} themeColor={themeColor} />))}</div>
+            </div>
+            );
+        };
+
+        const QuizView = ({ updateProgress, themeColor }) => {
+            const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [firstAttempts, setFirstAttempts] = useState({});
+            const [showHint, setShowHint] = useState(false);
+            const [showTranslation, setShowTranslation] = useState(false);
+            const [isFinished, setIsFinished] = useState(false);
+            const currentQuestion = QUIZ_LIST[currentQuestionIndex];
+            const shuffledOptions = useMemo(() => [...currentQuestion.options].sort(() => Math.random() - 0.5), [currentQuestion]);
+            const selectedOption = answers[currentQuestionIndex] || null;
+            const isCorrect = selectedOption?.isCorrect;
+
+            const handleOptionClick = (option) => { if (selectedOption?.isCorrect) return; if (firstAttempts[currentQuestionIndex] === undefined) setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option.isCorrect })); setAnswers(prev => ({ ...prev, [currentQuestionIndex]: option })); setShowHint(false); };
+            const handlePrev = () => { if (currentQuestionIndex > 0) { setCurrentQuestionIndex(prev => prev - 1); setShowHint(false); setShowTranslation(false); } };
+            const handleNext = () => { if (currentQuestionIndex < QUIZ_LIST.length - 1) { setCurrentQuestionIndex(prev => prev + 1); setShowHint(false); setShowTranslation(false); } else { finishQuiz(); } };
+            const finishQuiz = () => { setIsFinished(true); const totalQuestions = QUIZ_LIST.length; const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length; const finalScore = Math.round((correctCount / totalQuestions) * 100); updateProgress('quiz', finalScore); };
+            const handleRetry = () => { setCurrentQuestionIndex(0); setAnswers({}); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); };
+
+            if (isFinished) {
+                const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length;
+                return (
+                    <div className="max-w-7xl animate-fade-in mx-auto text-center py-10 view-quiz-style">
+                        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-10">
+                            <div className={`w-[5em] h-[5em] bg-${themeColor}-100 text-${themeColor}-600 rounded-full flex items-center justify-center mx-auto mb-6`}><QuizIcon className="icon-lg" /></div>
+                            <h2 className="text-[1.875em] font-black text-slate-900 mb-2 font-cafe24-surround">퀴즈 완료!</h2>
+                            <p className="text-slate-500 mb-8">총 {QUIZ_LIST.length}문제 중 {correctCount}문제를 한 번에 맞혔습니다.</p>
+                            <div className={`text-[3em] font-black text-${themeColor}-600 mb-10 font-school-smile`}>{Math.round((correctCount / QUIZ_LIST.length) * 100)}%</div>
+                            <button onClick={handleRetry} className={`px-8 py-3 rounded-xl bg-${themeColor}-600 text-white font-bold hover:bg-${themeColor}-700 transition-colors`}>다시 풀기 (Try Again)</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-7xl animate-fade-in mx-auto view-quiz-style">
+                    <div className="flex items-center gap-4 mb-6"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><QuizIcon className="icon-lg text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">내용 확인 퀴즈</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Comprehension Quiz ({currentQuestionIndex + 1}/{QUIZ_LIST.length})</span></div></div>
+                    <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200"><p className="font-bold text-slate-800">다음 빈칸에 알맞은 말을 고르세요.</p><p className="text-slate-500 text-[0.875em]">Choose the correct word for the blank.</p></div>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
+                        <div className="flex items-start gap-3 p-4"><span className={`bg-${themeColor}-100 text-${themeColor}-700 font-black rounded-lg px-2 py-1 text-[0.875em] shrink-0`}>Q{currentQuestion.id}</span><div className="flex flex-col"><h3 className="font-bold text-slate-900 text-[1.125em] leading-snug">{currentQuestion.questionKor}</h3><p className="text-slate-500 font-medium text-[0.875em] mt-1">{currentQuestion.questionEng}</p></div></div>
+                        <div className="bg-gray-50 rounded-xl p-4 mb-4 mx-1">
+                            <div>
+                                <div className="leading-relaxed text-[1.25em] font-bold text-slate-900">
+                                    {currentQuestion.sentence_pre}
+                                    <div className={`inline-flex align-middle mx-2 px-4 py-1 rounded-md font-bold text-[1.25em] transition-all duration-300 min-w-[80px] text-center border-b-2 ${isCorrect ? `bg-${themeColor}-50 text-${themeColor}-700 border-${themeColor}-500` : (showHint ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : (selectedOption ? 'bg-red-50 text-red-700 border-red-500' : 'bg-yellow-100 text-transparent border-yellow-400 select-none'))}`}>{isCorrect ? selectedOption.text : (showHint ? `[ ${currentQuestion.hint} ]` : (selectedOption ? selectedOption.text : "___"))}</div>
+                                    {currentQuestion.sentence_post}{selectedOption && (<span className={`ml-2 text-[1.125em] ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}
+                                </div>
+                                {showTranslation && (<div className="mt-4 pt-4 border-t border-gray-200 text-slate-500 italic text-[0.875em] animate-fade-in font-medium">{currentQuestion.translation}</div>)}
+                            </div>
+                        </div>
+                        <div className="flex gap-2 mb-4 px-2"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption?.isCorrect} className={`px-3 py-1.5 rounded-lg text-[0.75em] font-bold transition-colors ${selectedOption?.isCorrect ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-1 text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslation ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 px-2">{shuffledOptions.map((option, idx) => { const isSelected = selectedOption === option; let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; if (isSelected) { if (option.isCorrect) { btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; } else { btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; } } else if (selectedOption?.isCorrect) { btnClass = "bg-gray-50 border-gray-200 text-slate-400 cursor-not-allowed"; } return (<button key={idx} onClick={() => handleOptionClick(option)} disabled={selectedOption?.isCorrect} className={`py-3 px-4 rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option.text}</button>); })}</div>
+                        {selectedOption && (<div className="p-4 rounded-xl border-l-4 mb-4 mx-2 animate-fade-in transition-all bg-[#f8fafc] border-gray-300"><div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-4 rounded-lg border-l-4`}><h4 className={`font-bold text-[0.875em] mb-1 ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Try again.'}</h4><p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{selectedOption.feedback}</p></div></div>)}
+                        <div className="flex justify-between items-center mt-4 border-t border-gray-100 pt-4 px-2 pb-2"><button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-[1.125em]">←</span><span className="text-[0.75em]">이전 문제 (Prev)</span></button><span className="text-[0.75em] font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span><button onClick={handleNext} disabled={!isCorrect} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 shadow-md transition-colors ${!isCorrect ? 'bg-gray-300 text-slate-500 cursor-not-allowed' : 'bg-gray-900 text-white hover:bg-black'}`}><span className="text-[0.75em]">{currentQuestionIndex < QUIZ_LIST.length - 1 ? '다음 문제 (Next)' : '결과 보기 (Finish)'}</span><span className="text-[1.125em]">→</span></button></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DiscussView = ({ updateProgress, themeColor }) => {
+            const [answers, setAnswers] = useState({});
+            const [showTranslations, setShowTranslations] = useState({});
+            const handleTextChange = (id, value) => { setAnswers(prev => ({ ...prev, [id]: value })); };
+            const toggleTranslation = (id) => { setShowTranslations(prev => ({ ...prev, [id]: !prev[id] })); };
+
+            return (
+                <div className="max-w-7xl mx-auto animate-fade-in view-discuss-style">
+                    <div className="flex items-center gap-4 mb-8"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="icon-lg text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
+                    <div className={`mb-8 p-4 rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-1 mb-4">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-1">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/c7a67d41d89d" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p><p className="text-slate-500 text-[0.75em] mt-1 flex flex-wrap items-center gap-1">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/c7a67d41d89d" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p></div></div>
+                    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-10">
+                        {DISCUSS_DATA.map((item, index) => (
+                            <div key={item.id} className={index < DISCUSS_DATA.length - 1 ? "mb-12 border-b border-gray-100 pb-12" : "mb-8"}>
+                                <div className="mb-8"><h3 className="text-[1.25em] font-bold text-slate-900 mb-2">{item.question}</h3>{showTranslations[item.id] && (<p className="text-slate-500 text-[0.875em] mb-3 animate-fade-in font-medium">{item.translation}</p>)}<button onClick={() => toggleTranslation(item.id)} className="inline-flex items-center gap-1 text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslations[item.id] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                                <FeedbackSection themeColor={themeColor} question={item.question} value={answers[item.id] || ''} onChange={(e) => handleTextChange(item.id, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={
+                                    <div className="mb-10 space-y-4">
+                                        <div className="flex items-center gap-2"><span className="text-red-500 text-[1.125em]">📍</span><h4 className="font-bold text-slate-900 text-[1.125em]">핵심 표현 (Essential phrases)</h4></div>
+                                        <div className="space-y-4 pl-1">
+                                            {item.keyVocab.map((v, i) => (
+                                                <div key={i} className={`pl-4 border-l-4 border-${themeColor}-500`}>
+                                                    <p className="text-slate-700"><span className={`text-${themeColor}-600 font-bold text-[1.125em] mr-2`}>{v.term}:</span><span>{v.meaning_eng}</span></p>
+                                                    {v.context && (
+                                                        <div className="mt-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                                            <p className="text-[0.85em] text-slate-700 font-medium font-marker mb-1">"{v.context}"</p>
+                                                            <p className="text-[0.75em] text-slate-400">{v.context_eng}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                } />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const LearnView = ({ updateProgress, themeColor, autoScroll, showVocab, playbackRate, layoutMode, onPlayerReady, onPlayerStateChange, onTimeUpdate }) => {
+            const [player, setPlayer] = useState(null); const playerRef = useRef(null); const [currentTime, setCurrentTime] = useState(0); const [activeLine, setActiveLine] = useState(null); const [translations, setTranslations] = useState({}); const [popup, setPopup] = useState({ show: false, fixed: false, data: null, x: 0, y: 0 }); const [activeVocabTerm, setActiveVocabTerm] = useState(null); const [isLoading, setIsLoading] = useState(true); const sidebarVocabRefs = useRef({}); const scriptRefs = useRef({}); const intervalRef = useRef(null);
+
+            useEffect(() => {
+                const loadVideo = () => { if (window.YT && window.YT.Player) { new window.YT.Player('youtube-player', { videoId: 'yG728zOrtl0', width: '100%', height: '100%', playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0 }, events: { 'onReady': (event) => { playerRef.current = event.target; setPlayer(event.target); setIsLoading(false); if (onPlayerReady) onPlayerReady(event.target); }, 'onStateChange': (event) => { if (event.data === window.YT.PlayerState.PLAYING) { startInterval(); updateProgress('learn'); } else { stopInterval(); } if (onPlayerStateChange) onPlayerStateChange(event); } } }); } };
+                if (!window.YT) { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); window.onYouTubeIframeAPIReady = loadVideo; } else { loadVideo(); }
+                return () => stopInterval();
+            }, []);
+
+            useEffect(() => { if (player && player.setPlaybackRate) player.setPlaybackRate(playbackRate); }, [playbackRate, player]);
+
+            const startInterval = () => { stopInterval(); const updateTime = () => { const p = playerRef.current; if (p && p.getCurrentTime) { const time = p.getCurrentTime(); setCurrentTime(time); if (onTimeUpdate) onTimeUpdate(time); const currentLine = SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); if (currentLine) { setActiveLine(currentLine.id); } } intervalRef.current = requestAnimationFrame(updateTime); }; intervalRef.current = requestAnimationFrame(updateTime); };
+            const stopInterval = () => { if (intervalRef.current) { cancelAnimationFrame(intervalRef.current); intervalRef.current = null; } };
+
+            useEffect(() => { if (popup.show) return; if (activeLine && autoScroll && scriptRefs.current[activeLine]) { scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, [activeLine, autoScroll, popup.show]);
+
+            const handleLineClick = (time) => { if (player) { player.seekTo(time, true); player.playVideo(); } };
+            const toggleTranslation = (id) => setTranslations(prev => ({...prev, [id]: !prev[id]}));
+            const scrollToVocab = (term) => { const element = sidebarVocabRefs.current[term]; if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+
+            const handleVocabEnter = (e, wordData) => { if (popup.fixed) return; const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: false, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+            const handleVocabLeave = () => { if (popup.fixed) return; setPopup(prev => ({ ...prev, show: false })); };
+            const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+
+            const renderTextWithVocab = (text) => {
+                const allTerms = VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); return terms.map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length);
+                const matches = []; allTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; const overlaps = matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end)); if (!overlaps) matches.push({ start: index, end, term, vocab }); index = end; } }); matches.sort((a, b) => a.start - b.start);
+                const result = []; let lastIndex = 0; matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); result.push({ isVocab: true, ...match.vocab, displayText: match.term, key: idx }); lastIndex = match.end; }); if (lastIndex < text.length) result.push(text.substring(lastIndex));
+                return result.map((part, index) => { if (typeof part === 'string') return part; const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term); return (<span key={part.key} className={`cursor-pointer border-b-2 transition-all duration-200 font-bold inline-block leading-tight ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-0.5 mx-0.5` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} onMouseEnter={(e) => handleVocabEnter(e, part)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, part)}>{part.displayText}</span>); });
+            };
+
+            const getSmartPosition = () => { if (!popup.show || !popup.data) return { left: 0, arrowLeft: 0 }; const POPUP_WIDTH = 288; const SCREEN_PADDING = 16; const screenW = window.innerWidth; let leftPos = popup.x - (POPUP_WIDTH / 2); if (leftPos < SCREEN_PADDING) leftPos = SCREEN_PADDING; else if (leftPos + POPUP_WIDTH > screenW - SCREEN_PADDING) leftPos = screenW - POPUP_WIDTH - SCREEN_PADDING; let arrowLeft = popup.x - leftPos; if (arrowLeft < 12) arrowLeft = 12; if (arrowLeft > POPUP_WIDTH - 12) arrowLeft = POPUP_WIDTH - 12; return { left: leftPos, arrowLeft }; };
+            const { left: popupLeft, arrowLeft } = getSmartPosition();
+
+            const getVideoClass = () => { if (layoutMode === 'script') return 'hidden'; if (layoutMode === 'video') { return `w-full h-full bg-black lg:h-full lg:aspect-auto ${showVocab ? 'xl:w-9/12 lg:w-full' : 'lg:w-full'}`; } let base = 'w-full sticky top-1 z-50 bg-black aspect-video lg:static lg:aspect-auto'; return `${base} flex-1 lg:h-full`; };
+            const getScriptClass = () => { if (layoutMode === 'video') return 'hidden'; if (layoutMode === 'script') { return showVocab ? 'lg:flex-1 h-auto' : 'w-full max-w-7xl mx-auto h-auto'; } return `w-full lg:w-5/12 ${showVocab ? 'xl:w-4/12' : ''} lg:h-full`; };
+            const getContainerClass = () => { if (layoutMode === 'script') return 'items-start min-h-full'; if (layoutMode === 'video') { return 'h-[calc(100vh-9rem)] lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; } return 'min-h-full lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; }
+            const getInnerListStyle = () => { const baseStyle = "space-y-4 rounded-xl transition-all duration-300"; if (layoutMode === 'script') { return `${baseStyle} p-6 bg-slate-100 overflow-visible h-auto`; } else { return `${baseStyle} p-4 bg-gray-50 overflow-visible lg:overflow-y-auto flex-1`; } };
+
+            return (
+                <div className={`flex gap-4 animate-fade-in relative w-full mx-auto ${getContainerClass()}`}>
+                    {popup.show && popup.data && createPortal(<div className="fixed z-[9999] bg-white rounded-xl shadow-xl border border-gray-200 p-4 w-72 animate-fade-in pointer-events-none" style={{ left: popupLeft, top: popup.y + 12 }}><div className="flex items-center justify-between mb-2"><h3 className="text-[20px] font-black text-slate-900 font-ocarina">{popup.data.term}</h3></div><p className="text-[19px] text-slate-700 font-medium mb-3 leading-snug font-diary">{popup.data.mainDef}</p>{popup.fixed && popup.data.definition && (<div className="space-y-1 mt-2 bg-gray-50 p-2 rounded-lg border border-gray-100 text-[0.9em] whitespace-pre-line text-slate-600">{popup.data.definition}</div>)}<div className="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45" style={{ left: arrowLeft }}></div></div>, document.body)}
+                    <div className={`bg-black rounded-xl overflow-hidden shadow-lg transition-all duration-300 relative ${getVideoClass()}`}><div id="youtube-player" className="w-full h-full"></div>{isLoading && (<div className="absolute inset-0 bg-black/90 flex items-center justify-center z-10"><div className={`animate-spin rounded-full h-12 w-12 border-4 border-t-transparent border-${themeColor}-500 opacity-80`}></div></div>)}</div>
+                    <div className={`flex flex-col rounded-xl border border-gray-200 shadow-sm transition-all duration-300 bg-gray-50 ${getScriptClass()} view-learn-script-style`}>
+                        <div className={getInnerListStyle()}>
+                            {SCRIPT_DATA.map(line => {
+                                const isActive = activeLine === line.id; const isScriptMode = layoutMode === 'script';
+                                if (isScriptMode) {
+                                    const isLeft = line.speaker === '유나'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
+                                    return (
+                                        <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-6 ${isLeft ? 'items-start' : 'items-end'}`}>
+                                            <div className={`text-[0.75em] font-bold text-slate-500 mb-1 px-2 ${isLeft ? 'text-left' : 'text-right'}`}>{line.speaker}</div>
+                                            <div className={`relative p-5 rounded-xl border ${bubbleBg} ${bubbleBorder} ${isActive ? 'scale-[1.02] shadow-md z-10' : 'hover:shadow-md'} transition-all duration-300 max-w-[85%] sm:max-w-[70%] group`}>
+                                                <div className={`absolute bottom-4 w-3 h-3 border ${bubbleBg} ${bubbleBorder} rotate-45 transform ${isLeft ? '-left-1.5 border-t-0 border-r-0' : '-right-1.5 border-b-0 border-l-0'}`}></div>
+                                                <div className="relative z-10" onClick={() => handleLineClick(line.time[0])}><p className="text-[1.125em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>{translations[line.id] && (<div className="mt-3 pt-3 border-t border-dashed border-gray-200/60 animate-fade-in"><p className="text-[1em] text-slate-500">{line.eng}</p></div>)}</div>
+                                                <div className="flex justify-between items-center mt-4 pt-1"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-1 text-[0.68em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-3.5 h-3.5" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-5 h-5" /></button></div>
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className="flex flex-col">
+                                        <div className="flex items-center gap-2 mb-1 ml-1"><span className="text-[0.75em] font-bold text-slate-600">{line.speaker}</span></div>
+                                        <div onClick={() => handleLineClick(line.time[0])} className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-50 border-yellow-100 shadow-md scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                                            <p className="text-[1.375em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>
+                                            {translations[line.id] && (<div className="mt-3 pt-3 border-t border-dashed border-gray-200 animate-fade-in"><p className="text-[1.125em] text-slate-500">{line.eng}</p></div>)}
+                                            <div className="flex justify-between items-center mt-4 pt-3 border-t border-dashed border-gray-100"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-1 text-[0.68em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-3.5 h-3.5" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-5 h-5" /></button></div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            <div className="h-32"></div>
+                        </div>
+                    </div>
+                    {showVocab && (
+                        <div className={`hidden xl:flex w-3/12 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in ${layoutMode === 'script' ? 'sticky top-4 h-[calc(100vh-6rem)]' : 'h-full'}`}>
+                            <div className="p-4 border-b border-gray-100 flex items-center gap-2 bg-white rounded-t-xl"><VocabIcon className={`w-5 h-5 text-${themeColor}-600`} /><div className="flex flex-col leading-none"><h2 className="font-bold text-slate-900 text-[0.875em]">핵심 어휘</h2><span className="text-[0.625em] text-slate-400 font-medium">Key Vocabulary</span></div></div>
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">{VOCAB_DATA.map((word, idx) => (<div key={idx} ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-4 rounded-xl border transition-all duration-500 ${activeVocabTerm === word.term ? `border-${themeColor}-500 bg-${themeColor}-50 ring-2 ring-${themeColor}-200 shadow-md scale-105` : 'bg-white border-gray-200 shadow-sm'}`}><div className="flex justify-between items-start mb-2"><h3 className="text-[1.25em] font-extrabold text-slate-900 font-ocarina">{word.term}</h3></div><p className="text-[1.18em] text-slate-600 mb-3 font-medium font-diary">{word.mainDef}</p>{word.definition && (<div className={`space-y-2 bg-${themeColor}-50 p-2.5 rounded-lg border border-${themeColor}-100 whitespace-pre-line text-[1em] text-${themeColor}-800`}>{word.definition}</div>)}</div>))}</div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home'); const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); const [userLevel, setUserLevel] = useState("B2+"); const [autoScroll, setAutoScroll] = useState(true); const [showVocab, setShowVocab] = useState(false); const [playbackRate, setPlaybackRate] = useState(1.0); const [isSpeedMenuOpen, setIsSpeedMenuOpen] = useState(false); const [layoutMode, setLayoutMode] = useState('split'); const [progress, setProgress] = useState({ learn: false, vocab: false, quiz: 0, discuss: false }); const [videoState, setVideoState] = useState({ player: null, currentTime: 0, duration: 0, isPlaying: false });
+            const themeColor = useMemo(() => getLevelTheme(userLevel), [userLevel]);
+            const themeHexColors = { 'lime': '#a3e635', 'green': '#4ade80', 'sky': '#38bdf8', 'blue': '#60a5fa', 'violet': '#a78bfa', 'fuchsia': '#e879f9', 'purple': '#c084fc' };
+            const currentThemeHex = themeHexColors[themeColor] || '#4ade80';
+            const updateProgress = (key, value = true) => setProgress(prev => { if (prev[key] === value) return prev; return { ...prev, [key]: value }; });
+            const handlePlayerReady = (player) => setVideoState(prev => ({ ...prev, player, duration: player.getDuration() }));
+            const handlePlayerStateChange = (event) => setVideoState(prev => ({ ...prev, isPlaying: event.data === window.YT.PlayerState.PLAYING }));
+            const handleTimeUpdate = (time) => setVideoState(prev => ({ ...prev, currentTime: time }));
+            const mainPaddingClass = useMemo(() => { switch(activeTab) { case 'home': return 'p-[20px]'; case 'learn': return 'p-[2px]'; case 'vocab': return 'p-[16px]'; case 'quiz': return 'p-[4px]'; case 'discuss': return 'p-[2px]'; default: return 'p-[20px]'; } }, [activeTab]);
+            const getScrollClass = () => { if (activeTab === 'learn') { if (layoutMode === 'video') return 'lg:overflow-hidden'; if (layoutMode === 'split') return 'lg:overflow-hidden'; } return ''; };
+            useEffect(() => { const handleResize = () => { if (window.innerWidth < 1024) setIsSidebarCollapsed(true); else setIsSidebarCollapsed(false); }; window.addEventListener('resize', handleResize); handleResize(); return () => window.removeEventListener('resize', handleResize); }, []);
+            const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
+
+            const renderLearnHeaderContent = () => {
+                 const modes = [ { id: 'split', labelKorDesktop: '동영상 & 스크립트', labelKorMobile: '동영상 & 스크립트', labelEng: 'Video & Transcript' }, { id: 'video', labelKorDesktop: '동영상만 보기', labelKorMobile: '동영상', labelEngDesktop: 'Watch Video', labelEngMobile: 'Video' }, { id: 'script', labelKorDesktop: '스크립트만 보기', labelKorMobile: '스크립트', labelEngDesktop: 'Read Transcript', labelEngMobile: 'Transcript' } ];
+                const { player, currentTime, duration, isPlaying } = videoState;
+                const formatTime = (seconds) => { if (isNaN(seconds)) return "00:00"; const date = new Date(seconds * 1000); const mm = date.getUTCMinutes(); const ss = date.getUTCSeconds(); return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`; };
+                const handleSeek = (e) => { const time = parseFloat(e.target.value); if (player) player.seekTo(time, true); setVideoState(prev => ({ ...prev, currentTime: time })); };
+                const togglePlay = () => { if (player) { if (isPlaying) player.pauseVideo(); else player.playVideo(); } };
+                const rewind2 = () => { if (player) player.seekTo(Math.max(0, currentTime - 1.5), true); };
+                const forward2 = () => { if (player) player.seekTo(Math.min(duration, currentTime + 1.5), true); };
+                const layoutBtnTextSizeKor = "text-[12px] md:text-[13px] lg:text-[14px]"; const layoutBtnTextSizeEng = "text-[8px] md:text-[9px] lg:text-[10px]"; const layoutBtnPadding = "px-2 py-1 lg:px-4 lg:py-2"; const controlBtnHeight = "h-8 md:h-[32px] lg:h-9"; const controlTextSize = "text-[10px] md:text-[11px] lg:text-[12px]"; const controlPadding = "px-3";
+
+                return (
+                    <div className="flex items-center h-full px-4 lg:px-6 border-b border-gray-100 bg-white/90 backdrop-blur gap-4 header-learn-style">
+                        <div className="flex items-center gap-2 shrink-0">{modes.map((mode, index) => { const isActive = layoutMode === mode.id; const korFontClass = isActive ? "font-cafe24-surround text-green-700" : "font-cafe24 text-slate-500"; const engFontClass = isActive ? "font-bold text-green-500" : "font-medium text-slate-400"; const containerClass = isActive ? `bg-${themeColor}-50 border border-${themeColor}-100 shadow-sm` : 'bg-transparent border border-transparent hover:bg-gray-50'; return ( <React.Fragment key={mode.id}><button onClick={() => setLayoutMode(mode.id)} className={`flex flex-col items-center justify-center rounded-xl transition-all duration-300 ${layoutBtnPadding} ${containerClass}`}><span className={`leading-tight ${layoutBtnTextSizeKor} ${korFontClass}`}><span className="hidden md:inline">{mode.labelKorDesktop}</span><span className="md:hidden">{mode.labelKorMobile}</span></span><span className={`leading-tight font-nanum-round mt-0.5 ${layoutBtnTextSizeEng} ${engFontClass}`}><span className="hidden md:inline">{mode.labelEngDesktop || mode.labelEng}</span><span className="md:hidden">{mode.labelEngMobile || mode.labelEng}</span></span></button>{index < modes.length - 1 && <div className="w-px h-3 bg-gray-300"></div>}</React.Fragment> ); })}</div>
+                        <div className="flex items-center gap-2 flex-1 justify-end min-w-0">
+                            <div className={`hidden sm:flex flex-1 items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm min-w-0 transition-all ${controlBtnHeight} ${showVocab ? '' : 'max-w-[400px]'}`}>
+                                <div className="hidden md:flex flex-col flex-1 px-2 justify-center w-full min-w-[60px] lg:min-w-[80px]"><input type="range" min="0" max={duration || 100} value={currentTime} onChange={handleSeek} className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer" style={{ '--thumb-color': currentThemeHex }} /><div className="text-[8px] font-mono text-center leading-none mt-1 text-slate-400 font-bold whitespace-nowrap">{formatTime(currentTime)} / {formatTime(duration)}</div></div>
+                                <button onClick={rewind2} className="p-1 hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="-1.5s"><RewindIcon className="w-4 h-4" /></button><button onClick={togglePlay} className={`w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center rounded-xl transition-all duration-200 hover:scale-110 bg-${themeColor}-400 text-white shadow-md shrink-0`} title={isPlaying ? "Pause" : "Play"}>{isPlaying ? <PauseIcon className="w-4 h-4 lg:w-5 lg:h-5 fill-current" /> : <PlayIconSolid className="w-4 h-4 lg:w-5 lg:h-5 fill-current" />}</button><button onClick={forward2} className="p-1 hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="+1.5s"><ForwardIcon className="w-4 h-4" /></button>
+                            </div>
+                            <div className="w-px h-3 bg-gray-300 shrink-0 hidden sm:block"></div>
+                            <div className="relative shrink-0 hidden sm:block"><button onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)} className={`flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600`}><SpeedSolidIcon className="w-4 h-4 text-slate-400" /><span className={`${controlTextSize} font-bold font-nanum-round min-w-[32px] text-center`}>{playbackRate.toFixed(2)}x</span></button>{isSpeedMenuOpen && (<><div className="fixed inset-0 z-40" onClick={() => setIsSpeedMenuOpen(false)}></div><div className="absolute top-full right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-50 w-24 flex flex-col gap-0.5 animate-fade-in">{[0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0].map(speed => (<button key={speed} onClick={() => { setPlaybackRate(speed); setIsSpeedMenuOpen(false); }} className={`text-center px-2 py-1.5 rounded-lg text-[10px] font-bold font-nanum-round transition-colors ${playbackRate === speed ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-500 hover:bg-gray-50 hover:text-slate-700'}`}>{speed.toFixed(2)}x</button>))}</div></>)}</div>
+                            <div className="w-px h-3 bg-gray-300 shrink-0 hidden sm:block"></div>
+                            <button onClick={() => setAutoScroll(!autoScroll)} className={`hidden min-[400px]:flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600 shrink-0`}><div className={`relative transition-colors duration-200 ease-in-out ${autoScroll ? `bg-${themeColor}-400` : 'bg-gray-300'} w-6 h-2 md:w-7 md:h-3 lg:w-8 lg:h-4 rounded-full`}><div className={`absolute top-0.5 bg-white rounded-full shadow-sm transition-transform duration-200 left-0.5 w-1 h-1 md:w-2 md:h-2 lg:w-3 lg:h-3 ${autoScroll ? 'translate-x-4' : 'translate-x-0'}`}></div></div><span className={`${controlTextSize} font-bold font-nanum-round`}>Auto Scroll</span></button>
+                            <div className="w-px h-3 bg-gray-300 hidden xl:block shrink-0"></div>
+                            <button onClick={() => setShowVocab(!showVocab)} className={`hidden xl:flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border transition-all shadow-sm shrink-0 ${showVocab ? `bg-${themeColor}-50 border-${themeColor}-200 text-${themeColor}-700` : 'bg-white border-gray-200 text-slate-600 hover:bg-gray-50'}`}><OpenBookSolidIcon className="w-4 h-4" /><span className={`${controlTextSize} font-bold font-nanum-round hidden sm:inline`}>Vocabulary</span></button>
+                        </div>
+                    </div>
+                );
+            };
+
+            const renderHomeHeaderContent = () => {
+                return (
+                    <div className="flex lg:hidden items-center gap-3 px-4 h-full border-b border-gray-100 bg-white/90 backdrop-blur header-global-style"><img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className="w-[48px] h-[48px] rounded-2xl shadow-lg object-cover transition-all duration-300"/><div className="flex flex-col justify-center animate-fade-in"><span className="font-cafe24-deco text-[20px] text-black leading-tight">Open</span><span className={`font-mustache text-[11px] leading-tight text-${themeColor}-600 font-bold`}>KoreanLearningLab</span></div></div>
+                );
+            };
+
+            const renderContent = () => {
+                switch(activeTab) {
+                    case 'home': return <HomeView setActiveTab={setActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                    case 'learn': return <LearnView updateProgress={updateProgress} themeColor={themeColor} autoScroll={autoScroll} showVocab={showVocab} playbackRate={playbackRate} layoutMode={layoutMode} onPlayerReady={handlePlayerReady} onPlayerStateChange={handlePlayerStateChange} onTimeUpdate={handleTimeUpdate} />;
+                    case 'vocab': return <VocabView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'quiz': return <QuizView updateProgress={updateProgress} themeColor={themeColor} />;
+                    case 'discuss': return <DiscussView updateProgress={updateProgress} themeColor={themeColor} />;
+                    default: return <HomeView setActiveTab={setActiveTab} progress={progress} userLevel={userLevel} themeColor={themeColor} />;
+                }
+            };
+
+            const getHeaderClass = () => {
+                const base = `h-16 bg-white transition-all duration-300 ${isSidebarCollapsed ? 'lg:left-[88px]' : 'lg:left-[19rem]'}`; // Adjusted margin-left to match new sidebar width
+                if (activeTab === 'learn' && layoutMode === 'script') { return `${base} sticky top-0 z-40`; }
+                return `${base} relative lg:sticky lg:top-0 z-40`;
+            };
+
+            return (
+                <div className="flex min-h-screen bg-[#f9fafb]">
+                    <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} userLevel={userLevel} themeColor={themeColor} />
+                    <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[19rem]'}`}> {/* Adjusted margin-left to match new sidebar width */}
+                        <header className={getHeaderClass()}>{activeTab === 'learn' ? renderLearnHeaderContent() : (activeTab === 'home' ? renderHomeHeaderContent() : null)}</header>
+                        <main className={`flex-1 ${mainPaddingClass} flex flex-col ${getScrollClass()}`}>{renderContent()}</main>
+                    </div>
+                    <nav className="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-3 z-50">{['home','learn','vocab','quiz','discuss'].map(t=><button key={t} onClick={()=>setActiveTab(t)} className={`p-2 rounded-lg ${activeTab===t ? `text-${themeColor}-600 bg-${themeColor}-50` : 'text-slate-400'}`}>{t==='home'?<HomeIcon className="w-6 h-6"/>:t==='learn'?<LearnIcon className="w-6 h-6"/>:t==='vocab'?<VocabIcon className="w-6 h-6"/>:t==='quiz'?<QuizIcon className="w-6 h-6"/>:<DiscussIcon className="w-6 h-6"/>}</button>)}</nav>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
