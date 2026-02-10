@@ -12,21 +12,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
-    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
     <style>
+        /* 루트 폰트 사이즈를 clamp와 vw를 사용하여 유동적으로 설정 */
+        html { font-size: clamp(12px, 1vw, 16px); }
+        
         @font-face {
             font-family: 'NanumSquareRound';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
             font-weight: normal;
             font-display: swap;
         }
+        
         body{font-family:'NanumSquareRound',sans-serif;background-color:#f9fafb;color:#334155}
         .font-basic{font-family:'NanumSquareRound',sans-serif}
-        .font-jua{font-family:'Jua',sans-serif}
-        .font-noto{font-family:'Noto Sans KR',sans-serif}
-        .font-sunflower{font-family:'Sunflower',sans-serif}
-        .font-nanum-round{font-family:'NanumSquareRound',sans-serif}
-        @font-face{font-family:'Cafe24SurroundAir';src:url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24{font-family:'Cafe24SurroundAir',sans-serif}@font-face{font-family:'Cafe24Surround';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-surround{font-family:'Cafe24Surround',sans-serif}@font-face{font-family:'Cafe24Decoshadow';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-deco{font-family:'Cafe24Decoshadow',sans-serif}@font-face{font-family:'Cafe24Decoschool';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-school{font-family:'Cafe24Decoschool',sans-serif}@font-face{font-family:'Cafe24Anemone';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-anemone{font-family:'Cafe24Anemone',sans-serif}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');font-weight:700;font-display:swap}.font-school-smile{font-family:'SchoolSafetyRoundedSmile',sans-serif}@font-face{font-family:'SchoolSafetyFreeTime';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/HakgyoansimJayusiganR.woff2') format('woff2');font-weight:normal;font-style:normal}.font-school-free{font-family:'SchoolSafetyFreeTime',sans-serif}@font-face{font-family:'Juache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');font-weight:normal;font-display:swap}.font-juache{font-family:'Juache',sans-serif}@font-face{font-family:'SchoolSafetyOcarina';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-ocarina{font-family:'SchoolSafetyOcarina',sans-serif}@font-face{font-family:'SchoolSafetyPictureDiary';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}.font-diary{font-family:'SchoolSafetyPictureDiary',sans-serif}@font-face{font-family:'SchoolSafeBoardMarker';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-marker{font-family:'SchoolSafeBoardMarker',sans-serif}@font-face{font-family:'SchoolSafeDictation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');font-weight:normal;font-display:swap}.font-dictation{font-family:'SchoolSafeDictation',sans-serif}@font-face{font-family:'Cafe24Gowoonbam';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');font-weight:normal;font-display:swap}.font-gowoonbam{font-family:'Cafe24Gowoonbam',sans-serif}@font-face{font-family:'SchoolSafetyMustache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-mustache{font-family:'SchoolSafetyMustache',sans-serif}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#94a3b8}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.animate-fade-in{animation:fadeIn 0.3s ease-out forwards}input[type=range]{-webkit-appearance:none;background:transparent}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:12px;width:12px;border-radius:50%;background:var(--thumb-color,#22c55e);cursor:pointer;margin-top:-4px;border:1px solid white;box-shadow:0 1px 2px rgba(0,0,0,0.15)}input[type=range]::-webkit-slider-runnable-track{width:100%;height:4px;cursor:pointer;background:#e2e8f0;border-radius:2px}
+        .font-jua{font-family:'Jua',sans-serif}.font-noto{font-family:'Noto Sans KR',sans-serif}.font-sunflower{font-family:'Sunflower',sans-serif}.font-nanum-round{font-family:'NanumSquareRound',sans-serif}@font-face{font-family:'Cafe24SurroundAir';src:url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24{font-family:'Cafe24SurroundAir',sans-serif}@font-face{font-family:'Cafe24Surround';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-surround{font-family:'Cafe24Surround',sans-serif}@font-face{font-family:'Cafe24Decoshadow';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-deco{font-family:'Cafe24Decoshadow',sans-serif}@font-face{font-family:'Cafe24Decoschool';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');font-weight:normal;font-display:swap}.font-cafe24-school{font-family:'Cafe24Decoschool',sans-serif}@font-face{font-family:'Cafe24Anemone';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');font-weight:normal;font-display:swap}.font-cafe24-anemone{font-family:'Cafe24Anemone',sans-serif}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}@font-face{font-family:'SchoolSafetyRoundedSmile';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');font-weight:700;font-display:swap}.font-school-smile{font-family:'SchoolSafetyRoundedSmile',sans-serif}@font-face{font-family:'SchoolSafetyFreeTime';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/HakgyoansimJayusiganR.woff2') format('woff2');font-weight:normal;font-style:normal}.font-school-free{font-family:'SchoolSafetyFreeTime',sans-serif}@font-face{font-family:'Juache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');font-weight:normal;font-display:swap}.font-juache{font-family:'Juache',sans-serif}@font-face{font-family:'SchoolSafetyOcarina';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-ocarina{font-family:'SchoolSafetyOcarina',sans-serif}@font-face{font-family:'SchoolSafetyPictureDiary';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');font-weight:normal;font-display:swap}.font-diary{font-family:'SchoolSafetyPictureDiary',sans-serif}@font-face{font-family:'SchoolSafeBoardMarker';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-marker{font-family:'SchoolSafeBoardMarker',sans-serif}@font-face{font-family:'SchoolSafeDictation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2');font-weight:normal;font-display:swap}.font-dictation{font-family:'SchoolSafeDictation',sans-serif}@font-face{font-family:'Cafe24Gowoonbam';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');font-weight:normal;font-display:swap}.font-gowoonbam{font-family:'Cafe24Gowoonbam',sans-serif}@font-face{font-family:'SchoolSafetyMustache';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2');font-weight:normal;font-display:swap}.font-mustache{font-family:'SchoolSafetyMustache',sans-serif}::-webkit-scrollbar{width:0.375rem;height:0.375rem}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:0.1875rem}::-webkit-scrollbar-thumb:hover{background:#94a3b8}@keyframes fadeIn{from{opacity:0;transform:translateY(0.625rem)}to{opacity:1;transform:translateY(0)}}.animate-fade-in{animation:fadeIn 0.3s ease-out forwards}input[type=range]{-webkit-appearance:none;background:transparent}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:0.75rem;width:0.75rem;border-radius:50%;background:var(--thumb-color,#22c55e);cursor:pointer;margin-top:-0.25rem;border:1px solid white;box-shadow:0 1px 2px rgba(0,0,0,0.15)}input[type=range]::-webkit-slider-runnable-track{width:100%;height:0.25rem;cursor:pointer;background:#e2e8f0;border-radius:0.125rem}
     </style>
 </head>
 <body>
@@ -34,22 +33,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo, useCallback } = React;
         const { createPortal } = ReactDOM;
-
-        // --- Constants for Styles ---
-        const BASE_CLAMP = "clamp(12px, 1vw, 16px)";
-        const SCALE_SIDEBAR_EXPANDED = 1.15;
-        const SCALE_SIDEBAR_COLLAPSED = 1.0;
-        const SCALE_PAGE_HOME = 1.25;
-        const SCALE_PAGE_LEARN_SCRIPT = 1.3;
-        const SCALE_PAGE_VOCAB = 1.4;
-        const SCALE_PAGE_QUIZ = 1.55;
-        const SCALE_PAGE_DISCUSS = 1.35;
-        const SCALE_HEADER_LEARN = 1.0;
-        const SCALE_HEADER_DEFAULT = 1.3;
-
-        // Sidebar Width Calculation (Base w-64 is 16rem = 256px)
-        const SIDEBAR_WIDTH_EXPANDED_PX = 256 * 1.15; // ~295px
-        const SIDEBAR_WIDTH_COLLAPSED_PX = 88; // w-[88px]
 
         // --- Data Definitions ---
         const LEVEL_DEFINITIONS = {
@@ -777,7 +760,7 @@
                 "variants": ["오늘도 치킨 먹어야 하거든요"],
                 "subDefs": [
                     { "subTerm": "-아야/어야 하다", "subDef": "have to; must." },
-                    { "subTerm": "-거든요", "subDef": "used when you are giving the listener information or a reason they don't know yet; (in this context) \"I'm saying we should wrap this up because I have to eat chicken today too, you see.\"." }
+                    { "subTerm": "-거든요", "subDef": "used to when you are giving the listener information or a reason they don't know yet; (in this context) \"I'm saying we should wrap this up because I have to eat chicken today too, you see.\"." }
                 ],
                 "examples": [
                     { "kor": "지금 가야 하거든요.", "eng": "I have to go now (you see)." },
@@ -870,16 +853,16 @@
         ];
 
         const QUIZ_LIST = [
-            { id: 1, questionKor: "우디는 누구한테 크리스마스 선물을 받았어요?", questionEng: "Who gave Woody a Christmas gift?", sentence_pre: "우디는 회사 \"", sentence_post: "\"한테 크리스마스 선물을 받았어요.", correct_word: "동료", translation: "Woody received a Christmas gift from his \"____\".", hint: "Someone who works with you.", options: [{ text: "친구", isCorrect: false, feedback: "'친구' means 'friend'." }, { text: "동료", isCorrect: true, feedback: "Woody says '회사 동료가 선물을 줬어요!' ('동료' means 'coworker')." }, { text: "가족", isCorrect: false, feedback: "'가족' means 'family'." }, { text: "선생님", isCorrect: false, feedback: "'선생님' means 'teacher'." }] },
-            { id: 2, questionKor: "그 선물은 뭐였어요?", questionEng: "What was the gift?", sentence_pre: "\"", sentence_post: "\" 크리스마스 티셔츠였어요.", correct_word: "화려한", translation: "It was a \"____\" Christmas T-shirt.", hint: "Too many bright colors.", options: [{ text: "예쁜", isCorrect: false, feedback: "'예쁜' means 'pretty'." }, { text: "단순한", isCorrect: false, feedback: "'단순한' means 'simple'." }, { text: "화려한", isCorrect: true, feedback: "Woody says '너무 화려해요!' ('화려한' means 'flashy/colorful')." }, { text: "작은", isCorrect: false, feedback: "'작은' means 'small'." }] },
-            { id: 3, questionKor: "우디는 그 티셔츠를 좋아했어요?", questionEng: "Did Woody like the T-shirt?", sentence_pre: "우디는 그 티셔츠가 \"", sentence_post: "\".", correct_word: "마음에 안 들었어요", translation: "Woody \"____\" the T-shirt.", hint: "He didn't like it.", options: [{ text: "좋았어요", isCorrect: false, feedback: "'좋았어요' means 'liked it'." }, { text: "마음에 들었어요", isCorrect: false, feedback: "'마음에 들었어요' means 'liked it'." }, { text: "마음에 안 들었어요", isCorrect: true, feedback: "Woody says '마음에 안 들어요.' ('마음에 안 들다' means 'to not like')." }, { text: "예뻤어요", isCorrect: false, feedback: "'예뻤어요' means 'was pretty'." }] },
-            { id: 4, questionKor: "우디는 동료에게 \"고마워요\"라고 말했어요?", questionEng: "Did Woody say \"thank you\" to his coworker?", sentence_pre: "우디는 동료에게 \"그 티셔츠 못생겼어요\"라고 \"", sentence_post: "\" 말했어요.", correct_word: "솔직하게", translation: "Woody \"____\" told his coworker \"That T-shirt is ugly.\"", hint: "Telling the truth directly.", options: [{ text: "조용히", isCorrect: false, feedback: "'조용히' means 'quietly'." }, { text: "친절하게", isCorrect: false, feedback: "'친절하게' means 'kindly'." }, { text: "솔직하게", isCorrect: true, feedback: "Woody says '솔직한 게 제일 좋아요!' ('솔직하게' means 'honestly')." }, { text: "천천히", isCorrect: false, feedback: "'천천히' means 'slowly'." }] },
-            { id: 5, questionKor: "우디는 동료의 선물을 안 좋아했어요. 그 동료의 마음은 어땠을까요?", questionEng: "Woody didn't like the coworker's gift. How did the coworker feel?", sentence_pre: "우디의 동료는 마음에 \"", sentence_post: "\".", correct_word: "상처를 받았을 거예요", translation: "Woody's coworker probably \"____\".", hint: "Emotionally hurt.", options: [{ text: "기뻤을 거예요", isCorrect: false, feedback: "'기뻤을 거예요' means 'would have been happy'." }, { text: "웃었을 거예요", isCorrect: false, feedback: "'웃었을 거예요' means 'would have laughed'." }, { text: "상처를 받았을 거예요", isCorrect: true, feedback: "Yuna says '동료가 상처받았을 거예요!' ('상처를 받다' means 'to be hurt')." }, { text: "놀랐을 거예요", isCorrect: false, feedback: "'놀랐을 거예요' means 'would have been surprised'." }] },
-            { id: 6, questionKor: "우디는 나중에 그 티셔츠를 입었어요?", questionEng: "Did Woody wear the T-shirt later?", sentence_pre: "우디는 그 티셔츠를 치킨으로 \"", sentence_post: "\".", correct_word: "교환하고 싶어해요", translation: "Woody \"____\" the T-shirt for chicken.", hint: "He wants to exchange it.", options: [{ text: "입고 싶어해요", isCorrect: false, feedback: "'입고 싶어해요' means 'wants to wear'." }, { text: "버리고 싶어해요", isCorrect: false, feedback: "'버리고 싶어해요' means 'wants to throw away'." }, { text: "교환하고 싶어해요", isCorrect: true, feedback: "Woody says '티셔츠를 치킨으로 바꿀 거예요' ('교환하다/바꾸다' means 'to exchange')." }, { text: "선물하고 싶어해요", isCorrect: false, feedback: "'선물하고 싶어해요' means 'wants to give as a gift'." }] },
-            { id: 7, questionKor: "만약 우디가 그 티셔츠를 팔면, 동료의 마음은 어떨까요?", questionEng: "If Woody sells the T-shirt, how will the coworker feel?", sentence_pre: "우디의 동료는 아마도 \"", sentence_post: "\".", correct_word: "서운할 거예요", translation: "Woody's coworker will probably \"____\".", hint: "Sad and disappointed.", options: [{ text: "행복할 거예요", isCorrect: false, feedback: "'행복할 거예요' means 'will be happy'." }, { text: "신날 거예요", isCorrect: false, feedback: "'신날 거예요' means 'will be excited'." }, { text: "서운할 거예요", isCorrect: true, feedback: "Yuna says '동료가 정말 서운했을 거예요.' ('서운하다' means 'to feel hurt/disappointed')." }, { text: "무서울 거예요", isCorrect: false, feedback: "'무서울 거예요' means 'will be scared'." }] },
-            { id: 8, questionKor: "우디는 동료에게 어떻게 거짓말을 할 거예요?", questionEng: "How will Woody lie to his coworker?", sentence_pre: "우디는 선물을 \"", sentence_post: "\"라고 거짓말할 거예요.", correct_word: "간직하고 있어요", translation: "Woody will lie that he \"____\" the gift.", hint: "Keeping it carefully.", options: [{ text: "버렸어요", isCorrect: false, feedback: "'버렸어요' means 'threw it away'." }, { text: "팔았어요", isCorrect: false, feedback: "'팔았어요' means 'sold it'." }, { text: "간직하고 있어요", isCorrect: true, feedback: "Woody says '너무 아까워서 못 입고, 잘 간직하고 있어!' ('간직하다' means 'to treasure/keep')." }, { text: "입고 있어요", isCorrect: false, feedback: "'입고 있어요' means 'wearing it now'." }] },
-            { id: 9, questionKor: "우디의 성격은 어때요?", questionEng: "What is Woody's personality like?", sentence_pre: "우디는 \"", sentence_post: "\".", correct_word: "뻔뻔해요", translation: "Woody is \"____\".", hint: "Shameless, not embarrassed.", options: [{ text: "착해요", isCorrect: false, feedback: "'착해요' means 'is kind/good'." }, { text: "조용해요", isCorrect: false, feedback: "'조용해요' means 'is quiet'." }, { text: "뻔뻔해요", isCorrect: true, feedback: "Yuna says '와, 정말 뻔뻔하네요.' ('뻔뻔하다' means 'shameless')." }, { text: "부지런해요", isCorrect: false, feedback: "'부지런해요' means 'is diligent'." }] },
-            { id: 10, questionKor: "우디는 동료들과 잘 지낼 수 있을까요?", questionEng: "Will Woody be able to get along well with his coworkers?", sentence_pre: "우디는 동료와 \"", sentence_post: "\".", correct_word: "관계가 나빠질 수도 있어요", translation: "Woody's \"____\" with his coworker.", hint: "The relationship might become bad.", options: [{ text: "관계가 나빠질 수도 있어요", isCorrect: true, feedback: "Yuna says '동료 관계가 나빠질 수 있어요!' ('관계가 나쁘다' means 'relationship is bad')." }, { text: "관계가 좋아질 수도 있어요", isCorrect: false, feedback: "'관계가 좋아질 수도 있어요' means 'relationship might improve'." }, { text: "결혼할 수도 있어요", isCorrect: false, feedback: "'결혼할 수도 있어요' means 'might get married' - not related to the context." }, { text: "관계가 멀어질 수도 있어요", isCorrect: false, feedback: "'관계가 멀어질 수도 있어요' means 'relationship might become distant' - similar but Yuna specifically said '나빠질'." }] }
+            { id: 1, questionKor: "우디는 누구한테 크리스마스 선물을 받았어요?", questionEng: "Who gave Woody a Christmas gift?", sentence_pre: "우디는 회사 \"", sentence_post: "\"한테 크리스마스 선물을 받았어요.", correct_word: "동료", translation_pre: "Woody received a Christmas gift from his ", translation_answer: "coworker", translation_post: ".", hint: "Someone who works with you.", options: [{ text: "친구", isCorrect: false, feedback: "'친구' means 'friend'." }, { text: "동료", isCorrect: true, feedback: "Woody says '회사 동료가 선물을 줬어요!' ('동료' means 'coworker')." }, { text: "가족", isCorrect: false, feedback: "'가족' means 'family'." }, { text: "선생님", isCorrect: false, feedback: "'선생님' means 'teacher'." }] },
+            { id: 2, questionKor: "그 선물은 뭐였어요?", questionEng: "What was the gift?", sentence_pre: "\"", sentence_post: "\" 크리스마스 티셔츠였어요.", correct_word: "화려한", translation_pre: "It was a ", translation_answer: "flashy", translation_post: " Christmas T-shirt.", hint: "Too many bright colors.", options: [{ text: "예쁜", isCorrect: false, feedback: "'예쁜' means 'pretty'." }, { text: "단순한", isCorrect: false, feedback: "'단순한' means 'simple'." }, { text: "화려한", isCorrect: true, feedback: "Woody says '너무 화려해요!' ('화려한' means 'flashy/colorful')." }, { text: "작은", isCorrect: false, feedback: "'작은' means 'small'." }] },
+            { id: 3, questionKor: "우디는 그 티셔츠를 좋아했어요?", questionEng: "Did Woody like the T-shirt?", sentence_pre: "우디는 그 티셔츠가 \"", sentence_post: "\".", correct_word: "마음에 안 들었어요", translation_pre: "Woody ", translation_answer: "didn't like", translation_post: " the T-shirt.", hint: "He didn't like it.", options: [{ text: "좋았어요", isCorrect: false, feedback: "'좋았어요' means 'liked it'." }, { text: "마음에 들었어요", isCorrect: false, feedback: "'마음에 들었어요' means 'liked it'." }, { text: "마음에 안 들었어요", isCorrect: true, feedback: "Woody says '마음에 안 들어요.' ('마음에 안 들다' means 'to not like')." }, { text: "예뻤어요", isCorrect: false, feedback: "'예뻤어요' means 'was pretty'." }] },
+            { id: 4, questionKor: "우디는 동료에게 \"고마워요\"라고 말했어요?", questionEng: "Did Woody say \"thank you\" to his coworker?", sentence_pre: "우디는 동료에게 \"그 티셔츠 못생겼어요\"라고 \"", sentence_post: "\" 말했어요.", correct_word: "솔직하게", translation_pre: "Woody ", translation_answer: "honestly", translation_post: " told his coworker \"That T-shirt is ugly.\"", hint: "Telling the truth directly.", options: [{ text: "조용히", isCorrect: false, feedback: "'조용히' means 'quietly'." }, { text: "친절하게", isCorrect: false, feedback: "'친절하게' means 'kindly'." }, { text: "솔직하게", isCorrect: true, feedback: "Woody says '솔직한 게 제일 좋아요!' ('솔직하게' means 'honestly')." }, { text: "천천히", isCorrect: false, feedback: "'천천히' means 'slowly'." }] },
+            { id: 5, questionKor: "우디는 동료의 선물을 안 좋아했어요. 그 동료의 마음은 어땠을까요?", questionEng: "Woody didn't like the coworker's gift. How did the coworker feel?", sentence_pre: "우디의 동료는 마음에 \"", sentence_post: "\".", correct_word: "상처를 받았을 거예요", translation_pre: "Woody's coworker probably ", translation_answer: "got hurt", translation_post: ".", hint: "Emotionally hurt.", options: [{ text: "기뻤을 거예요", isCorrect: false, feedback: "'기뻤을 거예요' means 'would have been happy'." }, { text: "웃었을 거예요", isCorrect: false, feedback: "'웃었을 거예요' means 'would have laughed'." }, { text: "상처를 받았을 거예요", isCorrect: true, feedback: "Yuna says '동료가 상처받았을 거예요!' ('상처를 받다' means 'to be hurt')." }, { text: "놀랐을 거예요", isCorrect: false, feedback: "'놀랐을 거예요' means 'would have been surprised'." }] },
+            { id: 6, questionKor: "우디는 나중에 그 티셔츠를 입었어요?", questionEng: "Did Woody wear the T-shirt later?", sentence_pre: "우디는 그 티셔츠를 치킨으로 \"", sentence_post: "\".", correct_word: "교환하고 싶어해요", translation_pre: "Woody ", translation_answer: "wants to exchange", translation_post: " the T-shirt for chicken.", hint: "He wants to exchange it.", options: [{ text: "입고 싶어해요", isCorrect: false, feedback: "'입고 싶어해요' means 'wants to wear'." }, { text: "버리고 싶어해요", isCorrect: false, feedback: "'버리고 싶어해요' means 'wants to throw away'." }, { text: "교환하고 싶어해요", isCorrect: true, feedback: "Woody says '티셔츠를 치킨으로 바꿀 거예요' ('교환하다/바꾸다' means 'to exchange')." }, { text: "선물하고 싶어해요", isCorrect: false, feedback: "'선물하고 싶어해요' means 'wants to give as a gift'." }] },
+            { id: 7, questionKor: "만약 우디가 그 티셔츠를 팔면, 동료의 마음은 어떨까요?", questionEng: "If Woody sells the T-shirt, how will the coworker feel?", sentence_pre: "우디의 동료는 아마도 \"", sentence_post: "\".", correct_word: "서운할 거예요", translation_pre: "Woody's coworker will probably ", translation_answer: "be disappointed", translation_post: ".", hint: "Sad and disappointed.", options: [{ text: "행복할 거예요", isCorrect: false, feedback: "'행복할 거예요' means 'will be happy'." }, { text: "신날 거예요", isCorrect: false, feedback: "'신날 거예요' means 'will be excited'." }, { text: "서운할 거예요", isCorrect: true, feedback: "Yuna says '동료가 정말 서운했을 거예요.' ('서운하다' means 'to feel hurt/disappointed')." }, { text: "무서울 거예요", isCorrect: false, feedback: "'무서울 거예요' means 'will be scared'." }] },
+            { id: 8, questionKor: "우디는 동료에게 어떻게 거짓말을 할 거예요?", questionEng: "How will Woody lie to his coworker?", sentence_pre: "우디는 선물을 \"", sentence_post: "\"라고 거짓말할 거예요.", correct_word: "간직하고 있어요", translation_pre: "Woody will lie that he ", translation_answer: "is keeping it", translation_post: ".", hint: "Keeping it carefully.", options: [{ text: "버렸어요", isCorrect: false, feedback: "'버렸어요' means 'threw it away'." }, { text: "팔았어요", isCorrect: false, feedback: "'팔았어요' means 'sold it'." }, { text: "간직하고 있어요", isCorrect: true, feedback: "Woody says '너무 아까워서 못 입고, 잘 간직하고 있어!' ('간직하다' means 'to treasure/keep')." }, { text: "입고 있어요", isCorrect: false, feedback: "'입고 있어요' means 'wearing it now'." }] },
+            { id: 9, questionKor: "우디의 성격은 어때요?", questionEng: "What is Woody's personality like?", sentence_pre: "우디는 \"", sentence_post: "\".", correct_word: "뻔뻔해요", translation_pre: "Woody is ", translation_answer: "shameless", translation_post: ".", hint: "Shameless, not embarrassed.", options: [{ text: "착해요", isCorrect: false, feedback: "'착해요' means 'is kind/good'." }, { text: "조용해요", isCorrect: false, feedback: "'조용해요' means 'is quiet'." }, { text: "뻔뻔해요", isCorrect: true, feedback: "Yuna says '와, 정말 뻔뻔하네요.' ('뻔뻔하다' means 'shameless')." }, { text: "부지런해요", isCorrect: false, feedback: "'부지런해요' means 'is diligent'." }] },
+            { id: 10, questionKor: "우디는 동료들과 잘 지낼 수 있을까요?", questionEng: "Will Woody be able to get along well with his coworkers?", sentence_pre: "우디는 동료와 \"", sentence_post: "\".", correct_word: "관계가 나빠질 수도 있어요", translation_pre: "Woody's relationship with his coworker ", translation_answer: "might get bad", translation_post: ".", hint: "The relationship might become bad.", options: [{ text: "관계가 나빠질 수도 있어요", isCorrect: true, feedback: "Yuna says '동료 관계가 나빠질 수 있어요!' ('관계가 나쁘다' means 'relationship is bad')." }, { text: "관계가 좋아질 수도 있어요", isCorrect: false, feedback: "'관계가 좋아질 수도 있어요' means 'relationship might improve'." }, { text: "결혼할 수도 있어요", isCorrect: false, feedback: "'결혼할 수도 있어요' means 'might get married' - not related to the context." }, { text: "관계가 멀어질 수도 있어요", isCorrect: false, feedback: "'관계가 멀어질 수도 있어요' means 'relationship might become distant' - similar but Yuna specifically said '나빠질'." }] }
         ];
 
         const SCRIPT_DATA = [
@@ -968,6 +951,7 @@
             { 
                 id: 1, 
                 question: "친구나 회사 **동료**에게 선물을 자주 줘요?", 
+                translation: "Do you often give gifts to friends or coworkers?",
                 keyVocab: [
                     { term: "동료", meaning_eng: "Coworker" }
                 ] 
@@ -975,74 +959,83 @@
             { 
                 id: 2, 
                 question: "여러분이 선물을 줬는데, 친구가 그 선물을 안 좋아하면 **서운해요**?", 
+                translation: "If you gave a gift but your friend didn't like it, would you feel disappointed?",
                 keyVocab: [
                     { term: "-는데", meaning_eng: "But/And (Background)" },
                     { term: "서운하다", meaning_eng: "To feel disappointed" }
-                ] 
+                ]
             },
             { 
                 id: 3, 
                 question: "여러분은 **마음에 안 드는** 선물을 받은 적이 있어요?", 
+                translation: "Have you ever received a gift you didn't like?",
                 keyVocab: [
                     { term: "마음에 안 들다", meaning_eng: "To not like" },
                     { term: "마음에 안 드는 선물", meaning_eng: "Unwanted gift" },
                     { term: "-ㄴ 적이 있어요?", meaning_eng: "Have you ever...?" }
-                ] 
+                ]
             },
             { 
                 id: 4, 
                 question: "여러분은 선물을 안 좋아해도, 버리지 않고, 잘 **간직해요**?", 
+                translation: "Do you keep the gift well without throwing it away, even if you don't like it?",
                 keyVocab: [
                     { term: "-아도/어도", meaning_eng: "Even if" },
                     { term: "버리다", meaning_eng: "To throw away" },
                     { term: "간직하다", meaning_eng: "To keep/cherish" }
-                ] 
+                ]
             },
             { 
                 id: 5, 
                 question: "선물이 마음에 안 들면, 우디처럼 **솔직하게** 말해요?", 
+                translation: "If you don't like the gift, do you say it honestly like Woody?",
                 keyVocab: [
                     { term: "마음에 안 들다", meaning_eng: "To not like" },
                     { term: "솔직하게", meaning_eng: "Honestly" }
-                ] 
+                ]
             },
             { 
                 id: 6, 
                 question: "선물이 마음에 안 들면, 다른 것으로 **교환해요**?", 
+                translation: "If you don't like the gift, do you exchange it for something else?",
                 keyVocab: [
                     { term: "마음에 안 들다", meaning_eng: "To not like" },
                     { term: "다른 것", meaning_eng: "Something else" },
                     { term: "교환하다", meaning_eng: "To exchange" }
-                ] 
+                ]
             },
             { 
                 id: 7, 
                 question: "여러분이 선물을 줬는데, 친구가 그 선물을 바꾸면 **상처받아요**?", 
+                translation: "If you gave a gift and your friend exchanged it, would you be hurt?",
                 keyVocab: [
                     { term: "-는데", meaning_eng: "But/And" },
                     { term: "상처받다", meaning_eng: "To get hurt" }
-                ] 
+                ]
             },
             { 
                 id: 8, 
                 question: "여러분은 선물 때문에 친구와 관계가 나빠진 적이 있어요?", 
+                translation: "Have you ever had a relationship with a friend get worse because of a gift?",
                 keyVocab: [
                     { term: "때문에", meaning_eng: "Because of" },
                     { term: "관계가 나빠지다", meaning_eng: "Relationship gets worse" },
                     { term: "-ㄴ 적이 있어요?", meaning_eng: "Have you ever...?" }
-                ] 
+                ]
             },
             { 
                 id: 9, 
                 question: "만약 우디처럼 **화려한** 크리스마스 티셔츠를 선물로 받으면, 여러분은 어떻게 할 거예요?", 
+                translation: "If you received a flashy Christmas T-shirt like Woody, what would you do?",
                 keyVocab: [
                     { term: "화려한", meaning_eng: "Flashy/Colorful" },
                     { term: "-을/를 선물로 받다", meaning_eng: "To receive as a gift" }
-                ] 
+                ]
             },
             { 
                 id: 10, 
                 question: "만약 여러분이 선물을 팔았는데, 친구가 “그 옷을 입어 봤어?”라고 물어보면, 어떻게 할 거예요? <br> 우디처럼 “너무 아까워서 못 입고, 잘 간직하고 있어!”라고 뻔뻔하게 거짓말할 거예요?", 
+                translation: "If you sold the gift and your friend asked 'Did you try on that clothes?', what would you do? Would you shamelessly lie like Woody, saying 'It's too precious to wear, so I'm keeping it safe!'?",
                 keyVocab: [
                     { term: "-는데", meaning_eng: "But/And" },
                     { term: "-라고 물어보다", meaning_eng: "To ask that..." },
@@ -1050,7 +1043,7 @@
                     { term: "간직하다", meaning_eng: "To keep" },
                     { term: "뻔뻔하게", meaning_eng: "Shamelessly" },
                     { term: "-라고 거짓말하다", meaning_eng: "To lie that..." }
-                ] 
+                ]
             }
         ];
 
@@ -1096,51 +1089,49 @@
             const handleLevelTextEnter = (e) => { const rect = e.target.getBoundingClientRect(); setTooltip({ show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel] }); };
             const handleLevelTextLeave = () => { setTooltip(prev => ({ ...prev, show: false })); };
 
-            // Sidebar scale logic
-            const sidebarScale = isCollapsed ? SCALE_SIDEBAR_COLLAPSED : SCALE_SIDEBAR_EXPANDED;
-            const sidebarFontSize = `calc(${BASE_CLAMP} * ${sidebarScale})`;
-            const sidebarWidth = isCollapsed ? `${SIDEBAR_WIDTH_COLLAPSED_PX}px` : `${SIDEBAR_WIDTH_EXPANDED_PX}px`;
+            // Sidebar styles with em units based on parent font size
+            const sidebarFontSize = isCollapsed ? '1rem' : '1.15rem';
+            const sidebarWidth = isCollapsed ? '5.5rem' : '18.4rem'; // 88px -> 5.5rem, 16rem*1.15 -> 18.4rem
 
             return (
                 <aside 
+                    style={{ fontSize: sidebarFontSize, width: sidebarWidth }}
                     className={`bg-white border-r border-gray-200 fixed h-full hidden lg:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic`}
-                    style={{ width: sidebarWidth, fontSize: sidebarFontSize }}
                 >
-                    <div className={`p-6 flex items-center gap-3 relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
-                        <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[48px] h-[48px]' : 'w-[60px] h-[60px]'}`}/>
-                        {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center"><span className="font-extrabold text-[20px] text-black leading-tight font-cafe24-deco">Open</span><span className={`font-bold text-[11px] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span></div>)}
-                        <button onClick={toggleSidebar} className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-full p-1 shadow-sm text-slate-500 hover:text-slate-700 hover:bg-gray-50 transition-colors z-10">{isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}</button>
+                    <div className={`p-[1.5em] flex items-center gap-[0.75em] relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
+                        <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[3em] h-[3em]' : 'w-[3.75em] h-[3.75em]'}`}/>
+                        {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center"><span className="font-extrabold text-[1.25em] text-black leading-tight font-cafe24-deco">Open</span><span className={`font-bold text-[0.68em] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span></div>)}
+                        <button onClick={toggleSidebar} className="absolute -right-[0.75em] top-1/2 -translate-y-1/2 bg-white border border-gray-200 rounded-full p-[0.25em] shadow-sm text-slate-500 hover:text-slate-700 hover:bg-gray-50 transition-colors z-10">{isCollapsed ? <ChevronRight className="w-[0.75em] h-[0.75em]" /> : <ChevronLeft className="w-[0.75em] h-[0.75em]" />}</button>
                     </div>
-                    <nav className={`flex-1 space-y-3 mt-4 ${isCollapsed ? 'px-3' : 'px-3'}`}>
+                    <nav className={`flex-1 space-y-[0.75em] mt-[1em] ${isCollapsed ? 'px-[0.75em]' : 'px-[0.75em]'}`}>
                         {menus.map((menu) => {
                             const IconComp = menu.icon; const isActive = activeTab === menu.id; const activeFontClass = isActive ? "font-cafe24-surround" : "font-cafe24";
                             return (
-                                <button key={menu.id} onClick={() => { 
-                                    setActiveTab(menu.id); 
-                                    // Auto collapse logic for 'learn'
-                                    if (menu.id === 'learn' && !isCollapsed) {
-                                        toggleSidebar();
-                                    } else if (menu.id !== 'learn' && isCollapsed) {
-                                        // Optional: Auto expand for other tabs if desired, but user didn't explicitly ask for this. 
-                                        // keeping original logic:
-                                         toggleSidebar(); 
-                                    }
-                                }} onDoubleClick={toggleSidebar} className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-14 rounded-2xl' : 'gap-3 px-3 py-4 rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}>
-                                    {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-1.5 h-8' : 'w-1 h-6'}`}></div>}
-                                    <IconComp className={`shrink-0 transition-all duration-200 ${isCollapsed ? 'w-8 h-8' : 'w-7 h-7'} ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
-                                    {!isCollapsed && (<div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap"><span className={`text-[14px] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span><span className="text-[10px] font-normal text-slate-400 mt-0.5 leading-tight">{menu.subLabel}</span></div>)}
-                                    {isCollapsed && (<div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl flex flex-col items-start"><span className="text-xs font-bold">{menu.label}</span><span className="text-[10px] opacity-80">{menu.subLabel}</span><div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></div></div>)}
+                                <button key={menu.id} 
+                                    onClick={() => { 
+                                        setActiveTab(menu.id); 
+                                        // Auto-collapse logic when clicking 'learn'
+                                        if (menu.id === 'learn' && !isCollapsed) toggleSidebar(); 
+                                        else if (menu.id !== 'learn' && isCollapsed) toggleSidebar(); 
+                                    }} 
+                                    onDoubleClick={toggleSidebar} 
+                                    className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-[3.5em] rounded-2xl' : 'gap-[0.75em] px-[0.75em] py-[1em] rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}
+                                >
+                                    {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-[0.375em] h-[2em]' : 'w-[0.25em] h-[1.5em]'}`}></div>}
+                                    <IconComp className={`shrink-0 transition-all duration-200 ${isCollapsed ? 'w-[2em] h-[2em]' : 'w-[1.75em] h-[1.75em]'} ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
+                                    {!isCollapsed && (<div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap"><span className={`text-[0.875em] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span><span className="text-[0.625em] font-normal text-slate-400 mt-[0.125em] leading-tight">{menu.subLabel}</span></div>)}
+                                    {isCollapsed && (<div className="absolute left-full ml-[0.75em] px-[0.75em] py-[0.375em] bg-slate-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl flex flex-col items-start"><span className="text-[0.75em] font-bold">{menu.label}</span><span className="text-[0.625em] opacity-80">{menu.subLabel}</span><div className="absolute top-1/2 -left-[0.25em] -translate-y-1/2 w-[0.5em] h-[0.5em] bg-slate-900 rotate-45"></div></div>)}
                                 </button>
                             );
                         })}
                     </nav>
-                    <div className="p-2 border-t border-gray-100">
-                        <div className={`flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-gray-50 cursor-pointer ${isCollapsed ? 'justify-center' : ''}`}>
-                            <div className={`w-[44px] h-[44px] rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${bgClass} border ${currentStyle.split(' ')[2]}`}><span className={`text-[16px] font-extrabold font-school-smile ${currentStyle.replace('bg-', 'text-').replace('50', '600')}`}>{userLevel}</span></div>
-                            {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex-1"><p className="text-sm font-bold text-slate-900 mb-[1px] font-basic">학습자(Learner)</p><div className="mt-[1px]"><span className={`block w-fit px-[2px] py-0.5 rounded text-[10px] font-semibold border uppercase tracking-wide shadow-sm text-left cursor-help font-basic ${currentStyle}`} onMouseEnter={handleLevelTextEnter} onMouseLeave={handleLevelTextLeave}>Level: {LEVEL_DEFINITIONS[userLevel].title}</span></div></div>)}
+                    <div className="p-[0.5em] border-t border-gray-100">
+                        <div className={`flex items-center gap-[0.75em] p-[0.5em] rounded-xl transition-colors hover:bg-gray-50 cursor-pointer ${isCollapsed ? 'justify-center' : ''}`}>
+                            <div className={`w-[2.75em] h-[2.75em] rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 ${bgClass} border ${currentStyle.split(' ')[2]}`}><span className={`text-[1em] font-extrabold font-school-smile ${currentStyle.replace('bg-', 'text-').replace('50', '600')}`}>{userLevel}</span></div>
+                            {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex-1"><p className="text-[0.875em] font-bold text-slate-900 mb-[0.0625em] font-basic">학습자(Learner)</p><div className="mt-[0.0625em]"><span className={`block w-fit px-[0.125em] py-[0.125em] rounded text-[0.625em] font-semibold border uppercase tracking-wide shadow-sm text-left cursor-help font-basic ${currentStyle}`} onMouseEnter={handleLevelTextEnter} onMouseLeave={handleLevelTextLeave}>Level: {LEVEL_DEFINITIONS[userLevel].title}</span></div></div>)}
                         </div>
                     </div>
-                    {tooltip.show && tooltip.info && createPortal(<div className="fixed z-[9999] pointer-events-none animate-fade-in" style={{ left: tooltip.x, top: tooltip.y }}><div className="relative bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-2xl transform -translate-y-full -translate-x-6 -mt-3 w-64 border border-slate-700/50"><p className={`font-bold mb-1.5 text-sm text-${themeColor}-300`}>{userLevel} – {tooltip.info.title}</p><p className="opacity-90 leading-relaxed font-medium text-slate-200">{tooltip.info.desc}</p><div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-slate-900/95 border-r border-b border-slate-700/50 rotate-45"></div></div></div>, document.body)}
+                    {tooltip.show && tooltip.info && createPortal(<div className="fixed z-[9999] pointer-events-none animate-fade-in" style={{ left: tooltip.x, top: tooltip.y }}><div className="relative bg-slate-900/95 backdrop-blur text-white text-[0.75em] rounded-xl p-[1em] shadow-2xl transform -translate-y-full -translate-x-[1.5em] -mt-[0.75em] w-[16em] border border-slate-700/50"><p className={`font-bold mb-[0.375em] text-[0.875em] text-${themeColor}-300`}>{userLevel} – {tooltip.info.title}</p><p className="opacity-90 leading-relaxed font-medium text-slate-200">{tooltip.info.desc}</p><div className="absolute -bottom-[0.375em] left-[1em] w-[0.75em] h-[0.75em] bg-slate-900/95 border-r border-b border-slate-700/50 rotate-45"></div></div></div>, document.body)}
                 </aside>
             );
         };
@@ -1151,7 +1142,7 @@
             const getLevelStyle = (code) => { if (LEVEL_STYLES[code]) return LEVEL_STYLES[code]; const base = code.substring(0, 2); return LEVEL_STYLES[base] || "bg-gray-50 text-slate-600 border-gray-100"; };
             const badgeStyle = getLevelStyle(levelCode);
             return (
-                <div className="relative inline-flex items-center cursor-help z-50" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><span className={`px-2 py-0.5 rounded text-[10px] font-bold border uppercase tracking-wide shadow-sm font-sunflower ${badgeStyle}`}>Level: {info.title}</span>{isHovered && (<div className="absolute top-full left-0 mt-2 w-64 bg-slate-900/95 backdrop-blur text-white text-xs rounded-xl p-4 shadow-xl z-[100] animate-fade-in text-left"><p className={`font-bold mb-1.5 text-sm ${badgeStyle.split(' ')[1]}`}>{levelCode} – {info.title}</p><p className="opacity-90 leading-relaxed font-medium">{info.desc}</p><div className="absolute -top-1 left-4 w-2 h-2 bg-slate-900/95 rotate-45"></div></div>)}</div>
+                <div className="relative inline-flex items-center cursor-help z-50" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><span className={`px-[0.5em] py-[0.125em] rounded text-[0.625em] font-bold border uppercase tracking-wide shadow-sm font-sunflower ${badgeStyle}`}>Level: {info.title}</span>{isHovered && (<div className="absolute top-full left-0 mt-[0.5em] w-[16em] bg-slate-900/95 backdrop-blur text-white text-[0.75em] rounded-xl p-[1em] shadow-xl z-[100] animate-fade-in text-left"><p className={`font-bold mb-[0.375em] text-[0.875em] ${badgeStyle.split(' ')[1]}`}>{levelCode} – {info.title}</p><p className="opacity-90 leading-relaxed font-medium">{info.desc}</p><div className="absolute -top-[0.25em] left-[1em] w-[0.5em] h-[0.5em] bg-slate-900/95 rotate-45"></div></div>)}</div>
             );
         };
 
@@ -1173,15 +1164,15 @@
                 <div>
                     {keyPhrases}
                     <div>
-                        <h4 className="font-bold text-slate-900 mb-3 text-base">핵심 표현을 사용해서 질문에 대답해 보세요.</h4>
-                        <textarea value={value} onChange={onChange} placeholder={placeholder} className={`w-full p-4 rounded-xl border border-gray-200 focus:border-${themeColor}-500 focus:ring-1 focus:ring-${themeColor}-500 outline-none min-h-[120px] resize-none text-base text-slate-800 placeholder-gray-400 mb-3`}></textarea>
-                        <button onClick={checkSentence} disabled={!value.trim() || isLoading} className={`flex items-center gap-2 px-5 py-[6px] text-[12px] leading-[12px] rounded-xl font-bold transition-all shadow-sm ${!value.trim() || isLoading ? 'bg-gray-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md'}`}>{isLoading ? <span>분석 중...</span> : <> <SparklesIcon className="w-5 h-5" /> <span>AI Feedback (피드백 받기)</span> </>}</button>
-                        {error && <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-xl border border-red-200 text-sm font-medium animate-fade-in">{error}</div>}
+                        <h4 className="font-bold text-slate-900 mb-[0.75em] text-[1em]">핵심 표현을 사용해서 질문에 대답해 보세요.</h4>
+                        <textarea value={value} onChange={onChange} placeholder={placeholder} className={`w-full p-[1em] rounded-xl border border-gray-200 focus:border-${themeColor}-500 focus:ring-1 focus:ring-${themeColor}-500 outline-none min-h-[7.5em] resize-none text-[1em] text-slate-800 placeholder-gray-400 mb-[0.75em]`}></textarea>
+                        <button onClick={checkSentence} disabled={!value.trim() || isLoading} className={`flex items-center gap-[0.5em] px-[1.25em] py-[0.375em] text-[0.75em] leading-tight rounded-xl font-bold transition-all shadow-sm ${!value.trim() || isLoading ? 'bg-gray-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md'}`}>{isLoading ? <span>분석 중...</span> : <> <SparklesIcon className="w-[1.25em] h-[1.25em]" /> <span>AI Feedback (피드백 받기)</span> </>}</button>
+                        {error && <div className="mt-[1em] p-[1em] bg-red-50 text-red-600 rounded-xl border border-red-200 text-[0.875em] font-medium animate-fade-in">{error}</div>}
                         {feedback && (
-                            <div className={`mt-6 rounded-2xl p-6 border animate-fade-in ${feedback.is_correct ? `bg-${themeColor}-50 border-${themeColor}-200` : 'bg-yellow-50 border-yellow-200'}`}>
-                                <div className="flex items-center gap-2 mb-4"><span className="text-2xl">🤖</span><h4 className="font-extrabold text-slate-900 text-lg">AI Tutor Feedback</h4></div>
-                                <div className="mb-4"><span className={`font-black text-sm px-3 py-1 rounded-full bg-white border shadow-sm ${feedback.is_correct ? `text-${themeColor}-600 border-${themeColor}-200` : 'text-yellow-600 border-yellow-200'}`}>{feedback.is_correct ? '🎉 Great Job!' : '⚠️ Needs Improvement'}</span></div>
-                                <div className="space-y-4">{feedback.feedback_message_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Feedback</span><p className="text-slate-800 text-sm font-medium leading-relaxed">{feedback.feedback_message_eng}</p></div>}{feedback.explanation_eng && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Explanation</span><p className="text-slate-800 text-sm font-medium leading-relaxed">{feedback.explanation_eng}</p></div>}{feedback.corrected_sentence && <div className="flex flex-col sm:flex-row gap-1 sm:gap-4"><span className="font-bold text-slate-500 text-sm sm:w-24 shrink-0">Correction</span><p className="text-slate-900 text-lg font-black leading-relaxed">{feedback.corrected_sentence}</p></div>}</div>
+                            <div className={`mt-[1.5em] rounded-2xl p-[1.5em] border animate-fade-in ${feedback.is_correct ? `bg-${themeColor}-50 border-${themeColor}-200` : 'bg-yellow-50 border-yellow-200'}`}>
+                                <div className="flex items-center gap-[0.5em] mb-[1em]"><span className="text-[1.5em]">🤖</span><h4 className="font-extrabold text-slate-900 text-[1.125em]">AI Tutor Feedback</h4></div>
+                                <div className="mb-[1em]"><span className={`font-black text-[0.875em] px-[0.75em] py-[0.25em] rounded-full bg-white border shadow-sm ${feedback.is_correct ? `text-${themeColor}-600 border-${themeColor}-200` : 'text-yellow-600 border-yellow-200'}`}>{feedback.is_correct ? '🎉 Great Job!' : '⚠️ Needs Improvement'}</span></div>
+                                <div className="space-y-[1em]">{feedback.feedback_message_eng && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Feedback</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed">{feedback.feedback_message_eng}</p></div>}{feedback.explanation_eng && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Explanation</span><p className="text-slate-800 text-[0.875em] font-medium leading-relaxed">{feedback.explanation_eng}</p></div>}{feedback.corrected_sentence && <div className="flex flex-col sm:flex-row gap-[0.25em] sm:gap-[1em]"><span className="font-bold text-slate-500 text-[0.875em] sm:w-[6em] shrink-0">Correction</span><p className="text-slate-900 text-[1.125em] font-black leading-relaxed">{feedback.corrected_sentence}</p></div>}</div>
                             </div>
                         )}
                     </div>
@@ -1192,13 +1183,13 @@
         const VocabCard = ({ word, themeColor }) => {
             const [isOpen, setIsOpen] = useState(false);
             return (
-                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
-                    <div className="flex justify-between mb-4"><h3 className="text-[24px] font-extrabold text-slate-900">{word.term}</h3></div>
-                    <div className={`pl-4 border-l-4 border-${themeColor}-500 mb-6`}><p className="text-[21px] text-slate-600 font-medium font-diary">{word.mainDef}</p></div>
+                <div className="bg-white p-[1.5em] rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
+                    <div className="flex justify-between mb-[1em]"><h3 className="text-[1.5em] font-extrabold text-slate-900">{word.term}</h3></div>
+                    <div className={`pl-[1em] border-l-4 border-${themeColor}-500 mb-[1.5em]`}><p className="text-[1.3125em] text-slate-600 font-medium font-diary">{word.mainDef}</p></div>
                     <div className="flex-1 flex flex-col">
-                        <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all group border border-transparent hover:border-gray-200"><div className="flex items-center gap-2"><span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isOpen ? `bg-${themeColor}-500` : 'bg-gray-400'}`}></span><span className={`text-[12px] font-bold uppercase tracking-wider transition-colors duration-300 ${isOpen ? `text-${themeColor}-700` : 'text-slate-500'}`}>Examples (예문)</span></div><ChevronRight className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} /></button>
-                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}><div className="bg-gray-50 rounded-xl p-4 space-y-3 border border-gray-100">{word.examples.map((ex, i) => (<div key={i}><p className="font-bold text-slate-800 text-[19px] leading-relaxed font-marker">{ex.kor}</p><p className="text-slate-500 text-[17px] mt-0.5 font-gowoonbam">{ex.eng}</p></div>))}</div></div>
-                        {word.subDefs && word.subDefs.length > 0 && (<div className={`bg-${themeColor}-50 rounded-xl p-5 space-y-2 border border-${themeColor}-100 mt-4`}><h4 className={`font-bold text-${themeColor}-800 text-[12px] mb-2 flex items-center gap-2 uppercase tracking-wider`}><span className={`w-1.5 h-1.5 rounded-full bg-${themeColor}-400`}></span>Related & Grammar</h4>{word.subDefs.map((sub, i) => (<div key={i} className="flex flex-col"><span className={`font-bold text-${themeColor}-900 text-[20px] font-school-free`}>{sub.subTerm}</span><span className={`text-[19px] text-${themeColor}-600 font-dictation`}>{sub.subDef}</span></div>))}</div>)}
+                        <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-[1em] bg-gray-50 hover:bg-gray-100 rounded-xl transition-all group border border-transparent hover:border-gray-200"><div className="flex items-center gap-[0.5em]"><span className={`w-[0.375em] h-[0.375em] rounded-full transition-colors duration-300 ${isOpen ? `bg-${themeColor}-500` : 'bg-gray-400'}`}></span><span className={`text-[0.75em] font-bold uppercase tracking-wider transition-colors duration-300 ${isOpen ? `text-${themeColor}-700` : 'text-slate-500'}`}>Examples (예문)</span></div><ChevronRight className={`w-[1em] h-[1em] text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} /></button>
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[24em] opacity-100 mt-[0.5em]' : 'max-h-0 opacity-0'}`}><div className="bg-gray-50 rounded-xl p-[1em] space-y-[0.75em] border border-gray-100">{word.examples.map((ex, i) => (<div key={i}><p className="font-bold text-slate-800 text-[1.1875em] leading-relaxed font-marker">{ex.kor}</p><p className="text-slate-500 text-[1.0625em] mt-[0.125em] font-gowoonbam">{ex.eng}</p></div>))}</div></div>
+                        {word.subDefs && word.subDefs.length > 0 && (<div className={`bg-${themeColor}-50 rounded-xl p-[1.25em] space-y-[0.5em] border border-${themeColor}-100 mt-[1em]`}><h4 className={`font-bold text-${themeColor}-800 text-[0.75em] mb-[0.5em] flex items-center gap-[0.5em] uppercase tracking-wider`}><span className={`w-[0.375em] h-[0.375em] rounded-full bg-${themeColor}-400`}></span>Related & Grammar</h4>{word.subDefs.map((sub, i) => (<div key={i} className="flex flex-col"><span className={`font-bold text-${themeColor}-900 text-[1.25em] font-school-free`}>{sub.subTerm}</span><span className={`text-[1.1875em] text-${themeColor}-600 font-dictation`}>{sub.subDef}</span></div>))}</div>)}
                     </div>
                 </div>
             );
@@ -1212,40 +1203,37 @@
             const quizIconBg = (progress.quiz === 100 || progress.quiz === true) ? `bg-${themeColor}-100 text-${themeColor}-600` : `bg-${themeColor}-50 text-${themeColor}-600`;
 
             return (
-                <div 
-                    className="space-y-10 animate-fade-in max-w-7xl mx-auto"
-                    style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_HOME})` }}
-                >
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-2"><span className={`px-2 py-1 bg-${themeColor}-100 text-${themeColor}-700 text-[12px] font-extrabold rounded-md tracking-wider font-juache`}>팟캐스트 (Podcast)</span><span className={`text-[12px] font-bold text-${themeColor}-600 tracking-wide uppercase font-school-smile`}>이 주제로 이야기해 봐요! (Let's talk about this topic)</span></div>
-                        <h1 className="text-5xl font-black text-slate-900 tracking-tight font-cafe24-surround">마음에 들지 않는 선물</h1>
-                        <p className="text-slate-500 text-lg font-cafe24-surround">Unwanted Gift</p>
+                <div style={{ fontSize: '1.25rem' }} className="space-y-[2.5em] animate-fade-in max-w-7xl mx-auto">
+                    <div className="space-y-[0.75em]">
+                        <div className="flex items-center gap-[0.5em]"><span className={`px-[0.5em] py-[0.25em] bg-${themeColor}-100 text-${themeColor}-700 text-[0.75em] font-extrabold rounded-md tracking-wider font-juache`}>팟캐스트 (Podcast)</span><span className={`text-[0.75em] font-bold text-${themeColor}-600 tracking-wide uppercase font-school-smile`}>이 주제로 이야기해 봐요! (Let's talk about this topic)</span></div>
+                        <h1 className="text-[3em] font-black text-slate-900 tracking-tight font-cafe24-surround">마음에 들지 않는 선물</h1>
+                        <p className="text-slate-500 text-[1.125em] font-cafe24-surround">Unwanted Gift</p>
                     </div>
-                    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-80">
+                    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-[20em]">
                         <div className="md:w-5/12 relative group bg-black cursor-pointer overflow-hidden" onClick={() => setActiveTab('learn')}>
                             <img src="https://img.youtube.com/vi/6wPteSottlc/maxresdefault.jpg" alt="Thumbnail" className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
-                            <div className="absolute top-6 left-6"><span className="bg-[#ea3323] text-white text-[10px] font-bold px-2 py-1 rounded border border-[#ea3323] shadow-sm tracking-wider">ON AIR</span></div>
-                            <div className="absolute inset-0 flex items-center justify-center"><div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"><PlayIconLine className={`w-6 h-6 text-${themeColor}-600 fill-current ml-1`} /></div></div>
+                            <div className="absolute top-[1.5em] left-[1.5em]"><span className="bg-[#ea3323] text-white text-[0.625em] font-bold px-[0.5em] py-[0.25em] rounded border border-[#ea3323] shadow-sm tracking-wider">ON AIR</span></div>
+                            <div className="absolute inset-0 flex items-center justify-center"><div className="w-[3.5em] h-[3.5em] bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"><PlayIconLine className={`w-[1.5em] h-[1.5em] text-${themeColor}-600 fill-current ml-[0.25em]`} /></div></div>
                         </div>
-                        <div className="md:w-7/12 p-8 md:p-10 flex flex-col justify-center">
-                            <div className="flex items-center gap-2 mb-4"><span className="px-2 py-1 bg-gray-100 text-slate-600 text-[10px] font-bold rounded uppercase tracking-wide">Listening</span><LevelBadge levelCode={userLevel} /></div>
-                            <div className="mb-3"><h2 className="text-2xl font-black text-slate-900 font-cafe24-surround">동영상 자료</h2><span className="text-sm font-bold text-slate-400 font-cafe24-surround">Video Resources</span></div>
-                            <div className="text-slate-600 text-sm leading-relaxed mb-8 pr-4"><p>팟캐스트를 듣고 마음에 들지 않는 선물에 대한 이야기를 들어보세요.</p><p className="mt-1 text-slate-400 text-xs">Listen to the podcast about unwanted gifts.</p></div>
-                            <div className="flex items-center gap-3"><button onClick={() => setActiveTab('learn')} className="px-6 py-3 bg-[#111827] text-white rounded-xl hover:bg-black transition-colors shadow-md flex flex-col items-center leading-tight"><span className="text-sm font-bold">동영상 보러 가기</span><span className="text-[10px] opacity-70 font-medium">Watch Video</span></button></div>
+                        <div className="md:w-7/12 p-[2em] md:p-[2.5em] flex flex-col justify-center">
+                            <div className="flex items-center gap-[0.5em] mb-[1em]"><span className="px-[0.5em] py-[0.25em] bg-gray-100 text-slate-600 text-[0.625em] font-bold rounded uppercase tracking-wide">Listening</span><LevelBadge levelCode={userLevel} /></div>
+                            <div className="mb-[0.75em]"><h2 className="text-[1.5em] font-black text-slate-900 font-cafe24-surround">동영상 자료</h2><span className="text-[0.875em] font-bold text-slate-400 font-cafe24-surround">Video Resources</span></div>
+                            <div className="text-slate-600 text-[0.875em] leading-relaxed mb-[2em] pr-[1em]"><p>팟캐스트를 듣고 음악 취향에 대한 이야기를 들어보세요.</p><p className="mt-[0.25em] text-slate-400 text-[0.75em]">Listen to the podcast about music preferences.</p></div>
+                            <div className="flex items-center gap-[0.75em]"><button onClick={() => setActiveTab('learn')} className="px-[1.5em] py-[0.75em] bg-[#111827] text-white rounded-xl hover:bg-black transition-colors shadow-md flex flex-col items-center leading-tight"><span className="text-[0.875em] font-bold">동영상 보러 가기</span><span className="text-[0.625em] opacity-70 font-medium">Watch Video</span></button></div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-xs font-bold text-slate-500 font-cafe24-surround">핵심 어휘</span><span className="text-[10px] text-slate-400 font-medium font-cafe24-surround">Key Vocabulary</span></div><p className="text-4xl font-black text-slate-900 mt-1 font-jua">{VOCAB_DATA.length}개</p></div><div className={`w-10 h-10 bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><VocabIcon className="w-5 h-5" /></div></div>
-                            <button onClick={() => setActiveTab('vocab')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-xs font-bold text-slate-400 group-hover:text-${themeColor}-600`}>핵심 어휘 확인</span><span className={`text-[10px] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Check Vocabulary</span></div><span className={`text-lg leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5em]">
+                        <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">핵심 어휘</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Key Vocabulary</span></div><p className="text-[2.25em] font-black text-slate-900 mt-[0.25em] font-jua">{VOCAB_DATA.length}개</p></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><VocabIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('vocab')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>핵심 어휘 확인</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Check Vocabulary</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
                         </div>
-                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-xs font-bold text-slate-500 font-cafe24-surround">내용 확인 퀴즈</span><span className="text-[10px] text-slate-400 font-medium font-cafe24-surround">Comprehension Quiz</span></div><p className={`text-4xl font-black mt-1 transition-all duration-500 font-jua ${quizColorClass}`}>{quizScoreDisplay}</p></div><div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${quizIconBg}`}><QuizIcon className="w-5 h-5" /></div></div>
-                            <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className={`text-xs font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[10px] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-lg leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-1`}>→</span></button>
+                        <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">내용 확인 퀴즈</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Comprehension Quiz</span></div><p className={`text-[2.25em] font-black mt-[0.25em] transition-all duration-500 font-jua ${quizColorClass}`}>{quizScoreDisplay}</p></div><div className={`w-[2.5em] h-[2.5em] rounded-xl flex items-center justify-center transition-colors ${quizIconBg}`}><QuizIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
                         </div>
-                        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[160px] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-xs font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[10px] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-3"><a href="https://gemini.google.com/share/4face50f5a23" target="_blank" rel="noopener noreferrer" className={`text-[17px] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-1 leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-4 h-4" /></a></div></div><div className={`w-10 h-10 bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-5 h-5" /></div></div>
-                            <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-1 transition-colors"><div className="flex flex-col items-start"><span className="text-xs font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[10px] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-lg leading-none text-slate-400 group-hover:text-blue-600 ml-1">→</span></button>
+                        <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-[0.25em]">→</span></button>
                         </div>
                     </div>
                 </div>
@@ -1255,12 +1243,9 @@
         const VocabView = ({ updateProgress, themeColor }) => {
             useEffect(() => { updateProgress('vocab'); }, []);
             return (
-            <div 
-                className="max-w-7xl animate-fade-in mx-auto"
-                style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_VOCAB})` }}
-            >
-                <div className="flex items-center gap-4 mb-8"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><VocabIcon className={`w-10 h-10 text-${themeColor}-600`} /></div><div className="flex flex-col"><h2 className="text-3xl font-black text-slate-900 font-cafe24-surround">핵심 어휘</h2><span className="text-base text-slate-500 font-medium font-cafe24-surround">Key Vocabulary</span></div></div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{VOCAB_DATA.map((word, idx) => (<VocabCard key={idx} word={word} themeColor={themeColor} />))}</div>
+            <div style={{ fontSize: '1.4rem' }} className="max-w-7xl animate-fade-in mx-auto">
+                <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><VocabIcon className={`w-[2.5em] h-[2.5em] text-${themeColor}-600`} /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">핵심 어휘</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Key Vocabulary</span></div></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5em]">{VOCAB_DATA.map((word, idx) => (<VocabCard key={idx} word={word} themeColor={themeColor} />))}</div>
             </div>
             );
         };
@@ -1278,9 +1263,7 @@
             const isCorrect = selectedOption?.isCorrect;
 
             const handleOptionClick = (option) => { 
-                if (firstAttempts[currentQuestionIndex] === undefined) {
-                    setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option.isCorrect }));
-                }
+                if (firstAttempts[currentQuestionIndex] === undefined) setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option.isCorrect })); 
                 setAnswers(prev => ({ ...prev, [currentQuestionIndex]: option })); 
                 setShowHint(false); 
             };
@@ -1292,47 +1275,44 @@
             if (isFinished) {
                 const correctCount = Object.values(firstAttempts).filter(isCorrect => isCorrect === true).length;
                 return (
-                    <div className="max-w-7xl animate-fade-in mx-auto text-center py-10" style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_QUIZ})` }}>
-                        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-10">
-                            <div className={`w-20 h-20 bg-${themeColor}-100 text-${themeColor}-600 rounded-full flex items-center justify-center mx-auto mb-6`}><QuizIcon className="w-10 h-10" /></div>
-                            <h2 className="text-3xl font-black text-slate-900 mb-2 font-cafe24-surround">퀴즈 완료!</h2>
-                            <p className="text-slate-500 mb-8">총 {QUIZ_LIST.length}문제 중 {correctCount}문제를 한 번에 맞혔습니다.</p>
-                            <div className={`text-5xl font-black text-${themeColor}-600 mb-10 font-school-smile`}>{Math.round((correctCount / QUIZ_LIST.length) * 100)}%</div>
-                            <button onClick={handleRetry} className={`px-8 py-3 rounded-xl bg-${themeColor}-600 text-white font-bold hover:bg-${themeColor}-700 transition-colors`}>다시 풀기 (Try Again)</button>
+                    <div style={{ fontSize: '1.55rem' }} className="max-w-7xl animate-fade-in mx-auto text-center py-[2.5em]">
+                        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-[2.5em]">
+                            <div className={`w-[5em] h-[5em] bg-${themeColor}-100 text-${themeColor}-600 rounded-full flex items-center justify-center mx-auto mb-[1.5em]`}><QuizIcon className="w-[2.5em] h-[2.5em]" /></div>
+                            <h2 className="text-[1.875em] font-black text-slate-900 mb-[0.5em] font-cafe24-surround">퀴즈 완료!</h2>
+                            <p className="text-slate-500 mb-[2em]">총 {QUIZ_LIST.length}문제 중 {correctCount}문제를 한 번에 맞혔습니다.</p>
+                            <div className={`text-[3em] font-black text-${themeColor}-600 mb-[2em] font-school-smile`}>{Math.round((correctCount / QUIZ_LIST.length) * 100)}%</div>
+                            <button onClick={handleRetry} className={`px-[2em] py-[0.75em] rounded-xl bg-${themeColor}-600 text-white font-bold hover:bg-${themeColor}-700 transition-colors`}>다시 풀기 (Try Again)</button>
                         </div>
                     </div>
                 );
             }
 
             return (
-                <div 
-                    className="max-w-7xl animate-fade-in mx-auto"
-                    style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_QUIZ})` }}
-                >
-                    <div className="flex items-center gap-4 mb-6"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><QuizIcon className="w-10 h-10 text-current" /></div><div className="flex flex-col"><h2 className="text-3xl font-black text-slate-900 font-cafe24-surround">내용 확인 퀴즈</h2><span className="text-base text-slate-500 font-medium font-cafe24-surround">Comprehension Quiz ({currentQuestionIndex + 1}/{QUIZ_LIST.length})</span></div></div>
-                    <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200"><p className="font-bold text-slate-800">다음 빈칸에 알맞은 말을 고르세요.</p><p className="text-slate-500 text-sm">Choose the correct word for the blank.</p></div>
-                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-2">
-                        <div className="flex items-start gap-3 p-4"><span className={`bg-${themeColor}-100 text-${themeColor}-700 font-black rounded-lg px-2 py-1 text-sm shrink-0`}>Q{currentQuestion.id}</span><div className="flex flex-col"><h3 className="font-bold text-slate-900 text-lg leading-snug">{currentQuestion.questionKor}</h3><p className="text-slate-500 font-medium text-sm mt-1">{currentQuestion.questionEng}</p></div></div>
-                        <div className="bg-gray-50 rounded-xl p-4 mb-4 mx-1">
+                <div style={{ fontSize: '1.55rem' }} className="max-w-7xl animate-fade-in mx-auto">
+                    <div className="flex items-center gap-[1em] mb-[1.5em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><QuizIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">내용 확인 퀴즈</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Comprehension Quiz ({currentQuestionIndex + 1}/{QUIZ_LIST.length})</span></div></div>
+                    <div className="mb-[1.5em] p-[1em] bg-gray-50 rounded-xl border border-gray-200"><p className="font-bold text-slate-800">다음 빈칸에 알맞은 말을 고르세요.</p><p className="text-slate-500 text-[0.875em]">Choose the correct word for the blank.</p></div>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-[0.5em]">
+                        <div className="flex items-start gap-[0.75em] p-[1em]"><span className={`bg-${themeColor}-100 text-${themeColor}-700 font-black rounded-lg px-[0.5em] py-[0.25em] text-[0.875em] shrink-0`}>Q{currentQuestion.id}</span><div className="flex flex-col"><h3 className="font-bold text-slate-900 text-[1.125em] leading-snug">{currentQuestion.questionKor}</h3><p className="text-slate-500 font-medium text-[0.875em] mt-[0.25em]">{currentQuestion.questionEng}</p></div></div>
+                        <div className="bg-gray-50 rounded-xl p-[1em] mb-[1em] mx-[0.25em]">
                             <div>
-                                <div className="leading-relaxed text-xl font-bold text-slate-900">
+                                <div className="leading-relaxed text-[1.25em] font-bold text-slate-900">
                                     {currentQuestion.sentence_pre}
-                                    <div className={`inline-flex align-middle mx-2 px-4 py-1 rounded-md font-bold text-xl transition-all duration-300 min-w-[80px] text-center border-b-2 ${isCorrect ? `bg-${themeColor}-50 text-${themeColor}-700 border-${themeColor}-500` : (showHint ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : (selectedOption ? 'bg-red-50 text-red-700 border-red-500' : 'bg-yellow-100 text-transparent border-yellow-400 select-none'))}`}>{isCorrect ? selectedOption.text : (showHint ? `[ ${currentQuestion.hint} ]` : (selectedOption ? selectedOption.text : "___"))}</div>
-                                    {currentQuestion.sentence_post}{selectedOption && (<span className={`ml-2 text-lg ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}
+                                    <div className={`inline-flex align-middle mx-[0.5em] px-[1em] py-[0.25em] rounded-md font-bold text-[1.25em] transition-all duration-300 min-w-[5em] text-center border-b-2 ${isCorrect ? `bg-${themeColor}-50 text-${themeColor}-700 border-${themeColor}-500` : (showHint ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : (selectedOption ? 'bg-red-50 text-red-700 border-red-500' : 'bg-yellow-100 text-transparent border-yellow-400 select-none'))}`}>{isCorrect ? selectedOption.text : (showHint ? `[ ${currentQuestion.hint} ]` : (selectedOption ? selectedOption.text : "___"))}</div>
+                                    {currentQuestion.sentence_post}{selectedOption && (<span className={`ml-[0.5em] text-[1.125em] ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}
                                 </div>
                                 {showTranslation && (
-                                    <div className="mt-4 pt-4 border-t border-gray-200 text-slate-500 text-sm animate-fade-in font-medium">
+                                    <div className="mt-[1em] pt-[1em] border-t border-gray-200 text-slate-500 italic text-[0.875em] animate-fade-in font-medium">
                                         {currentQuestion.translation_pre}
-                                        <span className={`font-bold transition-colors duration-300 ${isCorrect ? `text-${themeColor}-600 underline decoration-2 underline-offset-2` : 'text-slate-300 bg-slate-100 rounded px-1'}`}>
-                                            {isCorrect ? currentQuestion.translation_answer : "______"}
+                                        <span className={`inline-block border-b border-slate-400 px-1 mx-1 min-w-[3em] text-center transition-all ${isCorrect ? `text-${themeColor}-600 font-bold border-transparent not-italic` : 'text-transparent'}`}>
+                                            {isCorrect ? currentQuestion.translation_answer : "____"}
                                         </span>
                                         {currentQuestion.translation_post}
                                     </div>
                                 )}
                             </div>
                         </div>
-                        <div className="flex gap-2 mb-4 px-2"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption?.isCorrect} className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${selectedOption?.isCorrect ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-1 text-[8px] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslation ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 px-2">{shuffledOptions.map((option, idx) => { 
+                        <div className="flex gap-[0.5em] mb-[1em] px-[0.5em]"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption?.isCorrect} className={`px-[0.75em] py-[0.375em] rounded-lg text-[0.75em] font-bold transition-colors ${selectedOption?.isCorrect ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[0.75em] h-[0.75em]" /><span>{showTranslation ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-[0.75em] mb-[1em] px-[0.5em]">{shuffledOptions.map((option, idx) => { 
                             const isSelected = selectedOption === option; 
                             let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; 
                             if (isSelected) { 
@@ -1342,15 +1322,10 @@
                                     btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; 
                                 } 
                             } 
-                            return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-3 px-4 rounded-xl border font-bold text-base transition-all duration-200 ${btnClass}`}>{option.text}</button>); 
+                            return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option.text}</button>); 
                         })}</div>
-                        {selectedOption && (
-                            <div className={`p-4 rounded-xl border-l-4 mb-4 mx-2 animate-fade-in shadow-sm ${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'}`}>
-                                <h4 className={`font-bold text-sm mb-1 ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Try again.'}</h4>
-                                <p className={`text-sm italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{selectedOption.feedback}</p>
-                            </div>
-                        )}
-                        <div className="flex justify-between items-center mt-4 border-t border-gray-100 pt-4 px-2 pb-2"><button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-lg">←</span><span className="text-xs">이전 문제 (Prev)</span></button><span className="text-xs font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span><button onClick={handleNext} disabled={!isCorrect} className={`px-6 py-1 rounded-xl font-bold flex items-center gap-2 shadow-md transition-colors ${!isCorrect ? 'bg-gray-300 text-slate-500 cursor-not-allowed' : 'bg-gray-900 text-white hover:bg-black'}`}><span className="text-xs">{currentQuestionIndex < QUIZ_LIST.length - 1 ? '다음 문제 (Next)' : '결과 보기 (Finish)'}</span><span className="text-lg">→</span></button></div>
+                        {selectedOption && (<div className="p-[1em] rounded-xl border-l-4 mb-[1em] mx-[0.5em] animate-fade-in transition-all bg-[#f8fafc] border-gray-300"><div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-[1em] rounded-lg border-l-4`}><h4 className={`font-bold text-[0.875em] mb-[0.25em] ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Try again.'}</h4><p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{selectedOption.feedback}</p></div></div>)}
+                        <div className="flex justify-between items-center mt-[1em] border-t border-gray-100 pt-[1em] px-[0.5em] pb-[0.5em]"><button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-[1.125em]">←</span><span className="text-[0.75em]">이전 문제 (Prev)</span></button><span className="text-[0.75em] font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span><button onClick={handleNext} disabled={!isCorrect} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] shadow-md transition-colors ${!isCorrect ? 'bg-gray-300 text-slate-500 cursor-not-allowed' : 'bg-gray-900 text-white hover:bg-black'}`}><span className="text-[0.75em]">{currentQuestionIndex < QUIZ_LIST.length - 1 ? '다음 문제 (Next)' : '결과 보기 (Finish)'}</span><span className="text-[1.125em]">→</span></button></div>
                     </div>
                 </div>
             );
@@ -1361,19 +1336,16 @@
             const [showTranslations, setShowTranslations] = useState({});
             const handleTextChange = (id, value) => { setAnswers(prev => ({ ...prev, [id]: value })); };
             const toggleTranslation = (id) => { setShowTranslations(prev => ({ ...prev, [id]: !prev[id] })); };
-             
+            
             return (
-                <div 
-                    className="max-w-7xl mx-auto animate-fade-in"
-                    style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_DISCUSS})` }}
-                >
-                    <div className="flex items-center gap-4 mb-8"><div className={`w-16 h-16 bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="w-10 h-10 text-current" /></div><div className="flex flex-col"><h2 className="text-3xl font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-base text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
-                    <div className={`mb-8 p-4 rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-sm font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-xs mt-1 mb-4">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-1">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/4face50f5a23" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p><p className="text-slate-500 text-xs mt-1 flex flex-wrap items-center gap-1">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/4face50f5a23" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-3 h-3" /></a></p></div></div>
-                    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-10">
+                <div style={{ fontSize: '1.35rem' }} className="max-w-7xl mx-auto animate-fade-in">
+                    <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
+                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
+                    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-[2em] md:p-[2.5em]">
                         {DISCUSS_DATA.map((item, index) => (
-                            <div key={item.id} className={index < DISCUSS_DATA.length - 1 ? "mb-12 border-b border-gray-100 pb-12" : "mb-8"}>
-                                <div className="mb-8"><h3 className="text-xl font-bold text-slate-900 mb-2" dangerouslySetInnerHTML={{__html: item.question}}></h3>{showTranslations[item.id] && (<p className="text-slate-500 text-sm mb-3 animate-fade-in font-medium">{item.translation}</p>)}<button onClick={() => toggleTranslation(item.id)} className="inline-flex items-center gap-1 text-[8px] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-3 h-3" /><span>{showTranslations[item.id] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
-                                <FeedbackSection themeColor={themeColor} question={item.question} value={answers[item.id] || ''} onChange={(e) => handleTextChange(item.id, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={<div className="mb-10 space-y-4"><div className="flex items-center gap-2"><span className="text-red-500 text-lg">📍</span><h4 className="font-bold text-slate-900 text-lg">핵심 표현 (Essential phrases)</h4></div><div className="space-y-4 pl-1">{item.keyVocab.map((v, i) => (<div key={i} className={`pl-4 border-l-4 border-${themeColor}-500`}><p className="text-slate-700"><span className={`text-${themeColor}-600 font-bold text-lg mr-2`}>{v.term}:</span><span>{v.meaning_eng}</span></p></div>))}</div></div>} />
+                            <div key={item.id} className={index < DISCUSS_DATA.length - 1 ? "mb-[3em] border-b border-gray-100 pb-[3em]" : "mb-[2em]"}>
+                                <div className="mb-[2em]"><h3 className="text-[1.25em] font-bold text-slate-900 mb-[0.5em]">{item.question}</h3>{showTranslations[item.id] && (<p className="text-slate-500 text-[0.875em] mb-[0.75em] animate-fade-in font-medium">{item.translation}</p>)}<button onClick={() => toggleTranslation(item.id)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[0.75em] h-[0.75em]" /><span>{showTranslations[item.id] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button></div>
+                                <FeedbackSection themeColor={themeColor} question={item.question} value={answers[item.id] || ''} onChange={(e) => handleTextChange(item.id, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={<div className="mb-[2.5em] space-y-[1em]"><div className="flex items-center gap-[0.5em]"><span className="text-red-500 text-[1.125em]">📍</span><h4 className="font-bold text-slate-900 text-[1.125em]">핵심 표현 (Essential phrases)</h4></div><div className="space-y-[1em] pl-[0.25em]">{item.keyVocab.map((v, i) => (<div key={i} className={`pl-[1em] border-l-4 border-${themeColor}-500`}><p className="text-slate-700"><span className={`text-${themeColor}-600 font-bold text-[1.125em] mr-[0.5em]`}>{v.term}:</span><span>{v.meaning_eng}</span></p></div>))}</div></div>} />
                             </div>
                         ))}
                     </div>
@@ -1394,7 +1366,7 @@
 
             const startInterval = () => { stopInterval(); const updateTime = () => { const p = playerRef.current; if (p && p.getCurrentTime) { const time = p.getCurrentTime(); setCurrentTime(time); if (onTimeUpdate) onTimeUpdate(time); const currentLine = SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); if (currentLine) { setActiveLine(currentLine.id); } } intervalRef.current = requestAnimationFrame(updateTime); }; intervalRef.current = requestAnimationFrame(updateTime); };
             const stopInterval = () => { if (intervalRef.current) { cancelAnimationFrame(intervalRef.current); intervalRef.current = null; } };
-             
+            
             useEffect(() => { if (popup.show) return; if (activeLine && autoScroll && scriptRefs.current[activeLine]) { scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, [activeLine, autoScroll, popup.show]);
 
             const handleLineClick = (time) => { if (player) { player.seekTo(time, true); player.playVideo(); } };
@@ -1406,7 +1378,12 @@
             const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
 
             const renderTextWithVocab = (text) => {
-                const allTerms = VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); return terms.map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length);
+                const allTerms = VOCAB_DATA.flatMap(vocab => { 
+                    const terms = [vocab.term]; 
+                    if (vocab.variants) terms.push(...vocab.variants); 
+                    // REMOVED: if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); 
+                    return terms.map(term => ({ term, vocab })); 
+                }).sort((a, b) => b.term.length - a.term.length);
                 const matches = []; allTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; const overlaps = matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end)); if (!overlaps) matches.push({ start: index, end, term, vocab }); index = end; } }); matches.sort((a, b) => a.start - b.start);
                 const result = []; let lastIndex = 0; matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); result.push({ isVocab: true, ...match.vocab, displayText: match.term, key: idx }); lastIndex = match.end; }); if (lastIndex < text.length) result.push(text.substring(lastIndex));
                 return result.map((part, index) => { if (typeof part === 'string') return part; const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term); return (<span key={part.key} className={`cursor-pointer border-b-2 transition-all duration-200 font-bold inline-block leading-tight ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-0.5 mx-0.5` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} onMouseEnter={(e) => handleVocabEnter(e, part)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, part)}>{part.displayText}</span>); });
@@ -1418,50 +1395,48 @@
             const getVideoClass = () => { if (layoutMode === 'script') return 'hidden'; if (layoutMode === 'video') { return `w-full h-full bg-black lg:h-full lg:aspect-auto ${showVocab ? 'xl:w-9/12 lg:w-full' : 'lg:w-full'}`; } let base = 'w-full sticky top-1 z-50 bg-black aspect-video lg:static lg:aspect-auto'; return `${base} flex-1 lg:h-full`; };
             const getScriptClass = () => { if (layoutMode === 'video') return 'hidden'; if (layoutMode === 'script') { return showVocab ? 'lg:flex-1 h-auto' : 'w-full max-w-7xl mx-auto h-auto'; } return `w-full lg:w-5/12 ${showVocab ? 'xl:w-4/12' : ''} lg:h-full`; };
             const getContainerClass = () => { if (layoutMode === 'script') return 'items-start min-h-full'; if (layoutMode === 'video') { return 'h-[calc(100vh-9rem)] lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; } return 'min-h-full lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; }
-            const getInnerListStyle = () => { const baseStyle = "space-y-4 rounded-xl transition-all duration-300"; if (layoutMode === 'script') { return `${baseStyle} p-6 bg-slate-100 overflow-visible h-auto`; } else { return `${baseStyle} p-4 bg-gray-50 overflow-visible lg:overflow-y-auto flex-1`; } };
+            // Added 1.3rem font size to script container
+            const getInnerListStyle = () => { const baseStyle = "space-y-[1em] rounded-xl transition-all duration-300"; if (layoutMode === 'script') { return `${baseStyle} p-[1.5em] bg-slate-100 overflow-visible h-auto`; } else { return `${baseStyle} p-[1em] bg-gray-50 overflow-visible lg:overflow-y-auto flex-1`; } };
 
             return (
-                <div className={`flex gap-4 animate-fade-in relative w-full mx-auto ${getContainerClass()}`}>
-                    {popup.show && popup.data && createPortal(<div className="fixed z-[9999] bg-white rounded-xl shadow-xl border border-gray-200 p-4 w-72 animate-fade-in pointer-events-none" style={{ left: popupLeft, top: popup.y + 12 }}><div className="flex items-center justify-between mb-2"><h3 className="text-[20px] font-black text-slate-900 font-ocarina">{popup.data.term}</h3></div><p className="text-[19px] text-slate-700 font-medium mb-3 leading-snug font-diary">{popup.data.mainDef}</p>{popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (<div className="space-y-1 mt-2">{popup.data.subDefs.map((sub, idx) => (<div key={idx} className={`bg-${themeColor}-50 rounded-lg p-2 border border-${themeColor}-100`}><p className={`text-[18px] text-${themeColor}-900 font-bold font-school-free`}>{sub.subTerm}</p><p className={`text-[17px] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}<div className="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45" style={{ left: arrowLeft }}></div></div>, document.body)}
-                    <div className={`bg-black rounded-xl overflow-hidden shadow-lg transition-all duration-300 relative ${getVideoClass()}`}><div id="youtube-player" className="w-full h-full"></div>{isLoading && (<div className="absolute inset-0 bg-black/90 flex items-center justify-center z-10"><div className={`animate-spin rounded-full h-12 w-12 border-4 border-t-transparent border-${themeColor}-500 opacity-80`}></div></div>)}</div>
-                    <div 
-                        className={`flex flex-col rounded-xl border border-gray-200 shadow-sm transition-all duration-300 bg-gray-50 ${getScriptClass()}`}
-                        style={{ fontSize: `calc(${BASE_CLAMP} * ${SCALE_PAGE_LEARN_SCRIPT})` }}
-                    >
+                <div className={`flex gap-[1em] animate-fade-in relative w-full mx-auto ${getContainerClass()}`}>
+                    {popup.show && popup.data && createPortal(<div className="fixed z-[9999] bg-white rounded-xl shadow-xl border border-gray-200 p-[1em] w-[18em] animate-fade-in pointer-events-none" style={{ left: popupLeft, top: popup.y + 12 }}><div className="flex items-center justify-between mb-[0.5em]"><h3 className="text-[1.25em] font-black text-slate-900 font-ocarina">{popup.data.term}</h3></div><p className="text-[1.1875em] text-slate-700 font-medium mb-[0.75em] leading-snug font-diary">{popup.data.mainDef}</p>{popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (<div className="space-y-[0.25em] mt-[0.5em]">{popup.data.subDefs.map((sub, idx) => (<div key={idx} className={`bg-${themeColor}-50 rounded-lg p-[0.5em] border border-${themeColor}-100`}><p className={`text-[1.125em] text-${themeColor}-900 font-bold font-school-free`}>{sub.subTerm}</p><p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}<div className="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-[0.75em] h-[0.75em] bg-white border-l border-t border-gray-200 rotate-45" style={{ left: arrowLeft }}></div></div>, document.body)}
+                    <div className={`bg-black rounded-xl overflow-hidden shadow-lg transition-all duration-300 relative ${getVideoClass()}`}><div id="youtube-player" className="w-full h-full"></div>{isLoading && (<div className="absolute inset-0 bg-black/90 flex items-center justify-center z-10"><div className={`animate-spin rounded-full h-[3em] w-[3em] border-4 border-t-transparent border-${themeColor}-500 opacity-80`}></div></div>)}</div>
+                    <div style={{ fontSize: '1.3rem' }} className={`flex flex-col rounded-xl border border-gray-200 shadow-sm transition-all duration-300 bg-gray-50 ${getScriptClass()}`}>
                         <div className={getInnerListStyle()}>
                             {SCRIPT_DATA.map(line => {
                                 const isActive = activeLine === line.id; const isScriptMode = layoutMode === 'script';
                                 if (isScriptMode) {
-                                    const isLeft = line.speaker === '유나'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
+                                    const isLeft = line.speaker === '조이'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
                                     return (
-                                        <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-6 ${isLeft ? 'items-start' : 'items-end'}`}>
-                                            <div className={`text-xs font-bold text-slate-500 mb-1 px-2 ${isLeft ? 'text-left' : 'text-right'}`}>{line.speaker}</div>
-                                            <div className={`relative p-5 rounded-xl border ${bubbleBg} ${bubbleBorder} ${isActive ? 'scale-[1.02] shadow-md z-10' : 'hover:shadow-md'} transition-all duration-300 max-w-[85%] sm:max-w-[70%] group`}>
-                                                <div className={`absolute bottom-4 w-3 h-3 border ${bubbleBg} ${bubbleBorder} rotate-45 transform ${isLeft ? '-left-1.5 border-t-0 border-r-0' : '-right-1.5 border-b-0 border-l-0'}`}></div>
-                                                <div className="relative z-10" onClick={() => handleLineClick(line.time[0])}><p className="text-[18px] sm:text-[20px] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>{translations[line.id] && (<div className="mt-3 pt-3 border-t border-dashed border-gray-200/60 animate-fade-in"><p className="text-[16px] text-slate-500">{line.eng}</p></div>)}</div>
-                                                <div className="flex justify-between items-center mt-4 pt-1"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-3.5 h-3.5" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-5 h-5" /></button></div>
+                                        <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-[1.5em] ${isLeft ? 'items-start' : 'items-end'}`}>
+                                            <div className={`text-[0.75em] font-bold text-slate-500 mb-[0.25em] px-[0.5em] ${isLeft ? 'text-left' : 'text-right'}`}>{line.speaker}</div>
+                                            <div className={`relative p-[1.25em] rounded-xl border ${bubbleBg} ${bubbleBorder} ${isActive ? 'scale-[1.02] shadow-md z-10' : 'hover:shadow-md'} transition-all duration-300 max-w-[85%] sm:max-w-[70%] group`}>
+                                                <div className={`absolute bottom-[1em] w-[0.75em] h-[0.75em] border ${bubbleBg} ${bubbleBorder} rotate-45 transform ${isLeft ? '-left-[0.375em] border-t-0 border-r-0' : '-right-[0.375em] border-b-0 border-l-0'}`}></div>
+                                                <div className="relative z-10" onClick={() => handleLineClick(line.time[0])}><p className="text-[1.125em] sm:text-[1.25em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>{translations[line.id] && (<div className="mt-[0.75em] pt-[0.75em] border-t border-dashed border-gray-200/60 animate-fade-in"><p className="text-[1em] text-slate-500">{line.eng}</p></div>)}</div>
+                                                <div className="flex justify-between items-center mt-[1em] pt-[0.25em]"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
                                             </div>
                                         </div>
                                     );
                                 }
                                 return (
                                     <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className="flex flex-col">
-                                        <div className="flex items-center gap-2 mb-1 ml-1"><span className="text-xs font-bold text-slate-600">{line.speaker}</span></div>
-                                        <div onClick={() => handleLineClick(line.time[0])} className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-50 border-yellow-100 shadow-md scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
-                                            <p className="text-[22px] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>
-                                            {translations[line.id] && (<div className="mt-3 pt-3 border-t border-dashed border-gray-200 animate-fade-in"><p className="text-[18px] text-slate-500">{line.eng}</p></div>)}
-                                            <div className="flex justify-between items-center mt-4 pt-3 border-t border-dashed border-gray-100"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-3.5 h-3.5" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-5 h-5" /></button></div>
+                                        <div className="flex items-center gap-[0.5em] mb-[0.25em] ml-[0.25em]"><span className="text-[0.75em] font-bold text-slate-600">{line.speaker}</span></div>
+                                        <div onClick={() => handleLineClick(line.time[0])} className={`p-[1.25em] rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-50 border-yellow-100 shadow-md scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                                            <p className="text-[1.375em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>
+                                            {translations[line.id] && (<div className="mt-[0.75em] pt-[0.75em] border-t border-dashed border-gray-200 animate-fade-in"><p className="text-[1.125em] text-slate-500">{line.eng}</p></div>)}
+                                            <div className="flex justify-between items-center mt-[1em] pt-[0.75em] border-t border-dashed border-gray-100"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
                                         </div>
                                     </div>
                                 );
                             })}
-                            <div className="h-32"></div>
+                            <div className="h-[8em]"></div>
                         </div>
                     </div>
                     {showVocab && (
-                        <div className={`hidden xl:flex w-3/12 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in ${layoutMode === 'script' ? 'sticky top-4 h-[calc(100vh-6rem)]' : 'h-full'}`}>
-                            <div className="p-4 border-b border-gray-100 flex items-center gap-2 bg-white rounded-t-xl"><VocabIcon className={`w-5 h-5 text-${themeColor}-600`} /><div className="flex flex-col leading-none"><h2 className="font-bold text-slate-900 text-[14px]">핵심 어휘</h2><span className="text-[10px] text-slate-400 font-medium">Key Vocabulary</span></div></div>
-                            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">{VOCAB_DATA.map((word, idx) => (<div key={idx} ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-4 rounded-xl border transition-all duration-500 ${activeVocabTerm === word.term ? `border-${themeColor}-500 bg-${themeColor}-50 ring-2 ring-${themeColor}-200 shadow-md scale-105` : 'bg-white border-gray-200 shadow-sm'}`}><div className="flex justify-between items-start mb-2"><h3 className="text-[20px] font-extrabold text-slate-900 font-ocarina">{word.term}</h3></div><p className="text-[19px] text-slate-600 mb-3 font-medium font-diary">{word.mainDef}</p>{word.subDefs && word.subDefs.length > 0 && (<div className={`space-y-2 bg-${themeColor}-50 p-2.5 rounded-lg border border-${themeColor}-100`}>{word.subDefs.map((sub, i) => (<div key={i}><p className={`text-[18px] text-${themeColor}-900 font-bold leading-snug font-school-free`}>{sub.subTerm}</p><p className={`text-[17px] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}</div>))}</div>
+                        <div className={`hidden xl:flex w-3/12 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in ${layoutMode === 'script' ? 'sticky top-[1em] h-[calc(100vh-6rem)]' : 'h-full'}`}>
+                            <div className="p-[1em] border-b border-gray-100 flex items-center gap-[0.5em] bg-white rounded-t-xl"><VocabIcon className={`w-[1.25em] h-[1.25em] text-${themeColor}-600`} /><div className="flex flex-col leading-none"><h2 className="font-bold text-slate-900 text-[0.875em]">핵심 어휘</h2><span className="text-[0.625em] text-slate-400 font-medium">Key Vocabulary</span></div></div>
+                            <div className="flex-1 overflow-y-auto p-[1em] space-y-[1em] bg-gray-50">{VOCAB_DATA.map((word, idx) => (<div key={idx} ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-[1em] rounded-xl border transition-all duration-500 ${activeVocabTerm === word.term ? `border-${themeColor}-500 bg-${themeColor}-50 ring-2 ring-${themeColor}-200 shadow-md scale-105` : 'bg-white border-gray-200 shadow-sm'}`}><div className="flex justify-between items-start mb-[0.5em]"><h3 className="text-[1.25em] font-extrabold text-slate-900 font-ocarina">{word.term}</h3></div><p className="text-[1.1875em] text-slate-600 mb-[0.75em] font-medium font-diary">{word.mainDef}</p>{word.subDefs && word.subDefs.length > 0 && (<div className={`space-y-[0.5em] bg-${themeColor}-50 p-[0.625em] rounded-lg border border-${themeColor}-100`}>{word.subDefs.map((sub, i) => (<div key={i}><p className={`text-[1.125em] text-${themeColor}-900 font-bold leading-snug font-school-free`}>{sub.subTerm}</p><p className={`text-[1.0625em] text-${themeColor}-700 font-dictation`}>{sub.subDef}</p></div>))}</div>)}</div>))}</div>
                         </div>
                     )}
                 </div>
@@ -1477,7 +1452,7 @@
             const handlePlayerReady = (player) => setVideoState(prev => ({ ...prev, player, duration: player.getDuration() }));
             const handlePlayerStateChange = (event) => setVideoState(prev => ({ ...prev, isPlaying: event.data === window.YT.PlayerState.PLAYING }));
             const handleTimeUpdate = (time) => setVideoState(prev => ({ ...prev, currentTime: time }));
-            const mainPaddingClass = useMemo(() => { switch(activeTab) { case 'home': return 'p-[20px]'; case 'learn': return 'p-[2px]'; case 'vocab': return 'p-[16px]'; case 'quiz': return 'p-[4px]'; case 'discuss': return 'p-[2px]'; default: return 'p-[20px]'; } }, [activeTab]);
+            const mainPaddingClass = useMemo(() => { switch(activeTab) { case 'home': return 'p-[1.25rem]'; case 'learn': return 'p-[0.125rem]'; case 'vocab': return 'p-[1rem]'; case 'quiz': return 'p-[0.25rem]'; case 'discuss': return 'p-[0.125rem]'; default: return 'p-[1.25rem]'; } }, [activeTab]);
             const getScrollClass = () => { if (activeTab === 'learn') { if (layoutMode === 'video') return 'lg:overflow-hidden'; if (layoutMode === 'split') return 'lg:overflow-hidden'; } return ''; };
             useEffect(() => { const handleResize = () => { if (window.innerWidth < 1024) setIsSidebarCollapsed(true); else setIsSidebarCollapsed(false); }; window.addEventListener('resize', handleResize); handleResize(); return () => window.removeEventListener('resize', handleResize); }, []);
             const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
@@ -1490,22 +1465,22 @@
                 const togglePlay = () => { if (player) { if (isPlaying) player.pauseVideo(); else player.playVideo(); } };
                 const rewind2 = () => { if (player) player.seekTo(Math.max(0, currentTime - 1.5), true); };
                 const forward2 = () => { if (player) player.seekTo(Math.min(duration, currentTime + 1.5), true); };
-                const layoutBtnTextSizeKor = "text-[12px] md:text-[13px] lg:text-[14px]"; const layoutBtnTextSizeEng = "text-[8px] md:text-[9px] lg:text-[10px]"; const layoutBtnPadding = "px-2 py-1 lg:px-4 lg:py-2"; const controlBtnHeight = "h-8 md:h-[32px] lg:h-9"; const controlTextSize = "text-[10px] md:text-[11px] lg:text-[12px]"; const controlPadding = "px-3";
+                const layoutBtnTextSizeKor = "text-[0.75em] md:text-[0.8125em] lg:text-[0.875em]"; const layoutBtnTextSizeEng = "text-[0.5em] md:text-[0.5625em] lg:text-[0.625em]"; const layoutBtnPadding = "px-[0.5em] py-[0.25em] lg:px-[1em] lg:py-[0.5em]"; const controlBtnHeight = "h-[2em] md:h-[2em] lg:h-[2.25em]"; const controlTextSize = "text-[0.625em] md:text-[0.6875em] lg:text-[0.75em]"; const controlPadding = "px-[0.75em]";
 
                 return (
-                    <div className="flex items-center h-full px-4 lg:px-6 border-b border-gray-100 bg-white/90 backdrop-blur gap-4">
-                        <div className="flex items-center gap-2 shrink-0">{modes.map((mode, index) => { const isActive = layoutMode === mode.id; const korFontClass = isActive ? "font-cafe24-surround text-green-700" : "font-cafe24 text-slate-500"; const engFontClass = isActive ? "font-bold text-green-500" : "font-medium text-slate-400"; const containerClass = isActive ? `bg-${themeColor}-50 border border-${themeColor}-100 shadow-sm` : 'bg-transparent border border-transparent hover:bg-gray-50'; return ( <React.Fragment key={mode.id}><button onClick={() => setLayoutMode(mode.id)} className={`flex flex-col items-center justify-center rounded-xl transition-all duration-300 ${layoutBtnPadding} ${containerClass}`}><span className={`leading-tight ${layoutBtnTextSizeKor} ${korFontClass}`}><span className="hidden md:inline">{mode.labelKorDesktop}</span><span className="md:hidden">{mode.labelKorMobile}</span></span><span className={`leading-tight font-nanum-round mt-0.5 ${layoutBtnTextSizeEng} ${engFontClass}`}><span className="hidden md:inline">{mode.labelEngDesktop || mode.labelEng}</span><span className="md:hidden">{mode.labelEngMobile || mode.labelEng}</span></span></button>{index < modes.length - 1 && <div className="w-px h-3 bg-gray-300"></div>}</React.Fragment> ); })}</div>
-                        <div className="flex items-center gap-2 flex-1 justify-end min-w-0">
-                            <div className={`hidden sm:flex flex-1 items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm min-w-0 transition-all ${controlBtnHeight} ${showVocab ? '' : 'max-w-[400px]'}`}>
-                                <div className="hidden md:flex flex-col flex-1 px-2 justify-center w-full min-w-[60px] lg:min-w-[80px]"><input type="range" min="0" max={duration || 100} value={currentTime} onChange={handleSeek} className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer" style={{ '--thumb-color': currentThemeHex }} /><div className="text-[8px] font-mono text-center leading-none mt-1 text-slate-400 font-bold whitespace-nowrap">{formatTime(currentTime)} / {formatTime(duration)}</div></div>
-                                <button onClick={rewind2} className="p-1 hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="-1.5s"><RewindIcon className="w-4 h-4" /></button><button onClick={togglePlay} className={`w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center rounded-xl transition-all duration-200 hover:scale-110 bg-${themeColor}-400 text-white shadow-md shrink-0`} title={isPlaying ? "Pause" : "Play"}>{isPlaying ? <PauseIcon className="w-4 h-4 lg:w-5 lg:h-5 fill-current" /> : <PlayIconSolid className="w-4 h-4 lg:w-5 lg:h-5 fill-current" />}</button><button onClick={forward2} className="p-1 hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="+1.5s"><ForwardIcon className="w-4 h-4" /></button>
+                    <div className="flex items-center h-full px-[1em] lg:px-[1.5em] border-b border-gray-100 bg-white/90 backdrop-blur gap-[1em]">
+                        <div className="flex items-center gap-[0.5em] shrink-0">{modes.map((mode, index) => { const isActive = layoutMode === mode.id; const korFontClass = isActive ? "font-cafe24-surround text-green-700" : "font-cafe24 text-slate-500"; const engFontClass = isActive ? "font-bold text-green-500" : "font-medium text-slate-400"; const containerClass = isActive ? `bg-${themeColor}-50 border border-${themeColor}-100 shadow-sm` : 'bg-transparent border border-transparent hover:bg-gray-50'; return ( <React.Fragment key={mode.id}><button onClick={() => setLayoutMode(mode.id)} className={`flex flex-col items-center justify-center rounded-xl transition-all duration-300 ${layoutBtnPadding} ${containerClass}`}><span className={`leading-tight ${layoutBtnTextSizeKor} ${korFontClass}`}><span className="hidden md:inline">{mode.labelKorDesktop}</span><span className="md:hidden">{mode.labelKorMobile}</span></span><span className={`leading-tight font-nanum-round mt-[0.125em] ${layoutBtnTextSizeEng} ${engFontClass}`}><span className="hidden md:inline">{mode.labelEngDesktop || mode.labelEng}</span><span className="md:hidden">{mode.labelEngMobile || mode.labelEng}</span></span></button>{index < modes.length - 1 && <div className="w-px h-[0.75em] bg-gray-300"></div>}</React.Fragment> ); })}</div>
+                        <div className="flex items-center gap-[0.5em] flex-1 justify-end min-w-0">
+                            <div className={`hidden sm:flex flex-1 items-center gap-[0.25em] bg-white border border-gray-200 rounded-xl p-[0.25em] shadow-sm min-w-0 transition-all ${controlBtnHeight} ${showVocab ? '' : 'max-w-[25em]'}`}>
+                                <div className="hidden md:flex flex-col flex-1 px-[0.5em] justify-center w-full min-w-[3.75em] lg:min-w-[5em]"><input type="range" min="0" max={duration || 100} value={currentTime} onChange={handleSeek} className="w-full h-[0.25em] bg-gray-200 rounded-lg appearance-none cursor-pointer" style={{ '--thumb-color': currentThemeHex }} /><div className="text-[0.5em] font-mono text-center leading-none mt-[0.25em] text-slate-400 font-bold whitespace-nowrap">{formatTime(currentTime)} / {formatTime(duration)}</div></div>
+                                <button onClick={rewind2} className="p-[0.25em] hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="-1.5s"><RewindIcon className="w-[1em] h-[1em]" /></button><button onClick={togglePlay} className={`w-[1.25em] h-[1.25em] lg:w-[1.5em] lg:h-[1.5em] flex items-center justify-center rounded-xl transition-all duration-200 hover:scale-110 bg-${themeColor}-400 text-white shadow-md shrink-0`} title={isPlaying ? "Pause" : "Play"}>{isPlaying ? <PauseIcon className="w-[1em] h-[1em] lg:w-[1.25em] lg:h-[1.25em] fill-current" /> : <PlayIconSolid className="w-[1em] h-[1em] lg:w-[1.25em] lg:h-[1.25em] fill-current" />}</button><button onClick={forward2} className="p-[0.25em] hover:bg-gray-100 rounded-lg text-slate-600 transition-colors shrink-0" title="+1.5s"><ForwardIcon className="w-[1em] h-[1em]" /></button>
                             </div>
-                            <div className="w-px h-3 bg-gray-300 shrink-0 hidden sm:block"></div>
-                            <div className="relative shrink-0 hidden sm:block"><button onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)} className={`flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600`}><SpeedSolidIcon className="w-4 h-4 text-slate-400" /><span className={`${controlTextSize} font-bold font-nanum-round min-w-[32px] text-center`}>{playbackRate.toFixed(2)}x</span></button>{isSpeedMenuOpen && (<><div className="fixed inset-0 z-40" onClick={() => setIsSpeedMenuOpen(false)}></div><div className="absolute top-full right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-50 w-24 flex flex-col gap-0.5 animate-fade-in">{[0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0].map(speed => (<button key={speed} onClick={() => { setPlaybackRate(speed); setIsSpeedMenuOpen(false); }} className={`text-center px-2 py-1.5 rounded-lg text-[10px] font-bold font-nanum-round transition-colors ${playbackRate === speed ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-500 hover:bg-gray-50 hover:text-slate-700'}`}>{speed.toFixed(2)}x</button>))}</div></>)}</div>
-                            <div className="w-px h-3 bg-gray-300 shrink-0 hidden sm:block"></div>
-                            <button onClick={() => setAutoScroll(!autoScroll)} className={`hidden min-[400px]:flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600 shrink-0`}><div className={`relative transition-colors duration-200 ease-in-out ${autoScroll ? `bg-${themeColor}-400` : 'bg-gray-300'} w-6 h-2 md:w-7 md:h-3 lg:w-8 lg:h-4 rounded-full`}><div className={`absolute top-0.5 bg-white rounded-full shadow-sm transition-transform duration-200 left-0.5 w-1 h-1 md:w-2 md:h-2 lg:w-3 lg:h-3 ${autoScroll ? 'translate-x-4' : 'translate-x-0'}`}></div></div><span className={`${controlTextSize} font-bold font-nanum-round`}>Auto Scroll</span></button>
-                            <div className="w-px h-3 bg-gray-300 hidden xl:block shrink-0"></div>
-                            <button onClick={() => setShowVocab(!showVocab)} className={`hidden xl:flex items-center gap-2 ${controlPadding} ${controlBtnHeight} rounded-xl border transition-all shadow-sm shrink-0 ${showVocab ? `bg-${themeColor}-50 border-${themeColor}-200 text-${themeColor}-700` : 'bg-white border-gray-200 text-slate-600 hover:bg-gray-50'}`}><OpenBookSolidIcon className="w-4 h-4" /><span className={`${controlTextSize} font-bold font-nanum-round hidden sm:inline`}>Vocabulary</span></button>
+                            <div className="w-px h-[0.75em] bg-gray-300 shrink-0 hidden sm:block"></div>
+                            <div className="relative shrink-0 hidden sm:block"><button onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)} className={`flex items-center gap-[0.5em] ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600`}><SpeedSolidIcon className="w-[1em] h-[1em] text-slate-400" /><span className={`${controlTextSize} font-bold font-nanum-round min-w-[2em] text-center`}>{playbackRate.toFixed(2)}x</span></button>{isSpeedMenuOpen && (<><div className="fixed inset-0 z-40" onClick={() => setIsSpeedMenuOpen(false)}></div><div className="absolute top-full right-0 mt-[0.5em] bg-white border border-gray-100 rounded-xl shadow-xl p-[0.375em] z-50 w-[6em] flex flex-col gap-[0.125em] animate-fade-in">{[0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0].map(speed => (<button key={speed} onClick={() => { setPlaybackRate(speed); setIsSpeedMenuOpen(false); }} className={`text-center px-[0.5em] py-[0.375em] rounded-lg text-[0.625em] font-bold font-nanum-round transition-colors ${playbackRate === speed ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-500 hover:bg-gray-50 hover:text-slate-700'}`}>{speed.toFixed(2)}x</button>))}</div></>)}</div>
+                            <div className="w-px h-[0.75em] bg-gray-300 shrink-0 hidden sm:block"></div>
+                            <button onClick={() => setAutoScroll(!autoScroll)} className={`hidden min-[400px]:flex items-center gap-[0.5em] ${controlPadding} ${controlBtnHeight} rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm text-slate-600 shrink-0`}><div className={`relative transition-colors duration-200 ease-in-out ${autoScroll ? `bg-${themeColor}-400` : 'bg-gray-300'} w-[1.5em] h-[0.5em] md:w-[1.75em] md:h-[0.75em] lg:w-[2em] lg:h-[1em] rounded-full`}><div className={`absolute top-[0.125em] bg-white rounded-full shadow-sm transition-transform duration-200 left-[0.125em] w-[0.25em] h-[0.25em] md:w-[0.5em] md:h-[0.5em] lg:w-[0.75em] lg:h-[0.75em] ${autoScroll ? 'translate-x-[1em]' : 'translate-x-0'}`}></div></div><span className={`${controlTextSize} font-bold font-nanum-round`}>Auto Scroll</span></button>
+                            <div className="w-px h-[0.75em] bg-gray-300 hidden xl:block shrink-0"></div>
+                            <button onClick={() => setShowVocab(!showVocab)} className={`hidden xl:flex items-center gap-[0.5em] ${controlPadding} ${controlBtnHeight} rounded-xl border transition-all shadow-sm shrink-0 ${showVocab ? `bg-${themeColor}-50 border-${themeColor}-200 text-${themeColor}-700` : 'bg-white border-gray-200 text-slate-600 hover:bg-gray-50'}`}><OpenBookSolidIcon className="w-[1em] h-[1em]" /><span className={`${controlTextSize} font-bold font-nanum-round hidden sm:inline`}>Vocabulary</span></button>
                         </div>
                     </div>
                 );
@@ -1513,7 +1488,7 @@
 
             const renderHomeHeaderContent = () => {
                 return (
-                    <div className="flex lg:hidden items-center gap-3 px-4 h-full border-b border-gray-100 bg-white/90 backdrop-blur"><img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className="w-[48px] h-[48px] rounded-2xl shadow-lg object-cover transition-all duration-300"/><div className="flex flex-col justify-center animate-fade-in"><span className="font-cafe24-deco text-[20px] text-black leading-tight">Open</span><span className={`font-mustache text-[11px] leading-tight text-${themeColor}-600 font-bold`}>KoreanLearningLab</span></div></div>
+                    <div className="flex lg:hidden items-center gap-[0.75em] px-[1em] h-full border-b border-gray-100 bg-white/90 backdrop-blur"><img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className="w-[3em] h-[3em] rounded-2xl shadow-lg object-cover transition-all duration-300"/><div className="flex flex-col justify-center animate-fade-in"><span className="font-cafe24-deco text-[1.25em] text-black leading-tight">Open</span><span className={`font-mustache text-[0.6875em] leading-tight text-${themeColor}-600 font-bold`}>KoreanLearningLab</span></div></div>
                 );
             };
 
@@ -1528,25 +1503,28 @@
                 }
             };
 
-            const getHeaderClass = () => {
-                const base = `h-16 bg-white transition-all duration-300 ${isSidebarCollapsed ? 'lg:left-[88px]' : 'lg:left-[295px]'}`;
-                if (activeTab === 'learn' && layoutMode === 'script') { return `${base} sticky top-0 z-40`; }
-                return `${base} relative lg:sticky lg:top-0 z-40`;
-            };
-
-            const headerScale = activeTab === 'learn' ? SCALE_HEADER_LEARN : SCALE_HEADER_DEFAULT;
-            const headerFontSize = `calc(${BASE_CLAMP} * ${headerScale})`;
-             
-            const mainMarginLeft = isSidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[295px]';
+            // Dynamic width class based on collapsed state and font sizes
+            // Since we use inline styles for widths, we adjust the margins here using styles as well or keep using a class if it matches
+            // We'll use inline styles for the main content margin to match sidebar width
+            const sidebarWidth = isSidebarCollapsed ? '5.5rem' : '18.4rem';
+            const headerFontSize = activeTab === 'learn' ? '1rem' : '1.3rem';
 
             return (
                 <div className="flex min-h-screen bg-[#f9fafb]">
                     <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} userLevel={userLevel} themeColor={themeColor} />
-                    <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${mainMarginLeft}`}>
-                        <header className={getHeaderClass()} style={{ fontSize: headerFontSize }}>{activeTab === 'learn' ? renderLearnHeaderContent() : (activeTab === 'home' ? renderHomeHeaderContent() : null)}</header>
+                    <div 
+                        className="flex-1 flex flex-col transition-all duration-300 ease-in-out"
+                        style={{ marginLeft: window.innerWidth >= 1024 ? sidebarWidth : 0 }}
+                    >
+                        <header 
+                            className={`bg-white transition-all duration-300 z-40 ${activeTab === 'learn' && layoutMode === 'script' ? 'sticky top-0' : 'relative lg:sticky lg:top-0'}`}
+                            style={{ height: '4rem', fontSize: headerFontSize }}
+                        >
+                            {activeTab === 'learn' ? renderLearnHeaderContent() : (activeTab === 'home' ? renderHomeHeaderContent() : null)}
+                        </header>
                         <main className={`flex-1 ${mainPaddingClass} flex flex-col ${getScrollClass()}`}>{renderContent()}</main>
                     </div>
-                    <nav className="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-3 z-50">{['home','learn','vocab','quiz','discuss'].map(t=><button key={t} onClick={()=>setActiveTab(t)} className={`p-2 rounded-lg ${activeTab===t ? `text-${themeColor}-600 bg-${themeColor}-50` : 'text-slate-400'}`}>{t==='home'?<HomeIcon className="w-6 h-6"/>:t==='learn'?<LearnIcon className="w-6 h-6"/>:t==='vocab'?<VocabIcon className="w-6 h-6"/>:t==='quiz'?<QuizIcon className="w-6 h-6"/>:<DiscussIcon className="w-6 h-6"/>}</button>)}</nav>
+                    <nav className="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-[0.75rem] z-50">{['home','learn','vocab','quiz','discuss'].map(t=><button key={t} onClick={()=>setActiveTab(t)} className={`p-[0.5rem] rounded-lg ${activeTab===t ? `text-${themeColor}-600 bg-${themeColor}-50` : 'text-slate-400'}`}>{t==='home'?<HomeIcon className="w-[1.5rem] h-[1.5rem]"/>:t==='learn'?<LearnIcon className="w-[1.5rem] h-[1.5rem]"/>:t==='vocab'?<VocabIcon className="w-[1.5rem] h-[1.5rem]"/>:t==='quiz'?<QuizIcon className="w-[1.5rem] h-[1.5rem]"/>:<DiscussIcon className="w-[1.5rem] h-[1.5rem]"/>}</button>)}</nav>
                 </div>
             );
         };
