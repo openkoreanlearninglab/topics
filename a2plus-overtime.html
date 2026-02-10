@@ -50,49 +50,389 @@
         };
 
         const VOCAB_DATA = [
-            { term: '이 주제로 이야기해 봐요', mainDef: 'Let\'s Talk About This Topic', examples: [], translations: { en: { main: 'Let\'s Talk About This Topic' } }, subDefs: [{ subTerm: '• ▢▢을/를 주제로 이야기하다', subDef: 'to talk about [something] as a topic', translations: { en: { def: 'to talk about [something] as a topic' } } }, { subTerm: '• -아/어 보다', subDef: 'used to make gentle suggestions without sounding pushy', translations: { en: { def: 'used to make gentle suggestions without sounding pushy' } } }] },
-            { term: '할 일', mainDef: 'work to do', examples: [], translations: { en: { main: 'work to do' } }, subDefs: [{ subTerm: '• 하다', subDef: 'to do', translations: { en: { def: 'to do' } } }, { subTerm: '• -ㄹ/을', subDef: 'used to turn a future-tense verb into an "adjective-ish" phrase that describes the following noun', translations: { en: { def: 'used to turn a future-tense verb into an "adjective-ish" phrase that describes the following noun' } } }, { subTerm: '• 일', subDef: 'work', translations: { en: { def: 'work' } } }] },
-            { term: '많아서', mainDef: 'because there is a lot of...', examples: [], translations: { en: { main: 'because there is a lot of...' } }, subDefs: [{ subTerm: '• 많다', subDef: 'to be many, a lot of', translations: { en: { def: 'to be many, a lot of' } } }, { subTerm: '• -아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")', translations: { en: { def: 'used to connect clauses indicating cause or reason ("because…")' } } }] },
-            { term: '일을 못 끝낼 것 같아요', mainDef: 'I don\'t think I can finish the work.', examples: [], translations: { en: { main: 'I don\'t think I can finish the work.' } }, subDefs: [{ subTerm: '• 일을 끝내다', subDef: 'to finish work', translations: { en: { def: 'to finish work' } } }, { subTerm: '• -ㄹ 것 같다', subDef: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”', translations: { en: { def: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”' } } }] },
-            { term: '늦게', mainDef: 'late', examples: [], translations: { en: { main: 'late' } }, subDefs: [] },
-            { term: '퇴근하면 되겠네요', mainDef: 'It\'s fine if you leave work late.', examples: [], translations: { en: { main: 'It\'s fine if you leave work late.' } }, subDefs: [{ subTerm: '• 퇴근하다', subDef: 'to leave work', translations: { en: { def: 'to leave work' } } }, { subTerm: '• -면 되다', subDef: 'used to say that one condition or action is enough, often translated as “all you have to do is …” or “it’s fine if ….”', translations: { en: { def: 'used to say that one condition or action is enough, often translated as “all you have to do is …” or “it’s fine if ….”' } } }, { subTerm: '• -겠네요', subDef: 'used to show an immediate reaction, realization, or empathy, often translated as “I guess … / That must be … / Sounds …”', translations: { en: { def: 'used to show an immediate reaction, realization, or empathy, often translated as “I guess … / That must be … / Sounds …”' } } }] },
-            { term: '퇴근하다', mainDef: 'to leave work', examples: [], translations: { en: { main: 'to leave work' } }, subDefs: [] },
-            { term: '일이 끝나고', mainDef: 'after the work is done', examples: [], translations: { en: { main: 'after the work is done' } }, subDefs: [{ subTerm: '• 일이 끝나다', subDef: 'for the work to be finished', translations: { en: { def: 'for the work to be finished' } } }, { subTerm: '• -고', subDef: 'used to connect two verbs, meaning “and then” or simply “and,” to show actions happening in sequence.', translations: { en: { def: 'used to connect two verbs, meaning “and then” or simply “and,” to show actions happening in sequence.' } } }] },
-            { term: '-라는 뜻이에요', mainDef: '"It means that…"', examples: [], translations: { en: { main: '"It means that…"' } }, subDefs: [{ subTerm: '• -(이)라는 뜻', subDef: 'used to state the meaning of a word or phrase', translations: { en: { def: 'used to state the meaning of a word or phrase' } } }] },
-            { term: '무슨 말이에요?', mainDef: 'What do you mean?', examples: [], translations: { en: { main: 'What do you mean?' } }, subDefs: [] },
-            { term: '늦게까지', mainDef: 'until late', examples: [], translations: { en: { main: 'until late' } }, subDefs: [{ subTerm: '• 늦게', subDef: 'late', translations: { en: { def: 'late' } } }, { subTerm: '• -까지', subDef: 'until', translations: { en: { def: 'until' } } }] },
-            { term: '일하기 싫어요', mainDef: 'I don\'t want to work.', examples: [], translations: { en: { main: 'I don\'t want to work.' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -기 싫다', subDef: 'used for your own dislike (“I don’t want to …”),', translations: { en: { def: 'used for your own dislike (“I don’t want to …”),' } } }] },
-            { term: '미루는 거', mainDef: 'the act of postponing', examples: [], translations: { en: { main: 'the act of postponing' } }, subDefs: [{ subTerm: '• 미루다', subDef: 'to postpone, to put off', translations: { en: { def: 'to postpone, to put off' } } }, { subTerm: '• -는 거', subDef: 'A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”', translations: { en: { def: 'A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”' } } }] },
-            { term: '미루다', mainDef: 'to postpone, to put off', examples: [], translations: { en: { main: 'to postpone, to put off' } }, subDefs: [] },
-            { term: '효율적인 거예요', mainDef: 'it is being efficient.', examples: [], translations: { en: { main: 'it is being efficient.' } }, subDefs: [{ subTerm: '• 효율적이다', subDef: 'to be efficient', translations: { en: { def: 'to be efficient' } } }, { subTerm: '• -ㄴ 거예요', subDef: 'A colloquial form of -ㄴ 것이다, used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”', translations: { en: { def: 'A colloquial form of -ㄴ 것이다, used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”' } } }] },
-            { term: '효율적이다', mainDef: 'to be efficient', examples: [], translations: { en: { main: 'to be efficient' } }, subDefs: [] },
-            { term: '결과', mainDef: 'result', examples: [], translations: { en: { main: 'result' } }, subDefs: [] },
-            { term: '얻다', mainDef: 'to get, to obtain', examples: [], translations: { en: { main: 'to get, to obtain' } }, subDefs: [] },
-            { term: '열심히', mainDef: 'hard, diligently', examples: [], translations: { en: { main: 'hard, diligently' } }, subDefs: [] },
-            { term: '일하는 거예요', mainDef: 'it is the act of working.', examples: [], translations: { en: { main: 'it is the act of working.' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -는 거예요', subDef: 'A colloquial form of -는 것이다, which is  used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”', translations: { en: { def: 'A colloquial form of -는 것이다, which is  used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”' } } }] },
-            { term: '그건 말이 안 돼요', mainDef: 'That doesn\'t make sense.', examples: [], translations: { en: { main: 'That doesn\'t make sense.' } }, subDefs: [{ subTerm: '• 말이 되다', subDef: 'to make sense', translations: { en: { def: 'to make sense' } } }] },
-            { term: '같은 사람', mainDef: 'the same person', examples: [], translations: { en: { main: 'the same person' } }, subDefs: [{ subTerm: '• 같다', subDef: 'to be the same, to be like', translations: { en: { def: 'to be the same, to be like' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }] },
-            { term: '완전히', mainDef: 'completely', examples: [], translations: { en: { main: 'completely' } }, subDefs: [] },
-            { term: '다른 사람', mainDef: 'a different person', examples: [], translations: { en: { main: 'a different person' } }, subDefs: [{ subTerm: '• 다르다', subDef: 'to be different', translations: { en: { def: 'to be different' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }] },
-            { term: '천재', mainDef: 'a genius', examples: [], translations: { en: { main: 'a genius' } }, subDefs: [] },
-            { term: '맡겼는데', mainDef: 'entrusted, but...', examples: [], translations: { en: { main: 'entrusted, but...' } }, subDefs: [{ subTerm: '• 맡기다', subDef: 'to entrust, to assign', translations: { en: { def: 'to entrust, to assign' } } }, { subTerm: '• -는데', subDef: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.', translations: { en: { def: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.' } } }] },
-            { term: '맡기다', mainDef: 'to entrust, to assign', examples: [], translations: { en: { main: 'to entrust, to assign' } }, subDefs: [] },
-            { term: '바보', mainDef: 'a fool, an idiot', examples: [], translations: { en: { main: 'a fool, an idiot' } }, subDefs: [] },
-            { term: '모레', mainDef: 'the day after tomorrow', examples: [], translations: { en: { main: 'the day after tomorrow' } }, subDefs: [] },
-            { term: '언젠가', mainDef: 'someday', examples: [], translations: { en: { main: 'someday' } }, subDefs: [] },
-            { term: '똑똑한', mainDef: 'smart', examples: [], translations: { en: { main: 'smart' } }, subDefs: [{ subTerm: '• 똑똑하다', subDef: 'to be smart', translations: { en: { def: 'to be smart' } } }] },
-            { term: '게으르다', mainDef: 'to be lazy', examples: [], translations: { en: { main: 'to be lazy' } }, subDefs: [] },
-            { term: '일하기 싫어하다', mainDef: 'to dislike working', examples: [], translations: { en: { main: 'to dislike working' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -기 싫어하다', subDef: 'used when talking about someone else’s dislike (“They don’t want to …”).', translations: { en: { def: 'used when talking about someone else’s dislike (“They don’t want to …”).' } } }] },
-            { term: '로봇', mainDef: 'a robot', examples: [], translations: { en: { main: 'a robot' } }, subDefs: [] },
-            { term: '피곤해서', mainDef: 'because I am tired', examples: [], translations: { en: { main: 'because I am tired' } }, subDefs: [{ subTerm: '• 피곤하다', subDef: 'to be tired', translations: { en: { def: 'to be tired' } } }, { subTerm: '• -아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")', translations: { en: { def: 'used to connect clauses indicating cause or reason ("because…")' } } }] },
-            { term: '그렇지 않으면', mainDef: 'if not, otherwise', examples: [], translations: { en: { main: 'if not, otherwise' } }, subDefs: [] },
-            { term: '회사에서 잘리다', mainDef: 'to get fired', examples: [], translations: { en: { main: 'to get fired' } }, subDefs: [] },
-            { term: '더 이상', mainDef: 'any more, no longer', examples: [], translations: { en: { main: 'any more, no longer' } }, subDefs: [] },
-            { term: '헐', mainDef: 'OMG', examples: [], translations: { en: { main: 'OMG' } }, subDefs: [] },
-            { term: '야근하다', mainDef: 'to work overtime', examples: [], translations: { en: { main: 'to work overtime' } }, subDefs: [] },
-            { term: '정리해 볼게요', mainDef: 'I will organize', examples: [], translations: { en: { main: 'I will organize' } }, subDefs: [{ subTerm: '• 정리하다', subDef: 'to summarize, to organize', translations: { en: { def: 'to summarize, to organize' } } }, { subTerm: '• -아/어 볼게요', subDef: 'used to politely show your intention to attempt something.', translations: { en: { def: 'used to politely show your intention to attempt something.' } } }] },
-            { term: '착한 사람', mainDef: 'a good person', examples: [], translations: { en: { main: 'a good person' } }, subDefs: [{ subTerm: '• 착하다', subDef: 'to be good, kind', translations: { en: { def: 'to be good, kind' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }] },
-            { term: '여기까지 할게요', mainDef: 'I\'ll stop here.', examples: [], translations: { en: { main: 'I\'ll stop here.' } }, subDefs: [{ subTerm: '• 여기까지 하다', subDef: 'to stop here, wrap something up', translations: { en: { def: 'to stop here, wrap something up' } } }, { subTerm: '• -게요', subDef: 'used to politely express your decision or intention to do something, especially when it affects the listener.', translations: { en: { def: 'used to politely express your decision or intention to do something, especially when it affects the listener.' } } }] }
+            {
+                term: '이 주제로 이야기해 봐요',
+                mainDef: 'Let\'s talk about this topic',
+                variants: ['이 주제로 이야기해 봐요'],
+                examples: [{ kor: '오늘은 환경 문제를 주제로 이야기해 봐요.', eng: 'Let\'s talk about environmental issues today.' }],
+                subDefs: [
+                    { subTerm: '주제', subDef: 'topic, subject' },
+                    { subTerm: '-아/어 보다', subDef: 'try doing (suggestion)' }
+                ]
+            },
+            {
+                term: '할 일',
+                mainDef: 'work to do',
+                variants: ['할 일이'],
+                examples: [{ kor: '주말에 할 일이 많아요.', eng: 'I have a lot of work to do this weekend.' }],
+                subDefs: [
+                    { subTerm: '-ㄹ/을', subDef: 'future determiner (to do)' },
+                    { subTerm: '일', subDef: 'work, task' }
+                ]
+            },
+            {
+                term: '많아서',
+                mainDef: 'because there is a lot',
+                variants: ['많아서'],
+                examples: [{ kor: '사람이 많아서 복잡해요.', eng: 'It is crowded because there are many people.' }],
+                subDefs: [
+                    { subTerm: '많다', subDef: 'to be many' },
+                    { subTerm: '-아서/어서', subDef: 'because, so' }
+                ]
+            },
+            {
+                term: '일을 못 끝낼 것 같아요',
+                mainDef: 'I don\'t think I can finish the work',
+                variants: ['일을 못 끝낼 것 같아요'],
+                examples: [{ kor: '오늘 안에 숙제를 못 끝낼 것 같아요.', eng: 'I don\'t think I can finish my homework by today.' }],
+                subDefs: [
+                    { subTerm: '못', subDef: 'cannot' },
+                    { subTerm: '-ㄹ 것 같다', subDef: 'it seems like...' }
+                ]
+            },
+            {
+                term: '늦게',
+                mainDef: 'late',
+                variants: ['늦게'],
+                examples: [{ kor: '어제 밤 늦게 잤어요.', eng: 'I went to bed late last night.' }],
+                subDefs: [
+                    { subTerm: '늦다', subDef: 'to be late' },
+                    { subTerm: '-게', subDef: 'adverbial suffix' }
+                ]
+            },
+            {
+                term: '퇴근하면 되겠네요',
+                mainDef: 'It\'s fine if you leave work',
+                variants: ['퇴근하면 되겠네요'],
+                examples: [{ kor: '일을 다 했으면 퇴근하면 돼요.', eng: 'If you finished work, you can leave.' }],
+                subDefs: [
+                    { subTerm: '퇴근하다', subDef: 'to leave work' },
+                    { subTerm: '-면 되다', subDef: 'it is okay to..., just have to...' }
+                ]
+            },
+            {
+                term: '퇴근하다',
+                mainDef: 'to leave work',
+                variants: ['퇴근할게요', '퇴근하다', '퇴근할 거예요'],
+                examples: [{ kor: '저는 보통 6시에 퇴근해요.', eng: 'I usually leave work at 6.' }],
+                subDefs: [
+                    { subTerm: '출근하다', subDef: 'to go to work (antonym)' }
+                ]
+            },
+            {
+                term: '일이 끝나고',
+                mainDef: 'after work is finished',
+                variants: ['일이 끝나고'],
+                examples: [{ kor: '수업이 끝나고 뭐 할 거예요?', eng: 'What will you do after class finishes?' }],
+                subDefs: [
+                    { subTerm: '끝나다', subDef: 'to end, to finish' },
+                    { subTerm: '-고', subDef: 'and (then)' }
+                ]
+            },
+            {
+                term: '-라는 뜻이에요',
+                mainDef: 'It means that...',
+                variants: ['라는 뜻이에요', '이라는 뜻이에요'],
+                examples: [{ kor: '‘사과’는 영어로 ‘apple’이라는 뜻이에요.', eng: '‘Sagwa’ means ‘apple’ in English.' }],
+                subDefs: [
+                    { subTerm: '뜻', subDef: 'meaning' },
+                    { subTerm: '이다', subDef: 'to be' }
+                ]
+            },
+            {
+                term: '무슨 말이에요?',
+                mainDef: 'What do you mean?',
+                variants: ['무슨 말이에요'],
+                examples: [{ kor: '그게 무슨 말이에요? 이해가 안 돼요.', eng: 'What do you mean by that? I don\'t understand.' }],
+                subDefs: [
+                    { subTerm: '무슨', subDef: 'what, what kind of' },
+                    { subTerm: '말', subDef: 'words, speech' }
+                ]
+            },
+            {
+                term: '늦게까지',
+                mainDef: 'until late',
+                variants: ['늦게까지'],
+                examples: [{ kor: '어제 늦게까지 공부했어요.', eng: 'I studied until late yesterday.' }],
+                subDefs: [
+                    { subTerm: '-까지', subDef: 'until' }
+                ]
+            },
+            {
+                term: '일하기 싫어요',
+                mainDef: 'I don\'t want to work',
+                variants: ['일하기 싫어요'],
+                examples: [{ kor: '오늘은 아무것도 하기 싫어요.', eng: 'I don\'t want to do anything today.' }],
+                subDefs: [
+                    { subTerm: '-기 싫다', subDef: 'to not want to do' }
+                ]
+            },
+            {
+                term: '미루는 거',
+                mainDef: 'procrastinating (the act of)',
+                variants: ['미루는 거'],
+                examples: [{ kor: '숙제를 미루는 거 안 좋아요.', eng: 'Procrastinating on homework is not good.' }],
+                subDefs: [
+                    { subTerm: '미루다', subDef: 'to postpone, to delay' },
+                    { subTerm: '-는 거', subDef: 'the act of doing (gerund)' }
+                ]
+            },
+            {
+                term: '미루다',
+                mainDef: 'to postpone, to put off',
+                variants: ['미루다', '미룰'],
+                examples: [{ kor: '약속을 다음 주로 미뤘어요.', eng: 'I postponed the appointment to next week.' }],
+                subDefs: []
+            },
+            {
+                term: '효율적인 거예요',
+                mainDef: 'It is being efficient',
+                variants: ['효율적인 거예요'],
+                examples: [{ kor: '이 방법이 더 효율적인 거예요.', eng: 'This method is more efficient.' }],
+                subDefs: [
+                    { subTerm: '효율적', subDef: 'efficient' },
+                    { subTerm: '-ㄴ 거예요', subDef: 'it is that... (explanation)' }
+                ]
+            },
+            {
+                term: '효율적이다',
+                mainDef: 'to be efficient',
+                variants: ['효율적이다'],
+                examples: [{ kor: '시간을 효율적으로 사용하세요.', eng: 'Please use your time efficiently.' }],
+                subDefs: []
+            },
+            {
+                term: '결과',
+                mainDef: 'result',
+                variants: ['결과를'],
+                examples: [{ kor: '시험 결과가 나왔어요.', eng: 'The exam results came out.' }],
+                subDefs: []
+            },
+            {
+                term: '얻다',
+                mainDef: 'to get, to obtain',
+                variants: ['얻어요', '얻다'],
+                examples: [{ kor: '좋은 경험을 얻었어요.', eng: 'I gained good experience.' }],
+                subDefs: []
+            },
+            {
+                term: '열심히',
+                mainDef: 'hard, diligently',
+                variants: ['열심', '열심히'],
+                examples: [{ kor: '한국어를 열심히 공부해요.', eng: 'I study Korean hard.' }],
+                subDefs: []
+            },
+            {
+                term: '일하는 거예요',
+                mainDef: 'It is working (action)',
+                variants: ['일하는 거예요'],
+                examples: [{ kor: '지금 노는 게 아니라 일하는 거예요.', eng: 'I\'m not playing, I\'m working.' }],
+                subDefs: [
+                    { subTerm: '-는 거예요', subDef: 'the fact is that I am doing...' }
+                ]
+            },
+            {
+                term: '그건 말이 안 돼요',
+                mainDef: 'That makes no sense',
+                variants: ['그건 말이 안 돼요'],
+                examples: [{ kor: '가격이 너무 비싸요. 말이 안 돼요.', eng: 'The price is too expensive. It makes no sense.' }],
+                subDefs: [
+                    { subTerm: '말이 되다', subDef: 'to make sense' },
+                    { subTerm: '안', subDef: 'not' }
+                ]
+            },
+            {
+                term: '같은 사람',
+                mainDef: 'the same person',
+                variants: ['같은 사람'],
+                examples: [{ kor: '우리는 같은 사람을 좋아해요.', eng: 'We like the same person.' }],
+                subDefs: [
+                    { subTerm: '같다', subDef: 'to be same' },
+                    { subTerm: '-ㄴ/은', subDef: 'noun modifier' }
+                ]
+            },
+            {
+                term: '완전히',
+                mainDef: 'completely',
+                variants: ['완전히'],
+                examples: [{ kor: '그 문제는 완전히 해결되었어요.', eng: 'That problem was completely solved.' }],
+                subDefs: []
+            },
+            {
+                term: '다른 사람',
+                mainDef: 'different person / other people',
+                variants: ['다른 사람'],
+                examples: [{ kor: '다른 사람에게 물어보세요.', eng: 'Please ask another person.' }],
+                subDefs: [
+                    { subTerm: '다르다', subDef: 'to be different' }
+                ]
+            },
+            {
+                term: '천재',
+                mainDef: 'genius',
+                variants: ['천재예요', '천재'],
+                examples: [{ kor: '그 아이는 수학 천재예요.', eng: 'That child is a math genius.' }],
+                subDefs: []
+            },
+            {
+                term: '맡겼는데',
+                mainDef: 'entrusted but...',
+                variants: ['맡겼는데'],
+                examples: [{ kor: '친구에게 고양이를 맡겼는데 걱정돼요.', eng: 'I entrusted my cat to a friend, but I\'m worried.' }],
+                subDefs: [
+                    { subTerm: '맡기다', subDef: 'to entrust' },
+                    { subTerm: '-는데', subDef: 'but, and (background)' }
+                ]
+            },
+            {
+                term: '맡기다',
+                mainDef: 'to entrust, to assign',
+                variants: ['맡기다'],
+                examples: [{ kor: '짐을 호텔에 맡기세요.', eng: 'Please leave your luggage at the hotel.' }],
+                subDefs: []
+            },
+            {
+                term: '바보',
+                mainDef: 'fool, idiot',
+                variants: ['바보였어요', '바보'],
+                examples: [{ kor: '저는 가끔 바보 같은 실수를 해요.', eng: 'Sometimes I make foolish mistakes.' }],
+                subDefs: []
+            },
+            {
+                term: '모레',
+                mainDef: 'the day after tomorrow',
+                variants: ['모레의', '모레'],
+                examples: [{ kor: '시험이 모레예요.', eng: 'The exam is the day after tomorrow.' }],
+                subDefs: [
+                    { subTerm: '내일', subDef: 'tomorrow' },
+                    { subTerm: '글피', subDef: 'two days after tomorrow' }
+                ]
+            },
+            {
+                term: '언젠가',
+                mainDef: 'someday',
+                variants: ['언젠가는'],
+                examples: [{ kor: '언젠가 다시 만날 거예요.', eng: 'We will meet again someday.' }],
+                subDefs: [
+                    { subTerm: '언제', subDef: 'when' },
+                    { subTerm: '-ㄴ가', subDef: 'indefinite suffix' }
+                ]
+            },
+            {
+                term: '똑똑한',
+                mainDef: 'smart',
+                variants: ['똑똑한'],
+                examples: [{ kor: '내 친구는 정말 똑똑한 학생이에요.', eng: 'My friend is a really smart student.' }],
+                subDefs: [
+                    { subTerm: '똑똑하다', subDef: 'to be smart' }
+                ]
+            },
+            {
+                term: '게으르다',
+                mainDef: 'to be lazy',
+                variants: ['게을러요', '게으르다'],
+                examples: [{ kor: '주말에는 게으르게 지내고 싶어요.', eng: 'I want to be lazy on the weekend.' }],
+                subDefs: []
+            },
+            {
+                term: '일하기 싫어하다',
+                mainDef: 'to dislike working',
+                variants: ['일하기 싫어하다'],
+                examples: [{ kor: '그 사람은 운동하기 싫어해요.', eng: 'He dislikes exercising.' }],
+                subDefs: [
+                    { subTerm: '-기 싫다', subDef: 'I hate doing...' },
+                    { subTerm: '-어하다', subDef: '3rd person feeling' }
+                ]
+            },
+            {
+                term: '로봇',
+                mainDef: 'robot',
+                variants: ['로봇이에요'],
+                examples: [{ kor: '청소 로봇이 방을 청소해요.', eng: 'The cleaning robot cleans the room.' }],
+                subDefs: []
+            },
+            {
+                term: '피곤해서',
+                mainDef: 'because I am tired',
+                variants: ['피곤해서'],
+                examples: [{ kor: '너무 피곤해서 일찍 잤어요.', eng: 'I was so tired that I went to bed early.' }],
+                subDefs: [
+                    { subTerm: '피곤하다', subDef: 'to be tired' }
+                ]
+            },
+            {
+                term: '그렇지 않으면',
+                mainDef: 'otherwise, if not',
+                variants: ['그렇지 않으면'],
+                examples: [{ kor: '빨리 가세요. 그렇지 않으면 늦을 거예요.', eng: 'Go quickly. Otherwise, you will be late.' }],
+                subDefs: [
+                    { subTerm: '그렇다', subDef: 'to be so' },
+                    { subTerm: '않으면', subDef: 'if not' }
+                ]
+            },
+            {
+                term: '회사에서 잘리다',
+                mainDef: 'to get fired',
+                variants: ['잘릴', '회사에서 잘리다'],
+                examples: [{ kor: '지각을 많이 해서 회사에서 잘렸어요.', eng: 'I got fired because I was late a lot.' }],
+                subDefs: [
+                    { subTerm: '자르다', subDef: 'to cut (active)' },
+                    { subTerm: '잘리다', subDef: 'to be cut (passive)' }
+                ]
+            },
+            {
+                term: '더 이상',
+                mainDef: 'anymore, no longer',
+                variants: ['더 이상'],
+                examples: [{ kor: '더 이상 기다릴 수 없어요.', eng: 'I can\'t wait anymore.' }],
+                subDefs: []
+            },
+            {
+                term: '헐',
+                mainDef: 'OMG (slang)',
+                variants: ['헐'],
+                examples: [{ kor: '헐! 진짜요?', eng: 'OMG! Really?' }],
+                subDefs: []
+            },
+            {
+                term: '야근하다',
+                mainDef: 'to work overtime',
+                variants: ['야근할게요', '야근하다'],
+                examples: [{ kor: '오늘 일이 많아서 야근해야 해요.', eng: 'I have a lot of work today, so I have to work overtime.' }],
+                subDefs: [
+                    { subTerm: '야', subDef: 'night (夜)' },
+                    { subTerm: '근', subDef: 'work (勤)' }
+                ]
+            },
+            {
+                term: '정리해 볼게요',
+                mainDef: 'I will organize/summarize',
+                variants: ['정리해 볼게요'],
+                examples: [{ kor: '책상을 정리해 볼게요.', eng: 'I will try organizing the desk.' }],
+                subDefs: [
+                    { subTerm: '정리하다', subDef: 'to organize' },
+                    { subTerm: '-아/어 보다', subDef: 'try doing' }
+                ]
+            },
+            {
+                term: '착한 사람',
+                mainDef: 'good person, kind person',
+                variants: ['착한 사람'],
+                examples: [{ kor: '제 친구는 정말 착한 사람이에요.', eng: 'My friend is a really kind person.' }],
+                subDefs: [
+                    { subTerm: '착하다', subDef: 'to be kind/good' }
+                ]
+            },
+            {
+                term: '여기까지 할게요',
+                mainDef: 'I\'ll stop here',
+                variants: ['여기까지 할게요'],
+                examples: [{ kor: '오늘 수업은 여기까지 할게요.', eng: 'We will stop today\'s class here.' }],
+                subDefs: [
+                    { subTerm: '여기', subDef: 'here' },
+                    { subTerm: '까지', subDef: 'until' }
+                ]
+            }
         ];
 
         const QUIZ_LIST = [
@@ -229,8 +569,9 @@
             const handleLevelTextEnter = (e) => { const rect = e.target.getBoundingClientRect(); setTooltip({ show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel] }); };
             const handleLevelTextLeave = () => { setTooltip(prev => ({ ...prev, show: false })); };
 
+            // Sidebar styles with em units based on parent font size
             const sidebarFontSize = isCollapsed ? '1rem' : '1.15rem';
-            const sidebarWidth = isCollapsed ? '5.5rem' : '18.4rem';
+            const sidebarWidth = isCollapsed ? '5.5rem' : '18.4rem'; // 88px -> 5.5rem, 16rem*1.15 -> 18.4rem
 
             return (
                 <aside 
@@ -249,6 +590,7 @@
                                 <button key={menu.id} 
                                     onClick={() => { 
                                         setActiveTab(menu.id); 
+                                        // Auto-collapse logic when clicking 'learn'
                                         if (menu.id === 'learn' && !isCollapsed) toggleSidebar(); 
                                         else if (menu.id !== 'learn' && isCollapsed) toggleSidebar(); 
                                     }} 
@@ -373,7 +715,7 @@
                             <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
                         </div>
                         <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/deec621e44e1" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/0125d8b995dc" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
                             <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-[0.25em]">→</span></button>
                         </div>
                     </div>
@@ -501,7 +843,7 @@
             return (
                 <div style={{ fontSize: '1.35rem' }} className="max-w-7xl mx-auto animate-fade-in">
                     <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
-                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/deec621e44e1" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/deec621e44e1" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
+                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/0125d8b995dc" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/0125d8b995dc" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
                     <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-[2em] md:p-[2.5em]">
                         {DISCUSS_DATA.map((item, index) => (
                             <div key={item.num} className={index < DISCUSS_DATA.length - 1 ? "mb-[3em] border-b border-gray-100 pb-[3em]" : "mb-[2em]"}>
@@ -568,7 +910,7 @@
                             {SCRIPT_DATA.map(line => {
                                 const isActive = activeLine === line.id; const isScriptMode = layoutMode === 'script';
                                 if (isScriptMode) {
-                                    const isLeft = line.speaker === '유나'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
+                                    const isLeft = line.speaker === '우디'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
                                     return (
                                         <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-[1.5em] ${isLeft ? 'items-start' : 'items-end'}`}>
                                             <div className={`text-[0.75em] font-bold text-slate-500 mb-[0.25em] px-[0.5em] ${isLeft ? 'text-left' : 'text-right'}`}>{line.speaker}</div>
