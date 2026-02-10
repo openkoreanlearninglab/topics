@@ -13,74 +13,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 루트 폰트 사이즈를 clamp와 vw를 사용하여 유동적으로 설정 */
         html { font-size: clamp(12px, 1vw, 16px); }
-        
-        @font-face {
-            font-family: 'NanumSquareRound';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-            font-weight: normal;
-            font-display: swap;
-        }
-        
+        @font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-display: swap; }
         body { font-family: 'NanumSquareRound', sans-serif; background-color: #f9fafb; color: #334155; }
         .font-basic { font-family: 'NanumSquareRound', sans-serif; }
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-noto { font-family: 'Noto Sans KR', sans-serif; }
         .font-sunflower { font-family: 'Sunflower', sans-serif; }
         .font-nanum-round { font-family: 'NanumSquareRound', sans-serif; }
-        
         @font-face { font-family: 'Cafe24SurroundAir'; src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff'); font-weight: normal; font-display: swap; }
         .font-cafe24 { font-family: 'Cafe24SurroundAir', sans-serif; }
-        
         @font-face { font-family: 'Cafe24Surround'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff'); font-weight: normal; font-display: swap; }
         .font-cafe24-surround { font-family: 'Cafe24Surround', sans-serif; }
-        
         @font-face { font-family: 'Cafe24Decoshadow'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoshadow.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-cafe24-deco { font-family: 'Cafe24Decoshadow', sans-serif; }
-        
         @font-face { font-family: 'Cafe24Decoschool'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-cafe24-school { font-family: 'Cafe24Decoschool', sans-serif; }
-        
         @font-face { font-family: 'Cafe24Anemone'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff'); font-weight: normal; font-display: swap; }
         .font-cafe24-anemone { font-family: 'Cafe24Anemone', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafetyRoundedSmile'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         @font-face { font-family: 'SchoolSafetyRoundedSmile'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2'); font-weight: 700; font-display: swap; }
         .font-school-smile { font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafetyFreeTime'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/HakgyoansimJayusiganR.woff2') format('woff2'); font-weight: normal; font-style: normal; }
         .font-school-free { font-family: 'SchoolSafetyFreeTime', sans-serif; }
-        
         @font-face { font-family: 'Juache'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-display: swap; }
         .font-juache { font-family: 'Juache', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafetyOcarina'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimOcarinaR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-ocarina { font-family: 'SchoolSafetyOcarina', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafetyPictureDiary'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-diary { font-family: 'SchoolSafetyPictureDiary', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafeBoardMarker'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-marker { font-family: 'SchoolSafeBoardMarker', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafeDictation'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-dictation { font-family: 'SchoolSafeDictation', sans-serif; }
-        
         @font-face { font-family: 'Cafe24Gowoonbam'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff'); font-weight: normal; font-display: swap; }
         .font-gowoonbam { font-family: 'Cafe24Gowoonbam', sans-serif; }
-        
         @font-face { font-family: 'SchoolSafetyMustache'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2'); font-weight: normal; font-display: swap; }
         .font-mustache { font-family: 'SchoolSafetyMustache', sans-serif; }
-        
         ::-webkit-scrollbar { width: 0.375rem; height: 0.375rem; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 0.1875rem; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(0.625rem); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 0.75rem; width: 0.75rem; border-radius: 50%; background: var(--thumb-color, #22c55e); cursor: pointer; margin-top: -0.25rem; border: 1px solid white; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 0.25rem; cursor: pointer; background: #e2e8f0; border-radius: 0.125rem; }
@@ -92,7 +67,6 @@
         const { useState, useEffect, useRef, useMemo, useCallback } = React;
         const { createPortal } = ReactDOM;
 
-        // --- Data Definitions ---
         const LEVEL_DEFINITIONS = {
             "A1": { title: "Novice", desc: "Can use and understand very simple everyday expressions. Can introduce themselves, ask and answer basic questions." },
             "A1+": { title: "Pre-Beginner", desc: "Still beginner, but can handle slightly more than A1." },
@@ -108,50 +82,526 @@
         };
 
         const VOCAB_DATA = [
-            { term: '고장나다', mainDef: 'to break down, to be out of order', examples: [{ kor: "컴퓨터가 고장났어요.", eng: "The computer broke down." }], translations: { en: { main: 'to break down, to be out of order' } } },
-            { term: '이 주제로 이야기해 봐요', mainDef: 'Let\'s Talk About This Topic', examples: [], translations: { en: { main: 'Let\'s Talk About This Topic' } }, subDefs: [{ subTerm: '• ▢▢을/를 주제로 이야기하다', subDef: 'to talk about [something] as a topic', translations: { en: { def: 'to talk about [something] as a topic' } } }, { subTerm: '• -아/어 보다', subDef: 'used to make gentle suggestions without sounding pushy', translations: { en: { def: 'used to make gentle suggestions without sounding pushy' } } }], variants: ["이 주제로 이야기해 봐요"] },
-            { term: '할 일', mainDef: 'work to do', examples: [], translations: { en: { main: 'work to do' } }, subDefs: [{ subTerm: '• 하다', subDef: 'to do', translations: { en: { def: 'to do' } } }, { subTerm: '• -ㄹ/을', subDef: 'used to turn a future-tense verb into an "adjective-ish" phrase that describes the following noun', translations: { en: { def: 'used to turn a future-tense verb into an "adjective-ish" phrase that describes the following noun' } } }, { subTerm: '• 일', subDef: 'work', translations: { en: { def: 'work' } } }], variants: ["할 일", "할 일이"] },
-            { term: '많아서', mainDef: 'because there is a lot of...', examples: [], translations: { en: { main: 'because there is a lot of...' } }, subDefs: [{ subTerm: '• 많다', subDef: 'to be many, a lot of', translations: { en: { def: 'to be many, a lot of' } } }, { subTerm: '• -아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")', translations: { en: { def: 'used to connect clauses indicating cause or reason ("because…")' } } }], variants: ["많아서"] },
-            { term: '일을 못 끝낼 것 같아요', mainDef: 'I don\'t think I can finish the work.', examples: [], translations: { en: { main: 'I don\'t think I can finish the work.' } }, subDefs: [{ subTerm: '• 일을 끝내다', subDef: 'to finish work', translations: { en: { def: 'to finish work' } } }, { subTerm: '• -ㄹ 것 같다', subDef: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”', translations: { en: { def: 'used to express assumption or guess about something that seems likely, often translated as “I think … will … / It looks like … / It seems ….”' } } }], variants: ["일을 못 끝낼 것 같아요"] },
-            { term: '늦게', mainDef: 'late', examples: [], translations: { en: { main: 'late' } }, subDefs: [], variants: ["늦게"] },
-            { term: '퇴근하면 되겠네요', mainDef: 'It\'s fine if you leave work late.', examples: [], translations: { en: { main: 'It\'s fine if you leave work late.' } }, subDefs: [{ subTerm: '• 퇴근하다', subDef: 'to leave work', translations: { en: { def: 'to leave work' } } }, { subTerm: '• -면 되다', subDef: 'used to say that one condition or action is enough, often translated as “all you have to do is …” or “it’s fine if ….”', translations: { en: { def: 'used to say that one condition or action is enough, often translated as “all you have to do is …” or “it’s fine if ….”' } } }, { subTerm: '• -겠네요', subDef: 'used to show an immediate reaction, realization, or empathy, often translated as “I guess … / That must be … / Sounds …”', translations: { en: { def: 'used to show an immediate reaction, realization, or empathy, often translated as “I guess … / That must be … / Sounds …”' } } }], variants: ["퇴근하면 되겠네요"] },
-            { term: '퇴근하다', mainDef: 'to leave work', examples: [], translations: { en: { main: 'to leave work' } }, subDefs: [], variants: ["퇴근할게요", "퇴근하다", "퇴근할 거예요"] },
-            { term: '일이 끝나고', mainDef: 'after the work is done', examples: [], translations: { en: { main: 'after the work is done' } }, subDefs: [{ subTerm: '• 일이 끝나다', subDef: 'for the work to be finished', translations: { en: { def: 'for the work to be finished' } } }, { subTerm: '• -고', subDef: 'used to connect two verbs, meaning “and then” or simply “and,” to show actions happening in sequence.', translations: { en: { def: 'used to connect two verbs, meaning “and then” or simply “and,” to show actions happening in sequence.' } } }], variants: ["일이 끝나고"] },
-            { term: '-라는 뜻이에요', mainDef: '"It means that…"', examples: [], translations: { en: { main: '"It means that…"' } }, subDefs: [{ subTerm: '• -(이)라는 뜻', subDef: 'used to state the meaning of a word or phrase', translations: { en: { def: 'used to state the meaning of a word or phrase' } } }], variants: ["라는 뜻이에요", "다는 뜻이에요"] },
-            { term: '무슨 말이에요?', mainDef: 'What do you mean?', examples: [], translations: { en: { main: 'What do you mean?' } }, subDefs: [], variants: ["무슨 말이에요"] },
-            { term: '늦게까지', mainDef: 'until late', examples: [], translations: { en: { main: 'until late' } }, subDefs: [{ subTerm: '• 늦게', subDef: 'late', translations: { en: { def: 'late' } } }, { subTerm: '• -까지', subDef: 'until', translations: { en: { def: 'until' } } }], variants: ["늦게까지"] },
-            { term: '일하기 싫어요', mainDef: 'I don\'t want to work.', examples: [], translations: { en: { main: 'I don\'t want to work.' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -기 싫다', subDef: 'used for your own dislike (“I don’t want to …”),', translations: { en: { def: 'used for your own dislike (“I don’t want to …”),' } } }], variants: ["일하기 싫어요"] },
-            { term: '미루는 거', mainDef: 'the act of postponing', examples: [], translations: { en: { main: 'the act of postponing' } }, subDefs: [{ subTerm: '• 미루다', subDef: 'to postpone, to put off', translations: { en: { def: 'to postpone, to put off' } } }, { subTerm: '• -는 거', subDef: 'A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”', translations: { en: { def: 'A colloquial form of -는 것, used to nominalize verbs by turning a verb into a noun phrase meaning “the act of …,” “the fact of …,” or “the thing that …”' } } }], variants: ["미루는 거"] },
-            { term: '미루다', mainDef: 'to postpone, to put off', examples: [], translations: { en: { main: 'to postpone, to put off' } }, subDefs: [], variants: ["미루다"] },
-            { term: '효율적인 거예요', mainDef: 'it is being efficient.', examples: [], translations: { en: { main: 'it is being efficient.' } }, subDefs: [{ subTerm: '• 효율적이다', subDef: 'to be efficient', translations: { en: { def: 'to be efficient' } } }, { subTerm: '• -ㄴ 거예요', subDef: 'A colloquial form of -ㄴ 것이다, used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”', translations: { en: { def: 'A colloquial form of -ㄴ 것이다, used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”' } } }], variants: ["효율적인 거예요"] },
-            { term: '효율적이다', mainDef: 'to be efficient', examples: [], translations: { en: { main: 'to be efficient' } }, subDefs: [], variants: ["효율적이다"] },
-            { term: '결과', mainDef: 'result', examples: [], translations: { en: { main: 'result' } }, subDefs: [], variants: ["결과를", "결과"] },
-            { term: '얻다', mainDef: 'to get, to obtain', examples: [], translations: { en: { main: 'to get, to obtain' } }, subDefs: [], variants: ["얻어요", "얻다"] },
-            { term: '열심히', mainDef: 'hard, diligently', examples: [], translations: { en: { main: 'hard, diligently' } }, subDefs: [], variants: ["열심히"] },
-            { term: '일하는 거예요', mainDef: 'it is the act of working.', examples: [], translations: { en: { main: 'it is the act of working.' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -는 거예요', subDef: 'A colloquial form of -는 것이다, which is  used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”', translations: { en: { def: 'A colloquial form of -는 것이다, which is  used to explain, clarify, or emphasize what something really is; “it is that …”, “the fact is that …”, or “what … means is …”' } } }], variants: ["일하는 거예요"] },
-            { term: '그건 말이 안 돼요', mainDef: 'That doesn\'t make sense.', examples: [], translations: { en: { main: 'That doesn\'t make sense.' } }, subDefs: [{ subTerm: '• 말이 되다', subDef: 'to make sense', translations: { en: { def: 'to make sense' } } }], variants: ["그건 말이 안 돼요"] },
-            { term: '같은 사람', mainDef: 'the same person', examples: [], translations: { en: { main: 'the same person' } }, subDefs: [{ subTerm: '• 같다', subDef: 'to be the same, to be like', translations: { en: { def: 'to be the same, to be like' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }], variants: ["같은 사람", "같은 사람이에요"] },
-            { term: '완전히', mainDef: 'completely', examples: [], translations: { en: { main: 'completely' } }, subDefs: [], variants: ["완전히"] },
-            { term: '다른 사람', mainDef: 'a different person', examples: [], translations: { en: { main: 'a different person' } }, subDefs: [{ subTerm: '• 다르다', subDef: 'to be different', translations: { en: { def: 'to be different' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }], variants: ["다른 사람", "다른 사람이에요", "다른 사람에게"] },
-            { term: '천재', mainDef: 'a genius', examples: [], translations: { en: { main: 'a genius' } }, subDefs: [], variants: ["천재예요", "천재", "천재’는"] },
-            { term: '맡겼는데', mainDef: 'entrusted, but...', examples: [], translations: { en: { main: 'entrusted, but...' } }, subDefs: [{ subTerm: '• 맡기다', subDef: 'to entrust, to assign', translations: { en: { def: 'to entrust, to assign' } } }, { subTerm: '• -는데', subDef: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.', translations: { en: { def: 'used to show contrast, or set up background often softening the tone or inviting the listener to respond.' } } }], variants: ["맡겼는데"] },
-            { term: '맡기다', mainDef: 'to entrust, to assign', examples: [], translations: { en: { main: 'to entrust, to assign' } }, subDefs: [], variants: ["맡기다’는", "맡기다"] },
-            { term: '바보', mainDef: 'a fool, an idiot', examples: [], translations: { en: { main: 'a fool, an idiot' } }, subDefs: [], variants: ["바보였어요", "바보'는", "바보"] },
-            { term: '모레', mainDef: 'the day after tomorrow', examples: [], translations: { en: { main: 'the day after tomorrow' } }, subDefs: [], variants: ["모레의", "모레’는", "모레"] },
-            { term: '언젠가', mainDef: 'someday', examples: [], translations: { en: { main: 'someday' } }, subDefs: [], variants: ["언젠가", "언젠가는"] },
-            { term: '똑똑한', mainDef: 'smart', examples: [], translations: { en: { main: 'smart' } }, subDefs: [{ subTerm: '• 똑똑하다', subDef: 'to be smart', translations: { en: { def: 'to be smart' } } }], variants: ["똑똑한"] },
-            { term: '게으르다', mainDef: 'to be lazy', examples: [], translations: { en: { main: 'to be lazy' } }, subDefs: [], variants: ["게을러요", "게으르다'는", "게으르다"] },
-            { term: '일하기 싫어하다', mainDef: 'to dislike working', examples: [], translations: { en: { main: 'to dislike working' } }, subDefs: [{ subTerm: '• 일하다', subDef: 'to work', translations: { en: { def: 'to work' } } }, { subTerm: '• -기 싫어하다', subDef: 'used when talking about someone else’s dislike (“They don’t want to …”).', translations: { en: { def: 'used when talking about someone else’s dislike (“They don’t want to …”).' } } }], variants: ["일하기 싫어하다"] },
-            { term: '로봇', mainDef: 'a robot', examples: [], translations: { en: { main: 'a robot' } }, subDefs: [], variants: ["로봇", "로봇이에요"] },
-            { term: '피곤해서', mainDef: 'because I am tired', examples: [], translations: { en: { main: 'because I am tired' } }, subDefs: [{ subTerm: '• 피곤하다', subDef: 'to be tired', translations: { en: { def: 'to be tired' } } }, { subTerm: '• -아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")', translations: { en: { def: 'used to connect clauses indicating cause or reason ("because…")' } } }], variants: ["피곤해서"] },
-            { term: '그렇지 않으면', mainDef: 'if not, otherwise', examples: [], translations: { en: { main: 'if not, otherwise' } }, subDefs: [], variants: ["그렇지 않으면"] },
-            { term: '회사에서 잘리다', mainDef: 'to get fired', examples: [], translations: { en: { main: 'to get fired' } }, subDefs: [], variants: ["회사에서 잘릴 수 있어요", "회사에서 잘리다’는", "회사에서 잘리다"] },
-            { term: '더 이상', mainDef: 'any more, no longer', examples: [], translations: { en: { main: 'any more, no longer' } }, subDefs: [], variants: ["더 이상"] },
-            { term: '헐', mainDef: 'OMG', examples: [], translations: { en: { main: 'OMG' } }, subDefs: [], variants: ["헐"] },
-            { term: '야근하다', mainDef: 'to work overtime', examples: [], translations: { en: { main: 'to work overtime' } }, subDefs: [], variants: ["야근할게요", "야근하다’는", "야근하다"] },
-            { term: '정리해 볼게요', mainDef: 'I will organize', examples: [], translations: { en: { main: 'I will organize' } }, subDefs: [{ subTerm: '• 정리하다', subDef: 'to summarize, to organize', translations: { en: { def: 'to summarize, to organize' } } }, { subTerm: '• -아/어 볼게요', subDef: 'used to politely show your intention to attempt something.', translations: { en: { def: 'used to politely show your intention to attempt something.' } } }], variants: ["정리해 볼게요"] },
-            { term: '착한 사람', mainDef: 'a good person', examples: [], translations: { en: { main: 'a good person' } }, subDefs: [{ subTerm: '• 착하다', subDef: 'to be good, kind', translations: { en: { def: 'to be good, kind' } } }, { subTerm: '• -ㄴ/은', subDef: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun', translations: { en: { def: 'used to turn a descriptive verb, which means an adjective in English, into an “adjective-ish” phrase that describes the following noun' } } }], variants: ["착한 사람", "착한 사람이니까"] },
-            { term: '여기까지 할게요', mainDef: 'I\'ll stop here.', examples: [], translations: { en: { main: 'I\'ll stop here.' } }, subDefs: [{ subTerm: '• 여기까지 하다', subDef: 'to stop here, wrap something up', translations: { en: { def: 'to stop here, wrap something up' } } }, { subTerm: '• -게요', subDef: 'used to politely express your decision or intention to do something, especially when it affects the listener.', translations: { en: { def: 'used to politely express your decision or intention to do something, especially when it affects the listener.' } } }], variants: ["여기까지 할게요"] }
+            {
+                term: '이 주제로 이야기해 봐요',
+                mainDef: "Let's talk about this topic",
+                variants: ['<이 주제로 이야기해 봐요>', '이 주제로 이야기해 봐요'],
+                examples: [{ kor: '우리 이 주제로 이야기해 봐요.', eng: "Let's talk about this topic." }],
+                subDefs: [
+                    { subTerm: '주제', subDef: 'topic, subject' },
+                    { subTerm: '-로', subDef: 'particle meaning "about" or "with (a topic)"' },
+                    { subTerm: '이야기하다', subDef: 'to talk, to have a conversation' },
+                    { subTerm: '-아/어 보다', subDef: 'used to make gentle suggestions without sounding pushy, meaning "try doing..." or "let\'s try..."' }
+                ]
+            },
+            {
+                term: '중요한 이야기',
+                mainDef: 'an important story',
+                variants: ['중요한 이야기를'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '중요하다', subDef: 'to be important' },
+                    { subTerm: '-는', subDef: 'used to turn a present-tense verb into an "adjective-ish" phrase that describes the following noun' }
+                ]
+            },
+            {
+                term: '-야 해요',
+                mainDef: '"have to…" or "must…"',
+                variants: ['해야 해요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: 'Grammar', subDef: 'used to express necessity or obligation' }
+                ]
+            },
+            {
+                term: '고장나다',
+                mainDef: 'to break down, to malfunction',
+                variants: ['고장났어요', '고장나다', '고장났고', '고장났을', '고장이', '고장나면'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '-라는 뜻이에요',
+                mainDef: '"It means that…"',
+                variants: ['뜻이에요', '라는 뜻이에요', '다는 뜻이에요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-(이)라는 뜻', subDef: 'used to state the meaning of a word or phrase' }
+                ]
+            },
+            {
+                term: '그래서요?',
+                mainDef: 'So what?',
+                variants: ['그래서요', '그래서요?'],
+                examples: [],
+                subDefs: [
+                    { subTerm: 'Meaning', subDef: 'expressing indifference or asking for more explanation' }
+                ]
+            },
+            {
+                term: '죽을 뻔하다',
+                mainDef: 'to almost die',
+                variants: ['죽을 뻔했어요', '죽을 뻔해요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-ㄹ/을 뻔하다', subDef: '"almost did…"; used to express that something nearly happened' }
+                ]
+            },
+            {
+                term: '한번도',
+                mainDef: 'not even once, never',
+                variants: ['한번도'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '습해서',
+                mainDef: 'because it\'s humid',
+                variants: ['습해서'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")' }
+                ]
+            },
+            {
+                term: '습하다',
+                mainDef: 'to be humid, to be damp',
+                variants: ['습하다', '습하다는'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '물고기가 될 뻔했어요.',
+                mainDef: 'I almost became a fish.',
+                variants: ['물고기가 될 뻔했어요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '물고기', subDef: 'fish' },
+                    { subTerm: '되다', subDef: 'to become' },
+                    { subTerm: '-ㄹ/을 뻔하다', subDef: '"almost did…"; used to express that something nearly happened' }
+                ]
+            },
+            {
+                term: '젖은 것 같다',
+                mainDef: 'seems wet',
+                variants: ['젖은 것 같다', '젖은 것 같다는'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '젖다', subDef: 'to get wet' },
+                    { subTerm: '-ㄴ/은 것 같다', subDef: '"seems like…" or "looks like…"; used to express assumption or impression' }
+                ]
+            },
+            {
+                term: '과장해서 말하다',
+                mainDef: 'to speak exaggeratedly',
+                variants: ['과장해서 말해요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아서/어서', subDef: 'used to connect two verbs, indicating that the first action is performed as the means or method for the second' }
+                ]
+            },
+            {
+                term: '과장하다',
+                mainDef: 'to exaggerate',
+                variants: ['과장하다는', '과장하다'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '사실을 말하지만',
+                mainDef: 'telling the truth, but…',
+                variants: ['사실을 말하지만'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '사실', subDef: 'fact, truth' },
+                    { subTerm: '-지만', subDef: '"but" or "although"; used to contrast two clauses' }
+                ]
+            },
+            {
+                term: '거짓말을 하다',
+                mainDef: 'to lie, to tell a lie',
+                variants: ['거짓말을 하다'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '에어컨이 고장난 적 없죠?',
+                mainDef: 'You\'ve never had your air conditioner break down, right?',
+                variants: ['에어컨이 고장난 적 없죠'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '고장나다', subDef: 'to break down, to malfunction' },
+                    { subTerm: '-ㄴ/은 적 없다', subDef: 'used to say "have never done [verb]" or to express that you\'ve had no experience of doing [verb]' }
+                ]
+            },
+            {
+                term: '경험해 봤어요',
+                mainDef: 'I\'ve experienced it.',
+                variants: ['경험해 봤어요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '경험하다', subDef: 'to experience' },
+                    { subTerm: '-아/어 봤어요', subDef: '"have tried…" or "have done…"; used to express past experience' }
+                ]
+            },
+            {
+                term: '작년',
+                mainDef: 'last year',
+                variants: ['작년'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '심지어',
+                mainDef: 'even, moreover',
+                variants: ['심지어'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '상황',
+                mainDef: 'situation',
+                variants: ['상황이'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '끔찍하다',
+                mainDef: 'to be terrible, to be horrible',
+                variants: ['끔찍했어요', '끔찍하다는', '끔찍하다'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '-을/를 때예요',
+                mainDef: '"when…"',
+                variants: ['때예요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: 'Usage', subDef: 'used to indicate the time when something happens' }
+                ]
+            },
+            {
+                term: '-라는 뜻이죠?',
+                mainDef: '"It means…, right?"',
+                variants: ['뜻이죠'],
+                examples: [],
+                subDefs: [
+                    { subTerm: 'Usage', subDef: 'asking for confirmation about meaning' },
+                    { subTerm: '-죠?', subDef: 'tag question particle used to seek agreement or confirmation' }
+                ]
+            },
+            {
+                term: '당연히',
+                mainDef: 'of course',
+                variants: ['당연히'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '말도 안 돼요',
+                mainDef: 'That doesn\'t make sense! That\'s ridiculous!',
+                variants: ['말도 안 돼요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '100배',
+                mainDef: '100 times',
+                variants: ['100배'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-배', subDef: 'counter suffix meaning "times" or "fold"; used to indicate multiples or degrees of comparison (e.g., 2배 = 2 times, 10배 = 10 times)' }
+                ]
+            },
+            {
+                term: '과장해서 말하네요',
+                mainDef: 'You\'re speaking exaggeratedly (again)',
+                variants: ['과장해서 말하네요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-네요', subDef: 'sentence ending expressing surprise or realization' }
+                ]
+            },
+            {
+                term: '보일러가 없으면',
+                mainDef: 'if there\'s no boiler',
+                variants: ['보일러가 없으면'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-면/으면', subDef: '"if…"; conditional particle' }
+                ]
+            },
+            {
+                term: '얼어 죽을 수도 있어요',
+                mainDef: 'might freeze to death',
+                variants: ['얼어 죽을 수도 있어요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-을/를 수도 있다', subDef: '"might…" or "could…"; used to express possibility' }
+                ]
+            },
+            {
+                term: '얼어 죽다',
+                mainDef: 'to freeze to death',
+                variants: ['얼어 죽다', '얼어 죽지'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '얼다', subDef: 'to freeze' },
+                    { subTerm: '-아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")' }
+                ]
+            },
+            {
+                term: '추워서',
+                mainDef: 'because it\'s cold',
+                variants: ['추워서'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")' }
+                ]
+            },
+            {
+                term: '위험하다',
+                mainDef: 'to be dangerous',
+                variants: ['위험해요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '녹다',
+                mainDef: 'to melt',
+                variants: ['녹아요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '더워서',
+                mainDef: 'because it\'s hot',
+                variants: ['더워서'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")' }
+                ]
+            },
+            {
+                term: '옷을 다 벗다',
+                mainDef: 'to take off all clothes',
+                variants: ['옷도 다 벗었어요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '다', subDef: 'all, completely' },
+                    { subTerm: '벗다', subDef: 'to take off (clothes)' }
+                ]
+            },
+            {
+                term: 'TMI',
+                mainDef: 'Too Much Information (English loanword)',
+                variants: ['TMI예요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '아무튼',
+                mainDef: 'anyway, anyhow',
+                variants: ['아무튼'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '껴입다',
+                mainDef: 'to layer clothes, to wear multiple layers',
+                variants: ['껴입을', '껴입다는', '껴입다'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '그러면',
+                mainDef: 'then, in that case',
+                variants: ['그러면'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '옷을 여러 개 입는 거예요',
+                mainDef: 'It\'s wearing multiple clothes',
+                variants: ['옷을 여러 개 입는 거예요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-는 것이다', subDef: 'used to state or explain a fact or essence, often translating as "it is that…" or "the fact is that…"' }
+                ]
+            },
+            {
+                term: '얼어서',
+                mainDef: 'because it freezes',
+                variants: ['얼어서'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아서/어서', subDef: 'used to connect clauses indicating cause or reason ("because…")' }
+                ]
+            },
+            {
+                term: '물이 안 나오다',
+                mainDef: 'water doesn\'t come out',
+                variants: ['안 나올 수도'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '얼다',
+                mainDef: 'to freeze',
+                variants: ['얼어요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '말하기 전에 생각을 하다',
+                mainDef: 'to think before speaking',
+                variants: ['말하기 전에 생각을 해요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-기 전에', subDef: '"before doing…"; used to indicate an action that happens before another' }
+                ]
+            },
+            {
+                term: '마시잖아요.',
+                mainDef: 'You drink (it), don\'t you?',
+                variants: ['마시잖아요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-잖아요', subDef: 'used to remind the listener of shared or obvious information, or to emphasize that something is already known' }
+                ]
+            },
+            {
+                term: '얼어 죽어도',
+                mainDef: 'even if I freeze to death',
+                variants: ['얼어 죽어도'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-아도/어도', subDef: '"even if…" or "even though…"; used to express concession' }
+                ]
+            },
+            {
+                term: '알겠어요',
+                mainDef: 'I understand/got it',
+                variants: ['알겠어요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '알다', subDef: 'to know' },
+                    { subTerm: '-겠다', subDef: 'used to indicate the speaker\'s intention or determination ("will…") or to express understanding' }
+                ]
+            },
+            {
+                term: '고치다',
+                mainDef: 'to fix, to repair',
+                variants: ['고쳤어요', '고치다', '고치다는'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '다시 쓸 수 있게 만들다',
+                mainDef: 'to make it usable again',
+                variants: ['다시 쓸 수 있게 만들다'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '쓰다', subDef: 'to use' },
+                    { subTerm: '-ㄹ/을 수 있게 만들다', subDef: '"to make it so that…can be done"; causative expression' }
+                ]
+            },
+            {
+                term: '기다리다',
+                mainDef: 'to wait',
+                variants: ['기다려야 해요'],
+                examples: [],
+                subDefs: []
+            },
+            {
+                term: '안 됐네요',
+                mainDef: 'That\'s too bad, I feel sorry for you',
+                variants: ['안 됐네요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-네요', subDef: 'sentence ending expressing surprise or realization' }
+                ]
+            },
+            {
+                term: '고치러 와요',
+                mainDef: 'Someone comes to fix it',
+                variants: ['고치러 와요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-러 오다', subDef: '"to come to do…"; used to express purpose of coming' }
+                ]
+            },
+            {
+                term: '중요하니까요',
+                mainDef: 'because it\'s important',
+                variants: ['중요하니까요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '-니까요', subDef: 'used to state a reason or cause ("because…"), often in response to a question' }
+                ]
+            },
+            {
+                term: '배운 단어',
+                mainDef: 'learned words/vocabulary',
+                variants: ['배운 단어'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '배우다', subDef: 'to learn' },
+                    { subTerm: '-ㄴ/은', subDef: 'used to turn a past-tense verb into an "adjective-ish" phrase that describes the following noun' },
+                    { subTerm: '단어', subDef: 'word, vocabulary' }
+                ]
+            },
+            {
+                term: '정리해 볼까요?',
+                mainDef: 'Shall we summarize?',
+                variants: ['정리해 볼까요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '정리하다', subDef: 'to summarize, to organize' },
+                    { subTerm: '-아/어 볼까요?', subDef: '"Shall we…?" "How about…?"; used to suggest trying something together' }
+                ]
+            },
+            {
+                term: '죽을 수 있지만, 진짜 죽지 않다',
+                mainDef: 'can die, but never really die',
+                variants: ['죽을 수 있지만, 진짜 죽지 않다'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '죽다', subDef: 'to die' },
+                    { subTerm: '-지만', subDef: '"but" or "although"; used to contrast two clauses' },
+                    { subTerm: '-지 않다', subDef: 'negative form "do not…"' }
+                ]
+            },
+            {
+                term: "'팀 우디'인지 '팀 유나'인지 알려주세요!",
+                mainDef: "Please tell us whether you're 'Team Woody' or 'Team Yuna'!",
+                variants: ["'팀 우디'인지 '팀 유나'인지 알려주세요"],
+                examples: [],
+                subDefs: [
+                    { subTerm: '팀', subDef: 'team' },
+                    { subTerm: '-인지 알려주다', subDef: '"tell us whether…"; used to ask someone to inform about a choice' }
+                ]
+            },
+            {
+                term: '바람이죠',
+                mainDef: 'That\'s (just) your wish/hope',
+                variants: ['바람이죠'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '바람', subDef: 'wish, hope, desire' },
+                    { subTerm: '-이죠/죠', subDef: 'informal sentence ending used for confirmation or emphasis' }
+                ]
+            },
+            {
+                term: '여기까지예요',
+                mainDef: 'That\'s all for now',
+                variants: ['여기까지예요'],
+                examples: [],
+                subDefs: [
+                    { subTerm: '여기까지', subDef: 'up to here, this far' }
+                ]
+            }
         ];
 
         const QUIZ_LIST = [
@@ -257,13 +707,11 @@
         const LEVEL_STYLES = { "A1": "bg-lime-50 text-lime-600 border-lime-100", "A1+": "bg-lime-50 text-lime-600 border-lime-100", "A2": "bg-green-50 text-green-600 border-green-100", "A2+": "bg-green-50 text-green-600 border-green-100", "B1": "bg-sky-50 text-sky-600 border-sky-100", "B1+": "bg-sky-50 text-sky-600 border-sky-100", "B2": "bg-blue-50 text-blue-600 border-blue-100", "B2+": "bg-blue-50 text-blue-600 border-blue-100", "C1": "bg-violet-50 text-violet-600 border-violet-100", "C1+": "bg-violet-50 text-violet-600 border-violet-100", "C2": "bg-violet-50 text-violet-600 border-violet-100" };
         const getLevelTheme = (l) => { const c = l.charAt(0); if(c==='A')return l==='A1'||l==='A1+'?'lime':'green'; if(c==='B')return l==='B1'||l==='B1+'?'sky':'blue'; return 'violet'; };
 
-        // --- Icons ---
         const HomeIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>);
         const LearnIcon = ({ className, filled }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="4" width="20" height="16" rx="4" fill={filled ? "currentColor" : "none"} /><polygon points="10 8 16 12 10 16 10 8" stroke={filled ? "#fff" : "currentColor"} fill={filled ? "#fff" : "none"} /></svg>);
         const VocabIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><path d="M3.5 12.5 12.5 3.5h6a2 2 0 0 1 2 2v6l-9 9a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8Z" stroke="currentColor" strokeWidth="1.8"/><path d="M16.5 7.5h.01" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/></svg>);
         const QuizIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
         const DiscussIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" className={className}><path d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2v3l-4.5-3H6a3 3 0 0 1-3-3V6Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M7 8h10M7 12h7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>);
-        const UserIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>);
         const LineIcon = ({ d, className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d} /></svg>);
         const PlayIconLine = (props) => <LineIcon {...props} d="M5 3l14 9-14 9V3z" />;
         const PlayIconSolid = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M8 5v14l11-7z" /></svg>);
@@ -279,7 +727,6 @@
         const ForwardIcon = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 19 22 12 13 5 13 19" /><polygon points="2 19 11 12 2 5 2 19" /></svg>);
         const PlayCircleIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" /><path d="M10 8L16 12L10 16V8Z" fill="currentColor" /></svg>);
 
-        // --- Sidebar Component ---
         const Sidebar = ({ activeTab, setActiveTab, isCollapsed, toggleSidebar, userLevel, themeColor }) => {
             const menus = [
                 { id: 'home', label: '시작 페이지', subLabel: 'Home Page', icon: HomeIcon },
@@ -295,15 +742,11 @@
             const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, info: null });
             const handleLevelTextEnter = (e) => { const rect = e.target.getBoundingClientRect(); setTooltip({ show: true, x: rect.right, y: rect.top, info: LEVEL_DEFINITIONS[userLevel] }); };
             const handleLevelTextLeave = () => { setTooltip(prev => ({ ...prev, show: false })); };
-
             const sidebarFontSize = isCollapsed ? '1rem' : '1.15rem';
             const sidebarWidth = isCollapsed ? '5.5rem' : '18.4rem';
 
             return (
-                <aside 
-                    style={{ fontSize: sidebarFontSize, width: sidebarWidth }}
-                    className={`bg-white border-r border-gray-200 fixed h-full hidden lg:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic`}
-                >
+                <aside style={{ fontSize: sidebarFontSize, width: sidebarWidth }} className={`bg-white border-r border-gray-200 fixed h-full hidden lg:flex flex-col z-50 transition-all duration-300 ease-in-out font-basic`}>
                     <div className={`p-[1.5em] flex items-center gap-[0.75em] relative ${isCollapsed ? 'justify-center px-0' : ''}`}>
                         <img src="https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/OpenKoreanLearningLab_Logo.jpeg" alt="Logo" className={`rounded-2xl shadow-lg shrink-0 transition-all duration-300 object-cover ${isCollapsed ? 'w-[3em] h-[3em]' : 'w-[3.75em] h-[3.75em]'}`}/>
                         {!isCollapsed && (<div className="animate-fade-in overflow-hidden whitespace-nowrap flex flex-col justify-center"><span className="font-extrabold text-[1.25em] text-black leading-tight font-cafe24-deco">Open</span><span className={`font-bold text-[0.68em] leading-tight font-mustache ${textClass}`}>KoreanLearningLab</span></div>)}
@@ -313,15 +756,7 @@
                         {menus.map((menu) => {
                             const IconComp = menu.icon; const isActive = activeTab === menu.id; const activeFontClass = isActive ? "font-cafe24-surround" : "font-cafe24";
                             return (
-                                <button key={menu.id} 
-                                    onClick={() => { 
-                                        setActiveTab(menu.id); 
-                                        if (menu.id === 'learn' && !isCollapsed) toggleSidebar(); 
-                                        else if (menu.id !== 'learn' && isCollapsed) toggleSidebar(); 
-                                    }} 
-                                    onDoubleClick={toggleSidebar} 
-                                    className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-[3.5em] rounded-2xl' : 'gap-[0.75em] px-[0.75em] py-[1em] rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}
-                                >
+                                <button key={menu.id} onClick={() => { setActiveTab(menu.id); if (menu.id === 'learn' && !isCollapsed) toggleSidebar(); else if (menu.id !== 'learn' && isCollapsed) toggleSidebar(); }} onDoubleClick={toggleSidebar} className={`w-full flex items-center transition-all duration-200 group relative ${isCollapsed ? 'justify-center h-[3.5em] rounded-2xl' : 'gap-[0.75em] px-[0.75em] py-[1em] rounded-2xl'} ${isActive ? `bg-${themeColor}-50 text-${themeColor}-600` : 'text-slate-700 hover:bg-gray-50 hover:text-slate-900'}`}>
                                     {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 bg-${themeColor}-500 rounded-r-lg ${isCollapsed ? 'w-[0.375em] h-[2em]' : 'w-[0.25em] h-[1.5em]'}`}></div>}
                                     <IconComp className={`shrink-0 transition-all duration-200 ${isCollapsed ? 'w-[2em] h-[2em]' : 'w-[1.75em] h-[1.75em]'} ${isActive ? `text-${themeColor}-600` : 'text-slate-400 group-hover:text-slate-900'}`} filled={isActive} />
                                     {!isCollapsed && (<div className="flex flex-col items-start animate-fade-in overflow-hidden whitespace-nowrap"><span className={`text-[0.875em] leading-tight transition-all ${activeFontClass} ${isActive ? `font-extrabold text-${themeColor}-600` : 'font-medium text-slate-700 group-hover:font-semibold group-hover:text-slate-900'}`}>{menu.label}</span><span className="text-[0.625em] font-normal text-slate-400 mt-[0.125em] leading-tight">{menu.subLabel}</span></div>)}
@@ -437,7 +872,7 @@
                             <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
                         </div>
                         <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/afddc2fa0952" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
                             <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-[0.25em]">→</span></button>
                         </div>
                     </div>
@@ -461,52 +896,13 @@
             const [firstAttempts, setFirstAttempts] = useState({}); 
             const [isFinished, setIsFinished] = useState(false);
             const currentQuestion = QUIZ_LIST[currentQuestionIndex];
-            
-            // Randomize options only when question changes
-            const shuffledOptions = useMemo(() => {
-                const options = [...currentQuestion.bank];
-                return options.sort(() => Math.random() - 0.5);
-            }, [currentQuestion]);
-
+            const shuffledOptions = useMemo(() => { const options = [...currentQuestion.bank]; return options.sort(() => Math.random() - 0.5); }, [currentQuestion]);
             const isCorrect = selectedOption === currentQuestion.answer;
-
-            const handleOptionClick = (option) => { 
-                if (firstAttempts[currentQuestionIndex] === undefined) {
-                    setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option === currentQuestion.answer })); 
-                }
-                setSelectedOption(option); 
-            };
-
-            const handleNext = () => { 
-                setSelectedOption(null);
-                if (currentQuestionIndex < QUIZ_LIST.length - 1) { 
-                    setCurrentQuestionIndex(prev => prev + 1); 
-                } else { 
-                    finishQuiz(); 
-                } 
-            };
-
-            const handlePrev = () => {
-                if (currentQuestionIndex > 0) {
-                    setSelectedOption(null);
-                    setCurrentQuestionIndex(prev => prev - 1);
-                }
-            };
-
-            const finishQuiz = () => { 
-                setIsFinished(true); 
-                const correctCount = Object.values(firstAttempts).filter(res => res === true).length; 
-                const finalScore = Math.round((correctCount / QUIZ_LIST.length) * 100); 
-                updateProgress('quiz', finalScore); 
-            };
-
-            const handleRetry = () => { 
-                setCurrentQuestionIndex(0); 
-                setSelectedOption(null); 
-                setFirstAttempts({}); 
-                setIsFinished(false); 
-                updateProgress('quiz', 0); 
-            };
+            const handleOptionClick = (option) => { if (firstAttempts[currentQuestionIndex] === undefined) { setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option === currentQuestion.answer })); } setSelectedOption(option); };
+            const handleNext = () => { setSelectedOption(null); if (currentQuestionIndex < QUIZ_LIST.length - 1) { setCurrentQuestionIndex(prev => prev + 1); } else { finishQuiz(); } };
+            const handlePrev = () => { if (currentQuestionIndex > 0) { setSelectedOption(null); setCurrentQuestionIndex(prev => prev - 1); } };
+            const finishQuiz = () => { setIsFinished(true); const correctCount = Object.values(firstAttempts).filter(res => res === true).length; const finalScore = Math.round((correctCount / QUIZ_LIST.length) * 100); updateProgress('quiz', finalScore); };
+            const handleRetry = () => { setCurrentQuestionIndex(0); setSelectedOption(null); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); };
 
             if (isFinished) {
                 const correctCount = Object.values(firstAttempts).filter(res => res === true).length; 
@@ -539,33 +935,17 @@
                                 {selectedOption && (<span className={`ml-[0.5em] text-[1.125em] ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}
                             </div>
                         </div>
-                        
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-[0.75em] mb-[1em] px-[0.5em]">
-                            {shuffledOptions.map((option, idx) => { 
-                                const isSelected = selectedOption === option; 
-                                let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; 
-                                if (isSelected) { 
-                                    if (option === currentQuestion.answer) { 
-                                        btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; 
-                                    } else { 
-                                        btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; 
-                                    } 
-                                } 
-                                return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option}</button>); 
-                            })}
+                            {shuffledOptions.map((option, idx) => { const isSelected = selectedOption === option; let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; if (isSelected) { if (option === currentQuestion.answer) { btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; } else { btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; } } return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option}</button>); })}
                         </div>
-
                         {selectedOption && (
                             <div className="p-[1em] rounded-xl border-l-4 mb-[1em] mx-[0.5em] animate-fade-in transition-all bg-[#f8fafc] border-gray-300">
                                 <div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-[1em] rounded-lg border-l-4`}>
                                     <h4 className={`font-bold text-[0.875em] mb-[0.25em] ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Incorrect'}</h4>
-                                    <p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>
-                                        {isCorrect ? currentQuestion.explanation : (currentQuestion.wrongAnswerExplanations[selectedOption] || "Try again!")}
-                                    </p>
+                                    <p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{isCorrect ? currentQuestion.explanation : (currentQuestion.wrongAnswerExplanations[selectedOption] || "Try again!")}</p>
                                 </div>
                             </div>
                         )}
-
                         <div className="flex justify-between items-center mt-[1em] border-t border-gray-100 pt-[1em] px-[0.5em] pb-[0.5em]">
                             <button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-[1.125em]">←</span><span className="text-[0.75em]">이전 문제 (Prev)</span></button>
                             <span className="text-[0.75em] font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span>
@@ -581,11 +961,10 @@
             const [showTranslations, setShowTranslations] = useState({});
             const handleTextChange = (id, value) => { setAnswers(prev => ({ ...prev, [id]: value })); };
             const toggleTranslation = (id) => { setShowTranslations(prev => ({ ...prev, [id]: !prev[id] })); };
-            
             return (
                 <div style={{ fontSize: '1.35rem' }} className="max-w-7xl mx-auto animate-fade-in">
                     <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
-                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/afddc2fa0952" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/afddc2fa0952" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
+                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
                     <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-[2em] md:p-[2.5em]">
                         {DISCUSS_DATA.map((item, index) => (
                             <div key={item.num} className={index < DISCUSS_DATA.length - 1 ? "mb-[3em] border-b border-gray-100 pb-[3em]" : "mb-[2em]"}>
@@ -597,19 +976,7 @@
                                 <FeedbackSection themeColor={themeColor} question={item.kor.replace(/<[^>]*>?/gm, '')} value={answers[item.num] || ''} onChange={(e) => handleTextChange(item.num, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={
                                     <div className="mb-[2.5em] space-y-[1em]">
                                         <div className="flex items-center gap-[0.5em]"><span className="text-red-500 text-[1.125em]">📍</span><h4 className="font-bold text-slate-900 text-[1.125em]">핵심 표현 (Essential phrases)</h4></div>
-                                        <div className="space-y-[1.5em] pl-[0.25em]">
-                                            {item.vocab.map((v, i) => (
-                                                <div key={i} className={`pl-[1em] border-l-4 border-${themeColor}-500 bg-gray-50 p-2 rounded-r-lg`}>
-                                                    <p className="text-slate-800 font-bold text-[1.125em] mb-[0.25em]">{v.term}</p>
-                                                    <p className="text-slate-600 text-[0.9em] mb-[0.5em] italic">{v.meaning}</p>
-                                                    <div className="text-[0.85em] text-slate-500 border-t border-gray-200 pt-[0.5em]">
-                                                        <p className="font-medium text-slate-700">Context:</p>
-                                                        <p>{v.context}</p>
-                                                        <p className="text-slate-400 text-[0.9em]">{v.context_eng}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        <div className="space-y-[1.5em] pl-[0.25em]">{item.vocab.map((v, i) => (<div key={i} className={`pl-[1em] border-l-4 border-${themeColor}-500 bg-gray-50 p-2 rounded-r-lg`}><p className="text-slate-800 font-bold text-[1.125em] mb-[0.25em]">{v.term}</p><p className="text-slate-600 text-[0.9em] mb-[0.5em] italic">{v.meaning}</p><div className="text-[0.85em] text-slate-500 border-t border-gray-200 pt-[0.5em]"><p className="font-medium text-slate-700">Context:</p><p>{v.context}</p><p className="text-slate-400 text-[0.9em]">{v.context_eng}</p></div></div>))}</div>
                                     </div>
                                 } />
                             </div>
@@ -644,12 +1011,8 @@
             const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
 
             const renderTextWithVocab = (text) => {
-                const allTerms = VOCAB_DATA.flatMap(vocab => { 
-                    const terms = [vocab.term]; 
-                    if (vocab.variants) terms.push(...vocab.variants); 
-                    // REMOVED: if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); 
-                    return terms.map(term => ({ term, vocab })); 
-                }).sort((a, b) => b.term.length - a.term.length);
+                if (!VOCAB_DATA || !Array.isArray(VOCAB_DATA)) return text;
+                const allTerms = VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); return terms.map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length);
                 const matches = []; allTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; const overlaps = matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end)); if (!overlaps) matches.push({ start: index, end, term, vocab }); index = end; } }); matches.sort((a, b) => a.start - b.start);
                 const result = []; let lastIndex = 0; matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); result.push({ isVocab: true, ...match.vocab, displayText: match.term, key: idx }); lastIndex = match.end; }); if (lastIndex < text.length) result.push(text.substring(lastIndex));
                 return result.map((part, index) => { if (typeof part === 'string') return part; const isActive = (popup.show && popup.data && popup.data.term === part.term) || (showVocab && activeVocabTerm === part.term); return (<span key={part.key} className={`cursor-pointer border-b-2 transition-all duration-200 font-bold inline-block leading-tight ${isActive ? `text-${themeColor}-700 border-${themeColor}-500 bg-${themeColor}-100 rounded-sm px-0.5 mx-0.5` : `text-slate-900 border-dashed border-gray-400 hover:text-${themeColor}-600 hover:border-${themeColor}-400 hover:bg-${themeColor}-50`}`} onMouseEnter={(e) => handleVocabEnter(e, part)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, part)}>{part.displayText}</span>); });
@@ -661,7 +1024,6 @@
             const getVideoClass = () => { if (layoutMode === 'script') return 'hidden'; if (layoutMode === 'video') { return `w-full h-full bg-black lg:h-full lg:aspect-auto ${showVocab ? 'xl:w-9/12 lg:w-full' : 'lg:w-full'}`; } let base = 'w-full sticky top-1 z-50 bg-black aspect-video lg:static lg:aspect-auto'; return `${base} flex-1 lg:h-full`; };
             const getScriptClass = () => { if (layoutMode === 'video') return 'hidden'; if (layoutMode === 'script') { return showVocab ? 'lg:flex-1 h-auto' : 'w-full max-w-7xl mx-auto h-auto'; } return `w-full lg:w-5/12 ${showVocab ? 'xl:w-4/12' : ''} lg:h-full`; };
             const getContainerClass = () => { if (layoutMode === 'script') return 'items-start min-h-full'; if (layoutMode === 'video') { return 'h-[calc(100vh-9rem)] lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; } return 'min-h-full lg:h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row'; }
-            // Added 1.3rem font size to script container
             const getInnerListStyle = () => { const baseStyle = "space-y-[1em] rounded-xl transition-all duration-300"; if (layoutMode === 'script') { return `${baseStyle} p-[1.5em] bg-slate-100 overflow-visible h-auto`; } else { return `${baseStyle} p-[1em] bg-gray-50 overflow-visible lg:overflow-y-auto flex-1`; } };
 
             return (
@@ -673,7 +1035,7 @@
                             {SCRIPT_DATA.map(line => {
                                 const isActive = activeLine === line.id; const isScriptMode = layoutMode === 'script';
                                 if (isScriptMode) {
-                                    const isLeft = line.speaker === '유나'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
+                                    const isLeft = line.speaker === '우디'; const bubbleBg = isActive ? 'bg-yellow-50' : 'bg-white'; const bubbleBorder = isActive ? 'border-yellow-100' : 'border-slate-200';
                                     return (
                                         <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-[1.5em] ${isLeft ? 'items-start' : 'items-end'}`}>
                                             <div className={`text-[0.75em] font-bold text-slate-500 mb-[0.25em] px-[0.5em] ${isLeft ? 'text-left' : 'text-right'}`}>{line.speaker}</div>
@@ -769,23 +1131,14 @@
                 }
             };
 
-            // Dynamic width class based on collapsed state and font sizes
-            // Since we use inline styles for widths, we adjust the margins here using styles as well or keep using a class if it matches
-            // We'll use inline styles for the main content margin to match sidebar width
             const sidebarWidth = isSidebarCollapsed ? '5.5rem' : '18.4rem';
             const headerFontSize = activeTab === 'learn' ? '1rem' : '1.3rem';
 
             return (
                 <div className="flex min-h-screen bg-[#f9fafb]">
                     <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} userLevel={userLevel} themeColor={themeColor} />
-                    <div 
-                        className="flex-1 flex flex-col transition-all duration-300 ease-in-out"
-                        style={{ marginLeft: window.innerWidth >= 1024 ? sidebarWidth : 0 }}
-                    >
-                        <header 
-                            className={`bg-white transition-all duration-300 z-40 ${activeTab === 'learn' && layoutMode === 'script' ? 'sticky top-0' : 'relative lg:sticky lg:top-0'}`}
-                            style={{ height: '4rem', fontSize: headerFontSize }}
-                        >
+                    <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out" style={{ marginLeft: window.innerWidth >= 1024 ? sidebarWidth : 0 }}>
+                        <header className={`bg-white transition-all duration-300 z-40 ${activeTab === 'learn' && layoutMode === 'script' ? 'sticky top-0' : 'relative lg:sticky lg:top-0'}`} style={{ height: '4rem', fontSize: headerFontSize }}>
                             {activeTab === 'learn' ? renderLearnHeaderContent() : (activeTab === 'home' ? renderHomeHeaderContent() : null)}
                         </header>
                         <main className={`flex-1 ${mainPaddingClass} flex flex-col ${getScrollClass()}`}>{renderContent()}</main>
