@@ -872,7 +872,7 @@
                             <button onClick={() => setActiveTab('quiz')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className={`text-[0.75em] font-bold text-slate-400 group-hover:text-${themeColor}-600`}>퀴즈 시작하기</span><span className={`text-[0.625em] text-slate-300 group-hover:text-${themeColor}-400 font-medium`}>Start Quiz</span></div><span className={`text-[1.125em] leading-none text-slate-400 group-hover:text-${themeColor}-600 ml-[0.25em]`}>→</span></button>
                         </div>
                         <div className="bg-white p-[1.5em] rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between min-h-[10em] h-full hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
+                            <div className="flex justify-between items-start"><div><div className="flex flex-col"><span className="text-[0.75em] font-bold text-slate-500 font-cafe24-surround">생각해 보기</span><span className="text-[0.625em] text-slate-400 font-medium font-cafe24-surround">Food For Thought</span></div><div className="flex flex-col mt-[0.75em]"><a href="https://gemini.google.com/share/3496cb4dea36" target="_blank" rel="noopener noreferrer" className={`text-[1.0625em] font-black text-${themeColor}-600 hover:text-${themeColor}-800 hover:underline transition-colors flex items-center gap-[0.25em] leading-tight`}>Gemini AI Feedback<ExternalLinkIcon className="w-[1em] h-[1em]" /></a></div></div><div className={`w-[2.5em] h-[2.5em] bg-${themeColor}-50 text-${themeColor}-600 rounded-xl flex items-center justify-center`}><DiscussIcon className="w-[1.25em] h-[1.25em]" /></div></div>
                             <button onClick={() => setActiveTab('discuss')} className="group flex items-center gap-[0.25em] transition-colors"><div className="flex flex-col items-start"><span className="text-[0.75em] font-bold text-slate-400 group-hover:text-blue-600">다음 질문들을 생각해 보세요.</span><span className="text-[0.625em] text-slate-300 group-hover:text-blue-400 font-medium">Have a think about the following questions.</span></div><span className="text-[1.125em] leading-none text-slate-400 group-hover:text-blue-600 ml-[0.25em]">→</span></button>
                         </div>
                     </div>
@@ -898,11 +898,36 @@
             const currentQuestion = QUIZ_LIST[currentQuestionIndex];
             const shuffledOptions = useMemo(() => { const options = [...currentQuestion.bank]; return options.sort(() => Math.random() - 0.5); }, [currentQuestion]);
             const isCorrect = selectedOption === currentQuestion.answer;
-            const handleOptionClick = (option) => { if (firstAttempts[currentQuestionIndex] === undefined) { setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option === currentQuestion.answer })); } setSelectedOption(option); };
-            const handleNext = () => { setSelectedOption(null); if (currentQuestionIndex < QUIZ_LIST.length - 1) { setCurrentQuestionIndex(prev => prev + 1); } else { finishQuiz(); } };
-            const handlePrev = () => { if (currentQuestionIndex > 0) { setSelectedOption(null); setCurrentQuestionIndex(prev => prev - 1); } };
+            const [showHint, setShowHint] = useState(false);
+            const [showTranslation, setShowTranslation] = useState(false);
+
+            const handleOptionClick = (option) => { 
+                if (firstAttempts[currentQuestionIndex] === undefined) { 
+                    setFirstAttempts(prev => ({ ...prev, [currentQuestionIndex]: option === currentQuestion.answer })); 
+                } 
+                setSelectedOption(option);
+                setShowHint(false);
+            };
+            const handleNext = () => { 
+                setSelectedOption(null); 
+                if (currentQuestionIndex < QUIZ_LIST.length - 1) { 
+                    setCurrentQuestionIndex(prev => prev + 1); 
+                    setShowHint(false);
+                    setShowTranslation(false);
+                } else { 
+                    finishQuiz(); 
+                } 
+            };
+            const handlePrev = () => { 
+                if (currentQuestionIndex > 0) { 
+                    setSelectedOption(null); 
+                    setCurrentQuestionIndex(prev => prev - 1); 
+                    setShowHint(false);
+                    setShowTranslation(false);
+                } 
+            };
             const finishQuiz = () => { setIsFinished(true); const correctCount = Object.values(firstAttempts).filter(res => res === true).length; const finalScore = Math.round((correctCount / QUIZ_LIST.length) * 100); updateProgress('quiz', finalScore); };
-            const handleRetry = () => { setCurrentQuestionIndex(0); setSelectedOption(null); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); };
+            const handleRetry = () => { setCurrentQuestionIndex(0); setSelectedOption(null); setFirstAttempts({}); setIsFinished(false); updateProgress('quiz', 0); setShowHint(false); setShowTranslation(false); };
 
             if (isFinished) {
                 const correctCount = Object.values(firstAttempts).filter(res => res === true).length; 
@@ -934,18 +959,41 @@
                                 {currentQuestion.parts[1]}
                                 {selectedOption && (<span className={`ml-[0.5em] text-[1.125em] ${isCorrect ? `text-${themeColor}-600` : 'text-red-600'}`}>{isCorrect ? '✓' : '✗'}</span>)}
                             </div>
+                            {showTranslation && (
+                                <div className="mt-[1em] pt-[1em] border-t border-gray-200 text-slate-500 italic text-[0.875em] animate-fade-in font-medium">
+                                    {currentQuestion.explanation}
+                                </div>
+                            )}
                         </div>
+                        
+                        <div className="flex gap-[0.5em] mb-[1em] px-[0.5em]"><button onClick={() => { setShowHint(!showHint); }} disabled={selectedOption === currentQuestion.answer} className={`px-[0.75em] py-[0.375em] rounded-lg text-[0.75em] font-bold transition-colors ${selectedOption === currentQuestion.answer ? 'opacity-50 cursor-not-allowed bg-gray-100 text-slate-400' : (showHint ? 'bg-yellow-200 text-yellow-800 ring-2 ring-yellow-400' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200')}`}>힌트 (Hint)</button><button onClick={() => setShowTranslation(!showTranslation)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[0.75em] h-[0.75em]" /><span>{showTranslation ? 'Hide' : 'English'}</span></button></div>
+
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-[0.75em] mb-[1em] px-[0.5em]">
-                            {shuffledOptions.map((option, idx) => { const isSelected = selectedOption === option; let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; if (isSelected) { if (option === currentQuestion.answer) { btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; } else { btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; } } return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option}</button>); })}
+                            {shuffledOptions.map((option, idx) => { 
+                                const isSelected = selectedOption === option; 
+                                let btnClass = "bg-white border-gray-200 text-slate-700 hover:bg-gray-50 hover:border-gray-300"; 
+                                if (isSelected) { 
+                                    if (option === currentQuestion.answer) { 
+                                        btnClass = `bg-${themeColor}-500 border-${themeColor}-600 text-white shadow-md ring-2 ring-${themeColor}-200`; 
+                                    } else { 
+                                        btnClass = "bg-red-500 border-red-600 text-white shadow-md ring-2 ring-red-200"; 
+                                    } 
+                                } 
+                                return (<button key={idx} onClick={() => handleOptionClick(option)} className={`py-[0.75em] px-[1em] rounded-xl border font-bold text-[1em] transition-all duration-200 ${btnClass}`}>{option}</button>); 
+                            })}
                         </div>
+
                         {selectedOption && (
                             <div className="p-[1em] rounded-xl border-l-4 mb-[1em] mx-[0.5em] animate-fade-in transition-all bg-[#f8fafc] border-gray-300">
                                 <div className={`${isCorrect ? `bg-${themeColor}-50 border-${themeColor}-500` : 'bg-red-50 border-red-500'} p-[1em] rounded-lg border-l-4`}>
                                     <h4 className={`font-bold text-[0.875em] mb-[0.25em] ${isCorrect ? `text-${themeColor}-800` : 'text-red-800'}`}>{isCorrect ? 'Correct!' : 'Incorrect'}</h4>
-                                    <p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>{isCorrect ? currentQuestion.explanation : (currentQuestion.wrongAnswerExplanations[selectedOption] || "Try again!")}</p>
+                                    <p className={`text-[0.875em] italic ${isCorrect ? `text-${themeColor}-700` : 'text-red-700'}`}>
+                                        {isCorrect ? currentQuestion.explanation : (currentQuestion.wrongAnswerExplanations[selectedOption] || "Try again!")}
+                                    </p>
                                 </div>
                             </div>
                         )}
+
                         <div className="flex justify-between items-center mt-[1em] border-t border-gray-100 pt-[1em] px-[0.5em] pb-[0.5em]">
                             <button onClick={handlePrev} disabled={currentQuestionIndex === 0} className={`px-[1.5em] py-[0.25em] rounded-xl font-bold flex items-center gap-[0.5em] transition-colors ${currentQuestionIndex === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-gray-100'}`}><span className="text-[1.125em]">←</span><span className="text-[0.75em]">이전 문제 (Prev)</span></button>
                             <span className="text-[0.75em] font-bold text-slate-600">{currentQuestionIndex + 1} / {QUIZ_LIST.length}</span>
@@ -964,14 +1012,14 @@
             return (
                 <div style={{ fontSize: '1.35rem' }} className="max-w-7xl mx-auto animate-fade-in">
                     <div className="flex items-center gap-[1em] mb-[2em]"><div className={`w-[4em] h-[4em] bg-${themeColor}-100 rounded-2xl flex items-center justify-center shrink-0`}><DiscussIcon className="w-[2.5em] h-[2.5em] text-current" /></div><div className="flex flex-col"><h2 className="text-[1.875em] font-black text-slate-900 font-cafe24-surround">생각해 보기</h2><span className="text-[1em] text-slate-500 font-medium font-cafe24-surround">Food For Thought</span></div></div>
-                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/16a7c53d38d3" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
+                    <div className={`mb-[2em] p-[1em] rounded-2xl bg-${themeColor}-50 border border-${themeColor}-100`}><div className="text-slate-800 text-[0.875em] font-medium leading-relaxed"><p>AI Feedback은 Gemini 웹페이지에서만 작용하기 때문에 Github 웹페이지에서 사용할 수 없어요.</p><p className="text-slate-500 text-[0.75em] mt-[0.25em] mb-[1em]">AI Feedback only works on the Gemini webpage, so it cannot be used on the GitHub webpage.</p><p className="flex flex-wrap items-center gap-[0.25em]">AI Feedback 기능을 사용하기 원할 경우, 다음 링크를 클릭하세요: <a href="https://gemini.google.com/share/3496cb4dea36" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p><p className="text-slate-500 text-[0.75em] mt-[0.25em] flex flex-wrap items-center gap-[0.25em]">To use the AI feedback feature, please click the following link: <a href="https://gemini.google.com/share/3496cb4dea36" target="_blank" rel="noopener noreferrer" className={`font-bold text-${themeColor}-600 hover:underline inline-flex items-center gap-0.5`}>Gemini AI Feedback<ExternalLinkIcon className="w-[0.75em] h-[0.75em]" /></a></p></div></div>
                     <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-[2em] md:p-[2.5em]">
                         {DISCUSS_DATA.map((item, index) => (
                             <div key={item.num} className={index < DISCUSS_DATA.length - 1 ? "mb-[3em] border-b border-gray-100 pb-[3em]" : "mb-[2em]"}>
                                 <div className="mb-[2em]">
                                     <h3 className="text-[1.25em] font-bold text-slate-900 mb-[0.5em]" dangerouslySetInnerHTML={{__html: item.kor}}></h3>
                                     {showTranslations[item.num] && (<p className="text-slate-500 text-[0.875em] mb-[0.75em] animate-fade-in font-medium">{item.eng}</p>)}
-                                    <button onClick={() => toggleTranslation(item.num)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[0.75em] h-[0.75em]" /><span>{showTranslations[item.num] ? '번역 숨기기 (Hide)' : '번역 (Translation)'}</span></button>
+                                    <button onClick={() => toggleTranslation(item.num)} className="inline-flex items-center gap-[0.25em] text-[0.5em] font-normal text-slate-400 hover:text-slate-600 font-cafe24 bg-transparent transition-colors"><TranslateIcon className="w-[0.75em] h-[0.75em]" /><span>{showTranslations[item.num] ? 'Hide' : 'English'}</span></button>
                                 </div>
                                 <FeedbackSection themeColor={themeColor} question={item.kor.replace(/<[^>]*>?/gm, '')} value={answers[item.num] || ''} onChange={(e) => handleTextChange(item.num, e.target.value)} placeholder="여기에 답변을 입력하세요 (Type your response here)" keyPhrases={
                                     <div className="mb-[2.5em] space-y-[1em]">
@@ -1042,7 +1090,7 @@
                                             <div className={`relative p-[1.25em] rounded-xl border ${bubbleBg} ${bubbleBorder} ${isActive ? 'scale-[1.02] shadow-md z-10' : 'hover:shadow-md'} transition-all duration-300 max-w-[85%] sm:max-w-[70%] group`}>
                                                 <div className={`absolute bottom-[1em] w-[0.75em] h-[0.75em] border ${bubbleBg} ${bubbleBorder} rotate-45 transform ${isLeft ? '-left-[0.375em] border-t-0 border-r-0' : '-right-[0.375em] border-b-0 border-l-0'}`}></div>
                                                 <div className="relative z-10" onClick={() => handleLineClick(line.time[0])}><p className="text-[1.125em] sm:text-[1.25em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>{translations[line.id] && (<div className="mt-[0.75em] pt-[0.75em] border-t border-dashed border-gray-200/60 animate-fade-in"><p className="text-[1em] text-slate-500">{line.eng}</p></div>)}</div>
-                                                <div className="flex justify-between items-center mt-[1em] pt-[0.25em]"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
+                                                <div className="flex justify-between items-center mt-[1em] pt-[0.25em]"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? 'Hide' : 'Eng'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
                                             </div>
                                         </div>
                                     );
@@ -1053,7 +1101,7 @@
                                         <div onClick={() => handleLineClick(line.time[0])} className={`p-[1.25em] rounded-2xl border transition-all duration-300 cursor-pointer relative group ${isActive ? 'bg-yellow-50 border-yellow-100 shadow-md scale-[1.01]' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
                                             <p className="text-[1.375em] text-slate-800 leading-relaxed font-medium">{renderTextWithVocab(line.kor)}</p>
                                             {translations[line.id] && (<div className="mt-[0.75em] pt-[0.75em] border-t border-dashed border-gray-200 animate-fade-in"><p className="text-[1.125em] text-slate-500">{line.eng}</p></div>)}
-                                            <div className="flex justify-between items-center mt-[1em] pt-[0.75em] border-t border-dashed border-gray-100"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? '숨기기' : '번역'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
+                                            <div className="flex justify-between items-center mt-[1em] pt-[0.75em] border-t border-dashed border-gray-100"><button onClick={(e) => { e.stopPropagation(); toggleTranslation(line.id); }} className="flex items-center gap-[0.25em] text-[0.6875em] font-bold text-slate-400 hover:text-slate-600 transition-colors p-[0.25em] rounded-lg hover:bg-gray-100/50"><TranslateIcon className="w-[0.875em] h-[0.875em]" /><span>{translations[line.id] ? 'Hide' : 'Eng'}</span></button><button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className={`transition-all duration-200 hover:scale-110 ${isActive ? 'text-yellow-700' : 'text-slate-400 hover:text-slate-600'}`} title="Play this line"><PlayCircleIcon className="w-[1.25em] h-[1.25em]" /></button></div>
                                         </div>
                                     </div>
                                 );
@@ -1137,8 +1185,14 @@
             return (
                 <div className="flex min-h-screen bg-[#f9fafb]">
                     <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} userLevel={userLevel} themeColor={themeColor} />
-                    <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out" style={{ marginLeft: window.innerWidth >= 1024 ? sidebarWidth : 0 }}>
-                        <header className={`bg-white transition-all duration-300 z-40 ${activeTab === 'learn' && layoutMode === 'script' ? 'sticky top-0' : 'relative lg:sticky lg:top-0'}`} style={{ height: '4rem', fontSize: headerFontSize }}>
+                    <div 
+                        className="flex-1 flex flex-col transition-all duration-300 ease-in-out"
+                        style={{ marginLeft: window.innerWidth >= 1024 ? sidebarWidth : 0 }}
+                    >
+                        <header 
+                            className={`bg-white transition-all duration-300 z-40 ${activeTab === 'learn' && layoutMode === 'script' ? 'sticky top-0' : 'relative lg:sticky lg:top-0'}`}
+                            style={{ height: '4rem', fontSize: headerFontSize }}
+                        >
                             {activeTab === 'learn' ? renderLearnHeaderContent() : (activeTab === 'home' ? renderHomeHeaderContent() : null)}
                         </header>
                         <main className={`flex-1 ${mainPaddingClass} flex flex-col ${getScrollClass()}`}>{renderContent()}</main>
