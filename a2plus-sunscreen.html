@@ -158,6 +158,169 @@
             { term: '막지 못해요', mainDef: 'cannot block', subDefs: [{ subTerm: '-지 못하다', subDef: 'cannot' }], examples: [{ kor: '햇빛을 막지 못해요.', eng: 'It cannot block the sunlight.' }] }
         ];
 
+        const QUIZ_LIST = [
+            {
+                id: 1,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "오늘 민호와 유나는 ",
+                sentence_post: "에 대해 이야기했어요.",
+                correct_word: "햇빛",
+                translation: "Today, Minho and Yuna talked about sunlight.",
+                hint: "sunlight",
+                options: [
+                    { text: '햇빛', isCorrect: true, feedback: "The conversation started because of the strong sunlight (햇빛)." },
+                    { text: '아이', isCorrect: false, feedback: "They discussed children, but it was a sub-topic." },
+                    { text: '운동', isCorrect: false, feedback: "They discussed exercise, but it was a sub-topic." },
+                    { text: '피부', isCorrect: false, feedback: "They discussed skin, but it was a sub-topic." }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "햇빛은 피부를 ",
+                sentence_post: " 수 있어요.",
+                correct_word: "아프게 할",
+                translation: "Sunlight can make your skin sick.",
+                hint: "to make sick",
+                options: [
+                    { text: '아프게 할', isCorrect: true, feedback: "'-게 하다' means 'to make' and '-ㄹ 수 있다' means 'can'." },
+                    { text: '아프거나', isCorrect: false, feedback: "'-거나' (or) is used to indicate a choice." },
+                    { text: '아프지만', isCorrect: false, feedback: "'-지만' (but) is used to connect contrasting information." },
+                    { text: '아프고', isCorrect: false, feedback: "'-고' (and) is mainly used to list actions in sequence." }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "선크림은 햇빛을 ",
+                sentence_post: " 피부를 지켜주는 효과가 있어요.",
+                correct_word: "막아서",
+                translation: "Sunscreen blocks sunlight and has the effect of protecting the skin.",
+                hint: "block and...",
+                options: [
+                    { text: '막아서', isCorrect: true, feedback: "'막다' means to block. The '-아서/어서' ending connects the reason." },
+                    { text: '열어서', isCorrect: false, feedback: "'열다' means 'to open', which is the opposite." },
+                    { text: '보아서', isCorrect: false, feedback: "'보다' means 'to see', which doesn't fit the context." },
+                    { text: '들어서', isCorrect: false, feedback: "'들다' has multiple meanings but doesn't fit here." }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "밖에 나가기 30분 전에 선크림을 발라야 피부에 잘 ",
+                sentence_post: ".",
+                correct_word: "흡수돼요",
+                translation: "You should apply sunscreen 30 minutes before going out so it can be absorbed well into the skin.",
+                hint: "be absorbed",
+                options: [
+                    { text: '흡수돼요', isCorrect: true, feedback: "'흡수되다' means 'to be absorbed'." },
+                    { text: '사라져요', isCorrect: false, feedback: "'사라지다' means 'to disappear'." },
+                    { text: '보여요', isCorrect: false, feedback: "'보이다' means 'to be seen'." },
+                    { text: '나와요', isCorrect: false, feedback: "'나오다' means 'to come out'." }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "",
+                sentence_post: " 선크림이 없어져서 2시간마다 다시 발라야 해요.",
+                correct_word: "땀을 흘리면",
+                translation: "If you sweat, the sunscreen wears off, so you must reapply it every two hours.",
+                hint: "if you sweat",
+                options: [
+                    { text: '땀을 흘리면', isCorrect: true, feedback: "'땀을 흘리다' means 'to sweat'. '-(으)면' means 'if'." },
+                    { text: '운동하면', isCorrect: false, feedback: "While similar, 'sweating' was the direct cause mentioned." },
+                    { text: '잠을 자면', isCorrect: false, feedback: "'잠을 자다' (to sleep) is not related." },
+                    { text: '밥을 먹으면', isCorrect: false, feedback: "'밥을 먹다' (to eat) is not related." }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "아이들은 피부가 ",
+                sentence_post: " 때문에 1살 아기는 선크림을 바르면 안 돼요.",
+                correct_word: "민감하기",
+                translation: "Because children's skin is sensitive, babies under one should not wear sunscreen.",
+                hint: "is sensitive",
+                options: [
+                    { text: '민감하기', isCorrect: true, feedback: "'민감하다' means 'to be sensitive'." },
+                    { text: '강하기', isCorrect: false, feedback: "'강하다' (strong) is the opposite." },
+                    { text: '두껍기', isCorrect: false, feedback: "'두껍다' (thick) is not correct." },
+                    { text: '건강하기', isCorrect: false, feedback: "'건강하다' (healthy) is not the reason for caution." }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "오래된 선크림은 효과가 없어서 1년 후에는 ",
+                sentence_post: ".",
+                correct_word: "바르면 안 돼요",
+                translation: "Old sunscreen is not effective, so you shouldn't apply it after one year.",
+                hint: "you shouldn't apply",
+                options: [
+                    { text: '바르면 안 돼요', isCorrect: true, feedback: "'-(으)면 안 되다' means 'you should not'." },
+                    { text: '발라야 해요', isCorrect: false, feedback: "'Must apply' is incorrect for old sunscreen." },
+                    { text: '바를 수 있어요', isCorrect: false, feedback: "'Can apply' suggests it's okay, which is wrong." },
+                    { text: '바르고 싶어요', isCorrect: false, feedback: "This expresses a wish, not a rule." }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "창문으로도 햇빛이 들어와서 집에서도 선크림을 ",
+                sentence_post: "이 좋아요.",
+                correct_word: "바르는 것",
+                translation: "Sunlight comes in through the windows, so it's good to apply sunscreen even at home.",
+                hint: "applying is",
+                options: [
+                    { text: '바르는 것', isCorrect: true, feedback: "'-는 것' turns a verb into a noun phrase (act of applying)." },
+                    { text: '바른 것', isCorrect: false, feedback: "'-은' indicates past tense." },
+                    { text: '바를 것', isCorrect: false, feedback: "'-을 것' indicates future tense." },
+                    { text: '발랐던 것', isCorrect: false, feedback: "'-았던' is for past experience recall." }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "선크림의 ",
+                sentence_post: "는 피부를 보호하는 것이에요.",
+                correct_word: "효과",
+                translation: "The effect of sunscreen is protecting the skin.",
+                hint: "effect",
+                options: [
+                    { text: '효과', isCorrect: true, feedback: "'효과' means 'effect' or 'effectiveness'." },
+                    { text: '가격', isCorrect: false, feedback: "'가격' (price) is not the function." },
+                    { text: '냄새', isCorrect: false, feedback: "'냄새' (smell) is not the function." },
+                    { text: '색깔', isCorrect: false, feedback: "'색깔' (color) is not the function." }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "다음 빈칸에 알맞은 말을 고르세요.",
+                questionEng: "Select the correct word for the blank.",
+                sentence_pre: "햇빛은 피부에 ",
+                sentence_post: " 선크림을 발라야 해요.",
+                correct_word: "나빠서",
+                translation: "Sunlight is bad for the skin, so you have to apply sunscreen.",
+                hint: "is bad, so...",
+                options: [
+                    { text: '나빠서', isCorrect: true, feedback: "'-아서/어서' links reason (bad) with result (must apply)." },
+                    { text: '나쁘고', isCorrect: false, feedback: "'-고' (and) doesn't show cause-and-effect." },
+                    { text: '나쁘면서', isCorrect: false, feedback: "'-으면서' means 'while', fitting simultaneously." },
+                    { text: '나빠도', isCorrect: false, feedback: "'-아도/어도' means 'even if'." }
+                ]
+            }
+        ];
+
         const SCRIPT_DATA = [
             { id: 's1', speaker: '민호', kor: '안녕하세요!', time: [4.794, 5.869], eng: "Hello!" },
             { id: 's2', speaker: '민호', kor: '<이 주제로 이야기해 봐요> 팟캐스트예요.', time: [5.945, 9.034], eng: "This is the <Let's Talk About This Topic> podcast." },
