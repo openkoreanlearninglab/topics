@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenKoreanLearningLab - Video Focus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', 'serif'],
+                        ui: ['"Noto Sans KR"', 'sans-serif'],
+                        'eng-header': ['"Montserrat"', 'sans-serif'],
+                        'sans-kr': ['"Noto Sans KR"', 'sans-serif'],
+                        'serif-kr': ['"Noto Serif KR"', 'serif'],
+                    },
+                    colors: {
+                        'journal-black': '#1a1a1a',
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#030712',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+        .font-sans { font-family: 'Noto Sans KR', sans-serif; }
+        .font-serif { font-family: 'Noto Serif KR', serif; }
+        .font-ui { font-family: 'Noto Sans KR', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; } 
+        ::-webkit-scrollbar-track { background: transparent; } 
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 0px; } 
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } 
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+        /* Range Input */
+        input[type=range] { -webkit-appearance: none; background: transparent; } 
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 12px; width: 12px; border-radius: 0%; background: #1a1a1a; cursor: pointer; margin-top: -5px; border: none; } 
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #e5e7eb; }
+
+        ::selection { background-color: #f3f4f6; color: #000; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
+        const { createPortal } = ReactDOM;
+
+        const CONFIG = { 
+            GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent', 
+            API_RETRY_DELAYS: [1000, 2000, 4000, 8000, 16000] 
+        };
+
+        const VIDEO_CONFIG = {
+            YOUTUBE_VIDEO_ID: 'ZJxoxoACBCU',
+            DEFAULT_PLAYBACK_RATE: 1.0,
+        };
+
+        const VIDEO_SCRIPT_DATA = [
+            { id: 's1', speaker: '조이', kor: '안녕하세요!', time: [11.349, 12.442], eng: "Hello!" },
+            { id: 's2', speaker: '조이', kor: '<이 주제로 이야기해 봐요> 팟캐스트예요.', time: [12.492, 15.018], eng: "This is the <Let's Talk About This Topic> podcast." },
+            { id: 's3', speaker: '조이', kor: '저는 조이예요.', time: [15.068, 16.272], eng: "I'm Joy." },
+            { id: 's4', speaker: '우디', kor: '조이 씨, 조이 씨! 그 얘기 들었어요?', time: [16.498, 19.133], eng: "Joy, Joy! Did you hear the news?" },
+            { id: 's5', speaker: '우디', kor: '민호 씨가 어제 회사에서... 😏', time: [19.304, 21.084], eng: "Minho at work yesterday... 😏" },
+            { id: 's6', speaker: '조이', kor: '우디 씨! 지금 뭐 해요?', time: [21.376, 23.025], eng: "Woody! What are you doing right now?" },
+            { id: 's7', speaker: '우디', kor: '아, 안녕하세요! 😆', time: [23.207, 24.271], eng: "Oh, hello! 😆" },
+            { id: 's8', speaker: '우디', kor: '저는 우디예요!', time: [24.331, 25.587], eng: "I'm Woody!" },
+            { id: 's9', speaker: '우디', kor: '조이 씨한테 \'중요한 정보\'를 알려주려고 했어요.', time: [25.627, 28.675], eng: "I was trying to give Joy some 'important information'." },
+            { id: 's10', speaker: '조이', kor: '그건 정보가 아니에요.', time: [28.756, 30.546], eng: "That's not information." },
+            { id: 's11', speaker: '조이', kor: '그건 \'뒷담화\'예요.', time: [30.596, 32.396], eng: "That's 'gossiping'." },
+            { id: 's12', speaker: '조이', kor: '\'뒷담화\'는 \'다른 사람이 없을 때, 그 사람 이야기를 하는 것\'이라는 뜻이에요.', time: [32.436, 37.008], eng: "'Gossip' means 'talking about someone when they are not around'." },
+            { id: 's13', speaker: '우디', kor: '아니에요! 저는 뒷담화를 안 해요!', time: [37.270, 39.816], eng: "No! I don't gossip!" },
+            { id: 's14', speaker: '우디', kor: '저는 그냥 \'정보를 공유\'하는 거예요. 📢', time: [39.876, 42.734], eng: "I'm just 'sharing information'. 📢" },
+            { id: 's15', speaker: '조이', kor: '우디 씨, 민호 씨가 없는데 민호 씨 이야기를 하면, 그게 뒷담화예요.', time: [42.734, 47.364], eng: "Woody, talking about Minho when he isn't here, that is gossiping." },
+            { id: 's16', speaker: '우디', kor: '조이 씨, 뒷담화는 나쁜 게 아니에요!', time: [47.535, 50.141], eng: "Joy, gossiping isn't bad!" },
+            { id: 's17', speaker: '우디', kor: '뒷담화는 사람들의 \'본성\'이에요!', time: [50.201, 52.524], eng: "Gossiping is human 'nature'!" },
+            { id: 's18', speaker: '우디', kor: '\'본성\'은 \'원래 성격\'이라는 뜻이에요.', time: [52.574, 55.029], eng: "'Nature' means 'original character'." },
+            { id: 's19', speaker: '조이', kor: '본성이라고 다 좋은 건 아니에요.', time: [55.079, 57.282], eng: "Just because it's human nature doesn't mean it's all good." },
+            { id: 's20', speaker: '조이', kor: '다른 사람 뒤에서 나쁜 이야기를 하는 건 도덕적으로 나빠요.', time: [57.322, 61.439], eng: "Talking badly behind someone's back is morally wrong." },
+            { id: 's21', speaker: '우디', kor: '아니에요. 유발 하라리라는 유명한 학자가 이렇게 말했어요.', time: [61.630, 65.365], eng: "No. A famous scholar named Yuval Harari said this." },
+            { id: 's22', speaker: '우디', kor: '"언어는 뒷담화를 위해서 만들어졌다!" 😤', time: [65.476, 68.000], eng: "'Language was created for gossiping!' 😤" },
+            { id: 's23', speaker: '조이', kor: '...우디 씨, 그 학자가 "뒷담화를 하라"고 말한 건 아니에요.', time: [68.766, 72.288], eng: "...Woody, that scholar didn't mean 'you should gossip'." },
+            { id: 's24', speaker: '우디', kor: '그래도! 뒷담화를 하면 \'스트레스가 풀려요\'.', time: [72.459, 75.378], eng: "Still! Gossiping 'relieves stress'." },
+            { id: 's25', speaker: '우디', kor: '\'스트레스가 풀리다\'는 \'마음이 편해지다\'라는 뜻이에요.', time: [75.428, 78.619], eng: "'Relieving stress' means 'feeling at ease'." },
+            { id: 's26', speaker: '우디', kor: '회사에서 힘든 일이 있으면, 친구한테 이야기해요.', time: [78.679, 81.638], eng: "If I have a hard time at work, I talk to my friend." },
+            { id: 's27', speaker: '우디', kor: '그러면 속이 시원해져요! 😮‍💨', time: [81.698, 83.649], eng: "Then I feel refreshed! 😮‍💨" },
+            { id: 's28', speaker: '조이', kor: '그건 \'하소연\'이에요.', time: [84.576, 85.933], eng: "That's 'venting'." },
+            { id: 's29', speaker: '조이', kor: '뒷담화하고 하소연은 달라요.', time: [86.000, 88.254], eng: "Gossiping and venting are different." },
+            { id: 's30', speaker: '조이', kor: '하소연은 내 힘든 이야기를 하는 거예요.', time: [88.304, 91.122], eng: "Venting is talking about your own difficult experiences." },
+            { id: 's31', speaker: '조이', kor: '뒷담화는 다른 사람을 \'험담하는 거예요\'.', time: [91.263, 93.950], eng: "Gossiping is 'speaking ill' of others." },
+            { id: 's32', speaker: '조이', kor: '\'험담하다\'는 \'나쁜 말을 하다\'라는 뜻이에요.', time: [94.000, 96.647], eng: "'Speaking ill' means 'saying bad things'." },
+            { id: 's33', speaker: '우디', kor: '아, 저는 험담 안 해요!', time: [96.859, 99.342], eng: "Ah, I don't speak ill of people!" },
+            { id: 's34', speaker: '우디', kor: '저는 그냥... "민호 씨가 오늘 좀 이상했어요"라고 말했어요.', time: [99.402, 104.190], eng: "I just said... 'Minho was a bit strange today'." },
+            { id: 's35', speaker: '우디', kor: '사실이잖아요! 😂', time: [104.311, 105.819], eng: "It's the truth! 😂" },
+            { id: 's36', speaker: '조이', kor: '그게 험담이에요.', time: [106.000, 107.537], eng: "That is speaking ill." },
+            { id: 's37', speaker: '우디', kor: '아... 😳 그래도 뒷담화에는 좋은 점이 있어요!', time: [107.728, 111.290], eng: "Ah... 😳 Still, gossiping has its good points!" },
+            { id: 's38', speaker: '우디', kor: '뒷담화를 하면 \'유대감\'이 생겨요.', time: [111.451, 113.683], eng: "Gossiping creates a 'sense of bonding'." },
+            { id: 's39', speaker: '우디', kor: '\'유대감\'은 \'사람들 사이의 친한 느낌\'이라는 뜻이에요.', time: [113.784, 116.983], eng: "A 'sense of bonding' means 'a feeling of closeness between people'." },
+            { id: 's40', speaker: '우디', kor: '같이 뒷담화를 하면 "우리는 한 편이야!"라고 느껴요.', time: [117.074, 120.776], eng: "When we gossip together, we feel 'we are on the same side!'" },
+            { id: 's41', speaker: '조이', kor: '다른 사람 욕을 하면서 친해지는 거요?', time: [120.867, 123.010], eng: "Getting close by badmouthing someone else?" },
+            { id: 's42', speaker: '조이', kor: '그건 진짜 우정이 아니에요.', time: [123.081, 125.194], eng: "That's not true friendship." },
+            { id: 's43', speaker: '우디', kor: '조이 씨, 학생이었을 때 생각해 봐요.', time: [125.476, 127.811], eng: "Joy, think about when you were a student." },
+            { id: 's44', speaker: '우디', kor: '"우리 반 선생님 정말 무섭지 않아?" 이런 이야기 한 적 없어요?', time: [127.861, 131.232], eng: "Haven't you ever said, 'Isn't our homeroom teacher really scary?'" },
+            { id: 's45', speaker: '우디', kor: '그러면서 \'소속감\'을 느꼈잖아요.', time: [131.423, 133.556], eng: "You felt a 'sense of belonging' doing that." },
+            { id: 's46', speaker: '우디', kor: '\'소속감\'은 \'그룹에 속해 있다는 느낌\'이라는 뜻이에요.', time: [133.616, 136.817], eng: "A 'sense of belonging' means 'the feeling of being part of a group'." },
+            { id: 's47', speaker: '우디', kor: '조이 씨도 했죠? 🤭', time: [137.674, 138.868], eng: "You did it too, right? 🤭" },
+            { id: 's48', speaker: '조이', kor: '... 그건 어릴 때 얘기예요.', time: [139.493, 140.999], eng: "... That's when we were young." },
+            { id: 's49', speaker: '조이', kor: '어른이 되면 달라요.', time: [141.039, 142.444], eng: "It's different when you become an adult." },
+            { id: 's50', speaker: '우디', kor: '달라지지 않아요!', time: [142.585, 143.759], eng: "It doesn't change!" },
+            { id: 's51', speaker: '우디', kor: '연구에 따르면, 뒷담화를 할 때 뇌에서 행복 호르몬이 나와요! 🧠', time: [143.799, 147.633], eng: "According to research, happy hormones are released in the brain when we gossip! 🧠" },
+            { id: 's52', speaker: '우디', kor: '\'카타르시스\'를 느끼는 거예요.', time: [148.399, 149.933], eng: "We feel 'catharsis'." },
+            { id: 's53', speaker: '우디', kor: '\'카타르시스\'는 \'마음속에 있던 감정이 나가서 시원해지는 것\'이라는 뜻이에요.', time: [150.000, 154.610], eng: "'Catharsis' means 'feeling refreshed after releasing pent-up emotions'." },
+            { id: 's54', speaker: '조이', kor: '우디 씨, 행복 호르몬이 나온다고 다 좋은 건 아니에요.', time: [154.862, 158.807], eng: "Woody, just because happy hormones are released doesn't mean it's all good." },
+            { id: 's55', speaker: '조이', kor: '뒷담화를 하면 \'신뢰가 깨져요\'.', time: [159.139, 161.522], eng: "Gossiping 'breaks trust'." },
+            { id: 's56', speaker: '조이', kor: '\'신뢰가 깨지다\'는 \'믿음이 없어지다\'라는 뜻이에요.', time: [161.643, 164.742], eng: "'Breaking trust' means 'losing faith'." },
+            { id: 's57', speaker: '우디', kor: '신뢰가 깨진다고요?', time: [164.913, 166.168], eng: "Trust is broken?" },
+            { id: 's58', speaker: '조이', kor: '네. 우디 씨가 저한테 민호 씨 이야기를 하면, 저는 생각해요.', time: [166.289, 170.674], eng: "Yes. If you talk to me about Minho, I think," },
+            { id: 's59', speaker: '조이', kor: '"우디 씨는 민호 씨한테도 내 이야기를 하겠구나."', time: [170.755, 173.602], eng: "'Woody will probably talk about me to Minho too.'" },
+            { id: 's60', speaker: '우디', kor: '아니에요! 저는 조이 씨 이야기는 안 해요! 😱', time: [173.755, 176.400], eng: "No! I don't talk about you, Joy! 😱" },
+            { id: 's61', speaker: '조이', kor: '정말요?', time: [176.531, 177.414], eng: "Really?" },
+            { id: 's62', speaker: '조이', kor: '그럼 지난주에 유나 씨한테 "조이 씨는 너무 무서워요"라고 한 건 뭐예요?', time: [177.677, 182.680], eng: "Then what about last week when you told Yuna, 'Joy is too scary'?" },
+            { id: 's63', speaker: '우디', kor: '... 😶 그건... \'공감\'이에요.', time: [182.842, 184.741], eng: "... 😶 That was... 'empathy'." },
+            { id: 's64', speaker: '우디', kor: '\'공감하다\'는 \'다른 사람의 마음을 이해하다\'라는 뜻이에요.', time: [184.791, 188.081], eng: "'Empathizing' means 'understanding another person's feelings'." },
+            { id: 's65', speaker: '우디', kor: '유나 씨도 \'공감\'했어요!', time: [188.152, 189.699], eng: "Yuna 'empathized' too!" },
+            { id: 's66', speaker: '조이', kor: '그게 뒷담화예요. 😤', time: [189.921, 191.893], eng: "That's gossiping. 😤" },
+            { id: 's67', speaker: '조이', kor: '그리고 뒷담화는 나중에 나에게 돌아와요.', time: [191.933, 195.072], eng: "And gossip will come back to you later." },
+            { id: 's68', speaker: '우디', kor: '조이 씨, 그래도 뒷담화에는 좋은 기능이 있어요!', time: [195.203, 198.493], eng: "Joy, gossip still has a good function!" },
+            { id: 's69', speaker: '우디', kor: '뒷담화를 하면, 사람들이 \'눈치를 봐요\'.', time: [198.553, 201.117], eng: "When people gossip, others 'read the room'." },
+            { id: 's70', speaker: '우디', kor: '\'눈치를 보다\'는 \'다른 사람의 기분을 생각하다’라는 뜻이에요.', time: [201.167, 204.548], eng: "'Reading the room' means 'considering other people's feelings'." },
+            { id: 's71', speaker: '우디', kor: '뒷담화가 무서우니까 나쁜 행동을 안 하게 돼요!', time: [204.598, 207.303], eng: "Because they are afraid of gossip, they avoid doing bad things!" },
+            { id: 's72', speaker: '조이', kor: '우디 씨, 뒷담화가 무서워서 착하게 행동한다고요?', time: [207.535, 209.837], eng: "Woody, acting nice because you're afraid of gossip?" },
+            { id: 's73', speaker: '조이', kor: '그건 진짜 착한 게 아니에요.', time: [209.908, 212.051], eng: "That's not being truly nice." },
+            { id: 's74', speaker: '조이', kor: '그냥 \'무서워서 착한 척하는 거예요\'.', time: [212.222, 215.151], eng: "It's just 'pretending to be nice out of fear'." },
+            { id: 's75', speaker: '우디', kor: '아, 그렇게 보면 그렇네요... 😅', time: [215.211, 217.564], eng: "Ah, looking at it that way, you're right... 😅" },
+            { id: 's76', speaker: '우디', kor: '그래도! 뒷담화는 안 하는 게 불가능해요!', time: [217.806, 220.763], eng: "Still! It's impossible not to gossip!" },
+            { id: 's77', speaker: '우디', kor: '뒷담화를 안 하면 친구가 없어요! 😭', time: [220.823, 223.186], eng: "If you don't gossip, you won't have any friends! 😭" },
+            { id: 's78', speaker: '조이', kor: '뒷담화 없이도 친구를 사귈 수 있어요.', time: [223.307, 226.154], eng: "You can make friends without gossiping." },
+            { id: 's79', speaker: '조이', kor: '오히려 뒷담화를 안 하는 사람이 더 \'신뢰\'를 받아요.', time: [226.225, 229.758], eng: "Actually, people who don't gossip are 'trusted' more." },
+            { id: 's80', speaker: '조이', kor: '"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요.', time: [229.809, 233.381], eng: "Because people think, 'This person won't talk about me'." },
+            { id: 's81', speaker: '우디', kor: '음... 그건 맞는 것 같아요.', time: [233.542, 236.040], eng: "Hmm... I think that's true." },
+            { id: 's82', speaker: '우디', kor: '근데 조이 씨, 솔직히 말해 봐요.', time: [236.111, 238.323], eng: "But Joy, honestly." },
+            { id: 's83', speaker: '우디', kor: '조이 씨도 뒷담화 한 적 있죠?', time: [238.383, 240.051], eng: "You've gossiped before too, haven't you?" },
+            { id: 's84', speaker: '조이', kor: '... 저도 한 적 있어요.', time: [240.202, 241.738], eng: "... I have." },
+            { id: 's85', speaker: '조이', kor: '솔직히 \'양심에 찔렸어요\'.', time: [241.778, 244.130], eng: "Honestly, it 'pricked my conscience'." },
+            { id: 's86', speaker: '조이', kor: '\'양심에 찔리다\'는 \'잘못한 것 같아서 마음이 불편하다\'라는 뜻이에요.', time: [244.272, 248.712], eng: "'Pricking one's conscience' means 'feeling uncomfortable because you think you did something wrong'." },
+            { id: 's87', speaker: '우디', kor: '봐요! 조이 씨도 하잖아요! 🎉', time: [248.803, 250.944], eng: "See! You do it too! 🎉" },
+            { id: 's88', speaker: '조이', kor: '그래서 요즘 저는 뒷담화를 안 하려고 노력하고 있어요.', time: [251.710, 255.353], eng: "So lately, I've been trying not to gossip." },
+            { id: 's89', speaker: '조이', kor: '뒷담화가 본성이라는 건 알아요.', time: [255.585, 257.847], eng: "I know gossiping is human nature." },
+            { id: 's90', speaker: '조이', kor: '하지만 모든 본성이 좋은 게 아니에요.', time: [257.907, 260.693], eng: "But not all human nature is good." },
+            { id: 's91', speaker: '조이', kor: '우리는 본성을 조절할 수 있어야 해요.', time: [260.955, 263.822], eng: "We need to be able to control our nature." },
+            { id: 's92', speaker: '우디', kor: '조이 씨... 그 말 좀 멋있어요. 😢', time: [264.000, 266.746], eng: "Joy... that sounded kind of cool. 😢" },
+            { id: 's93', speaker: '조이', kor: '그럼 오늘 배운 단어를 정리해 봐요.', time: [266.917, 269.231], eng: "Then let's review the words we learned today." },
+            { id: 's94', speaker: '우디', kor: '네!', time: [269.302, 269.921], eng: "Yes!" },
+            { id: 's95', speaker: '조이', kor: '• 뒷담화: 다른 사람이 없을 때 그 사람 이야기를 하는 것', time: [271.070, 274.521], eng: "• Gossip: talking about someone when they are not around" },
+            { id: 's96', speaker: '우디', kor: '• 험담하다: 나쁜 말을 하다', time: [274.592, 276.854], eng: "• Speak ill: saying bad things" },
+            { id: 's97', speaker: '조이', kor: '• 신뢰가 깨지다: 믿음이 없어지다', time: [276.944, 279.470], eng: "• Trust is broken: losing faith" },
+            { id: 's98', speaker: '우디', kor: '• 양심에 찔리다: 잘못한 것 같아서 마음이 불편하다', time: [279.551, 283.476], eng: "• Pricking one's conscience: feeling uncomfortable because you think you did something wrong" },
+            { id: 's99', speaker: '조이', kor: '• 눈치를 보다: 다른 다른 사람의 기분을 생각하다', time: [283.637, 286.685], eng: "• Read the room: considering other people's feelings" },
+            { id: 's100', speaker: '우디', kor: '• 본성: 원래 성격', time: [287.663, 289.461], eng: "• Nature: original character" },
+            { id: 's101', speaker: '조이', kor: '• 스트레스가 풀리다: 마음이 편해지다', time: [289.562, 292.257], eng: "• Relieving stress: feeling at ease" },
+            { id: 's102', speaker: '우디', kor: '• 유대감: 사람들 사이의 친한 느낌', time: [292.358, 294.993], eng: "• Sense of bonding: a feeling of closeness between people" },
+            { id: 's103', speaker: '조이', kor: '• 소속감: 그룹에 속해 있다는 느낌', time: [295.094, 297.336], eng: "• Sense of belonging: the feeling of being part of a group" },
+            { id: 's104', speaker: '우디', kor: '• 카타르시스: 마음속에 있던 감정이 나가서 시원해지는 것', time: [297.407, 300.999], eng: "• Catharsis: feeling refreshed after releasing pent-up emotions" },
+            { id: 's105', speaker: '조이', kor: '• 공감하다: 다른 사람의 마음을 이해하다', time: [301.100, 303.614], eng: "• Empathize: understanding another person's feelings" },
+            { id: 's106', speaker: '조이', kor: '여러분은 뒷담화에 대해서 어떻게 생각해요?', time: [304.541, 308.154], eng: "What do you all think about gossiping?" },
+            { id: 's107', speaker: '조이', kor: '뒷담화는 나쁜 거예요?', time: [308.225, 310.000], eng: "Is gossiping bad?" },
+            { id: 's108', speaker: '조이', kor: '아니면 자연스러운 거예요?', time: [310.060, 312.000], eng: "Or is it natural?" },
+            { id: 's109', speaker: '우디', kor: '여러분의 생각을 알려주세요!', time: [312.171, 313.899], eng: "Let us know your thoughts!" },
+            { id: 's110', speaker: '우디', kor: '그럼 오늘은 여기까지 할게요!', time: [313.959, 315.939], eng: "That's it for today!" },
+            { id: 's111', speaker: '조이', kor: '안녕히 계세요!', time: [316.100, 316.992], eng: "Goodbye!" },
+            { id: 's112', speaker: '우디', kor: '안녕히 계세요!', time: [317.143, 318.075], eng: "Goodbye!" },
+            { id: 's113', speaker: '우디', kor: '아, 그리고 여러분...', time: [318.156, 319.702], eng: "Oh, and everyone..." },
+            { id: 's114', speaker: '우디', kor: '조이 씨가 오늘 뒷담화 한 적 있다고 했거든요... 🤫', time: [319.773, 322.590], eng: "Joy said she's gossiped before today... 🤫" },
+            { id: 's115', speaker: '조이', kor: '우디 씨!!! 지금 뭐 해요?!! 😡', time: [322.761, 324.388], eng: "Woody!!! What are you doing right now?!! 😡" },
+            { id: 's116', speaker: '우디', kor: '정보 공유요! 😂', time: [324.559, 326.045], eng: "Sharing information! 😂" },
+            { id: 's117', speaker: '우디', kor: '안녕! 🏃‍♂️💨', time: [326.105, 326.816], eng: "Bye! 🏃‍♂️💨" },
+            { id: 's118', speaker: '조이', kor: '... 🤦‍♀️ 진짜 저 사람은...', time: [327.038, 328.817], eng: "... 🤦‍♀️ Seriously, that guy..." }
+        ];
+
+        const VOCAB_DATA = [
+                { term: '이 주제로 이야기해 봐요', mainDef: "Let's talk about this topic", variants: ['<이 주제로 이야기해 봐요>'], examples: [{ kor: '우리 이 주제로 이야기해 봐요.', eng: "Let's talk about this topic." }], subDefs: [{ subTerm: '◻︎◻︎을/를 주제로 이야기 하다', subDef: 'to talk about [X] as a topic' }, { subTerm: '-아/어 보다 as in 이야기해 봐요', subDef: 'used to make gentle suggestions without sounding pushy, meaning "try doing..." or "let\'s try..."' }] },
+                { term: '그 얘기 들었어요?', mainDef: 'Did you hear about that?', variants: ['그 얘기 들었어요?'], examples: [{ kor: '어제 있었던 그 얘기 들었어요?', eng: 'Did you hear about what happened yesterday?' }], subDefs: [{ subTerm: '얘기', subDef: 'story, talk, what people are saying' }] },
+                { term: '정보', mainDef: 'information, intel', variants: ['정보를'], examples: [{ kor: '중요한 정보예요.', eng: 'It\'s important information.' }], subDefs: [] },
+                { term: '알려주려고 햇어요', mainDef: 'I was going to tell you / I tried to let you know', variants: ['알려주려고 했어요'], examples: [{ kor: '비밀을 알려주려고 했어요.', eng: 'I was going to tell you a secret.' }], subDefs: [{ subTerm: '알려주다', subDef: 'to let (someone) know, to tell' }, { subTerm: '-려고 하다', subDef: 'used to express intention or plan, meaning "to intend to" or "was going to..."' }] },
+                { term: '뒷담화', mainDef: 'gossip, talking behind someone\'s back', variants: ['뒷담화예요', '뒷담화는', '뒷담화', '뒷담화를'], examples: [{ kor: '뒷담화는 나쁜 습관이에요.', eng: 'Gossiping is a bad habit.' }], subDefs: [] },
+                { term: '이야기를 하는 것', mainDef: 'the act of talking about (someone)', variants: ['이야기를 하는 것'], examples: [{ kor: '남 이야기를 하는 것은 조심해야 해요.', eng: 'You should be careful about the act of talking about others.' }], subDefs: [{ subTerm: '-는 것', subDef: 'used to turn an action verb into a noun phrase meaning "the act of...-ing" or "the thing that..."' }] },
+                { term: '-이라는 뜻이에요', mainDef: 'It means...', variants: ['-이라는 뜻이에요', '라는 뜻이에요'], examples: [{ kor: '이건 금지라는 뜻이에요.', eng: 'This means prohibition.' }], subDefs: [] },
+                { term: '뒷담화를 하다', mainDef: 'to gossip', variants: ['뒷담화를 안 해요', '뒷담화를 하면', '뒷담화를 하라'], examples: [{ kor: '친구 뒷담화를 하지 마세요.', eng: 'Don\'t gossip about your friends.' }], subDefs: [] },
+                { term: '공유하는 거예요', mainDef: 'I\'m (just) sharing', variants: ['공유하는 거예요'], examples: [{ kor: '좋은 소식을 공유하는 거예요.', eng: 'I\'m just sharing good news.' }], subDefs: [{ subTerm: '공유하다', subDef: 'to share' }, { subTerm: '-는 거예요 as in 공유하는 거예요', subDef: 'Identified as a colloquial form of -는 것이에요. Used to explain, clarify, or emphasize the essence of something ("The fact is that I am sharing...")' }] },
+                { term: '민호 씨가 없는데 민호 씨 이야기를 하면', mainDef: 'If you talk about Minho when he\'s not around', variants: ['민호 씨가 없는데 민호 씨 이야기를 하면'], examples: [{ kor: '당사자가 없는데 이야기를 하면 안 돼요.', eng: 'You shouldn\'t talk about someone when they aren\'t here.' }], subDefs: [{ subTerm: '-는데 as in 없는데', subDef: 'used to provide background information or set the scene before making the main point ("he is not here, and...").' }, { subTerm: '-면 as in 하면', subDef: 'used to express a condition, meaning "if..."' }] },
+                { term: '나쁜 게', mainDef: 'a bad thing', variants: ['나쁜 게'], examples: [{ kor: '우는 건 나쁜 게 아니에요.', eng: 'Crying isn\'t a bad thing.' }], subDefs: [{ subTerm: '-ㄴ/은 게 as in 나쁜 게', subDef: 'Identified as colloquial form of -ㄴ/은 것이. Used to turn a descriptive verb into a noun phrase meaning "a thing that is bad".' }] },
+                { term: '본성', mainDef: 'human nature, true nature', variants: ['본성이에요', '본성', '본성이'], examples: [{ kor: '그건 인간의 본성이에요.', eng: 'That\'s human nature.' }], subDefs: [] },
+                { term: '원래 성격', mainDef: 'true character, original personality', variants: ['원래 성격'], examples: [{ kor: '그의 원래 성격은 아주 착해요.', eng: 'His true character is very kind.' }], subDefs: [{ subTerm: '원래', subDef: 'originally, naturally' }, { subTerm: '성격', subDef: 'personality, character' }] },
+                { term: '본성이라고 다 좋은 건 아니에요', mainDef: 'Just because it\'s human nature doesn\'t mean it\'s all good', variants: ['본성이라고 다 좋은 건 아니에요'], examples: [{ kor: '비싸다고 다 좋은 건 아니에요.', eng: 'Just because it\'s expensive doesn\'t mean it\'s all good.' }], subDefs: [{ subTerm: '-이라고 해도 as in 본성이라고', subDef: 'used to express concession, meaning "even if it is called..." or "just because it is..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is good")' }] },
+                { term: '도덕적으로', mainDef: 'morally', variants: ['도덕적으로'], examples: [{ kor: '도덕적으로 옳은 행동이에요.', eng: 'It is a morally right behavior.' }], subDefs: [{ subTerm: '도덕적', subDef: 'moral' }, { subTerm: '-으로', subDef: 'particle turning a noun into an adverb ("-ly")' }] },
+                { term: '유발 하라리라는 유명한 학자', mainDef: 'a famous scholar named Yuval Harari', variants: ['유발 하라리라는 유명한 학자가'], examples: [{ kor: '스티브 잡스라는 유명한 사람이 있어요.', eng: 'There is a famous person named Steve Jobs.' }], subDefs: [{ subTerm: '유발 하라리', subDef: 'Yuval Harari' }, { subTerm: '-라는 as in 하라리라는', subDef: 'used to specify a name, meaning "called" or "named"' }, { subTerm: '학자', subDef: 'scholar' }] },
+                { term: '언어', mainDef: 'language', variants: ['언어는'], examples: [{ kor: '언어는 소통의 도구예요.', eng: 'Language is a tool for communication.' }], subDefs: [] },
+                { term: '-을/를 위해서', mainDef: 'for the sake of, for', variants: ['위해서'], examples: [{ kor: '가족을 위해서 열심히 일해요.', eng: 'I work hard for my family.' }], subDefs: [] },
+                { term: '"뒷담화를 하라"고 말한 건 아니에요.', mainDef: 'It doesn\'t mean he said "Go gossip."', variants: ['"뒷담화를 하라"고 말한 건 아니에요.'], examples: [{ kor: '내가 가라고 말한 건 아니에요.', eng: 'It doesn\'t mean I told you to go.' }], subDefs: [{ subTerm: '(명령)라고/으라고 말하다', subDef: 'used to quote a command, meaning "told someone to do..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 말한 건 아니에요', subDef: 'used to correct a misunderstanding ("it is not the fact that he said...")' }] },
+                { term: '스트레스가 풀리다', mainDef: 'to blow off steam, to destress', variants: ['스트레스가 풀려요'], examples: [{ kor: '운동을 하면 스트레스가 풀려요.', eng: 'Working out helps me blow off steam.' }], subDefs: [{ subTerm: '풀리다', subDef: 'to be relieved, to be resolved' }] },
+                { term: '마음이 편해지다', mainDef: 'to feel at ease, to relax', variants: ['마음이 편해지다'], examples: [{ kor: '친구와 이야기하면 마음이 편해져요.', eng: 'Talking with a friend puts my mind at ease.' }], subDefs: [{ subTerm: '편해지다', subDef: 'to become comfortable (adjective + -아/어지다)' }] },
+                { term: '힘든 일', mainDef: 'tough stuff, hard things', variants: ['힘든 일이'], examples: [{ kor: '힘든 일이 있으면 말해 줘.', eng: 'Tell me if you have any tough stuff going on.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase that describes the following noun.' }] },
+                { term: '속이 시원해지다', mainDef: 'to get it off one\'s chest, to feel relieved', variants: ['속이 시원해져요'], examples: [{ kor: '비밀을 말하고 나니 속이 시원해졌어요.', eng: 'I got it off my chest after telling the secret, so I felt relieved.' }], subDefs: [{ subTerm: '속', subDef: 'inside, heart' }, { subTerm: '시원해지다', subDef: 'to become refreshing/relieved' }] },
+                { term: '하소연', mainDef: 'venting, pouring one\'s heart out', variants: ['하소연이에요', '하소연은'], examples: [{ kor: '이건 그냥 내 하소연이야.', eng: 'This is just me venting.' }], subDefs: [] },
+                { term: '내 힘든 이야기를 하는 거예요', mainDef: 'It\'s (just) talking about my own struggles', variants: ['내 힘든 이야기를 하는 거예요'], examples: [{ kor: '이건 험담이 아니라 내 힘든 이야기를 하는 거예요.', eng: 'This isn\'t badmouthing, it\'s just me talking about my struggles.' }], subDefs: [{ subTerm: '내 힘든 이야기', subDef: 'my tough stories / struggles' }, { subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '-는 거예요 as in 하는 거예요', subDef: 'colloquial of -는 것이에요. Used to define the essence of something ("The fact is it\'s talking about...")' }] },
+                { term: '험담하다', mainDef: 'to badmouth, to talk smack', variants: ['험담하는 거예요', '험담 안 해요'], examples: [{ kor: '남을 험담하는 것은 좋지 않아요.', eng: 'It\'s not good to badmouth others.' }], subDefs: [{ subTerm: '-는 거예요 as in 험담하는 거예요', subDef: 'used to explain or clarify ("It means you are badmouthing")' }] },
+                { term: '이상하다', mainDef: 'to be acting weird, to be strange', variants: ['이상했어요'], examples: [{ kor: '그 사람 오늘 좀 이상해요.', eng: 'That person is acting a bit weird today.' }], subDefs: [] },
+                { term: '사실이잖아요!', mainDef: 'But it\'s a fact! / Come on, it\'s the truth!', variants: ['사실이잖아요!'], examples: [{ kor: '내가 잘못한 게 아니야, 사실이잖아요!', eng: 'It\'s not my fault, come on, it\'s a fact!' }], subDefs: [{ subTerm: '사실', subDef: 'fact, truth' }, { subTerm: '-잖아요 as in 사실이잖아요', subDef: 'used to remind the listener of shared information or something obvious. Nuance: "You know..." or "Come on, as you can see..."' }] },
+                { term: '좋은 점', mainDef: 'pro, advantage, good point', variants: ['좋은 점이'], examples: [{ kor: '이 방법의 좋은 점은 빠르다는 거예요.', eng: 'The pro of this method is that it\'s fast.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }] },
+                { term: '유대감', mainDef: 'bond, sense of fellowship', variants: ['유대감이', '유대감은'], examples: [{ kor: '우리 팀은 유대감이 강해요.', eng: 'Our team has a strong bond.' }], subDefs: [] },
+                { term: '사람들 사이의 친한 느낌', mainDef: 'a feeling of closeness between people', variants: ['사람들 사이의 친한 느낌'], examples: [{ kor: '유대감은 사람들 사이의 친한 느낌이에요.', eng: 'A bond is a feeling of closeness between people.' }], subDefs: [{ subTerm: '사이의', subDef: 'between, among' }, { subTerm: '-ㄴ/은 as in 친한', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '느낌', subDef: 'feeling' }] },
+                { term: '우리는 한 편이야', mainDef: 'We are on the same side / We\'re a team', variants: ['우리는 한 편이야'], examples: [{ kor: '걱정 마, 우리는 한 편이야.', eng: 'Don\'t worry, we\'re on the same side.' }], subDefs: [{ subTerm: '한 편', subDef: 'same side, same team' }, { subTerm: '-이야', subDef: 'informal copula ("am/are/is")' }] },
+                { term: '다른 사람 욕을 하면서', mainDef: 'while talking smack about someone else', variants: ['다른 사람 욕을 하면서'], examples: [{ kor: '남 욕을 하면서 시간을 보냈어요.', eng: 'We spent time while talking smack about others.' }], subDefs: [{ subTerm: '욕을 하다', subDef: 'to swear, to talk smack, to badmouth' }, { subTerm: '-면서 as in 하면서', subDef: 'used to connect two actions happening simultaneously, meaning "while..."' }] },
+                { term: '친해지는 거요?', mainDef: 'You mean getting close (by doing that)?', variants: ['친해지는 거요?'], examples: [{ kor: '같이 밥을 먹으면서 친해지는 거요?', eng: 'You mean getting close while eating together?' }], subDefs: [{ subTerm: '친해지다', subDef: 'to get close to someone' }, { subTerm: '-는 거요? as in 친해지는 거요?', subDef: 'colloquial form of -는 것이에요?, used to ask for clarification on a fact ("You mean the act of...?")' }] },
+                { term: '우정', mainDef: 'friendship', variants: ['우정이'], examples: [{ kor: '우리의 우정은 영원할 거야.', eng: 'Our friendship will last forever.' }], subDefs: [] },
+                { term: '학생이었을 때 생각해 봐요', mainDef: 'Think about back when you were a student', variants: ['학생이었을 때 생각해 봐요'], examples: [{ kor: '어렸을 때 생각해 봐요.', eng: 'Think about back when you were young.' }], subDefs: [{ subTerm: '-이었을 때 as in 학생이었을 때', subDef: 'used to indicate a past time period ("when you were a...")' }, { subTerm: '-아/어 보다 as in 생각해 봐요', subDef: 'used to make gentle suggestions ("try thinking about...")' }] },
+                { term: '이런 이야기 한 적 없어요?', mainDef: 'Haven\'t you ever said things like this?', variants: ['이런 이야기 한 적 없어요?'], examples: [{ kor: '거짓말 한 적 없어요?', eng: 'Haven\'t you ever told a lie?' }], subDefs: [{ subTerm: '이런', subDef: 'like this, such' }, { subTerm: '-ㄴ/은 적 없다 as in 한 적 없어요', subDef: 'used to express a lack of past experience, meaning "have never done..."' }] },
+                { term: '소속감', mainDef: 'sense of belonging', variants: ['소속감을', '소속감은'], examples: [{ kor: '팀에서 소속감을 느껴요.', eng: 'I feel a sense of belonging in the team.' }], subDefs: [] },
+                { term: '조이 씨도 했죠?', mainDef: 'You did it too, right?', variants: ['조이 씨도 했죠?'], examples: [{ kor: '어제 숙제 했죠?', eng: 'You did the homework yesterday, right?' }], subDefs: [{ subTerm: '-죠? as in 했죠?', subDef: 'a tag question used to seek agreement or confirmation, meaning "Right?"' }] },
+                { term: '어른이 되면', mainDef: 'When you grow up / When you become an adult', variants: ['어른이 되면'], examples: [{ kor: '어른이 되면 이해할 거예요.', eng: 'When you grow up, you will understand.' }], subDefs: [{ subTerm: '어른', subDef: 'adult' }, { subTerm: '-이 되면 as in 어른이 되면', subDef: 'used to express a condition or time ("if/when you become...")' }] },
+                { term: '달라지지 않아요', mainDef: 'It doesn\'t change', variants: ['달라지지 않아요'], examples: [{ kor: '사람은 쉽게 달라지지 않아요.', eng: 'People don\'t change easily.' }], subDefs: [{ subTerm: '달라지다', subDef: 'to change, to become different' }, { subTerm: '-지 않다 as in 달라지지 않아요', subDef: 'negative form ("does not")' }] },
+                { term: '연구에 따르면', mainDef: 'according to research', variants: ['연구에 따르면'], examples: [{ kor: '연구에 따르면 규칙적인 운동이 중요해요.', eng: 'According to research, regular exercise is important.' }], subDefs: [{ subTerm: '연구', subDef: 'research, study' }, { subTerm: '-에 따르면', subDef: 'particle phrase meaning "according to"' }] },
+                { term: '뇌에서 행복 호르몬이 나와요', mainDef: 'happy hormones are released in the brain', variants: ['뇌에서 행복 호르몬이 나와요'], examples: [{ kor: '초콜릿을 먹으면 행복 호르몬이 나와요.', eng: 'When you eat chocolate, happy hormones are released.' }], subDefs: [{ subTerm: '뇌', subDef: 'brain' }, { subTerm: '호르몬이 나오다', subDef: 'hormones are released' }] },
+                { term: '카타르시스', mainDef: 'catharsis', variants: ['카타르시스를', '카타르시스는'], examples: [{ kor: '슬픈 영화를 보고 카타르시스를 느꼈어요.', eng: 'I felt catharsis after watching a sad movie.' }], subDefs: [] },
+                { term: '마음속에 있던 감정이 나가서 시원해지는 것', mainDef: 'the act of feeling relieved as pent-up emotions are let out', variants: ['마음속에 있던 감정이 나가서 시원해지는 것'], examples: [{ kor: '울고 나면 감정이 나가서 시원해져요.', eng: 'After crying, emotions are let out and you feel relieved.' }], subDefs: [{ subTerm: '마음속에 있다', subDef: 'to be inside one\'s heart/mind' }, { subTerm: '-던 as in 있던', subDef: 'used to turn a past continuing state into an "adjective-ish" phrase' }, { subTerm: '감정', subDef: 'emotion' }, { subTerm: '-아서/어서 as in 나가서', subDef: 'used to express a cause ("because they go out...")' }, { subTerm: '-는 것 as in 시원해지는 것', subDef: 'nominalizing the action ("the act of feeling relieved")' }] },
+                { term: '행복 호르몬이 나온다고 다 좋은 건 아니에요', mainDef: 'Just because happy hormones are released doesn\'t mean it\'s all good', variants: ['행복 호르몬이 나온다고 다 좋은 건 아니에요'], examples: [{ kor: '맛있다고 다 몸에 좋은 건 아니에요.', eng: 'Just because it\'s delicious doesn\'t mean it\'s all good for your body.' }], subDefs: [{ subTerm: '호르몬이 나오다', subDef: 'hormones are released' }, { subTerm: '-다고 해도 as in 나온다고 다', subDef: '"just because [X happens]..." — concession pattern' }, { subTerm: '-이라고 해도 as in 본성이라고', subDef: '"even if it is called..." or "just because it is..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is [adjective]")' }] },
+                { term: '신뢰가 깨지다', mainDef: 'trust is broken', variants: ['신뢰가 깨져요', '신뢰가 깨진다고요'], examples: [{ kor: '거짓말을 반복하면 신뢰가 깨져요.', eng: 'If you repeat lies, trust is broken.' }], subDefs: [{ subTerm: '신뢰', subDef: 'trust' }, { subTerm: '깨지다', subDef: 'to be broken, to be shattered' }] },
+                { term: '믿음이 없어지다', mainDef: 'to lose faith, faith disappears', variants: ['믿음이 없어지다'], examples: [{ kor: '그 사람에 대한 믿음이 없어졌어요.', eng: 'My faith in that person disappeared.' }], subDefs: [{ subTerm: '믿음', subDef: 'faith, belief' }, { subTerm: '없어지다', subDef: 'to disappear, to be gone' }] },
+                { term: '내 이야기를 하겠구나', mainDef: '"Ah, he\'s going to talk about me (too)"', variants: ['내 이야기를 하겠구나', '내 이야기를 안 하겠구나'], examples: [{ kor: '저 사람은 내 비밀도 말하겠구나 생각했어요.', eng: 'I thought, "Ah, that person will probably tell my secrets too."' }], subDefs: [{ subTerm: '-겠구나', subDef: 'used to show an immediate reaction or a strong guess based on a situation. Nuance: "I guess that..." or "Ah, so..."' }] },
+                { term: '-라고 한 건 뭐예요?', mainDef: 'What about the fact that you said "...?"', variants: ['-라고 한 건 뭐예요?'], examples: [{ kor: '어제 안 간다고 한 건 뭐예요?', eng: 'What about the fact that you said you weren\'t going yesterday?' }], subDefs: [{ subTerm: '-라고 하다', subDef: 'to say that...' }, { subTerm: '-ㄴ/은 것 as in 한 건', subDef: 'nominalizes the past action ("the fact that you said")' }] },
+                { term: '공감하다', mainDef: 'to empathize, to relate', variants: ['공감', '공감하다', '공감했어요'], examples: [{ kor: '너의 마음에 100% 공감해.', eng: 'I relate to your feelings 100%.' }], subDefs: [] },
+                { term: '마음을 이해하다', mainDef: 'to understand (someone\'s) heart/mind', variants: ['마음을 이해하다'], examples: [{ kor: '서로의 마음을 이해하는 게 중요해요.', eng: 'It\'s important to understand each other\'s hearts.' }], subDefs: [{ subTerm: '이해하다', subDef: 'to understand' }] },
+                { term: '나중에', mainDef: 'later, later on', variants: ['나중에'], examples: [{ kor: '나중에 다시 이야기해요.', eng: 'Let\'s talk again later.' }], subDefs: [] },
+                { term: '-에게 돌아와요', mainDef: 'it comes back to (someone), it backfires on', variants: ['나에게 돌아와요'], examples: [{ kor: '나쁜 행동은 결국 자기에게 돌아와요.', eng: 'Bad behavior eventually comes back to oneself.' }], subDefs: [] },
+                { term: '좋은 기능', mainDef: 'good function, positive role', variants: ['좋은 기능이'], examples: [{ kor: '이 앱은 좋은 기능이 많아요.', eng: 'This app has many good functions.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '기능', subDef: 'function, role' }] },
+                { term: '눈치를 보다', mainDef: 'to walk on eggshells, to read the room, to be self-conscious of others', variants: ['눈치를 봐요', '눈치를 보다'], examples: [{ kor: '직장에서 상사 눈치를 봐요.', eng: 'I walk on eggshells around my boss at work.' }], subDefs: [] },
+                { term: '기분', mainDef: 'mood, feelings', variants: ['기분을'], examples: [{ kor: '오늘 기분이 어때요?', eng: 'How is your mood today?' }], subDefs: [] },
+                { term: '무서우니까', mainDef: 'because it is scary', variants: ['무서우니까'], examples: [{ kor: '밤길이 무서우니까 일찍 들어가세요.', eng: 'Go home early because the night streets are scary.' }], subDefs: [{ subTerm: '-니까', subDef: 'used to express a clear reason or cause, meaning "since..." or "because..."' }] },
+                { term: '나쁜 행동을 안 하게 돼요', mainDef: 'you end up not doing bad behavior', variants: ['나쁜 행동을 안 하게 돼요'], examples: [{ kor: '규칙이 있으면 나쁜 행동을 안 하게 돼요.', eng: 'If there are rules, you end up not doing bad behaviors.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 나쁜', subDef: 'adjective-ish phrase' }, { subTerm: '행동을 하다', subDef: 'to do an action, to behave' }, { subTerm: '-게 되다 as in 안 하게 돼요', subDef: 'used to express a change in state or situation outside of one\'s direct control, meaning "end up (not) doing..."' }] },
+                { term: '무서워서', mainDef: 'because you are scared', variants: ['무서워서'], examples: [{ kor: '귀신이 무서워서 도망갔어요.', eng: 'I ran away because I was scared of the ghost.' }], subDefs: [{ subTerm: '-아서/어서', subDef: 'used to express a cause, meaning "because..."' }] },
+                { term: '착하게 행동한다고요?', mainDef: 'Are you saying you act nicely (because of that)?', variants: ['착하게 행동한다고요?'], examples: [{ kor: '매일 착하게 행동한다고요?', eng: 'Are you saying you act nicely every day?' }], subDefs: [{ subTerm: '착하게 행동하다', subDef: 'to behave nicely, to act good' }, { subTerm: '-게 as in 착하게', subDef: 'adverbial marker meaning "nicely"' }, { subTerm: '-다고요?', subDef: 'used to seek confirmation of what was just heard, meaning "Are you saying that...?"' }] },
+                { term: '착한 게 아니에요', mainDef: 'It doesn\'t mean you are a good person', variants: ['착한 게 아니에요'], examples: [{ kor: '돈이 많다고 다 착한 게 아니에요.', eng: 'Just because someone has a lot of money doesn\'t mean they are a good person.' }], subDefs: [{ subTerm: '-ㄴ/는 것이 아니에요 as in 착한 게 아니에요', subDef: 'used to clarify the fact ("it is not the fact that you are nice")' }] },
+                { term: '착한 척하는 거예요', mainDef: 'You are just pretending to be nice', variants: ['착한 척하는 거예요'], examples: [{ kor: '그는 똑똑한 척하는 거예요.', eng: 'He is pretending to be smart.' }], subDefs: [{ subTerm: '착하다', subDef: 'to be nice, kind' }, { subTerm: '-ㄴ/은 척하다 as in 착한 척하다', subDef: 'to pretend to be (adjective)' }, { subTerm: '-는 거예요 as in 척하는 거예요', subDef: 'colloquial explanation ("The fact is you are pretending...")' }] },
+                { term: '그렇게 보면 그렇네요', mainDef: 'Now that you put it that way, I guess you\'re right.', variants: ['그렇게 보면 그렇네요'], examples: [{ kor: '설명을 듣고 나니 그렇게 보면 그렇네요.', eng: 'After hearing the explanation, now that you put it that way, yeah.' }], subDefs: [{ subTerm: '그렇게 보면', subDef: 'Looking at it that way' }, { subTerm: '그렇네요', subDef: 'That is so (with a realization nuance, -네요)' }] },
+                { term: '뒷담화는 안 하는 게', mainDef: 'the act of not gossiping', variants: ['뒷담화는 안 하는 게'], examples: [{ kor: '거짓말은 안 하는 게 좋아요.', eng: 'It\'s better not to lie.' }], subDefs: [{ subTerm: '뒷담화를 하다', subDef: 'to gossip' }, { subTerm: '-는 게 as in 하는 게', subDef: 'colloquial form of -는 것이, meaning "the act of doing"' }] },
+                { term: '불가능하다', mainDef: 'to be impossible', variants: ['불가능해요'], examples: [{ kor: '하루 만에 다 하는 건 불가능해요.', eng: 'Doing it all in one day is impossible.' }], subDefs: [] },
+                { term: '뒷담화 없이도', mainDef: 'even without gossiping', variants: ['뒷담화 없이도'], examples: [{ kor: '돈 없이도 행복할 수 있어요.', eng: 'You can be happy even without money.' }], subDefs: [{ subTerm: '없이', subDef: 'without' }] },
+                { term: '친구를 사귀다', mainDef: 'to make friends', variants: ['친구를 사귈'], examples: [{ kor: '동아리에서 새로운 친구를 사귀었어요.', eng: 'I made new friends in the club.' }], subDefs: [] },
+                { term: '오히려', mainDef: 'actually, rather, on the contrary', variants: ['오히려'], examples: [{ kor: '도와주려고 했는데 오히려 방해가 됐어요.', eng: 'I tried to help, but it actually became a distraction.' }], subDefs: [] },
+                { term: '신뢰를 받다', mainDef: 'to gain trust, to be trusted', variants: ['신뢰를 받아요'], examples: [{ kor: '솔직한 사람이 신뢰를 받아요.', eng: 'Honest people gain trust.' }], subDefs: [{ subTerm: '신뢰', subDef: 'trust' }] },
+                { term: '"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요', mainDef: 'Because they think, "Ah, this person won\'t talk behind my back."', variants: ['"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요'], examples: [{ kor: '나를 믿는다고 생각하니까요.', eng: 'Because I think they trust me.' }], subDefs: [{ subTerm: '-겠구나 as in 하겠구나', subDef: 'realization/guess ("I guess they won\'t...")' }, { subTerm: '-라고 생각하다', subDef: 'to think that...' }, { subTerm: '-니까요 as in 생각하니까요', subDef: 'giving a reason as an ending ("Because...")' }] },
+                { term: '그건 맞는 것 같아요', mainDef: 'I think that makes sense / That seems right', variants: ['그건 맞는 것 같아요'], examples: [{ kor: '네 말이 맞는 것 같아.', eng: 'I think what you said is right.' }], subDefs: [{ subTerm: '맞다', subDef: 'to be correct' }, { subTerm: '-는 것 같다', subDef: 'used to express an assumption or guess, meaning "I think..." or "it seems..."' }] },
+                { term: '솔직히 말해 봐요', mainDef: 'Be honest with me / Try telling the truth', variants: ['솔직히 말해 봐요'], examples: [{ kor: '숨기지 말고 솔직히 말해 봐요.', eng: 'Don\'t hide it, try speaking honestly.' }], subDefs: [{ subTerm: '솔직히', subDef: 'honestly, frankly' }, { subTerm: '-아/어 보다 as in 말해 봐요', subDef: 'used to make a gentle suggestion ("try doing...")' }] },
+                { term: '뒷담화 한 적 있죠?', mainDef: 'You\'ve gossiped before, right?', variants: ['뒷담화 한 적 있죠?'], examples: [{ kor: '김치 먹어본 적 있죠?', eng: 'You\'ve tried eating Kimchi before, right?' }], subDefs: [{ subTerm: '-ㄴ/은 적 있다 as in 한 적 있다', subDef: 'used to express past experience, meaning "have done..."' }, { subTerm: '-죠? as in 있죠?', subDef: 'seeking confirmation ("right?")' }] },
+                { term: '양심에 찔리다', mainDef: 'to feel a pang of guilt, to have a guilty conscience', variants: ['양심에 찔렸어요', '양심에 찔리다'], examples: [{ kor: '거짓말을 하고 나니 양심에 찔려요.', eng: 'After lying, I felt a pang of guilt.' }], subDefs: [{ subTerm: '양심', subDef: 'conscience' }, { subTerm: '찔리다', subDef: 'to be pierced, pricked (guilty)' }] },
+                { term: '잘못한 것 같아서', mainDef: 'because it feels like I did something wrong', variants: ['잘못한 것 같아서'], examples: [{ kor: '내가 잘못한 것 같아서 사과했어요.', eng: 'I apologized because it felt like I did something wrong.' }], subDefs: [{ subTerm: '잘못하다', subDef: 'to do wrong, to make a mistake' }, { subTerm: '-ㄴ/은 것 같다', subDef: 'I think..., it seems like...' }, { subTerm: '-아서/어서 as in 같아서', subDef: 'used to express a cause ("because...")' }] },
+                { term: '마음이 불편하다', mainDef: 'to feel uncomfortable, to feel uneasy', variants: ['마음이 불편하다'], examples: [{ kor: '싸운 친구를 보면 마음이 불편해요.', eng: 'I feel uncomfortable when I see the friend I fought with.' }], subDefs: [] },
+                { term: '봐요! 조이 씨도 하잖아요', mainDef: 'See! You do it too, you know!', variants: ['봐요! 조이 씨도 하잖아요'], examples: [{ kor: '봐요! 제가 맞다고 했잖아요.', eng: 'See! I told you I was right, you know.' }], subDefs: [{ subTerm: '봐요!', subDef: 'Look! / See!' }, { subTerm: '-잖아요 as in 하잖아요', subDef: 'reminding the listener of an obvious fact ("Come on, you do it too!")' }] },
+                { term: '뒷담화를 안 하려고 노력하고 있어요', mainDef: 'I am making an effort not to gossip', variants: ['뒷담화를 안 하려고 노력하고 있어요'], examples: [{ kor: '건강을 위해 운동하려고 노력하고 있어요.', eng: 'I am making an effort to exercise for my health.' }], subDefs: [{ subTerm: '-려고 노력하다 as in 안 하려고 노력하다', subDef: 'to try to do, to make an effort to do' }, { subTerm: '-고 있다 as in 노력하고 있어요', subDef: 'present continuous ("am doing...")' }] },
+                { term: '뒷담화가 본성이라는 건 알아요', mainDef: 'I know that gossip is human nature', variants: ['본성이라는 건 알아요'], examples: [{ kor: '공부가 중요하다는 건 알아요.', eng: 'I know that studying is important.' }], subDefs: [{ subTerm: '-라는 것 as in 본성이라는 건', subDef: 'the fact that it is... (quoting a fact)' }, { subTerm: '알다', subDef: 'to know' }] },
+                { term: '좋은 게 아니에요', mainDef: 'it is not a good thing', variants: ['좋은 게 아니에요'], examples: [{ kor: '쉽게 포기하는 건 좋은 게 아니에요.', eng: 'Giving up easily is not a good thing.' }], subDefs: [{ subTerm: '-ㄴ/은 것이 아니에요', subDef: 'it is not the fact that it is...' }] },
+                { term: '조절할 수 있어야 해요', mainDef: 'we must be able to keep it in check / control it', variants: ['조절할 수 있어야 해요'], examples: [{ kor: '화가 나도 감정을 조절할 수 있어야 해요.', eng: 'Even if you are angry, you must be able to keep your emotions in check.' }], subDefs: [{ subTerm: '조절하다', subDef: 'to control, to regulate' }, { subTerm: '-ㄹ/을 수 있다', subDef: 'to be able to' }, { subTerm: '-어야 하다', subDef: 'must, have to' }] },
+                { term: '오늘 배운 단어를 정리해 봐요', mainDef: 'let\'s recap today\'s vocabulary', variants: ['오늘 배운 단어를 정리해 봐요'], examples: [{ kor: '회의가 끝난 후 내용을 정리해 봐요.', eng: 'Let\'s recap the details after the meeting ends.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 배운', subDef: 'past tense modifier' }, { subTerm: '단어', subDef: 'word, vocabulary' }, { subTerm: '정리하다', subDef: 'to recap, to organize' }, { subTerm: '-아/어 보다 as in 정리해 봐요', subDef: 'let\'s try doing...' }] },
+                { term: '뒷담화에 대해서 어떻게 생각해요?', mainDef: 'What do you think about gossiping?', variants: ['뒷담화에 대해서 어떻게 생각해요?'], examples: [{ kor: '이 계획에 대해서 어떻게 생각해요?', eng: 'What do you think about this plan?' }], subDefs: [{ subTerm: '-에 대해서', subDef: 'about, regarding' }, { subTerm: '어떻게 생각하다', subDef: 'to think what/how' }] },
+                { term: '나쁜 거예요', mainDef: 'is it a bad thing?', variants: ['나쁜 거예요?'], examples: [{ kor: '거짓말은 나쁜 거예요.', eng: 'Lying is a bad thing.' }], subDefs: [{ subTerm: '-ㄴ/은 것 as in 나쁜 거', subDef: 'nominalizing the adjective ("a thing that is bad")' }] },
+                { term: '자연스러운 것', mainDef: 'a natural thing', variants: ['자연스러운 거예요?'], examples: [{ kor: '실수하는 건 인간으로서 자연스러운 거예요.', eng: 'Making a mistake is a natural thing as a human.' }], subDefs: [{ subTerm: '자연스럽다', subDef: 'to be natural' }, { subTerm: '-ㄴ/은 것 as in 자연스러운 거', subDef: 'nominalizing ("a thing that is natural")' }] },
+                { term: '오늘은 여기까지 할게요', mainDef: 'That\'s a wrap for today', variants: ['오늘은 여기까지 할게요'], examples: [{ kor: '회의는 오늘은 여기까지 할게요.', eng: 'That\'s a wrap for the meeting today.' }], subDefs: [{ subTerm: '여기까지', subDef: 'up to here' }, { subTerm: '-ㄹ/을게요 as in 할게요', subDef: 'I will... (intention/announcement)' }] },
+                { term: '뒷담화 한 적 있다고 했거든요', mainDef: 'Because she said she has gossiped before... (Just so you know)', variants: ['뒷담화 한 적 있다고 했거든요'], examples: [{ kor: '친구가 어제 바쁘다고 했거든요.', eng: 'Because my friend said they were busy yesterday... (Just so you know)' }], subDefs: [{ subTerm: '-ㄴ/은 적 있다 as in 한 적 있다고', subDef: 'have done (experience)' }, { subTerm: '-다고 하다 as in 있다고 했다', subDef: 'quoting a statement ("she said that...")' }, { subTerm: '-거든요 as in 했거든요', subDef: 'giving a reason or a fact the listener might not know ("Just so you know...")' }] },
+                { term: '진짜 저 사람은...', mainDef: 'Seriously, that guy is...', variants: ['진짜 저 사람은'], examples: [{ kor: '진짜 저 사람은 못 말려요.', eng: 'Seriously, there\'s no stopping that guy.' }], subDefs: [{ subTerm: '\'진짜\'', subDef: 'seriously, for real (expressing frustration here)' }] }
+        ];
+
+        const QUIZ_LIST = [
+            {
+                id: 1,
+                questionKor: "우디가 민호 씨 이야기를 하려고 했을 때, 조이는 그것을 무엇이라고 했나요?",
+                questionEng: "What did Joy call it when Woody tried to talk about Minho?",
+                sentence_pre: "다른 사람이 없을 때 그 사람 이야기를 하는 것은 ",
+                sentence_post: "이에요.",
+                correct_word: "뒷담화",
+                translation_pre: "Talking about someone when they are not around is ",
+                translation_answer: "gossiping",
+                translation_post: ".",
+                hint: "Noun. Talking behind someone's back / Gossip.",
+                options: [
+                    { text: "뒷담화", isCorrect: true, feedback: "Correct! '뒷담화' means 'gossip' or 'talking behind someone's back'. Joy pointed out that Woody wasn't sharing information; he was gossiping." },
+                    { text: "하소연", isCorrect: false, feedback: "Incorrect. '하소연' means 'complaining about one's own hardships'." },
+                    { text: "정보", isCorrect: false, feedback: "Incorrect. '정보' means 'information'. Joy specifically said it was NOT information." },
+                    { text: "거짓말", isCorrect: false, feedback: "Incorrect. '거짓말' means 'lie'." }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "우디는 뒷담화가 사람들의 원래 성격인 무엇이라고 주장했나요?",
+                questionEng: "What did Woody claim gossiping is, referring to people's original nature?",
+                sentence_pre: "우디는 뒷담화가 사람들의 ",
+                sentence_post: "이라고 말했어요.",
+                correct_word: "본성",
+                translation_pre: "Woody said that gossiping is ",
+                translation_answer: "human nature",
+                translation_post: ".",
+                hint: "Noun. Human nature / Original character.",
+                options: [
+                    { text: "본성", isCorrect: true, feedback: "Correct! '본성' means 'human nature'. Woody tried to justify gossiping by saying it's just human nature." },
+                    { text: "습관", isCorrect: false, feedback: "Incorrect. '습관' means 'habit'." },
+                    { text: "실수", isCorrect: false, feedback: "Incorrect. '실수' means 'mistake'." },
+                    { text: "취미", isCorrect: false, feedback: "Incorrect. '취미' means 'hobby'." }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "우디는 친구에게 힘든 일을 이야기하면 마음이 어떻게 된다고 했나요?",
+                questionEng: "How did Woody say you feel after talking to a friend about hard times?",
+                sentence_pre: "친구한테 힘든 일을 이야기하면 ",
+                sentence_post: ".",
+                correct_word: "스트레스가 풀려요",
+                translation_pre: "If you talk about hard things to a friend, your ",
+                translation_answer: "stress is relieved",
+                translation_post: ".",
+                hint: "Phrase. Stress is relieved / To feel relaxed.",
+                options: [
+                    { text: "스트레스가 풀려요", isCorrect: true, feedback: "Bingo! '스트레스가 풀리다' means 'to relieve stress'. Woody argued that talking about others helps blow off steam." },
+                    { text: "우울해져요", isCorrect: false, feedback: "Incorrect. '우울해지다' means 'to become depressed'." },
+                    { text: "피곤해져요", isCorrect: false, feedback: "Incorrect. '피곤해지다' means 'to become tired'." },
+                    { text: "지루해져요", isCorrect: false, feedback: "Incorrect. '지루해지다' means 'to become bored'." }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "조이는 하소연과 달리, 뒷담화는 다른 사람에게 나쁜 말을 하는 것이라고 했어요. 이것을 무엇이라고 하나요?",
+                questionEng: "Joy said that unlike venting, gossiping is saying bad things about others. What is this called?",
+                sentence_pre: "뒷담화는 내 이야기가 아니라 다른 사람을 ",
+                sentence_post: " 거예요.",
+                correct_word: "험담하는",
+                translation_pre: "Gossiping isn't talking about yourself; it's ",
+                translation_answer: "speaking ill of",
+                translation_post: " others.",
+                hint: "Verb modifier (-는 form). To speak ill of someone / To badmouth.",
+                options: [
+                    { text: "험담하는", isCorrect: true, feedback: "Exactly! '험담하다' means 'to speak ill of someone'. Joy made a clear distinction between venting your own struggles and badmouthing someone else." },
+                    { text: "칭찬하는", isCorrect: false, feedback: "Incorrect. '칭찬하다' means 'to praise'." },
+                    { text: "위로하는", isCorrect: false, feedback: "Incorrect. '위로하다' means 'to comfort'." },
+                    { text: "공감하는", isCorrect: false, feedback: "Incorrect. '공감하다' means 'to empathize'." }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "우디는 같이 뒷담화를 하면 사람들 사이에 친한 느낌이 생긴다고 했어요. 이 느낌은 무엇인가요?",
+                questionEng: "Woody said gossiping together creates a close feeling between people. What is this feeling?",
+                sentence_pre: "같이 뒷담화를 하면 우리는 한 편이라는 ",
+                sentence_post: "이/가 생겨요.",
+                correct_word: "유대감",
+                translation_pre: "If we gossip together, a ",
+                translation_answer: "sense of bonding",
+                translation_post: " forms, making us feel like we are on the same side.",
+                hint: "Noun. Sense of bonding / Connection.",
+                options: [
+                    { text: "유대감", isCorrect: true, feedback: "That's right! '유대감' means 'sense of bonding'. Woody felt that gossiping makes people feel like they are on the same team." },
+                    { text: "소외감", isCorrect: false, feedback: "Incorrect. '소외감' means 'sense of alienation'." },
+                    { text: "배신감", isCorrect: false, feedback: "Incorrect. '배신감' means 'sense of betrayal'." },
+                    { text: "긴장감", isCorrect: false, feedback: "Incorrect. '긴장감' means 'sense of tension'." }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "학생 때 무서운 선생님 이야기를 같이 하면서 그룹에 속해 있다는 느낌을 받았다고 했어요. 이것은 무엇인가요?",
+                questionEng: "He said they felt like they belonged to a group when talking about a scary teacher in school. What is this called?",
+                sentence_pre: "같은 반 친구들과 선생님 이야기를 하면서 ",
+                sentence_post: "을/를 느꼈어요.",
+                correct_word: "소속감",
+                translation_pre: "While talking about the teacher with classmates, they felt a ",
+                translation_answer: "sense of belonging",
+                translation_post: ".",
+                hint: "Noun. Sense of belonging.",
+                options: [
+                    { text: "소속감", isCorrect: true, feedback: "Spot on! '소속감' means 'sense of belonging'. Gossiping about a shared hardship made them feel united." },
+                    { text: "책임감", isCorrect: false, feedback: "Incorrect. '책임감' means 'sense of responsibility'." },
+                    { text: "자신감", isCorrect: false, feedback: "Incorrect. '자신감' means 'self-confidence'." },
+                    { text: "거부감", isCorrect: false, feedback: "Incorrect. '거부감' means 'feeling of rejection'." }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "조이는 뒷담화를 하면 사람들 사이의 믿음이 어떻게 된다고 했나요?",
+                questionEng: "What did Joy say happens to trust between people if you gossip?",
+                sentence_pre: "다른 사람의 뒷담화를 자꾸 하면 사람들 사이의 ",
+                sentence_post: ".",
+                correct_word: "신뢰가 깨져요",
+                translation_pre: "If you keep gossiping about others, ",
+                translation_answer: "trust between people gets broken",
+                translation_post: ".",
+                hint: "Phrase. Trust is broken.",
+                options: [
+                    { text: "신뢰가 깨져요", isCorrect: true, feedback: "Correct! '신뢰가 깨지다' means 'trust is broken'. Joy pointed out that if you gossip to someone, they'll assume you also gossip ABOUT them." },
+                    { text: "유대감이 생겨요", isCorrect: false, feedback: "Incorrect. While Woody argued gossip builds bonding, Joy said it breaks trust." },
+                    { text: "오해가 풀려요", isCorrect: false, feedback: "Incorrect. '오해가 풀리다' means 'misunderstanding is resolved'." },
+                    { text: "기분이 좋아져요", isCorrect: false, feedback: "Incorrect. '기분이 좋아지다' means 'to feel better'." }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "우디는 유나 씨에게 조이 씨 이야기를 한 것이 뒷담화가 아니라 무엇이라고 변명했나요?",
+                questionEng: "What did Woody excuse his talking about Joy to Yuna as, instead of gossiping?",
+                sentence_pre: "우디는 조이 씨가 무섭다고 말한 것이 다른 사람의 마음을 이해하는 ",
+                sentence_post: "(이)라고 변명했어요.",
+                correct_word: "공감",
+                translation_pre: "Woody made an excuse that saying Joy was scary was ",
+                translation_answer: "empathy",
+                translation_post: ", understanding another person's feelings.",
+                hint: "Noun. Empathy / Sympathy.",
+                options: [
+                    { text: "공감", isCorrect: true, feedback: "Haha, yes! '공감' means 'empathy'. Woody tried to wrap his gossip in a nice word, but Joy saw right through it!" },
+                    { text: "농담", isCorrect: false, feedback: "Incorrect. '농담' means 'joke'." },
+                    { text: "칭찬", isCorrect: false, feedback: "Incorrect. '칭찬' means 'praise'." },
+                    { text: "하소연", isCorrect: false, feedback: "Incorrect. '하소연' means 'complaint/venting'." }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "우디는 뒷담화가 무서워서 사람들이 다른 사람의 기분을 살피게 된다고 했어요. 이를 무엇이라고 하나요?",
+                questionEng: "Woody said people check others' moods because they are afraid of gossip. What is this called?",
+                sentence_pre: "뒷담화가 무서우면 사람들은 다른 사람의 ",
+                sentence_post: ".",
+                correct_word: "눈치를 봐요",
+                translation_pre: "If they are afraid of gossip, people ",
+                translation_answer: "walk on eggshells / read the room",
+                translation_post: " around others.",
+                hint: "Phrase. To read the room / To walk on eggshells.",
+                options: [
+                    { text: "눈치를 봐요", isCorrect: true, feedback: "Exactly! '눈치를 보다' means 'to read the room/walk on eggshells'. Woody thought this was a 'good function' of gossip keeping people in check." },
+                    { text: "화를 내요", isCorrect: false, feedback: "Incorrect. '화를 내다' means 'to get angry'." },
+                    { text: "짜증을 내요", isCorrect: false, feedback: "Incorrect. '짜증을 내다' means 'to get annoyed'." },
+                    { text: "고집을 부려요", isCorrect: false, feedback: "Incorrect. '고집을 부리다' means 'to be stubborn'." }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "조이도 뒷담화를 한 적이 있지만, 잘못한 것 같아서 마음이 불편했다고 했어요. 이것을 무엇이라고 하나요?",
+                questionEng: "Joy said she also gossiped before, but felt uncomfortable because she felt she did something wrong. What is this called?",
+                sentence_pre: "조이는 뒷담화를 하고 나서 마음이 불편하고 ",
+                sentence_post: ".",
+                correct_word: "양심에 찔렸어요",
+                translation_pre: "Joy felt her ",
+                translation_answer: "conscience was pricked",
+                translation_post: " and her mind was uncomfortable after gossiping.",
+                hint: "Phrase. Conscience is pricked / To feel guilty.",
+                options: [
+                    { text: "양심에 찔렸어요", isCorrect: true, feedback: "Ding ding! '양심에 찔리다' means 'to feel a prick of conscience' or 'to feel guilty'. That's why Joy is trying hard not to gossip anymore!" },
+                    { text: "스트레스가 풀렸어요", isCorrect: false, feedback: "Incorrect. This means 'stress was relieved'." },
+                    { text: "속이 시원했어요", isCorrect: false, feedback: "Incorrect. This means 'felt refreshed/relieved'." },
+                    { text: "자신감이 생겼어요", isCorrect: false, feedback: "Incorrect. This means 'gained confidence'." }
+                ]
+            }
+        ];
+
+        const DISCUSS_DATA = [
+            { 
+                id: 1, 
+                questionKor: "여러분은 친구들과 만날 때 주로 어떤 이야기를 해요? 다른 사람에 대한 이야기를 자주 하는 편이에요?", 
+                questionEng: "What do you usually talk about when you meet your friends? Do you tend to talk about other people often?", 
+                vocab: [
+                    { term: "주로", def: "mostly, usually" }, 
+                    { term: "-에 대한 이야기", def: "talk/story about..." },
+                    { term: "-는 편이다", def: "to tend to..., to be on the side of..." }
+                ] 
+            },
+            { 
+                id: 2, 
+                questionKor: "여러분은 다른 사람에 대한 이야기가 '정보 공유'라고 생각해요? 아니면 '뒷담화'라고 생각해요?", 
+                questionEng: "Do you think talking about other people is 'sharing information' or 'gossiping'?", 
+                vocab: [
+                    { term: "정보 공유", def: "sharing information" }, 
+                    { term: "뒷담화", def: "gossip, talking behind someone's back" },
+                    { term: "-라고 생각하다", def: "to think that..." }
+                ] 
+            },
+            { 
+                id: 3, 
+                questionKor: "여러분은 자주 친구에게 힘든 일을 말해요? '하소연'과 '험담'은 어떻게 다를까요?", 
+                questionEng: "Do you often talk to your friends about your difficulties? How are 'venting' and 'badmouthing' different?", 
+                vocab: [
+                    { term: "힘든 일", def: "hardships, difficult times" }, 
+                    { term: "하소연", def: "venting, pouring out one's troubles" },
+                    { term: "험담", def: "badmouthing, speaking ill of" }
+                ] 
+            },
+            { 
+                id: 4, 
+                questionKor: "여러분은 뒷담화를 하면 기분이 어때요? 스트레스가 풀려요? 아니면 양심에 찔려요?", 
+                questionEng: "How do you feel when you gossip? Does it relieve stress, or do you feel a pang of guilt?", 
+                vocab: [
+                    { term: "기분", def: "feeling, mood" }, 
+                    { term: "스트레스가 풀리다", def: "to relieve stress, to blow off steam" },
+                    { term: "양심에 찔리다", def: "to feel a pang of guilt, to prick one's conscience" }
+                ] 
+            },
+            { 
+                id: 5, 
+                questionKor: "우디는 뒷담화를 하면 '유대감'이나 '소속감'이 생긴다고 했어요. 여러분도 누군가를 같이 욕하면서 친구와 더 친해진 적이 있어요?", 
+                questionEng: "Woody said gossiping builds a 'sense of bonding' or 'sense of belonging'. Have you ever gotten closer to a friend by badmouthing someone together?", 
+                vocab: [
+                    { term: "유대감", def: "sense of bonding" }, 
+                    { term: "소속감", def: "sense of belonging" },
+                    { term: "욕하다", def: "to swear at, to badmouth" },
+                    { term: "친해지다", def: "to become close to someone" },
+                    { term: "-ㄴ/은 적이 있다", def: "to have the experience of (doing something)" }
+                ] 
+            },
+            { 
+                id: 6, 
+                questionKor: "여러분은 뒷담화가 무서워서 행동을 조심한 적이 있어요? 다른 사람의 눈치를 본 적이 있어요?", 
+                questionEng: "Have you ever been careful with your behavior because you were afraid of being gossiped about? Have you ever walked on eggshells around others?", 
+                vocab: [
+                    { term: "행동을 조심하다", def: "to be careful of one's behavior" }, 
+                    { term: "눈치를 보다", def: "to read the room, to walk on eggshells" }
+                ] 
+            },
+            { 
+                id: 7, 
+                questionKor: "조이는 뒷담화를 하면서 친해지는 것은 진짜 우정이 아니라고 했어요. 여러분은 어떻게 생각해요?", 
+                questionEng: "Joy said that getting close through gossiping isn't true friendship. What do you think?", 
+                vocab: [
+                    { term: "친해지는 것", def: "becoming close" }, 
+                    { term: "진짜 우정", def: "true friendship" }
+                ] 
+            },
+            { 
+                id: 8, 
+                questionKor: "우디는 뒷담화가 '사람의 본성'이라고 말해요. 여러분도 뒷담화를 하고 싶을 때가 있어요? 그럴 때 어떻게 해요?", 
+                questionEng: "Woody says gossiping is 'human nature'. Are there times when you want to gossip too? What do you do at times like that?", 
+                vocab: [
+                    { term: "본성", def: "human nature, true nature" }, 
+                    { term: "뒷담화를 하고 싶을 때", def: "when you want to gossip" },
+                    { term: "그럴 때", def: "at times like that, in such cases" }
+                ] 
+            },
+            { 
+                id: 9, 
+                questionKor: "조이는 뒷담화를 하는 사람은 결국 신뢰가 깨진다고 했어요. 여러분은 뒷담화를 자주 하는 사람을 계속 믿을 수 있어요?", 
+                questionEng: "Joy said that trust eventually breaks with people who gossip. Can you continue to trust someone who gossips often?", 
+                vocab: [
+                    { term: "결국", def: "eventually, in the end" }, 
+                    { term: "신뢰가 깨지다", def: "trust is broken" },
+                    { term: "계속 믿다", def: "to continue to trust" }
+                ] 
+            },
+            { 
+                id: 10, 
+                questionKor: "여러분은 앞으로 뒷담화를 줄이려고 노력할 거예요? 아니면 자연스러운 거니까 괜찮다고 생각해요?", 
+                questionEng: "Will you make an effort to reduce gossiping from now on? Or do you think it's fine because it's natural?", 
+                vocab: [
+                    { term: "앞으로", def: "from now on, in the future" }, 
+                    { term: "뒷담화를 줄이다", def: "to reduce gossiping" },
+                    { term: "-려고 노력하다", def: "to try to, to make an effort to" },
+                    { term: "자연스러운 것", def: "something natural" }
+                ] 
+            }
+        ];
+
+        const LEVEL_DEFINITIONS = { 
+            "A1": { title: "Novice", desc: "Basic everyday expressions." }, "A1+": { title: "Pre-Beginner", desc: "Can handle slightly more than A1." },
+            "A2": { title: "Beginner", desc: "Frequently used sentences." }, "A2+": { title: "Upper Beginner", desc: "Can speak a bit more smoothly." }, 
+            "B1": { title: "Pre-Intermediate", desc: "Standard speech main points." }, "B1+": { title: "Lower Intermediate", desc: "Stronger B1. More comfortable carrying conversations." },
+            "B2": { title: "Intermediate", desc: "Complex text main ideas." }, "B2+": { title: "Upper Intermediate", desc: "Near C1. Can argue a point logically." },
+            "C1": { title: "Advanced", desc: "Long, demanding texts." }, "C1+": { title: "Upper Advanced", desc: "Very strong C1, approaching native-like flexibility." },
+            "C2": { title: "Proficient", desc: "Can understand virtually everything heard or read." }
+        };
+
+        // --- Icons ---
+        const HomeIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><rect x="3" y="3" width="18" height="18" rx="0" ry="0" /><path d="M3 9h18" /><path d="M9 21V9" /></svg>);
+        const VideoIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>);
+        const VocabIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>);
+        const QuizIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>);
+        const DiscussIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>);
+        const TranslateIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.09-.02.67-.02zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" /></svg>);
+        const RewindIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>);
+        const ForwardIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>);
+        const PauseIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>);
+        const PlayIconSolid = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M5 3l14 9-14 9V3z" /></svg>);
+        const MenuIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        );
+        const ExternalLinkIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>);
+        const SparklesIcon = ({className}) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 00-1.423 1.423z" /></svg>);
+
+        // --- Helper Utilities ---
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = ""; 
+            const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${apiKey}`; 
+            const delays = CONFIG.API_RETRY_DELAYS;
+            for (let i = 0; i <= delays.length; i++) { 
+                try { 
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); 
+                    if (!response.ok) { 
+                        if (response.status === 429 || response.status >= 500) throw new Error(`Server error: ${response.status}`); 
+                        throw new Error(`API error: ${response.statusText}`); 
+                    } 
+                    return await response.json(); 
+                } catch (error) { 
+                    if (i === delays.length) throw error; 
+                    await new Promise(resolve => setTimeout(resolve, delays[i])); 
+                } 
+            }
+        };
+
+        const shuffleArray = (array) => {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        };
+
+        const TransBtn = ({ onClick, isShowing, labelOff='Eng', labelOn='Hide', className = "" }) => (
+            <button onClick={(e) => { e.stopPropagation(); onClick(e); }} className={`flex items-center gap-1 text-[10px] font-medium text-gray-400 hover:text-gray-900 font-sans transition-colors cursor-pointer border-none p-0 tracking-wide uppercase ${className}`}>
+                <TranslateIcon className="w-3 h-3" />{isShowing ? labelOn : labelOff}
+            </button>
+        );
+
+        const TranslateButton = ({ onClick, isShowing, className = "" }) => (
+            <button onClick={(e) => { e.stopPropagation(); onClick(e); }} className={`flex items-center gap-1 text-[10px] font-medium text-gray-400 hover:text-gray-900 font-sans transition-colors cursor-pointer border-none p-0 tracking-wide uppercase ${className}`}>
+                <TranslateIcon className="w-3 h-3" />{isShowing ? 'Hide' : 'Eng'}
+            </button>
+        );
+
+        const LevelBadge = ({ levelCode }) => {
+            const definition = LEVEL_DEFINITIONS[levelCode] || { title: "Unknown", desc: "" };
+            return (<div className="flex items-center gap-2 border border-black px-2 py-0.5 rounded-none"><span className="text-xs font-bold font-sans text-black">{levelCode}</span><div className="w-px h-3 bg-gray-300"></div><span className="text-xs text-gray-500 font-sans">{definition.title}</span></div>);
+        };
+
+        // --- Configuration ---
+        const NAV_ITEMS = [
+            { id: 'home', label: '시작 페이지', icon: HomeIcon },
+            { id: 'video', label: '동영상 자료', icon: VideoIcon },
+            { id: 'vocab', label: '핵심 어휘', icon: VocabIcon },
+            { id: 'quiz', label: '내용 확인 퀴즈', icon: QuizIcon },
+            { id: 'discuss', label: '생각해 보기', icon: DiscussIcon }
+        ];
+
+        const HOME_CARDS = [
+            { 
+                tag: "Vocab", 
+                title: "핵심 어휘", 
+                korDesc: <>학습 자료에 나온 단어와<br/>표현을 학습해 보세요.</>, 
+                engDesc: <>Learn new words and<br/>expressions from the text.</>,
+                subtitle: "Key Vocabulary",
+                target: 'vocab' 
+            },
+            { 
+                tag: "Quiz", 
+                title: "내용 퀴즈", 
+                korDesc: <>학습 자료의 내용과 어휘를<br/>이해했는지 확인해 보세요.</>, 
+                engDesc: <>Check your understanding of<br/>the content and vocabulary.</>,
+                subtitle: "Comprehension Quiz",
+                target: 'quiz' 
+            },
+            { 
+                tag: "Discuss", 
+                title: "생각해 보기", 
+                korDesc: <>학습 자료에 대해<br/>깊게 생각해 보세요.</>, 
+                engDesc: <>Think deeply about the topic<br/>and form your own opinion.</>,
+                subtitle: "Food For Thought",
+                target: 'discuss' 
+            }
+        ];
+
+        // --- Main Views ---
+        const Header = ({ isExpanded, setIsExpanded, activeTab, setActiveTab }) => (
+            <>
+                <nav className={`sticky top-0 z-50 bg-white border-b border-gray-100 hidden lg:flex items-center justify-between px-8 overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'}`}>
+                    <div className="flex items-center cursor-pointer text-left" onClick={() => setActiveTab('home')}><span className="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div>
+                    <div className="flex items-center justify-end gap-8 pr-12 flex-1">
+                        {NAV_ITEMS.map((menu) => (
+                            <button key={menu.id} onClick={() => setActiveTab(menu.id)} className={`text-sm font-medium transition-colors font-sans relative ${activeTab === menu.id ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}>{menu.label}{activeTab === menu.id && <div className="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>}</button>
+                        ))}
+                    </div>
+                </nav>
+                
+                <button 
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className={`fixed top-0 right-0 z-[60] hidden lg:flex items-center justify-center w-10 h-16 bg-white hover:bg-gray-50 transition-colors ${isExpanded ? 'border-b border-gray-100' : 'border-transparent'}`}
+                    title={isExpanded ? "메뉴 접기" : "메뉴 펼치기"}
+                >
+                    <MenuIcon className="w-5 h-5 text-black" />
+                </button>
+            </>
+        );
+
+        const HomeListItem = ({ title, korDesc, engDesc, subtitle, onClick }) => (
+            <div 
+                onClick={onClick}
+                className="group p-8 md:p-10 flex flex-col items-center text-center transition-colors hover:bg-gray-50 cursor-pointer"
+            >
+                <h3 className="font-serif-kr text-xl mb-4 text-gray-900 mt-4">{title}</h3>
+                <div className="mb-8 space-y-2">
+                    <p className="font-sans-kr text-xs text-gray-500 leading-relaxed">{korDesc}</p>
+                    <p className="font-eng-header text-[9px] text-gray-300 leading-relaxed group-hover:text-gray-500 transition-colors">{engDesc}</p>
+                </div>
+                <span className="font-eng-header text-[10px] tracking-widest border-b border-transparent group-hover:border-gray-900 pb-0.5 transition-all uppercase text-gray-800">{subtitle}</span>
+            </div>
+        );
+
+        const HomeView = ({ setActiveTab, userLevel }) => {
+            const levelInfo = LEVEL_DEFINITIONS[userLevel] || { title: "Unknown" };
+            return (
+                <div className="animate-fade-in max-w-5xl mx-auto w-full px-6 lg:px-0 pt-[3.75rem] pb-8 flex flex-col items-center h-full justify-center">
+                    <div className="flex flex-col items-center justify-center text-center w-full mb-16">
+                        <div className="flex flex-wrap items-center justify-center gap-3 mb-6"> 
+                            <span className="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-wide">
+                                이 주제로 이야기해 봐요! <span className="ml-1 font-eng-header font-medium tracking-widest opacity-90 uppercase">Let's Talk About It</span>
+                            </span>
+                            <div className="flex items-center border border-gray-900 px-3 py-1 text-[10px] font-sans tracking-widest uppercase text-gray-900">
+                                <span className="font-bold">{userLevel}</span>
+                                <span className="mx-2 w-px h-2.5 bg-gray-300"></span>
+                                <span className="font-medium">{levelInfo.title}</span>
+                            </div>
+                        </div>
+                        <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold">
+                            뒷담화는 나쁠까요? 괜찮을까요?
+                        </h1>
+                        <p className="font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed">
+                            Is gossiping bad? Or is it okay?
+                        </p>
+                        
+                        <div 
+                            onClick={() => setActiveTab('video')}
+                            className="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black"
+                        >
+                            <img 
+                                src={`https://img.youtube.com/vi/${VIDEO_CONFIG.YOUTUBE_VIDEO_ID}/maxresdefault.jpg`} 
+                                alt="Video Thumbnail" 
+                                className="w-full h-full object-cover opacity-90 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"
+                            />
+                            
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                    <PlayIconSolid className="w-6 h-6 text-black ml-1" />
+                                </div>
+                            </div>
+                            
+                            <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="bg-black px-5 py-2 flex items-center gap-2.5">
+                                    <span className="text-white text-xs font-bold font-sans tracking-widest">동영상 보기</span>
+                                    <div className="w-px h-2.5 bg-gray-500"></div>
+                                    <span className="text-gray-300 text-[10px] font-eng-header tracking-widest uppercase mt-px">Watch Video</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 w-full pt-0 max-w-5xl">
+                        {HOME_CARDS.map((card, idx) => (
+                            <HomeListItem 
+                                key={idx} 
+                                title={card.title} 
+                                korDesc={card.korDesc}
+                                engDesc={card.engDesc}
+                                subtitle={card.subtitle}
+                                onClick={() => setActiveTab(card.target)} 
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const VideoSidebarVocabCard = ({ word, activeVocabTerm, sidebarVocabRefs }) => {
+            const [showTrans, setShowTrans] = useState(false);
+            const trans = word.translations?.en;
+            return (
+                <div ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-5 border-b border-gray-100 last:border-0 transition-all duration-500 bg-white`}>
+                    <div className="flex justify-between items-baseline mb-2">
+                        <h3 className={`text-lg font-serif font-bold ${activeVocabTerm === word.term ? 'text-black underline decoration-1 underline-offset-4' : 'text-gray-900'}`}>{word.term}</h3>
+                        <TransBtn onClick={() => setShowTrans(!showTrans)} isShowing={showTrans} />
+                    </div>
+                    <p className="text-sm font-serif text-gray-600 mb-3 leading-relaxed">{word.mainDef}</p>
+                    {showTrans && trans?.mainDef && (<div className="mt-2 mb-4 pt-2 border-t border-gray-100 animate-fade-in"><p className="text-xs font-ui text-gray-500">{trans.mainDef}</p></div>)}
+                    {word.subDefs && word.subDefs.length > 0 && (
+                        <div className="space-y-2 mt-3 pl-3 border-l border-gray-200">
+                            {word.subDefs.map((sub, i) => (
+                                <div key={i}>
+                                    <p className="text-xs font-bold text-gray-800 font-ui mb-0.5">{sub.subTerm}</p>
+                                    <p className="text-xs text-gray-500 font-serif">{sub.subDef}</p>
+                                    {showTrans && trans?.subDefs?.[i]?.def && (<p className="text-[10px] text-gray-400 font-ui mt-0.5 italic">{trans.subDefs[i].def}</p>)}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const VideoVocabPopup = ({ popup, onGlobalClick }) => {
+            const [showTrans, setShowTrans] = useState(false);
+            const trans = popup.data?.translations?.en;
+            const popupWidth = 300; const padding = 20; const windowWidth = window.innerWidth;
+            let leftPos = popup.x - (popupWidth / 2);
+            if (leftPos < padding) leftPos = padding; else if (leftPos + popupWidth > windowWidth - padding) leftPos = windowWidth - popupWidth - padding;
+            useEffect(() => { setShowTrans(false); }, [popup.data]);
+            if (!popup.show || !popup.data) return null;
+            return createPortal(
+                <div className={`fixed z-[9999] bg-white border border-gray-200 p-6 w-[300px] shadow-2xl animate-fade-in ${!popup.fixed ? 'pointer-events-none' : ''}`} style={{ left: leftPos, top: popup.y + 16 }} onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                        <h3 className="text-xl font-serif font-bold text-gray-900">{popup.data.term}</h3>
+                        {popup.fixed && (<TransBtn onClick={() => setShowTrans(!showTrans)} isShowing={showTrans} />)}
+                    </div>
+                    <p className="text-sm font-serif text-gray-700 leading-relaxed mb-4">{popup.data.mainDef}</p>
+                    {showTrans && popup.fixed && trans?.mainDef && (<div className="mb-4 bg-white border border-gray-100 p-3 animate-fade-in"><p className="text-xs font-ui text-gray-600">{trans.mainDef}</p></div>)}
+                    {popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (<div className="space-y-3 mt-4">{popup.data.subDefs.map((sub, idx) => (<div key={idx}><p className="text-xs font-bold font-ui text-gray-900 mb-1">{sub.subTerm}</p><p className="text-xs font-serif text-gray-600">{sub.subDef}</p></div>))}</div>)}
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45"></div>
+                </div>, document.body
+            );
+        };
+
+        const LearnView = ({ updateProgress }) => {
+            const playerRef = useRef(null); 
+            const [videoState, setVideoState] = useState({ player: null, currentTime: 0, duration: 0, isPlaying: false });
+            const [activeLine, setActiveLine] = useState(null);
+            const [translations, setTranslations] = useState({});
+            const [popup, setPopup] = useState({ show: false, fixed: false, data: null, x: 0, y: 0 });
+            const [isLoading, setIsLoading] = useState(true);
+            const [activeVocabTerm, setActiveVocabTerm] = useState(null);
+            const sidebarVocabRefs = useRef({});
+            const scriptRefs = useRef({});
+            const intervalRef = useRef(null);
+            const [isSpeedMenuOpen, setIsSpeedMenuOpen] = useState(false);
+            
+            const [layoutMode, setLayoutMode] = useState('split');
+            const [autoScroll, setAutoScroll] = useState(true);
+            const [showVocab, setShowVocab] = useState(false);
+            const [playbackRate, setPlaybackRate] = useState(1.0);
+
+            useEffect(() => {
+                const loadVideo = () => {
+                    if (window.YT && window.YT.Player) {
+                        new window.YT.Player('youtube-player', {
+                            videoId: VIDEO_CONFIG.YOUTUBE_VIDEO_ID, width: '100%', height: '100%',
+                            playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0, 'disablekb': 1 },
+                            events: {
+                                'onReady': (event) => { playerRef.current = event.target; setVideoState(prev => ({ ...prev, player: event.target, duration: event.target.getDuration() })); setIsLoading(false); },
+                                'onStateChange': (event) => { if (event.data === window.YT.PlayerState.PLAYING) { startInterval(); updateProgress('learn'); setVideoState(prev => ({ ...prev, isPlaying: true })); } else { stopInterval(); if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) { setVideoState(prev => ({ ...prev, isPlaying: false })); } } }
+                            }
+                        });
+                    }
+                };
+                if (!window.YT) { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); window.onYouTubeIframeAPIReady = loadVideo; } else { loadVideo(); }
+                return () => stopInterval();
+            }, []);
+
+            useEffect(() => { if (videoState.player && videoState.player.setPlaybackRate) videoState.player.setPlaybackRate(playbackRate); }, [playbackRate, videoState.player]);
+
+            const handleGlobalClick = useCallback(() => { if (popup.fixed) setPopup(prev => ({ ...prev, show: false, fixed: false })); }, [popup.fixed]);
+            useEffect(() => { if (popup.fixed) window.addEventListener('click', handleGlobalClick); return () => window.removeEventListener('click', handleGlobalClick); }, [popup.fixed, handleGlobalClick]);
+
+            useEffect(() => {
+                const handleKeyPress = (e) => {
+                    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                    if (e.code === 'Space') { e.preventDefault(); const player = videoState.player; if (player && typeof player.getPlayerState === 'function') { if (player.getPlayerState() === 1) player.pauseVideo(); else player.playVideo(); } }
+                    if (e.code === 'ArrowLeft') { e.preventDefault(); const currentIndex = VIDEO_SCRIPT_DATA.findIndex(line => line.id === activeLine); if (currentIndex > 0) handleLineClick(VIDEO_SCRIPT_DATA[currentIndex - 1].time[0]); }
+                    if (e.code === 'ArrowRight') { e.preventDefault(); const currentIndex = VIDEO_SCRIPT_DATA.findIndex(line => line.id === activeLine); if (currentIndex !== -1 && currentIndex < VIDEO_SCRIPT_DATA.length - 1) handleLineClick(VIDEO_SCRIPT_DATA[currentIndex + 1].time[0]); else if (currentIndex === -1 && VIDEO_SCRIPT_DATA.length > 0) handleLineClick(VIDEO_SCRIPT_DATA[0].time[0]); }
+                };
+                window.addEventListener('keydown', handleKeyPress); return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [videoState.player, activeLine]);
+
+            const startInterval = () => { 
+                stopInterval(); 
+                intervalRef.current = setInterval(() => {
+                    const p = playerRef.current; 
+                    if (p && p.getCurrentTime) { 
+                        const time = p.getCurrentTime(); 
+                        setVideoState(prev => ({ ...prev, currentTime: time })); 
+                        const currentLine = VIDEO_SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); 
+                        if (currentLine) setActiveLine(currentLine.id); 
+                    }
+                }, 200); 
+            };
+            
+            const stopInterval = () => { 
+                if (intervalRef.current) { 
+                    clearInterval(intervalRef.current); 
+                    intervalRef.current = null; 
+                } 
+            };
+
+            useEffect(() => { 
+                if (popup.show) return; 
+                if (activeLine && autoScroll && scriptRefs.current[activeLine]) {
+                    scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+                }
+            }, [activeLine, autoScroll, popup.show, layoutMode]);
+
+            const handleLineClick = (time) => { const player = videoState.player; if (player) { player.seekTo(time, true); player.playVideo(); } };
+            const toggleTranslation = (id) => setTranslations(prev => ({...prev, [id]: !prev[id]}));
+            const scrollToVocab = (term) => { const element = sidebarVocabRefs.current[term]; if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+            
+            const handleVocabEnter = (e, wordData) => { if (popup.fixed) return; const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: false, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+            const handleVocabLeave = () => { if (popup.fixed) return; setPopup(prev => ({ ...prev, show: false })); };
+            const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+
+            const handleSeek = (e) => { const time = parseFloat(e.target.value); if (videoState.player) videoState.player.seekTo(time, true); setVideoState(prev => ({ ...prev, currentTime: time })); };
+            const togglePlay = () => { const player = videoState.player; if (player) { if (videoState.isPlaying) player.pauseVideo(); else player.playVideo(); } };
+            const rewind2 = () => { const player = videoState.player; if (player) { const newTime = Math.max(0, videoState.currentTime - 1.5); player.seekTo(newTime, true); setVideoState(prev => ({ ...prev, currentTime: newTime })); } };
+            const forward2 = () => { const player = videoState.player; if (player) { const newTime = Math.min(videoState.duration, videoState.currentTime + 1.5); player.seekTo(newTime, true); setVideoState(prev => ({ ...prev, currentTime: newTime })); } };
+            const formatTime = (seconds) => { if (isNaN(seconds)) return "00:00"; const date = new Date(seconds * 1000); const mm = date.getUTCMinutes(); const ss = date.getUTCSeconds(); return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`; };
+
+            const allVocabTerms = useMemo(() => { return VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); return [...new Set(terms)].filter(t => t).map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length); }, []);
+
+            const renderTextWithVocab = (text) => {
+                if (!text) return [""];
+                const matches = [];
+                allVocabTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; const overlaps = matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end) || (index <= m.start && end >= m.end)); if (!overlaps) matches.push({ start: index, end, term, vocab }); index += 1; } });
+                matches.sort((a, b) => a.start - b.start);
+                const result = []; let lastIndex = 0;
+                matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); const isActive = (popup.show && popup.data && popup.data.term === match.vocab.term) || (showVocab && activeVocabTerm === match.vocab.term); 
+                result.push(<span key={`${match.term}-${idx}`} className={`cursor-pointer border-b border-dotted transition-all duration-200 font-medium inline-block leading-tight ${isActive ? 'border-black bg-white text-black border-solid' : 'border-gray-400 text-gray-800 hover:border-black hover:text-black'}`} onMouseEnter={(e) => handleVocabEnter(e, match.vocab)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, match.vocab)}>{match.term}</span>); lastIndex = match.end; });
+                if (lastIndex < text.length) result.push(text.substring(lastIndex));
+                return result;
+            };
+
+            // Layout Mode Logic
+            const isScriptMode = layoutMode === 'script';
+            const isVideoOnlyMode = layoutMode === 'video';
+            const isSplitMode = layoutMode === 'split';
+
+            // Video Container Classes based on Breakpoints and Layout Mode
+            const videoStyle = isSplitMode 
+                ? `w-full aspect-video shrink-0 z-20 shadow-md lg:shadow-none lg:h-full lg:aspect-auto ${showVocab ? 'lg:w-[58%] xl:flex-1' : 'lg:w-[58%] xl:w-7/12'}` 
+                : (isScriptMode ? 'hidden' : 'flex-1 w-full h-full');
+
+            // Script Container Classes based on Breakpoints and Layout Mode
+            const scriptContainerBaseClass = `flex-1 flex flex-col min-h-0 bg-white border-l border-gray-200 transition-all duration-300`;
+            const scriptContainerResponsiveClass = isSplitMode 
+                ? `w-full lg:w-[42%] lg:h-full lg:flex-none ${showVocab ? 'xl:w-4/12' : 'xl:w-5/12'}`
+                : (isScriptMode ? 'w-full h-full' : 'hidden');
+
+            const LearnToolbar = () => (
+                <div className="sticky top-0 z-40 h-16 flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shadow-sm pr-14">
+                    <div className="flex items-center gap-1 shrink-0">
+                        {[
+                            { id: 'split', kor: '동영상 & 스크립트', eng: 'Video & Transcript' }, 
+                            { id: 'video', kor: '동영상만 보기', eng: 'Watch Video' }, 
+                            { id: 'script', kor: '스크립트만 보기', eng: 'Read Transcript' }
+                        ].map((mode) => {
+                            const isActive = layoutMode === mode.id;
+                            let visibilityClass = "hidden"; // Default hidden
+
+                            if (mode.id === 'split') visibilityClass = "flex"; // Always visible (Video & Script)
+                            else if (mode.id === 'video') visibilityClass = "hidden md:flex"; // Video Only from md
+                            else if (mode.id === 'script') visibilityClass = "hidden sm:flex"; // Script Only from sm
+
+                            return (
+                                <button
+                                    key={mode.id}
+                                    onClick={() => setLayoutMode(mode.id)}
+                                    className={`flex-col items-center justify-center px-3 py-1.5 transition-all rounded-sm ${visibilityClass} ${isActive ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-gray-50'}`}
+                                >
+                                    <span className="text-[11px] md:text-xs font-bold font-sans">{mode.kor}</span>
+                                    <span className="text-[8px] md:text-[9px] font-eng-header uppercase tracking-widest mt-0.5 opacity-80">{mode.eng}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="flex items-center gap-4 flex-1 justify-end min-w-0">
+                        {/* Player Controls */}
+                        <div className="hidden sm:flex items-center gap-4 flex-1 max-w-xl justify-end">
+                            
+                            {/* 1. Progress Bar & Time - Hidden on xs/sm, shown from md */}
+                            <div className="hidden md:flex flex-col flex-1 gap-1 w-full">
+                                <div className="relative group h-2 flex items-center">
+                                    <div className="absolute inset-0 flex items-center">
+                                        <div className="w-full h-[1px] bg-gray-200 group-hover:h-[2px] transition-all"></div>
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-black" style={{ width: `${(videoState.currentTime/videoState.duration)*100}%` }}></div>
+                                    </div>
+                                    <input type="range" min="0" max={videoState.duration || 100} value={videoState.currentTime} onChange={handleSeek} className="absolute inset-0 w-full opacity-0 cursor-pointer" />
+                                </div>
+                                <span className="text-[10px] font-mono text-gray-400 text-right leading-none">{formatTime(videoState.currentTime)} / {formatTime(videoState.duration)}</span>
+                            </div>
+
+                            {/* 2. Control Buttons - Hidden on xs, Shown from sm */}
+                            <div className="hidden sm:flex items-center gap-3 shrink-0">
+                                <button onClick={rewind2} className="text-gray-400 hover:text-black transition-colors"><RewindIcon className="w-4 h-4" /></button>
+                                <button onClick={togglePlay} className="w-6 h-6 border border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">
+                                    {videoState.isPlaying ? <PauseIcon className="w-2.5 h-2.5 fill-current" /> : <PlayIconSolid className="w-2.5 h-2.5 fill-current ml-0.5" />}
+                                </button>
+                                <button onClick={forward2} className="text-gray-400 hover:text-black transition-colors"><ForwardIcon className="w-4 h-4" /></button>
+                            </div>
+                        </div>
+
+                        <div className="h-4 w-px bg-gray-200 hidden sm:block"></div>
+
+                        {/* Speed Control - Hidden on xs */}
+                        <div className="relative shrink-0 hidden sm:flex group">
+                            <button onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)} className="flex items-center gap-1.5 text-xs font-bold font-ui uppercase tracking-wider text-gray-500 hover:text-black">
+                                {playbackRate.toFixed(1)}x
+                            </button>
+                            {isSpeedMenuOpen && (
+                                <>
+                                <div className="fixed inset-0 z-40" onClick={() => setIsSpeedMenuOpen(false)}></div>
+                                <div className="absolute top-full right-0 mt-2 bg-white border border-gray-200 shadow-xl p-1 z-50 w-20 animate-fade-in">
+                                    {[0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map(speed => (
+                                        <button key={speed} onClick={() => { setPlaybackRate(speed); setIsSpeedMenuOpen(false); }} className={`w-full text-center py-1.5 text-[10px] font-bold font-ui hover:bg-white ${playbackRate === speed ? 'text-black' : 'text-gray-400'}`}>
+                                            {speed}x
+                                        </button>
+                                    ))}
+                                </div>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Auto Scroll - Hidden on xs */}
+                        <button 
+                            onClick={() => setAutoScroll(!autoScroll)} 
+                            className={`hidden sm:flex items-center gap-2 text-[10px] font-bold font-ui uppercase tracking-widest transition-colors ${autoScroll ? 'text-black' : 'text-gray-300 hover:text-gray-500'}`}
+                        >
+                            <span className={`w-2 h-2 rounded-full ${autoScroll ? 'bg-black' : 'border border-gray-300'}`}></span>
+                            <span className="md:hidden">Scroll</span>
+                            <span className="hidden md:inline">Auto Scroll</span>
+                        </button>
+
+                        {/* Dictionary - Hidden on xs/sm/md/lg, Show on xl */}
+                        <button 
+                            onClick={() => setShowVocab(!showVocab)} 
+                            className={`hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}`}
+                        >
+                            Vocabulary
+                        </button>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="flex flex-col h-full animate-fade-in">
+                    <LearnToolbar />
+                    <div className={`flex flex-col lg:flex-row flex-1 overflow-hidden relative`}>
+                        <VideoVocabPopup popup={popup} onGlobalClick={handleGlobalClick} />
+                        
+                        {/* Video Container */}
+                        <div className={`bg-black overflow-hidden relative transition-all duration-300 ${videoStyle} ${isScriptMode ? 'hidden' : ''} ${isVideoOnlyMode ? 'h-full flex-1 w-full' : ''}`}>
+                                {isLoading && (<div className="absolute inset-0 z-10 bg-black flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div></div>)}
+                                <div id="youtube-player" className={`w-full h-full`}></div>
+                        </div>
+                        
+                        {/* Script Container */}
+                        <div className={`${scriptContainerBaseClass} ${scriptContainerResponsiveClass} ${isVideoOnlyMode ? 'hidden' : ''}`}>
+                            <div className={`flex-1 overflow-y-auto bg-white`}>
+                                <div className={isScriptMode ? "w-full mx-auto p-4 sm:p-8 min-h-full bg-white shadow-sm my-8 max-w-4xl lg:max-w-5xl" : "p-8 space-y-8"}>
+                                    {VIDEO_SCRIPT_DATA.map(line => {
+                                        const isActive = activeLine === line.id;
+                                        const isLeft = line.speaker === VIDEO_SCRIPT_DATA[0].speaker;
+                                        const translation = translations[line.id];
+                                        
+                                        const speakerClass = "text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-bold font-ui uppercase tracking-widest text-gray-400";
+                                        const koreanClass = "text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-serif leading-[1.8] tracking-wide text-left";
+                                        const englishClass = "text-xs sm:text-sm md:text-sm lg:text-sm xl:text-sm font-serif text-gray-500 text-left";
+
+                                        if (isScriptMode) {
+                                            return (
+                                                <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-8 ${isLeft ? 'items-start' : 'items-end'}`}>
+                                                    <span className={`${speakerClass} mb-2 ${isLeft ? 'ml-1' : 'mr-1'}`}>{line.speaker}</span>
+                                                    <div onClick={() => handleLineClick(line.time[0])} className={`relative px-6 py-5 max-w-[90%] md:max-w-[80%] bg-white border border-transparent rounded-2xl ${isLeft ? 'rounded-bl-none' : 'rounded-br-none'} hover:shadow-md transition-all duration-300 cursor-pointer group ${isActive ? 'ring-1 ring-black border-black' : ''}`}>
+                                                        <p className={`${koreanClass} text-gray-800`}>{renderTextWithVocab(line.kor)}</p>
+                                                        {translation && <div className="mt-3 pt-3 border-t border-dashed border-gray-100 animate-fade-in"><p className={`${englishClass} leading-relaxed`}>{line.eng}</p></div>}
+                                                        <div className="flex items-center justify-start mt-4 gap-3">
+                                                            <TransBtn onClick={() => toggleTranslation(line.id)} isShowing={translation} labelOn="Eng" className="font-bold" />
+                                                            <button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400"><PlayIconSolid className="w-2 h-2 ml-0.5" /></button>
+                                                        </div>
+                                                        <svg className={`absolute bottom-[-1px] ${isLeft ? '-left-[7px]' : '-right-[7px]'} w-[8px] h-[8px] z-10`} viewBox="0 0 8 8" fill="none"><path d={isLeft ? "M8 0 C 8 4 4 8 0 8 L 8 8 V 0 Z" : "M0 0 C 0 4 4 8 8 8 L 0 8 V 0 Z"} fill="white" /><path d={isLeft ? "M0 8 C 4 8 8 4 8 0" : "M8 8 C 4 8 0 4 0 0"} stroke={isActive ? "black" : "transparent"} strokeWidth="1" fill="none" /><path d={isLeft ? "M8 0 V8" : "M0 0 V8"} stroke="white" strokeWidth="2" /></svg>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-90'}`}>
+                                                <div className="flex items-center gap-2 mb-2 justify-start">
+                                                    <span className={speakerClass}>{line.speaker}</span>
+                                                    {isActive && <span className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></span>}
+                                                </div>
+                                                <div onClick={() => handleLineClick(line.time[0])} className="cursor-pointer group">
+                                                    <p className={`${koreanClass} ${isActive ? 'text-black' : 'text-[#1a1a1a]'}`}>{renderTextWithVocab(line.kor)}</p>
+                                                    {translation && <p className={`${englishClass} mt-2 animate-fade-in pl-3 border-l border-gray-200`}>{line.eng}</p>}
+                                                    <div className="flex mt-2 opacity-0 group-hover:opacity-100 transition-opacity justify-start"><TransBtn onClick={() => toggleTranslation(line.id)} isShowing={translation} /></div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="h-32"></div>
+                                </div>
+                            </div>
+                        </div>
+                        {showVocab && (
+                            <div className={`w-80 flex flex-col bg-white border-l border-gray-200 animate-fade-in ${isScriptMode ? 'fixed right-0 top-[114px] h-[calc(100vh-114px)]' : 'h-full'}`}>
+                                <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
+                                    <span className="font-ui text-xs font-bold uppercase tracking-widest text-gray-900">핵심 어휘</span>
+                                    <span className="text-xs font-serif text-gray-500 italic">{VOCAB_DATA.length}개</span>
+                                </div>
+                                <div className="flex-1 overflow-y-auto bg-white">
+                                    {VOCAB_DATA.map((word, idx) => (<VideoSidebarVocabCard key={idx} word={word} activeVocabTerm={activeVocabTerm} sidebarVocabRefs={sidebarVocabRefs} />))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabExampleRow = ({ ex }) => {
+            const [isTransVisible, setIsTransVisible] = useState(false);
+            return (
+                <div className="group">
+                    <div className="flex justify-between items-start gap-2">
+                        <p className="font-serif-kr text-base text-gray-700 leading-relaxed mb-1.5 break-keep">
+                            {ex.kor}
+                        </p>
+                        <div className={`shrink-0 mt-0.5 transition-opacity duration-200 ${isTransVisible ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                            <TranslateButton onClick={() => setIsTransVisible(!isTransVisible)} isShowing={isTransVisible} />
+                        </div>
+                    </div>
+                    {isTransVisible && (
+                        <p className="font-sans-kr text-sm text-gray-500 font-light leading-relaxed animate-fade-in">
+                            {ex.eng}
+                        </p>
+                    )}
+                </div>
+            );
+        };
+
+        const VocabItem = ({ word }) => {
+            const [showExamples, setShowExamples] = useState(false);
+            
+            return (
+                <div className="bg-white p-8 md:p-12 border border-gray-200 hover:border-gray-300 transition-colors duration-300 flex flex-col h-full">
+                    {/* 1단계: 단어 및 핵심 의미 */}
+                    <div className="mb-6">
+                        <h3 className="font-serif-kr text-xl md:text-2xl text-gray-900 font-semibold tracking-tight mb-2">
+                            {word.term}
+                        </h3>
+                        <p className="font-sans-kr text-base text-gray-500 font-light leading-relaxed">
+                            {word.mainDef}
+                        </p>
+                    </div>
+
+                    {/* 2단계: 어휘 풀이 (Breakdown) */}
+                    {word.subDefs && word.subDefs.length > 0 && (
+                        <div className="mb-8 pl-4 border-l border-gray-200 flex-1">
+                            <div className="font-sans-kr text-xs text-gray-400 tracking-widest uppercase mb-3 flex items-center gap-2">
+                                어휘 풀이 <span className="font-eng-header font-light text-xs">BREAKDOWN</span>
+                            </div>
+                            <div className="space-y-4">
+                                {word.subDefs.map((sub, idx) => (
+                                    <div key={idx} className="flex flex-col gap-1">
+                                        <span className="font-serif-kr text-base text-gray-800 font-medium">
+                                            {sub.subTerm}
+                                        </span>
+                                        <span className="font-sans-kr text-sm text-gray-500 leading-relaxed">
+                                            {sub.subDef}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 어휘 풀이가 없는 경우 레이아웃 균형을 위한 여백 */}
+                    {(!word.subDefs || word.subDefs.length === 0) && <div className="flex-1"></div>}
+
+                    {/* 3단계: 예문 영역 (아코디언 UI) */}
+                    {word.examples && word.examples.length > 0 && (
+                        <div className="mt-6 pt-6 border-t border-gray-100 mt-auto">
+                            <button 
+                                onClick={() => setShowExamples(!showExamples)}
+                                className="flex items-center gap-2 font-sans-kr text-xs text-gray-400 hover:text-gray-800 transition-colors duration-200"
+                            >
+                                <svg className={`w-3 h-3 transition-transform duration-200 ${showExamples ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                                예문 보기 <span className="font-eng-header text-xs tracking-widest uppercase font-light">VIEW EXAMPLES</span>
+                            </button>
+                            
+                            {showExamples && (
+                                <div className="space-y-5 bg-gray-50/50 p-5 rounded-sm mt-6 animate-fade-in">
+                                    {word.examples.map((ex, idx) => (
+                                        <VocabExampleRow key={idx} ex={ex} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        const VocabView = ({ updateProgress }) => { 
+            useEffect(() => { updateProgress('vocab'); }, []); 
+            return (
+                <div className="w-full pt-16 px-6 max-w-[1000px] mx-auto pb-20 animate-fade-in">
+                    {/* 전체 섹션 헤더 (제목 영역) */}
+                    <div className="mb-12 md:mb-20 text-center animate-fade-in">
+                        <h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight">
+                            핵심 어휘
+                        </h2>
+                        <span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2">
+                            Key Vocabulary
+                        </span>
+                        
+                        {/* 장식용 세로선 */}
+                        <div className="w-[1px] h-8 bg-gray-200 mx-auto mt-8"></div>
+                    </div>
+
+                    {/* 어휘 카드 그리드 및 컨테이너 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        {VOCAB_DATA.map((word, idx) => (<VocabItem key={idx} word={word} />))}
+                    </div>
+                </div>
+            ); 
+        };
+
+        const QuizSentence = ({ quiz, onAttempt }) => {
+            const [selectedOption, setSelectedOption] = useState(null);
+            const [showHint, setShowHint] = useState(false);
+            const [showTrans, setShowTrans] = useState(false);
+            const [isSolved, setIsSolved] = useState(false);
+            const [hasAttempted, setHasAttempted] = useState(false);
+
+            const handleOptionClick = (option) => {
+                if (isSolved && option.isCorrect) return;
+                
+                setSelectedOption(option);
+                
+                if (!hasAttempted) {
+                    setHasAttempted(true);
+                    onAttempt(quiz.id, option.isCorrect);
+                }
+
+                if (option.isCorrect) {
+                    setIsSolved(true);
+                }
+            };
+
+            return (
+                <div className="mb-16 pb-8 border-b border-gray-100 last:border-0">
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="text-xs font-bold font-sans text-black border border-black px-1.5 py-0.5">Q.{quiz.id}</span>
+                        <div className="flex flex-col">
+                            <h3 className="text-lg font-bold font-serif text-gray-900 leading-snug">{quiz.questionKor}</h3>
+                             <p className="text-xs font-sans text-gray-400">{quiz.questionEng}</p>
+                        </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200">
+                        <div className="text-xl font-serif text-gray-900 leading-loose text-left">
+                            <span>{quiz.sentence_pre}</span>
+                            <span className={`inline-block border-b-2 px-2 mx-1 font-bold transition-colors ${isSolved ? 'text-green-600 border-green-500' : (selectedOption && !selectedOption.isCorrect ? 'text-red-500 border-red-400' : 'text-gray-400 border-gray-400 min-w-[80px]')}`}>
+                                {isSolved ? quiz.correct_word : (selectedOption && !selectedOption.isCorrect ? selectedOption.text : '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')}
+                            </span>
+                            <span>{quiz.sentence_post}</span>
+                        </div>
+
+                        {showTrans && (
+                            <div className="mt-6 pt-6 border-t border-gray-200 text-left animate-fade-in">
+                                <p className="text-sm font-serif text-gray-600 leading-relaxed">
+                                    <span>{quiz.translation_pre}</span>
+                                    <span className={`inline-block border-b-2 px-1 mx-1 font-bold transition-all ${isSolved ? 'text-green-700 border-green-500' : 'border-gray-400 min-w-[60px]'}`}>
+                                        {isSolved ? quiz.translation_answer : '\u00A0\u00A0\u00A0\u00A0\u00A0'}
+                                    </span>
+                                    <span>{quiz.translation_post}</span>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                        {quiz.options.map((option, idx) => (
+                            <button 
+                                key={idx} 
+                                onClick={() => handleOptionClick(option)}
+                                disabled={isSolved && option.isCorrect}
+                                className={`p-4 text-left border rounded-lg transition-all font-serif text-base relative ${
+                                    isSolved && option.isCorrect 
+                                        ? 'bg-green-50 border-green-500 text-green-800' 
+                                        : selectedOption === option 
+                                            ? (option.isCorrect ? 'bg-green-50 border-green-500 text-green-800' : 'bg-red-50 border-red-300 text-red-800')
+                                            : 'bg-white border-gray-200 hover:border-gray-400 hover:shadow-sm text-gray-700'
+                                }`}
+                            >
+                                <span className="font-bold mr-2 text-sm font-sans text-gray-400">{String.fromCharCode(65 + idx)}.</span>
+                                {option.text}
+                                {isSolved && option.isCorrect && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600">✓</span>}
+                                {selectedOption === option && !option.isCorrect && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500">✕</span>}
+                            </button>
+                        ))}
+                    </div>
+
+                    {selectedOption && (
+                        <div className={`p-4 rounded-lg text-sm mb-4 animate-fade-in ${selectedOption.isCorrect ? 'bg-green-50 text-green-800 border border-green-100' : 'bg-red-50 text-red-800 border border-red-100'}`}>
+                            <p className="font-bold mb-1 font-sans">{selectedOption.isCorrect ? '정답입니다! 🎉' : '다시 생각해보세요.'}</p>
+                            <p className="font-serif leading-relaxed">{selectedOption.feedback}</p>
+                        </div>
+                    )}
+
+                    <div className="flex items-center gap-4 text-xs font-bold font-sans">
+                         <button onClick={() => setShowHint(!showHint)} className="text-gray-400 hover:text-journal-black uppercase tracking-widest transition-colors">Hint</button>
+                         <div className="h-3 w-px bg-gray-300"></div>
+                         <TranslateButton onClick={() => setShowTrans(!showTrans)} isShowing={showTrans} />
+                    </div>
+
+                    {showHint && (<p className="mt-3 text-sm font-sans text-gray-500 italic animate-fade-in">💡 Hint: {quiz.hint}</p>)}
+                </div>
+            );
+        };
+
+        const QuizView = ({ updateProgress }) => {
+            const [attempts, setAttempts] = useState({});
+            const [quizData, setQuizData] = useState(() => {
+                return QUIZ_LIST.map(quiz => ({
+                    ...quiz,
+                    options: shuffleArray(quiz.options)
+                }));
+            });
+            const [resetToken, setResetToken] = useState(0); 
+            
+            const totalQuestions = quizData.length; 
+            const correctCount = Object.values(attempts).filter(v => v).length; 
+            const currentScore = Math.round((correctCount / totalQuestions) * 100);
+            
+            useEffect(() => { 
+                const totalAttempts = Object.keys(attempts).length; 
+                if (totalAttempts === 0) return; 
+                updateProgress('quiz', currentScore); 
+            }, [attempts, currentScore, updateProgress]);
+            
+            const handleAttempt = (quizId, isCorrect) => { 
+                setAttempts(prev => ({ ...prev, [quizId]: isCorrect })); 
+            };
+
+            const handleReset = () => {
+                setAttempts({});
+                setQuizData(QUIZ_LIST.map(quiz => ({
+                    ...quiz,
+                    options: shuffleArray(quiz.options)
+                })));
+                setResetToken(prev => prev + 1); 
+                updateProgress('quiz', 0);
+            };
+            
+            return (
+                <div className="max-w-3xl mx-auto w-full px-6 py-12 animate-fade-in flex flex-col gap-8">
+                    <div className="mb-12 md:mb-16 text-center animate-fade-in">
+                        <h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight">
+                            내용 확인 퀴즈
+                        </h2>
+                        <span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2">
+                            Comprehension Quiz
+                        </span>
+                        <div className="w-12 h-px bg-gray-200 mx-auto mt-12 md:mt-16"></div>
+                    </div>
+                    
+                    <div className="flex-1">
+                        {quizData.map((quiz) => (
+                            <QuizSentence 
+                                key={`${quiz.id}-${resetToken}`}
+                                quiz={quiz} 
+                                onAttempt={handleAttempt} 
+                            />
+                        ))}
+                    </div>
+
+                    <div className="mt-8 pt-12 border-t border-gray-100 flex flex-col items-center gap-10 animate-fade-in">
+                        <div className="flex flex-col items-center">
+                             <span className="text-[10px] font-bold font-eng-header text-gray-400 uppercase tracking-[0.2em] mb-2">
+                                정답률 / Accuracy
+                             </span>
+                             <span className="text-5xl font-serif-kr font-bold text-journal-black tracking-tight">
+                                {currentScore}%
+                             </span>
+                        </div>
+
+                        <button 
+                            onClick={handleReset}
+                            className="group flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 hover:border-black hover:bg-gray-50 transition-all duration-300"
+                        >
+                            <svg className="w-4 h-4 text-gray-400 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <div className="flex flex-col items-start leading-none gap-1">
+                                <span className="text-xs font-bold font-sans-kr text-gray-900 group-hover:text-black">다시 풀기</span>
+                                <span className="text-[9px] font-eng-header font-medium tracking-wider text-gray-400 group-hover:text-gray-600 uppercase">Retry</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const DiscussQuestionItem = ({ item, userLevel }) => {
+            const [text, setText] = useState(''); 
+            const [showTranslation, setShowTranslation] = useState(false);
+            const [isGenerating, setIsGenerating] = useState(false);
+            const [feedbackData, setFeedbackData] = useState(null);
+            const [error, setError] = useState('');
+
+            // 마크다운 **굵은 글씨** 처리를 위한 유틸리티 함수
+            const renderFormattedText = (textContent) => {
+                if (!textContent) return null;
+                const parts = textContent.split(/(\*\*.*?\*\*)/g);
+                return parts.map((part, i) => {
+                    if (part.startsWith('**') && part.endsWith('**')) {
+                        return <strong key={i} className="font-bold text-gray-900 bg-gray-100 px-1 mx-0.5 rounded-sm">{part.slice(2, -2)}</strong>;
+                    }
+                    return <span key={i}>{part}</span>;
+                });
+            };
+
+            const handleGetFeedback = async () => {
+                if (!text.trim()) return;
+                setIsGenerating(true);
+                setFeedbackData(null);
+                setError('');
+
+                const isBeginnerOrIntermediate = ["A1", "A1+", "A2", "A2+", "B1", "B1+"].includes(userLevel);
+                
+                let feedbackInstruction = "";
+                if (isBeginnerOrIntermediate) {
+                    feedbackInstruction = `The student's level is ${userLevel} (Beginner/Intermediate). 
+Feedback Guidelines:
+1. feedback field: Write an encouraging and positive general feedback message **ENTIRELY IN ENGLISH**.
+2. correction field: Provide the fully corrected version of the student's answer in natural Korean.
+3. detailed_corrections field: Break down the specific errors. For each error:
+   - Provide the 'original' text (the incorrect Korean part).
+   - Provide the 'corrected' text (the correct Korean part).
+   - Provide an 'explanation' **ENTIRELY IN ENGLISH**. 
+   - CRITICAL: Inside the English explanation, whenever you mention a Korean word or expression, you MUST wrap it in double asterisks like this: **한국어**.`;
+                } else {
+                    feedbackInstruction = `학생의 레벨은 ${userLevel} (중고급 이상)입니다.
+피드백 작성 지침:
+1. 모든 필드(feedback, correction, detailed_corrections)를 **오직 한국어로만** 자연스럽고 친절하게 작성해주세요. 영어는 절대 사용하지 마세요.
+2. detailed_corrections의 explanation 필드 내에서 강조하고 싶은 한국어 단어나 표현이 있다면 반드시 **단어** 처럼 마크다운 기호를 사용하여 강조해주세요.`;
+                }
+
+                // AI 환각(Hallucination) 방지를 위한 핵심 Context 및 검증 로직 주입
+                const vocabContext = item.vocab ? item.vocab.map(v => `- ${v.term}: ${v.def}`).join('\n') : "제공된 핵심 어휘 없음";
+
+                const systemPrompt = `당신은 한국어 맞춤법과 문법에 완벽하게 통달한 전문적인 한국어 선생님입니다.
+${feedbackInstruction}
+
+[필수 준수 사항 - 철저한 오류 검증 및 환각 방지]
+1. 학생의 답변에서 철자(맞춤법), 띄어쓰기, 문법 오류를 가장 먼저 찾아내어 분석하세요. (예: '뒤담화'는 틀린 표기이며 '뒷담화'가 맞습니다.)
+2. 특히 아래 제공된 [핵심 어휘 목록]의 단어들이 정확한 맞춤법으로 사용되었는지 반드시 확인하세요.
+3. 'correction' 필드에는 국립국어원 표준국어대사전 기준에 맞는 완벽한 한국어 문장만 작성하세요. 발음이 비슷하다고 해서 잘못된 철자를 맞는 것으로 간주해서는 안 됩니다.
+4. **[중요] 'correction' 필드의 모범 답안은 반드시 '해요체(~요)'를 사용하여 작성하세요.** (예: ~했습니다(X), ~한다(X) -> ~했어요(O))
+
+[핵심 어휘 목록 (참고용)]
+${vocabContext}
+
+학생이 다음 질문에 대해 답변을 작성했습니다.
+질문: "${item.questionKor}"
+학생 답변: "${text}"
+
+위 지침을 엄격히 준수하여 긍정적이고 구조화된 피드백을 제공해주세요.`;
+
+                const payload = { 
+                    contents: [{ parts: [{ text: `내 답변에 대한 피드백을 줘.` }] }], 
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                feedback: { type: "STRING" },
+                                correction: { type: "STRING" },
+                                detailed_corrections: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            original: { type: "STRING" },
+                                            corrected: { type: "STRING" },
+                                            explanation: { type: "STRING" }
+                                        },
+                                        required: ["original", "corrected", "explanation"]
+                                    }
+                                }
+                            },
+                            required: ["feedback", "correction", "detailed_corrections"]
+                        }
+                    }
+                };
+
+                try {
+                    const result = await callGeminiWithBackoff(payload);
+                    const feedbackText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    if (feedbackText) {
+                        setFeedbackData(JSON.parse(feedbackText));
+                    } else {
+                        setError("피드백을 생성하지 못했습니다.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    setError("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                } finally {
+                    setIsGenerating(false);
+                }
+            };
+
+            return (
+                <div className="mb-16 group">
+                    <div className="flex items-center gap-4 mb-6"><span className="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900">{item.id < 10 ? '0' + item.id : item.id}</span><h3 className="text-xl font-serif font-bold text-gray-900 leading-normal">{item.questionKor}</h3></div>
+                    <div className="pl-0 md:pl-14">
+                        <div className="flex gap-2 mb-4"><TranslateButton onClick={() => setShowTranslation(!showTranslation)} isShowing={showTranslation} />{showTranslation && (<p className="text-sm font-sans text-gray-500 animate-fade-in">{item.questionEng}</p>)}</div>
+                        <div className="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span className="text-xs font-bold font-sans text-gray-400 uppercase mb-2 block tracking-widest">Key Vocabulary</span><div className="space-y-1">{item.vocab.map((v, i) => (<p key={i} className="text-sm font-serif text-gray-700"><span className="font-bold text-black mr-2">{v.term}</span>{v.def}</p>))}</div></div>
+                        <textarea 
+                            value={text} 
+                            onChange={(e) => setText(e.target.value)} 
+                            placeholder="여기에 생각을 적어보세요..." 
+                            className="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300"
+                        ></textarea>
+                        
+                        <div className="flex justify-end">
+                            <button 
+                                onClick={handleGetFeedback}
+                                disabled={!text.trim() || isGenerating} 
+                                className={`px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${!text.trim() || isGenerating ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}`}
+                            >
+                                {isGenerating ? (
+                                    <>
+                                        <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                                        Generating...
+                                    </>
+                                ) : 'Get AI Feedback'}
+                            </button>
+                        </div>
+
+                        {/* 피드백 에러 출력 */}
+                        {error && (
+                            <div className="mt-4 p-4 text-sm text-red-600 bg-red-50 border border-red-100 rounded-sm animate-fade-in">
+                                {error}
+                            </div>
+                        )}
+                        
+                        {/* AI 피드백 결과 출력 */}
+                        {feedbackData && (
+                            <div className="mt-8 p-6 bg-gray-50 border border-gray-200 rounded-sm animate-fade-in relative">
+                                <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-200">
+                                    <SparklesIcon className="w-5 h-5 text-gray-900" />
+                                    <span className="text-xs font-bold font-sans text-gray-900 uppercase tracking-widest">AI Teacher Feedback</span>
+                                </div>
+                                
+                                <div className="space-y-8">
+                                    {/* 1. General Feedback */}
+                                    <div>
+                                        <h4 className="text-[10px] font-bold font-sans text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                            피드백 <span className="font-eng-header font-medium text-[9px]">FEEDBACK</span>
+                                        </h4>
+                                        <p className="text-[13px] md:text-sm font-sans text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                            {renderFormattedText(feedbackData.feedback)}
+                                        </p>
+                                    </div>
+                                    
+                                    {/* 2. Full Correction */}
+                                    <div>
+                                        <h4 className="text-[10px] font-bold font-sans text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                            모범 답안 <span className="font-eng-header font-medium text-[9px]">CORRECTION</span>
+                                        </h4>
+                                        <p className="text-[15px] md:text-base font-serif text-gray-900 leading-relaxed font-medium bg-white p-4 border border-gray-200 shadow-sm rounded-sm">
+                                            {feedbackData.correction}
+                                        </p>
+                                    </div>
+                                    
+                                    {/* 3. Detailed Explanations */}
+                                    {feedbackData.detailed_corrections && feedbackData.detailed_corrections.length > 0 && (
+                                        <div>
+                                            <h4 className="text-[10px] font-bold font-sans text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                상세 설명 <span className="font-eng-header font-medium text-[9px]">EXPLANATION</span>
+                                            </h4>
+                                            <div className="space-y-3">
+                                                {feedbackData.detailed_corrections.map((detail, idx) => (
+                                                    <div key={idx} className="bg-white p-4 border border-gray-100 rounded-sm hover:border-gray-200 transition-colors">
+                                                        {(detail.original || detail.corrected) && (
+                                                            <div className="flex flex-wrap items-center gap-3 mb-2.5 text-[15px] font-serif">
+                                                                {detail.original && <span className="text-red-400 line-through decoration-red-300/60">{detail.original}</span>}
+                                                                {detail.original && detail.corrected && <span className="text-gray-300">→</span>}
+                                                                {detail.corrected && <span className="text-gray-900 font-bold tracking-wide">{detail.corrected}</span>}
+                                                            </div>
+                                                        )}
+                                                        <p className="text-[13px] md:text-sm font-sans text-gray-600 leading-relaxed">
+                                                            {renderFormattedText(detail.explanation)}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Disclaimer */}
+                                <div className="mt-8 pt-4 border-t border-gray-200">
+                                    <p className="text-[10px] text-gray-400 font-sans text-center">
+                                        ※ AI가 생성한 피드백이므로 간혹 부자연스럽거나 오류가 있을 수 있습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+        
+        const DiscussView = ({ updateProgress, userLevel }) => (
+            <div className="max-w-3xl mx-auto w-full px-6 py-12 animate-fade-in">
+                <div className="mb-12 md:mb-16 text-center animate-fade-in">
+                    <h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight">
+                        생각해 보기
+                    </h2>
+                    <span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2">
+                        Food For Thought
+                    </span>
+                </div>
+                
+                <div className="bg-gray-50 border border-gray-200 py-4 px-5 mb-24 md:mb-32 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex gap-4 items-center">
+                        <div className="shrink-0 text-gray-400"><SparklesIcon className="w-5 h-5" /></div>
+                        <div className="flex flex-col">
+                            <p className="text-xs font-bold font-sans text-gray-800 leading-tight">AI 피드백은 현재 Gemini 웹에서만 가능합니다.</p>
+                            <p className="text-[10px] font-sans text-gray-400 mt-1">AI feedback is currently available only on Gemini web.</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://gemini.google.com/share/dac09dba8996" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
+                        <div className="flex items-center gap-1">
+                            <span className="text-[11px] font-bold font-sans text-gray-700 group-hover:text-black">Gemini에서 열기</span>
+                            <ExternalLinkIcon className="w-3 h-3 text-gray-400 group-hover:text-black"/>
+                        </div>
+                        <span className="text-[9px] font-sans text-gray-400 group-hover:text-gray-600 uppercase tracking-widest mt-0.5">Open in Gemini</span>
+                    </a>
+                </div>
+
+                {DISCUSS_DATA.map((item) => (<DiscussQuestionItem key={item.id} item={item} userLevel={userLevel} />))}
+            </div>
+        );
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home'); 
+            const [userLevel] = useState("B1+"); 
+            const [progress, setProgress] = useState({ learn: false, vocab: false, quiz: 0, discuss: false });
+            const [isHeaderExpanded, setIsHeaderExpanded] = useState(true);
+
+            useEffect(() => {
+                if (activeTab === 'video') {
+                    setIsHeaderExpanded(false); 
+                } else {
+                    setIsHeaderExpanded(true); 
+                }
+            }, [activeTab]);
+
+            const updateProgress = useCallback((key, value = true) => { setProgress(prev => { if (prev[key] === value) return prev; return { ...prev, [key]: value }; }); }, []);
+            
+            const renderContent = () => { 
+                switch(activeTab) { 
+                    case 'home': return <HomeView setActiveTab={setActiveTab} userLevel={userLevel} />; 
+                    case 'video': return <LearnView updateProgress={updateProgress} />; 
+                    case 'vocab': return <VocabView updateProgress={updateProgress} />; 
+                    case 'quiz': return <QuizView updateProgress={updateProgress} />; 
+                    case 'discuss': return <DiscussView updateProgress={updateProgress} userLevel={userLevel} />; 
+                    default: return <HomeView setActiveTab={setActiveTab} userLevel={userLevel} />; 
+                } 
+            };
+            
+            const isVideoTab = activeTab === 'video';
+            return (
+                <div className={`flex flex-col bg-white text-gray-900 selection:bg-gray-200 selection:text-black font-sans ${isVideoTab ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
+                    <Header isExpanded={isHeaderExpanded} setIsExpanded={setIsHeaderExpanded} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <div className="lg:hidden h-14 border-b border-gray-100 flex items-center justify-center sticky top-0 bg-white z-40"><span className="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span></div>
+                    <main className={`flex-1 relative flex flex-col ${isVideoTab ? 'overflow-x-hidden lg:overflow-hidden lg:h-full' : ''}`}>{renderContent()}</main>
+                    <nav className="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-100 flex justify-around p-3 z-50">{NAV_ITEMS.map((item) => (<button key={item.id} onClick={() => setActiveTab(item.id)} className={`p-2 ${activeTab === item.id ? 'text-black' : 'text-gray-300'}`}><item.icon className="w-6 h-6" /></button>))}</nav>
+                </div>
+            );
+        };
+        
+        const root = ReactDOM.createRoot(document.getElementById('root')); root.render(<App />);
+    </script>
+</body>
+</html>
