@@ -98,7 +98,7 @@
             { id: 's11', speaker: '조이', kor: '그건 \'뒷담화\'예요.', time: [30.596, 32.396], eng: "That's 'gossiping'." },
             { id: 's12', speaker: '조이', kor: '\'뒷담화\'는 \'다른 사람이 없을 때, 그 사람 이야기를 하는 것\'이라는 뜻이에요.', time: [32.436, 37.008], eng: "'Gossip' means 'talking about someone when they are not around'." },
             { id: 's13', speaker: '우디', kor: '아니에요! 저는 뒷담화를 안 해요!', time: [37.270, 39.816], eng: "No! I don't gossip!" },
-            { id: 's14', speaker: '우디', kor: '저는 그냥 \'정보를 공유\'하는 거예요. 📢', time: [39.876, 42.734], eng: "I'm just 'sharing information'. 📢" },
+            { id: 's14', speaker: '우디', kor: '저는 그냥 정보를 공유하는 거예요. 📢', time: [39.876, 42.734], eng: "I'm just 'sharing information'. 📢" },
             { id: 's15', speaker: '조이', kor: '우디 씨, 민호 씨가 없는데 민호 씨 이야기를 하면, 그게 뒷담화예요.', time: [42.734, 47.364], eng: "Woody, talking about Minho when he isn't here, that is gossiping." },
             { id: 's16', speaker: '우디', kor: '조이 씨, 뒷담화는 나쁜 게 아니에요!', time: [47.535, 50.141], eng: "Joy, gossiping isn't bad!" },
             { id: 's17', speaker: '우디', kor: '뒷담화는 사람들의 \'본성\'이에요!', time: [50.201, 52.524], eng: "Gossiping is human 'nature'!" },
@@ -155,7 +155,7 @@
             { id: 's68', speaker: '우디', kor: '조이 씨, 그래도 뒷담화에는 좋은 기능이 있어요!', time: [195.203, 198.493], eng: "Joy, gossip still has a good function!" },
             { id: 's69', speaker: '우디', kor: '뒷담화를 하면, 사람들이 \'눈치를 봐요\'.', time: [198.553, 201.117], eng: "When people gossip, others 'read the room'." },
             { id: 's70', speaker: '우디', kor: '\'눈치를 보다\'는 \'다른 사람의 기분을 생각하다’라는 뜻이에요.', time: [201.167, 204.548], eng: "'Reading the room' means 'considering other people's feelings'." },
-            { id: 's71', speaker: '우디', kor: '뒷담화가 무서우니까 나쁜 행동을 안 하게 돼요!', time: [204.598, 207.303], eng: "Because they are afraid of gossip, they avoid doing bad things!" },
+            { id: 's71', speaker: '우디', kor: '뒷담화가 무서워서 나쁜 행동을 안 하게 돼요!', time: [204.598, 207.303], eng: "Because they are afraid of gossip, they avoid doing bad things!" },
             { id: 's72', speaker: '조이', kor: '우디 씨, 뒷담화가 무서워서 착하게 행동한다고요?', time: [207.535, 209.837], eng: "Woody, acting nice because you're afraid of gossip?" },
             { id: 's73', speaker: '조이', kor: '그건 진짜 착한 게 아니에요.', time: [209.908, 212.051], eng: "That's not being truly nice." },
             { id: 's74', speaker: '조이', kor: '그냥 \'무서워서 착한 척하는 거예요\'.', time: [212.222, 215.151], eng: "It's just 'pretending to be nice out of fear'." },
@@ -206,95 +206,830 @@
         ];
 
         const VOCAB_DATA = [
-                { term: '이 주제로 이야기해 봐요', mainDef: "Let's talk about this topic", variants: ['<이 주제로 이야기해 봐요>'], examples: [{ kor: '우리 이 주제로 이야기해 봐요.', eng: "Let's talk about this topic." }], subDefs: [{ subTerm: '◻︎◻︎을/를 주제로 이야기 하다', subDef: 'to talk about [X] as a topic' }, { subTerm: '-아/어 보다 as in 이야기해 봐요', subDef: 'used to make gentle suggestions without sounding pushy, meaning "try doing..." or "let\'s try..."' }] },
-                { term: '그 얘기 들었어요?', mainDef: 'Did you hear about that?', variants: ['그 얘기 들었어요?'], examples: [{ kor: '어제 있었던 그 얘기 들었어요?', eng: 'Did you hear about what happened yesterday?' }], subDefs: [{ subTerm: '얘기', subDef: 'story, talk, what people are saying' }] },
-                { term: '정보', mainDef: 'information, intel', variants: ['정보를'], examples: [{ kor: '중요한 정보예요.', eng: 'It\'s important information.' }], subDefs: [] },
-                { term: '알려주려고 햇어요', mainDef: 'I was going to tell you / I tried to let you know', variants: ['알려주려고 했어요'], examples: [{ kor: '비밀을 알려주려고 했어요.', eng: 'I was going to tell you a secret.' }], subDefs: [{ subTerm: '알려주다', subDef: 'to let (someone) know, to tell' }, { subTerm: '-려고 하다', subDef: 'used to express intention or plan, meaning "to intend to" or "was going to..."' }] },
-                { term: '뒷담화', mainDef: 'gossip, talking behind someone\'s back', variants: ['뒷담화예요', '뒷담화는', '뒷담화', '뒷담화를'], examples: [{ kor: '뒷담화는 나쁜 습관이에요.', eng: 'Gossiping is a bad habit.' }], subDefs: [] },
-                { term: '이야기를 하는 것', mainDef: 'the act of talking about (someone)', variants: ['이야기를 하는 것'], examples: [{ kor: '남 이야기를 하는 것은 조심해야 해요.', eng: 'You should be careful about the act of talking about others.' }], subDefs: [{ subTerm: '-는 것', subDef: 'used to turn an action verb into a noun phrase meaning "the act of...-ing" or "the thing that..."' }] },
-                { term: '-이라는 뜻이에요', mainDef: 'It means...', variants: ['-이라는 뜻이에요', '라는 뜻이에요'], examples: [{ kor: '이건 금지라는 뜻이에요.', eng: 'This means prohibition.' }], subDefs: [] },
-                { term: '뒷담화를 하다', mainDef: 'to gossip', variants: ['뒷담화를 안 해요', '뒷담화를 하면', '뒷담화를 하라'], examples: [{ kor: '친구 뒷담화를 하지 마세요.', eng: 'Don\'t gossip about your friends.' }], subDefs: [] },
-                { term: '공유하는 거예요', mainDef: 'I\'m (just) sharing', variants: ['공유하는 거예요'], examples: [{ kor: '좋은 소식을 공유하는 거예요.', eng: 'I\'m just sharing good news.' }], subDefs: [{ subTerm: '공유하다', subDef: 'to share' }, { subTerm: '-는 거예요 as in 공유하는 거예요', subDef: 'Identified as a colloquial form of -는 것이에요. Used to explain, clarify, or emphasize the essence of something ("The fact is that I am sharing...")' }] },
-                { term: '민호 씨가 없는데 민호 씨 이야기를 하면', mainDef: 'If you talk about Minho when he\'s not around', variants: ['민호 씨가 없는데 민호 씨 이야기를 하면'], examples: [{ kor: '당사자가 없는데 이야기를 하면 안 돼요.', eng: 'You shouldn\'t talk about someone when they aren\'t here.' }], subDefs: [{ subTerm: '-는데 as in 없는데', subDef: 'used to provide background information or set the scene before making the main point ("he is not here, and...").' }, { subTerm: '-면 as in 하면', subDef: 'used to express a condition, meaning "if..."' }] },
-                { term: '나쁜 게', mainDef: 'a bad thing', variants: ['나쁜 게'], examples: [{ kor: '우는 건 나쁜 게 아니에요.', eng: 'Crying isn\'t a bad thing.' }], subDefs: [{ subTerm: '-ㄴ/은 게 as in 나쁜 게', subDef: 'Identified as colloquial form of -ㄴ/은 것이. Used to turn a descriptive verb into a noun phrase meaning "a thing that is bad".' }] },
-                { term: '본성', mainDef: 'human nature, true nature', variants: ['본성이에요', '본성', '본성이'], examples: [{ kor: '그건 인간의 본성이에요.', eng: 'That\'s human nature.' }], subDefs: [] },
-                { term: '원래 성격', mainDef: 'true character, original personality', variants: ['원래 성격'], examples: [{ kor: '그의 원래 성격은 아주 착해요.', eng: 'His true character is very kind.' }], subDefs: [{ subTerm: '원래', subDef: 'originally, naturally' }, { subTerm: '성격', subDef: 'personality, character' }] },
-                { term: '본성이라고 다 좋은 건 아니에요', mainDef: 'Just because it\'s human nature doesn\'t mean it\'s all good', variants: ['본성이라고 다 좋은 건 아니에요'], examples: [{ kor: '비싸다고 다 좋은 건 아니에요.', eng: 'Just because it\'s expensive doesn\'t mean it\'s all good.' }], subDefs: [{ subTerm: '-이라고 해도 as in 본성이라고', subDef: 'used to express concession, meaning "even if it is called..." or "just because it is..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is good")' }] },
-                { term: '도덕적으로', mainDef: 'morally', variants: ['도덕적으로'], examples: [{ kor: '도덕적으로 옳은 행동이에요.', eng: 'It is a morally right behavior.' }], subDefs: [{ subTerm: '도덕적', subDef: 'moral' }, { subTerm: '-으로', subDef: 'particle turning a noun into an adverb ("-ly")' }] },
-                { term: '유발 하라리라는 유명한 학자', mainDef: 'a famous scholar named Yuval Harari', variants: ['유발 하라리라는 유명한 학자가'], examples: [{ kor: '스티브 잡스라는 유명한 사람이 있어요.', eng: 'There is a famous person named Steve Jobs.' }], subDefs: [{ subTerm: '유발 하라리', subDef: 'Yuval Harari' }, { subTerm: '-라는 as in 하라리라는', subDef: 'used to specify a name, meaning "called" or "named"' }, { subTerm: '학자', subDef: 'scholar' }] },
-                { term: '언어', mainDef: 'language', variants: ['언어는'], examples: [{ kor: '언어는 소통의 도구예요.', eng: 'Language is a tool for communication.' }], subDefs: [] },
-                { term: '-을/를 위해서', mainDef: 'for the sake of, for', variants: ['위해서'], examples: [{ kor: '가족을 위해서 열심히 일해요.', eng: 'I work hard for my family.' }], subDefs: [] },
-                { term: '"뒷담화를 하라"고 말한 건 아니에요.', mainDef: 'It doesn\'t mean he said "Go gossip."', variants: ['"뒷담화를 하라"고 말한 건 아니에요.'], examples: [{ kor: '내가 가라고 말한 건 아니에요.', eng: 'It doesn\'t mean I told you to go.' }], subDefs: [{ subTerm: '(명령)라고/으라고 말하다', subDef: 'used to quote a command, meaning "told someone to do..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 말한 건 아니에요', subDef: 'used to correct a misunderstanding ("it is not the fact that he said...")' }] },
-                { term: '스트레스가 풀리다', mainDef: 'to blow off steam, to destress', variants: ['스트레스가 풀려요'], examples: [{ kor: '운동을 하면 스트레스가 풀려요.', eng: 'Working out helps me blow off steam.' }], subDefs: [{ subTerm: '풀리다', subDef: 'to be relieved, to be resolved' }] },
-                { term: '마음이 편해지다', mainDef: 'to feel at ease, to relax', variants: ['마음이 편해지다'], examples: [{ kor: '친구와 이야기하면 마음이 편해져요.', eng: 'Talking with a friend puts my mind at ease.' }], subDefs: [{ subTerm: '편해지다', subDef: 'to become comfortable (adjective + -아/어지다)' }] },
-                { term: '힘든 일', mainDef: 'tough stuff, hard things', variants: ['힘든 일이'], examples: [{ kor: '힘든 일이 있으면 말해 줘.', eng: 'Tell me if you have any tough stuff going on.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase that describes the following noun.' }] },
-                { term: '속이 시원해지다', mainDef: 'to get it off one\'s chest, to feel relieved', variants: ['속이 시원해져요'], examples: [{ kor: '비밀을 말하고 나니 속이 시원해졌어요.', eng: 'I got it off my chest after telling the secret, so I felt relieved.' }], subDefs: [{ subTerm: '속', subDef: 'inside, heart' }, { subTerm: '시원해지다', subDef: 'to become refreshing/relieved' }] },
-                { term: '하소연', mainDef: 'venting, pouring one\'s heart out', variants: ['하소연이에요', '하소연은'], examples: [{ kor: '이건 그냥 내 하소연이야.', eng: 'This is just me venting.' }], subDefs: [] },
-                { term: '내 힘든 이야기를 하는 거예요', mainDef: 'It\'s (just) talking about my own struggles', variants: ['내 힘든 이야기를 하는 거예요'], examples: [{ kor: '이건 험담이 아니라 내 힘든 이야기를 하는 거예요.', eng: 'This isn\'t badmouthing, it\'s just me talking about my struggles.' }], subDefs: [{ subTerm: '내 힘든 이야기', subDef: 'my tough stories / struggles' }, { subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '-는 거예요 as in 하는 거예요', subDef: 'colloquial of -는 것이에요. Used to define the essence of something ("The fact is it\'s talking about...")' }] },
-                { term: '험담하다', mainDef: 'to badmouth, to talk smack', variants: ['험담하는 거예요', '험담 안 해요'], examples: [{ kor: '남을 험담하는 것은 좋지 않아요.', eng: 'It\'s not good to badmouth others.' }], subDefs: [{ subTerm: '-는 거예요 as in 험담하는 거예요', subDef: 'used to explain or clarify ("It means you are badmouthing")' }] },
-                { term: '이상하다', mainDef: 'to be acting weird, to be strange', variants: ['이상했어요'], examples: [{ kor: '그 사람 오늘 좀 이상해요.', eng: 'That person is acting a bit weird today.' }], subDefs: [] },
-                { term: '사실이잖아요!', mainDef: 'But it\'s a fact! / Come on, it\'s the truth!', variants: ['사실이잖아요!'], examples: [{ kor: '내가 잘못한 게 아니야, 사실이잖아요!', eng: 'It\'s not my fault, come on, it\'s a fact!' }], subDefs: [{ subTerm: '사실', subDef: 'fact, truth' }, { subTerm: '-잖아요 as in 사실이잖아요', subDef: 'used to remind the listener of shared information or something obvious. Nuance: "You know..." or "Come on, as you can see..."' }] },
-                { term: '좋은 점', mainDef: 'pro, advantage, good point', variants: ['좋은 점이'], examples: [{ kor: '이 방법의 좋은 점은 빠르다는 거예요.', eng: 'The pro of this method is that it\'s fast.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }] },
-                { term: '유대감', mainDef: 'bond, sense of fellowship', variants: ['유대감이', '유대감은'], examples: [{ kor: '우리 팀은 유대감이 강해요.', eng: 'Our team has a strong bond.' }], subDefs: [] },
-                { term: '사람들 사이의 친한 느낌', mainDef: 'a feeling of closeness between people', variants: ['사람들 사이의 친한 느낌'], examples: [{ kor: '유대감은 사람들 사이의 친한 느낌이에요.', eng: 'A bond is a feeling of closeness between people.' }], subDefs: [{ subTerm: '사이의', subDef: 'between, among' }, { subTerm: '-ㄴ/은 as in 친한', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '느낌', subDef: 'feeling' }] },
-                { term: '우리는 한 편이야', mainDef: 'We are on the same side / We\'re a team', variants: ['우리는 한 편이야'], examples: [{ kor: '걱정 마, 우리는 한 편이야.', eng: 'Don\'t worry, we\'re on the same side.' }], subDefs: [{ subTerm: '한 편', subDef: 'same side, same team' }, { subTerm: '-이야', subDef: 'informal copula ("am/are/is")' }] },
-                { term: '다른 사람 욕을 하면서', mainDef: 'while talking smack about someone else', variants: ['다른 사람 욕을 하면서'], examples: [{ kor: '남 욕을 하면서 시간을 보냈어요.', eng: 'We spent time while talking smack about others.' }], subDefs: [{ subTerm: '욕을 하다', subDef: 'to swear, to talk smack, to badmouth' }, { subTerm: '-면서 as in 하면서', subDef: 'used to connect two actions happening simultaneously, meaning "while..."' }] },
-                { term: '친해지는 거요?', mainDef: 'You mean getting close (by doing that)?', variants: ['친해지는 거요?'], examples: [{ kor: '같이 밥을 먹으면서 친해지는 거요?', eng: 'You mean getting close while eating together?' }], subDefs: [{ subTerm: '친해지다', subDef: 'to get close to someone' }, { subTerm: '-는 거요? as in 친해지는 거요?', subDef: 'colloquial form of -는 것이에요?, used to ask for clarification on a fact ("You mean the act of...?")' }] },
-                { term: '우정', mainDef: 'friendship', variants: ['우정이'], examples: [{ kor: '우리의 우정은 영원할 거야.', eng: 'Our friendship will last forever.' }], subDefs: [] },
-                { term: '학생이었을 때 생각해 봐요', mainDef: 'Think about back when you were a student', variants: ['학생이었을 때 생각해 봐요'], examples: [{ kor: '어렸을 때 생각해 봐요.', eng: 'Think about back when you were young.' }], subDefs: [{ subTerm: '-이었을 때 as in 학생이었을 때', subDef: 'used to indicate a past time period ("when you were a...")' }, { subTerm: '-아/어 보다 as in 생각해 봐요', subDef: 'used to make gentle suggestions ("try thinking about...")' }] },
-                { term: '이런 이야기 한 적 없어요?', mainDef: 'Haven\'t you ever said things like this?', variants: ['이런 이야기 한 적 없어요?'], examples: [{ kor: '거짓말 한 적 없어요?', eng: 'Haven\'t you ever told a lie?' }], subDefs: [{ subTerm: '이런', subDef: 'like this, such' }, { subTerm: '-ㄴ/은 적 없다 as in 한 적 없어요', subDef: 'used to express a lack of past experience, meaning "have never done..."' }] },
-                { term: '소속감', mainDef: 'sense of belonging', variants: ['소속감을', '소속감은'], examples: [{ kor: '팀에서 소속감을 느껴요.', eng: 'I feel a sense of belonging in the team.' }], subDefs: [] },
-                { term: '조이 씨도 했죠?', mainDef: 'You did it too, right?', variants: ['조이 씨도 했죠?'], examples: [{ kor: '어제 숙제 했죠?', eng: 'You did the homework yesterday, right?' }], subDefs: [{ subTerm: '-죠? as in 했죠?', subDef: 'a tag question used to seek agreement or confirmation, meaning "Right?"' }] },
-                { term: '어른이 되면', mainDef: 'When you grow up / When you become an adult', variants: ['어른이 되면'], examples: [{ kor: '어른이 되면 이해할 거예요.', eng: 'When you grow up, you will understand.' }], subDefs: [{ subTerm: '어른', subDef: 'adult' }, { subTerm: '-이 되면 as in 어른이 되면', subDef: 'used to express a condition or time ("if/when you become...")' }] },
-                { term: '달라지지 않아요', mainDef: 'It doesn\'t change', variants: ['달라지지 않아요'], examples: [{ kor: '사람은 쉽게 달라지지 않아요.', eng: 'People don\'t change easily.' }], subDefs: [{ subTerm: '달라지다', subDef: 'to change, to become different' }, { subTerm: '-지 않다 as in 달라지지 않아요', subDef: 'negative form ("does not")' }] },
-                { term: '연구에 따르면', mainDef: 'according to research', variants: ['연구에 따르면'], examples: [{ kor: '연구에 따르면 규칙적인 운동이 중요해요.', eng: 'According to research, regular exercise is important.' }], subDefs: [{ subTerm: '연구', subDef: 'research, study' }, { subTerm: '-에 따르면', subDef: 'particle phrase meaning "according to"' }] },
-                { term: '뇌에서 행복 호르몬이 나와요', mainDef: 'happy hormones are released in the brain', variants: ['뇌에서 행복 호르몬이 나와요'], examples: [{ kor: '초콜릿을 먹으면 행복 호르몬이 나와요.', eng: 'When you eat chocolate, happy hormones are released.' }], subDefs: [{ subTerm: '뇌', subDef: 'brain' }, { subTerm: '호르몬이 나오다', subDef: 'hormones are released' }] },
-                { term: '카타르시스', mainDef: 'catharsis', variants: ['카타르시스를', '카타르시스는'], examples: [{ kor: '슬픈 영화를 보고 카타르시스를 느꼈어요.', eng: 'I felt catharsis after watching a sad movie.' }], subDefs: [] },
-                { term: '마음속에 있던 감정이 나가서 시원해지는 것', mainDef: 'the act of feeling relieved as pent-up emotions are let out', variants: ['마음속에 있던 감정이 나가서 시원해지는 것'], examples: [{ kor: '울고 나면 감정이 나가서 시원해져요.', eng: 'After crying, emotions are let out and you feel relieved.' }], subDefs: [{ subTerm: '마음속에 있다', subDef: 'to be inside one\'s heart/mind' }, { subTerm: '-던 as in 있던', subDef: 'used to turn a past continuing state into an "adjective-ish" phrase' }, { subTerm: '감정', subDef: 'emotion' }, { subTerm: '-아서/어서 as in 나가서', subDef: 'used to express a cause ("because they go out...")' }, { subTerm: '-는 것 as in 시원해지는 것', subDef: 'nominalizing the action ("the act of feeling relieved")' }] },
-                { term: '행복 호르몬이 나온다고 다 좋은 건 아니에요', mainDef: 'Just because happy hormones are released doesn\'t mean it\'s all good', variants: ['행복 호르몬이 나온다고 다 좋은 건 아니에요'], examples: [{ kor: '맛있다고 다 몸에 좋은 건 아니에요.', eng: 'Just because it\'s delicious doesn\'t mean it\'s all good for your body.' }], subDefs: [{ subTerm: '호르몬이 나오다', subDef: 'hormones are released' }, { subTerm: '-다고 해도 as in 나온다고 다', subDef: '"just because [X happens]..." — concession pattern' }, { subTerm: '-이라고 해도 as in 본성이라고', subDef: '"even if it is called..." or "just because it is..."' }, { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is [adjective]")' }] },
-                { term: '신뢰가 깨지다', mainDef: 'trust is broken', variants: ['신뢰가 깨져요', '신뢰가 깨진다고요'], examples: [{ kor: '거짓말을 반복하면 신뢰가 깨져요.', eng: 'If you repeat lies, trust is broken.' }], subDefs: [{ subTerm: '신뢰', subDef: 'trust' }, { subTerm: '깨지다', subDef: 'to be broken, to be shattered' }] },
-                { term: '믿음이 없어지다', mainDef: 'to lose faith, faith disappears', variants: ['믿음이 없어지다'], examples: [{ kor: '그 사람에 대한 믿음이 없어졌어요.', eng: 'My faith in that person disappeared.' }], subDefs: [{ subTerm: '믿음', subDef: 'faith, belief' }, { subTerm: '없어지다', subDef: 'to disappear, to be gone' }] },
-                { term: '내 이야기를 하겠구나', mainDef: '"Ah, he\'s going to talk about me (too)"', variants: ['내 이야기를 하겠구나', '내 이야기를 안 하겠구나'], examples: [{ kor: '저 사람은 내 비밀도 말하겠구나 생각했어요.', eng: 'I thought, "Ah, that person will probably tell my secrets too."' }], subDefs: [{ subTerm: '-겠구나', subDef: 'used to show an immediate reaction or a strong guess based on a situation. Nuance: "I guess that..." or "Ah, so..."' }] },
-                { term: '-라고 한 건 뭐예요?', mainDef: 'What about the fact that you said "...?"', variants: ['-라고 한 건 뭐예요?'], examples: [{ kor: '어제 안 간다고 한 건 뭐예요?', eng: 'What about the fact that you said you weren\'t going yesterday?' }], subDefs: [{ subTerm: '-라고 하다', subDef: 'to say that...' }, { subTerm: '-ㄴ/은 것 as in 한 건', subDef: 'nominalizes the past action ("the fact that you said")' }] },
-                { term: '공감하다', mainDef: 'to empathize, to relate', variants: ['공감', '공감하다', '공감했어요'], examples: [{ kor: '너의 마음에 100% 공감해.', eng: 'I relate to your feelings 100%.' }], subDefs: [] },
-                { term: '마음을 이해하다', mainDef: 'to understand (someone\'s) heart/mind', variants: ['마음을 이해하다'], examples: [{ kor: '서로의 마음을 이해하는 게 중요해요.', eng: 'It\'s important to understand each other\'s hearts.' }], subDefs: [{ subTerm: '이해하다', subDef: 'to understand' }] },
-                { term: '나중에', mainDef: 'later, later on', variants: ['나중에'], examples: [{ kor: '나중에 다시 이야기해요.', eng: 'Let\'s talk again later.' }], subDefs: [] },
-                { term: '-에게 돌아와요', mainDef: 'it comes back to (someone), it backfires on', variants: ['나에게 돌아와요'], examples: [{ kor: '나쁜 행동은 결국 자기에게 돌아와요.', eng: 'Bad behavior eventually comes back to oneself.' }], subDefs: [] },
-                { term: '좋은 기능', mainDef: 'good function, positive role', variants: ['좋은 기능이'], examples: [{ kor: '이 앱은 좋은 기능이 많아요.', eng: 'This app has many good functions.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }, { subTerm: '기능', subDef: 'function, role' }] },
-                { term: '눈치를 보다', mainDef: 'to walk on eggshells, to read the room, to be self-conscious of others', variants: ['눈치를 봐요', '눈치를 보다'], examples: [{ kor: '직장에서 상사 눈치를 봐요.', eng: 'I walk on eggshells around my boss at work.' }], subDefs: [] },
-                { term: '기분', mainDef: 'mood, feelings', variants: ['기분을'], examples: [{ kor: '오늘 기분이 어때요?', eng: 'How is your mood today?' }], subDefs: [] },
-                { term: '무서우니까', mainDef: 'because it is scary', variants: ['무서우니까'], examples: [{ kor: '밤길이 무서우니까 일찍 들어가세요.', eng: 'Go home early because the night streets are scary.' }], subDefs: [{ subTerm: '-니까', subDef: 'used to express a clear reason or cause, meaning "since..." or "because..."' }] },
-                { term: '나쁜 행동을 안 하게 돼요', mainDef: 'you end up not doing bad behavior', variants: ['나쁜 행동을 안 하게 돼요'], examples: [{ kor: '규칙이 있으면 나쁜 행동을 안 하게 돼요.', eng: 'If there are rules, you end up not doing bad behaviors.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 나쁜', subDef: 'adjective-ish phrase' }, { subTerm: '행동을 하다', subDef: 'to do an action, to behave' }, { subTerm: '-게 되다 as in 안 하게 돼요', subDef: 'used to express a change in state or situation outside of one\'s direct control, meaning "end up (not) doing..."' }] },
-                { term: '무서워서', mainDef: 'because you are scared', variants: ['무서워서'], examples: [{ kor: '귀신이 무서워서 도망갔어요.', eng: 'I ran away because I was scared of the ghost.' }], subDefs: [{ subTerm: '-아서/어서', subDef: 'used to express a cause, meaning "because..."' }] },
-                { term: '착하게 행동한다고요?', mainDef: 'Are you saying you act nicely (because of that)?', variants: ['착하게 행동한다고요?'], examples: [{ kor: '매일 착하게 행동한다고요?', eng: 'Are you saying you act nicely every day?' }], subDefs: [{ subTerm: '착하게 행동하다', subDef: 'to behave nicely, to act good' }, { subTerm: '-게 as in 착하게', subDef: 'adverbial marker meaning "nicely"' }, { subTerm: '-다고요?', subDef: 'used to seek confirmation of what was just heard, meaning "Are you saying that...?"' }] },
-                { term: '착한 게 아니에요', mainDef: 'It doesn\'t mean you are a good person', variants: ['착한 게 아니에요'], examples: [{ kor: '돈이 많다고 다 착한 게 아니에요.', eng: 'Just because someone has a lot of money doesn\'t mean they are a good person.' }], subDefs: [{ subTerm: '-ㄴ/는 것이 아니에요 as in 착한 게 아니에요', subDef: 'used to clarify the fact ("it is not the fact that you are nice")' }] },
-                { term: '착한 척하는 거예요', mainDef: 'You are just pretending to be nice', variants: ['착한 척하는 거예요'], examples: [{ kor: '그는 똑똑한 척하는 거예요.', eng: 'He is pretending to be smart.' }], subDefs: [{ subTerm: '착하다', subDef: 'to be nice, kind' }, { subTerm: '-ㄴ/은 척하다 as in 착한 척하다', subDef: 'to pretend to be (adjective)' }, { subTerm: '-는 거예요 as in 척하는 거예요', subDef: 'colloquial explanation ("The fact is you are pretending...")' }] },
-                { term: '그렇게 보면 그렇네요', mainDef: 'Now that you put it that way, I guess you\'re right.', variants: ['그렇게 보면 그렇네요'], examples: [{ kor: '설명을 듣고 나니 그렇게 보면 그렇네요.', eng: 'After hearing the explanation, now that you put it that way, yeah.' }], subDefs: [{ subTerm: '그렇게 보면', subDef: 'Looking at it that way' }, { subTerm: '그렇네요', subDef: 'That is so (with a realization nuance, -네요)' }] },
-                { term: '뒷담화는 안 하는 게', mainDef: 'the act of not gossiping', variants: ['뒷담화는 안 하는 게'], examples: [{ kor: '거짓말은 안 하는 게 좋아요.', eng: 'It\'s better not to lie.' }], subDefs: [{ subTerm: '뒷담화를 하다', subDef: 'to gossip' }, { subTerm: '-는 게 as in 하는 게', subDef: 'colloquial form of -는 것이, meaning "the act of doing"' }] },
-                { term: '불가능하다', mainDef: 'to be impossible', variants: ['불가능해요'], examples: [{ kor: '하루 만에 다 하는 건 불가능해요.', eng: 'Doing it all in one day is impossible.' }], subDefs: [] },
-                { term: '뒷담화 없이도', mainDef: 'even without gossiping', variants: ['뒷담화 없이도'], examples: [{ kor: '돈 없이도 행복할 수 있어요.', eng: 'You can be happy even without money.' }], subDefs: [{ subTerm: '없이', subDef: 'without' }] },
-                { term: '친구를 사귀다', mainDef: 'to make friends', variants: ['친구를 사귈'], examples: [{ kor: '동아리에서 새로운 친구를 사귀었어요.', eng: 'I made new friends in the club.' }], subDefs: [] },
-                { term: '오히려', mainDef: 'actually, rather, on the contrary', variants: ['오히려'], examples: [{ kor: '도와주려고 했는데 오히려 방해가 됐어요.', eng: 'I tried to help, but it actually became a distraction.' }], subDefs: [] },
-                { term: '신뢰를 받다', mainDef: 'to gain trust, to be trusted', variants: ['신뢰를 받아요'], examples: [{ kor: '솔직한 사람이 신뢰를 받아요.', eng: 'Honest people gain trust.' }], subDefs: [{ subTerm: '신뢰', subDef: 'trust' }] },
-                { term: '"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요', mainDef: 'Because they think, "Ah, this person won\'t talk behind my back."', variants: ['"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요'], examples: [{ kor: '나를 믿는다고 생각하니까요.', eng: 'Because I think they trust me.' }], subDefs: [{ subTerm: '-겠구나 as in 하겠구나', subDef: 'realization/guess ("I guess they won\'t...")' }, { subTerm: '-라고 생각하다', subDef: 'to think that...' }, { subTerm: '-니까요 as in 생각하니까요', subDef: 'giving a reason as an ending ("Because...")' }] },
-                { term: '그건 맞는 것 같아요', mainDef: 'I think that makes sense / That seems right', variants: ['그건 맞는 것 같아요'], examples: [{ kor: '네 말이 맞는 것 같아.', eng: 'I think what you said is right.' }], subDefs: [{ subTerm: '맞다', subDef: 'to be correct' }, { subTerm: '-는 것 같다', subDef: 'used to express an assumption or guess, meaning "I think..." or "it seems..."' }] },
-                { term: '솔직히 말해 봐요', mainDef: 'Be honest with me / Try telling the truth', variants: ['솔직히 말해 봐요'], examples: [{ kor: '숨기지 말고 솔직히 말해 봐요.', eng: 'Don\'t hide it, try speaking honestly.' }], subDefs: [{ subTerm: '솔직히', subDef: 'honestly, frankly' }, { subTerm: '-아/어 보다 as in 말해 봐요', subDef: 'used to make a gentle suggestion ("try doing...")' }] },
-                { term: '뒷담화 한 적 있죠?', mainDef: 'You\'ve gossiped before, right?', variants: ['뒷담화 한 적 있죠?'], examples: [{ kor: '김치 먹어본 적 있죠?', eng: 'You\'ve tried eating Kimchi before, right?' }], subDefs: [{ subTerm: '-ㄴ/은 적 있다 as in 한 적 있다', subDef: 'used to express past experience, meaning "have done..."' }, { subTerm: '-죠? as in 있죠?', subDef: 'seeking confirmation ("right?")' }] },
-                { term: '양심에 찔리다', mainDef: 'to feel a pang of guilt, to have a guilty conscience', variants: ['양심에 찔렸어요', '양심에 찔리다'], examples: [{ kor: '거짓말을 하고 나니 양심에 찔려요.', eng: 'After lying, I felt a pang of guilt.' }], subDefs: [{ subTerm: '양심', subDef: 'conscience' }, { subTerm: '찔리다', subDef: 'to be pierced, pricked (guilty)' }] },
-                { term: '잘못한 것 같아서', mainDef: 'because it feels like I did something wrong', variants: ['잘못한 것 같아서'], examples: [{ kor: '내가 잘못한 것 같아서 사과했어요.', eng: 'I apologized because it felt like I did something wrong.' }], subDefs: [{ subTerm: '잘못하다', subDef: 'to do wrong, to make a mistake' }, { subTerm: '-ㄴ/은 것 같다', subDef: 'I think..., it seems like...' }, { subTerm: '-아서/어서 as in 같아서', subDef: 'used to express a cause ("because...")' }] },
-                { term: '마음이 불편하다', mainDef: 'to feel uncomfortable, to feel uneasy', variants: ['마음이 불편하다'], examples: [{ kor: '싸운 친구를 보면 마음이 불편해요.', eng: 'I feel uncomfortable when I see the friend I fought with.' }], subDefs: [] },
-                { term: '봐요! 조이 씨도 하잖아요', mainDef: 'See! You do it too, you know!', variants: ['봐요! 조이 씨도 하잖아요'], examples: [{ kor: '봐요! 제가 맞다고 했잖아요.', eng: 'See! I told you I was right, you know.' }], subDefs: [{ subTerm: '봐요!', subDef: 'Look! / See!' }, { subTerm: '-잖아요 as in 하잖아요', subDef: 'reminding the listener of an obvious fact ("Come on, you do it too!")' }] },
-                { term: '뒷담화를 안 하려고 노력하고 있어요', mainDef: 'I am making an effort not to gossip', variants: ['뒷담화를 안 하려고 노력하고 있어요'], examples: [{ kor: '건강을 위해 운동하려고 노력하고 있어요.', eng: 'I am making an effort to exercise for my health.' }], subDefs: [{ subTerm: '-려고 노력하다 as in 안 하려고 노력하다', subDef: 'to try to do, to make an effort to do' }, { subTerm: '-고 있다 as in 노력하고 있어요', subDef: 'present continuous ("am doing...")' }] },
-                { term: '뒷담화가 본성이라는 건 알아요', mainDef: 'I know that gossip is human nature', variants: ['본성이라는 건 알아요'], examples: [{ kor: '공부가 중요하다는 건 알아요.', eng: 'I know that studying is important.' }], subDefs: [{ subTerm: '-라는 것 as in 본성이라는 건', subDef: 'the fact that it is... (quoting a fact)' }, { subTerm: '알다', subDef: 'to know' }] },
-                { term: '좋은 게 아니에요', mainDef: 'it is not a good thing', variants: ['좋은 게 아니에요'], examples: [{ kor: '쉽게 포기하는 건 좋은 게 아니에요.', eng: 'Giving up easily is not a good thing.' }], subDefs: [{ subTerm: '-ㄴ/은 것이 아니에요', subDef: 'it is not the fact that it is...' }] },
-                { term: '조절할 수 있어야 해요', mainDef: 'we must be able to keep it in check / control it', variants: ['조절할 수 있어야 해요'], examples: [{ kor: '화가 나도 감정을 조절할 수 있어야 해요.', eng: 'Even if you are angry, you must be able to keep your emotions in check.' }], subDefs: [{ subTerm: '조절하다', subDef: 'to control, to regulate' }, { subTerm: '-ㄹ/을 수 있다', subDef: 'to be able to' }, { subTerm: '-어야 하다', subDef: 'must, have to' }] },
-                { term: '오늘 배운 단어를 정리해 봐요', mainDef: 'let\'s recap today\'s vocabulary', variants: ['오늘 배운 단어를 정리해 봐요'], examples: [{ kor: '회의가 끝난 후 내용을 정리해 봐요.', eng: 'Let\'s recap the details after the meeting ends.' }], subDefs: [{ subTerm: '-ㄴ/은 as in 배운', subDef: 'past tense modifier' }, { subTerm: '단어', subDef: 'word, vocabulary' }, { subTerm: '정리하다', subDef: 'to recap, to organize' }, { subTerm: '-아/어 보다 as in 정리해 봐요', subDef: 'let\'s try doing...' }] },
-                { term: '뒷담화에 대해서 어떻게 생각해요?', mainDef: 'What do you think about gossiping?', variants: ['뒷담화에 대해서 어떻게 생각해요?'], examples: [{ kor: '이 계획에 대해서 어떻게 생각해요?', eng: 'What do you think about this plan?' }], subDefs: [{ subTerm: '-에 대해서', subDef: 'about, regarding' }, { subTerm: '어떻게 생각하다', subDef: 'to think what/how' }] },
-                { term: '나쁜 거예요', mainDef: 'is it a bad thing?', variants: ['나쁜 거예요?'], examples: [{ kor: '거짓말은 나쁜 거예요.', eng: 'Lying is a bad thing.' }], subDefs: [{ subTerm: '-ㄴ/은 것 as in 나쁜 거', subDef: 'nominalizing the adjective ("a thing that is bad")' }] },
-                { term: '자연스러운 것', mainDef: 'a natural thing', variants: ['자연스러운 거예요?'], examples: [{ kor: '실수하는 건 인간으로서 자연스러운 거예요.', eng: 'Making a mistake is a natural thing as a human.' }], subDefs: [{ subTerm: '자연스럽다', subDef: 'to be natural' }, { subTerm: '-ㄴ/은 것 as in 자연스러운 거', subDef: 'nominalizing ("a thing that is natural")' }] },
-                { term: '오늘은 여기까지 할게요', mainDef: 'That\'s a wrap for today', variants: ['오늘은 여기까지 할게요'], examples: [{ kor: '회의는 오늘은 여기까지 할게요.', eng: 'That\'s a wrap for the meeting today.' }], subDefs: [{ subTerm: '여기까지', subDef: 'up to here' }, { subTerm: '-ㄹ/을게요 as in 할게요', subDef: 'I will... (intention/announcement)' }] },
-                { term: '뒷담화 한 적 있다고 했거든요', mainDef: 'Because she said she has gossiped before... (Just so you know)', variants: ['뒷담화 한 적 있다고 했거든요'], examples: [{ kor: '친구가 어제 바쁘다고 했거든요.', eng: 'Because my friend said they were busy yesterday... (Just so you know)' }], subDefs: [{ subTerm: '-ㄴ/은 적 있다 as in 한 적 있다고', subDef: 'have done (experience)' }, { subTerm: '-다고 하다 as in 있다고 했다', subDef: 'quoting a statement ("she said that...")' }, { subTerm: '-거든요 as in 했거든요', subDef: 'giving a reason or a fact the listener might not know ("Just so you know...")' }] },
-                { term: '진짜 저 사람은...', mainDef: 'Seriously, that guy is...', variants: ['진짜 저 사람은'], examples: [{ kor: '진짜 저 사람은 못 말려요.', eng: 'Seriously, there\'s no stopping that guy.' }], subDefs: [{ subTerm: '\'진짜\'', subDef: 'seriously, for real (expressing frustration here)' }] }
+                {
+                    term: '이 주제로 이야기해 봐요',
+                    mainDef: "Let's talk about this topic",
+                    variants: ['<이 주제로 이야기해 봐요>'],
+                    examples: [{ kor: '우리 이 주제로 이야기해 봐요.', eng: "Let's talk about this topic." }],
+                    subDefs: [
+                        { subTerm: '◻︎◻︎을/를 주제로 이야기 하다', subDef: 'to talk about [X] as a topic' },
+                        { subTerm: '-아/어 보다 as in 이야기해 봐요', subDef: 'used to make gentle suggestions without sounding pushy, meaning "try doing..." or "let\'s try..."' }
+                    ]
+                },
+                {
+                    term: '그 얘기 들었어요?',
+                    mainDef: 'Did you hear about that?',
+                    variants: ['그 얘기 들었어요?'],
+                    examples: [{ kor: '어제 있었던 그 얘기 들었어요?', eng: 'Did you hear about what happened yesterday?' }],
+                    subDefs: [
+                        { subTerm: '얘기', subDef: 'story, talk, what people are saying' }
+                    ]
+                },
+                {
+                    term: '정보',
+                    mainDef: 'information, intel',
+                    variants: ['정보'],
+                    examples: [{ kor: '중요한 정보예요.', eng: 'It\'s important information.' }],
+                    subDefs: []
+                },
+                {
+                    term: '알려주려고 햇어요',
+                    mainDef: 'I was going to tell you / I tried to let you know',
+                    variants: ['알려주려고 했어요'],
+                    examples: [{ kor: '비밀을 알려주려고 했어요.', eng: 'I was going to tell you a secret.' }],
+                    subDefs: [
+                        { subTerm: '알려주다', subDef: 'to let (someone) know, to tell' },
+                        { subTerm: '-려고 하다', subDef: 'used to express intention or plan, meaning "to intend to" or "was going to..."' }
+                    ]
+                },
+                {
+                    term: '뒷담화',
+                    mainDef: 'gossip, talking behind someone\'s back',
+                    variants: ['뒷담화예요', '뒷담화'],
+                    examples: [{ kor: '뒷담화는 나쁜 습관이에요.', eng: 'Gossiping is a bad habit.' }],
+                    subDefs: []
+                },
+                {
+                    term: '이야기를 하는 것',
+                    mainDef: 'the act of talking about (someone)',
+                    variants: ['이야기를 하는 것'],
+                    examples: [{ kor: '남 이야기를 하는 것은 조심해야 해요.', eng: 'You should be careful about the act of talking about others.' }],
+                    subDefs: [
+                        { subTerm: '-는 것', subDef: 'used to turn an action verb into a noun phrase meaning "the act of...-ing" or "the thing that..."' }
+                    ]
+                },
+                {
+                    term: '-이라는 뜻이에요',
+                    mainDef: 'It means...',
+                    variants: ['-이라는 뜻이에요', '라는 뜻이에요'],
+                    examples: [{ kor: '이건 금지라는 뜻이에요.', eng: 'This means prohibition.' }],
+                    subDefs: []
+                },
+                {
+                    term: '뒷담화를 하다',
+                    mainDef: 'to gossip',
+                    variants: ['뒷담화를 안 해요', '뒷담화를 하면', '뒷담화를 하라'],
+                    examples: [{ kor: '친구 뒷담화를 하지 마세요.', eng: 'Don\'t gossip about your friends.' }],
+                    subDefs: []
+                },
+                {
+                    term: '공유하는 거예요',
+                    mainDef: 'I\'m (just) sharing',
+                    variants: ['공유하는 거예요', '공유'],
+                    examples: [{ kor: '좋은 소식을 공유하는 거예요.', eng: 'I\'m just sharing good news.' }],
+                    subDefs: [
+                        { subTerm: '공유하다', subDef: 'to share' },
+                        { subTerm: '-는 거예요 as in 공유하는 거예요', subDef: 'Identified as a colloquial form of -는 것이에요. Used to explain, clarify, or emphasize the essence of something ("The fact is that I am sharing...")' }
+                    ]
+                },
+                {
+                    term: '민호 씨가 없는데 민호 씨 이야기를 하면',
+                    mainDef: 'If you talk about Minho when he\'s not around',
+                    variants: ['민호 씨가 없는데 민호 씨 이야기를 하면'],
+                    examples: [{ kor: '당사자가 없는데 이야기를 하면 안 돼요.', eng: 'You shouldn\'t talk about someone when they aren\'t here.' }],
+                    subDefs: [
+                        { subTerm: '-는데 as in 없는데', subDef: 'used to provide background information or set the scene before making the main point ("he is not here, and...").' },
+                        { subTerm: '-면 as in 하면', subDef: 'used to express a condition, meaning "if..."' }
+                    ]
+                },
+                {
+                    term: '나쁜 게',
+                    mainDef: 'a bad thing',
+                    variants: ['나쁜 게'],
+                    examples: [{ kor: '우는 건 나쁜 게 아니에요.', eng: 'Crying isn\'t a bad thing.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 게 as in 나쁜 게', subDef: 'Identified as colloquial form of -ㄴ/은 것이. Used to turn a descriptive verb into a noun phrase meaning "a thing that is bad".' }
+                    ]
+                },
+                {
+                    term: '본성',
+                    mainDef: 'human nature, true nature',
+                    variants: ['본성이에요', '본성'],
+                    examples: [{ kor: '그건 인간의 본성이에요.', eng: 'That\'s human nature.' }],
+                    subDefs: []
+                },
+                {
+                    term: '원래 성격',
+                    mainDef: 'true character, original personality',
+                    variants: ['원래 성격'],
+                    examples: [{ kor: '그의 원래 성격은 아주 착해요.', eng: 'His true character is very kind.' }],
+                    subDefs: [
+                        { subTerm: '원래', subDef: 'originally, naturally' },
+                        { subTerm: '성격', subDef: 'personality, character' }
+                    ]
+                },
+                {
+                    term: '본성이라고 다 좋은 건 아니에요',
+                    mainDef: 'Just because it\'s human nature doesn\'t mean it\'s all good',
+                    variants: ['본성이라고 다 좋은 건 아니에요'],
+                    examples: [{ kor: '비싸다고 다 좋은 건 아니에요.', eng: 'Just because it\'s expensive doesn\'t mean it\'s all good.' }],
+                    subDefs: [
+                        { subTerm: '-이라고 해도 as in 본성이라고', subDef: 'used to express concession, meaning "even if it is called..." or "just because it is..."' },
+                        { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is good")' }
+                    ]
+                },
+                {
+                    term: '도덕적으로',
+                    mainDef: 'morally',
+                    variants: ['도덕적으로'],
+                    examples: [{ kor: '도덕적으로 옳은 행동이에요.', eng: 'It is a morally right behavior.' }],
+                    subDefs: [
+                        { subTerm: '도덕적', subDef: 'moral' },
+                        { subTerm: '-으로', subDef: 'particle turning a noun into an adverb ("-ly")' }
+                    ]
+                },
+                {
+                    term: '유발 하라리라는 유명한 학자',
+                    mainDef: 'a famous scholar named Yuval Harari',
+                    variants: ['유발 하라리라는 유명한 학자가'],
+                    examples: [{ kor: '스티브 잡스라는 유명한 사람이 있어요.', eng: 'There is a famous person named Steve Jobs.' }],
+                    subDefs: [
+                        { subTerm: '유발 하라리', subDef: 'Yuval Harari' },
+                        { subTerm: '-라는 as in 하라리라는', subDef: 'used to specify a name, meaning "called" or "named"' },
+                        { subTerm: '학자', subDef: 'scholar' }
+                    ]
+                },
+                {
+                    term: '언어',
+                    mainDef: 'language',
+                    variants: ['언어는'],
+                    examples: [{ kor: '언어는 소통의 도구예요.', eng: 'Language is a tool for communication.' }],
+                    subDefs: []
+                },
+                {
+                    term: '-을/를 위해서',
+                    mainDef: 'for the sake of, for',
+                    variants: ['위해서'],
+                    examples: [{ kor: '가족을 위해서 열심히 일해요.', eng: 'I work hard for my family.' }],
+                    subDefs: []
+                },
+                {
+                    term: '"뒷담화를 하라"고 말한 건 아니에요.',
+                    mainDef: 'It doesn\'t mean he said "Go gossip."',
+                    variants: ['"뒷담화를 하라"고 말한 건 아니에요.'],
+                    examples: [{ kor: '내가 가라고 말한 건 아니에요.', eng: 'It doesn\'t mean I told you to go.' }],
+                    subDefs: [
+                        { subTerm: '(명령)라고/으라고 말하다', subDef: 'used to quote a command, meaning "told someone to do..."' },
+                        { subTerm: '-ㄴ/은 건 아니에요 as in 말한 건 아니에요', subDef: 'used to correct a misunderstanding ("it is not the fact that he said...")' }
+                    ]
+                },
+                {
+                    term: '스트레스가 풀리다',
+                    mainDef: 'to blow off steam, to destress',
+                    variants: ['스트레스가 풀려요'],
+                    examples: [{ kor: '운동을 하면 스트레스가 풀려요.', eng: 'Working out helps me blow off steam.' }],
+                    subDefs: [
+                        { subTerm: '풀리다', subDef: 'to be relieved, to be resolved' }
+                    ]
+                },
+                {
+                    term: '마음이 편해지다',
+                    mainDef: 'to feel at ease, to relax',
+                    variants: ['마음이 편해지다'],
+                    examples: [{ kor: '친구와 이야기하면 마음이 편해져요.', eng: 'Talking with a friend puts my mind at ease.' }],
+                    subDefs: [
+                        { subTerm: '편해지다', subDef: 'to become comfortable (adjective + -아/어지다)' }
+                    ]
+                },
+                {
+                    term: '힘든 일',
+                    mainDef: 'tough stuff, hard things',
+                    variants: ['힘든 일'],
+                    examples: [{ kor: '힘든 일이 있으면 말해 줘.', eng: 'Tell me if you have any tough stuff going on.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase that describes the following noun.' }
+                    ]
+                },
+                {
+                    term: '속이 시원해지다',
+                    mainDef: 'to get it off one\'s chest, to feel relieved',
+                    variants: ['속이 시원해져요'],
+                    examples: [{ kor: '비밀을 말하고 나니 속이 시원해졌어요.', eng: 'I got it off my chest after telling the secret, so I felt relieved.' }],
+                    subDefs: [
+                        { subTerm: '속', subDef: 'inside, heart' },
+                        { subTerm: '시원해지다', subDef: 'to become refreshing/relieved' }
+                    ]
+                },
+                {
+                    term: '하소연',
+                    mainDef: 'venting, pouring one\'s heart out',
+                    variants: ['하소연이에요', '하소연'],
+                    examples: [{ kor: '이건 그냥 내 하소연이야.', eng: 'This is just me venting.' }],
+                    subDefs: []
+                },
+                {
+                    term: '내 힘든 이야기를 하는 거예요',
+                    mainDef: 'It\'s (just) talking about my own struggles',
+                    variants: ['내 힘든 이야기를 하는 거예요'],
+                    examples: [{ kor: '이건 험담이 아니라 내 힘든 이야기를 하는 거예요.', eng: 'This isn\'t badmouthing, it\'s just me talking about my struggles.' }],
+                    subDefs: [
+                        { subTerm: '내 힘든 이야기', subDef: 'my tough stories / struggles' },
+                        { subTerm: '-ㄴ/은 as in 힘든', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' },
+                        { subTerm: '-는 거예요 as in 하는 거예요', subDef: 'colloquial of -는 것이에요. Used to define the essence of something ("The fact is it\'s talking about...")' }
+                    ]
+                },
+                {
+                    term: '험담하다',
+                    mainDef: 'to badmouth, to talk smack',
+                    variants: ['험담하는 거예요', '험담 안 해요'],
+                    examples: [{ kor: '남을 험담하는 것은 좋지 않아요.', eng: 'It\'s not good to badmouth others.' }],
+                    subDefs: [
+                        { subTerm: '-는 거예요 as in 험담하는 거예요', subDef: 'used to explain or clarify ("It means you are badmouthing")' }
+                    ]
+                },
+                {
+                    term: '이상하다',
+                    mainDef: 'to be acting weird, to be strange',
+                    variants: ['이상했어요'],
+                    examples: [{ kor: '그 사람 오늘 좀 이상해요.', eng: 'That person is acting a bit weird today.' }],
+                    subDefs: []
+                },
+                {
+                    term: '사실이잖아요!',
+                    mainDef: 'But it\'s a fact! / Come on, it\'s the truth!',
+                    variants: ['사실이잖아요!'],
+                    examples: [{ kor: '내가 잘못한 게 아니야, 사실이잖아요!', eng: 'It\'s not my fault, come on, it\'s a fact!' }],
+                    subDefs: [
+                        { subTerm: '사실', subDef: 'fact, truth' },
+                        { subTerm: '-잖아요 as in 사실이잖아요', subDef: 'used to remind the listener of shared information or something obvious. Nuance: "You know..." or "Come on, as you can see..."' }
+                    ]
+                },
+                {
+                    term: '좋은 점',
+                    mainDef: 'pro, advantage, good point',
+                    variants: ['좋은 점'],
+                    examples: [{ kor: '이 방법의 좋은 점은 빠르다는 거예요.', eng: 'The pro of this method is that it\'s fast.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' }
+                    ]
+                },
+                {
+                    term: '유대감',
+                    mainDef: 'bond, sense of fellowship',
+                    variants: ['유대감'],
+                    examples: [{ kor: '우리 팀은 유대감이 강해요.', eng: 'Our team has a strong bond.' }],
+                    subDefs: []
+                },
+                {
+                    term: '사람들 사이의 친한 느낌',
+                    mainDef: 'a feeling of closeness between people',
+                    variants: ['사람들 사이의 친한 느낌'],
+                    examples: [{ kor: '유대감은 사람들 사이의 친한 느낌이에요.', eng: 'A bond is a feeling of closeness between people.' }],
+                    subDefs: [
+                        { subTerm: '사이의', subDef: 'between, among' },
+                        { subTerm: '-ㄴ/은 as in 친한', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' },
+                        { subTerm: '느낌', subDef: 'feeling' }
+                    ]
+                },
+                {
+                    term: '우리는 한 편이야',
+                    mainDef: 'We are on the same side / We\'re a team',
+                    variants: ['우리는 한 편이야'],
+                    examples: [{ kor: '걱정 마, 우리는 한 편이야.', eng: 'Don\'t worry, we\'re on the same side.' }],
+                    subDefs: [
+                        { subTerm: '한 편', subDef: 'same side, same team' },
+                        { subTerm: '-이야', subDef: 'informal copula ("am/are/is")' }
+                    ]
+                },
+                {
+                    term: '다른 사람 욕을 하면서',
+                    mainDef: 'while talking smack about someone else',
+                    variants: ['다른 사람 욕을 하면서'],
+                    examples: [{ kor: '남 욕을 하면서 시간을 보냈어요.', eng: 'We spent time while talking smack about others.' }],
+                    subDefs: [
+                        { subTerm: '욕을 하다', subDef: 'to swear, to talk smack, to badmouth' },
+                        { subTerm: '-면서 as in 하면서', subDef: 'used to connect two actions happening simultaneously, meaning "while..."' }
+                    ]
+                },
+                {
+                    term: '친해지는 거요?',
+                    mainDef: 'You mean getting close (by doing that)?',
+                    variants: ['친해지는 거요?'],
+                    examples: [{ kor: '같이 밥을 먹으면서 친해지는 거요?', eng: 'You mean getting close while eating together?' }],
+                    subDefs: [
+                        { subTerm: '친해지다', subDef: 'to get close to someone' },
+                        { subTerm: '-는 거요? as in 친해지는 거요?', subDef: 'colloquial form of -는 것이에요?, used to ask for clarification on a fact ("You mean the act of...?")' }
+                    ]
+                },
+                {
+                    term: '우정',
+                    mainDef: 'friendship',
+                    variants: ['우정'],
+                    examples: [{ kor: '우리의 우정은 영원할 거야.', eng: 'Our friendship will last forever.' }],
+                    subDefs: []
+                },
+                {
+                    term: '학생이었을 때 생각해 봐요',
+                    mainDef: 'Think about back when you were a student',
+                    variants: ['학생이었을 때 생각해 봐요'],
+                    examples: [{ kor: '어렸을 때 생각해 봐요.', eng: 'Think about back when you were young.' }],
+                    subDefs: [
+                        { subTerm: '-이었을 때 as in 학생이었을 때', subDef: 'used to indicate a past time period ("when you were a...")' },
+                        { subTerm: '-아/어 보다 as in 생각해 봐요', subDef: 'used to make gentle suggestions ("try thinking about...")' }
+                    ]
+                },
+                {
+                    term: '이런 이야기 한 적 없어요?',
+                    mainDef: 'Haven\'t you ever said things like this?',
+                    variants: ['이런 이야기 한 적 없어요?'],
+                    examples: [{ kor: '거짓말 한 적 없어요?', eng: 'Haven\'t you ever told a lie?' }],
+                    subDefs: [
+                        { subTerm: '이런', subDef: 'like this, such' },
+                        { subTerm: '-ㄴ/은 적 없다 as in 한 적 없어요', subDef: 'used to express a lack of past experience, meaning "have never done..."' }
+                    ]
+                },
+                {
+                    term: '소속감',
+                    mainDef: 'sense of belonging',
+                    variants: ['소속감'],
+                    examples: [{ kor: '팀에서 소속감을 느껴요.', eng: 'I feel a sense of belonging in the team.' }],
+                    subDefs: []
+                },
+                {
+                    term: '그룹에 속해 있다는 느낌',
+                    mainDef: 'the feeling of belonging to a group',
+                    variants: ['그룹에 속해 있다는 느낌'],
+                    examples: [{ kor: '우리는 같은 그룹에 속해 있다는 느낌을 받아요.', eng: 'We feel like we belong to the same group.' }],
+                    subDefs: [
+                        { subTerm: '그룹', subDef: 'group' },
+                        { subTerm: '-에 속해 있다', subDef: 'to belong to, to be part of' },
+                        { subTerm: '-는 느낌', subDef: 'the feeling that...' }
+                    ]
+                },
+                {
+                    term: '조이 씨도 했죠?',
+                    mainDef: 'You did it too, right?',
+                    variants: ['조이 씨도 했죠?'],
+                    examples: [{ kor: '어제 숙제 했죠?', eng: 'You did the homework yesterday, right?' }],
+                    subDefs: [
+                        { subTerm: '-죠? as in 했죠?', subDef: 'a tag question used to seek agreement or confirmation, meaning "Right?"' }
+                    ]
+                },
+                {
+                    term: '어른이 되면',
+                    mainDef: 'When you grow up / When you become an adult',
+                    variants: ['어른이 되면'],
+                    examples: [{ kor: '어른이 되면 이해할 거예요.', eng: 'When you grow up, you will understand.' }],
+                    subDefs: [
+                        { subTerm: '어른', subDef: 'adult' },
+                        { subTerm: '-이 되면 as in 어른이 되면', subDef: 'used to express a condition or time ("if/when you become...")' }
+                    ]
+                },
+                {
+                    term: '달라지지 않아요',
+                    mainDef: 'It doesn\'t change',
+                    variants: ['달라지지 않아요'],
+                    examples: [{ kor: '사람은 쉽게 달라지지 않아요.', eng: 'People don\'t change easily.' }],
+                    subDefs: [
+                        { subTerm: '달라지다', subDef: 'to change, to become different' },
+                        { subTerm: '-지 않다 as in 달라지지 않아요', subDef: 'negative form ("does not")' }
+                    ]
+                },
+                {
+                    term: '연구에 따르면',
+                    mainDef: 'according to research',
+                    variants: ['연구에 따르면'],
+                    examples: [{ kor: '연구에 따르면 규칙적인 운동이 중요해요.', eng: 'According to research, regular exercise is important.' }],
+                    subDefs: [
+                        { subTerm: '연구', subDef: 'research, study' },
+                        { subTerm: '-에 따르면', subDef: 'particle phrase meaning "according to"' }
+                    ]
+                },
+                {
+                    term: '뇌에서 행복 호르몬이 나와요',
+                    mainDef: 'happy hormones are released in the brain',
+                    variants: ['뇌에서 행복 호르몬이 나와요'],
+                    examples: [{ kor: '초콜릿을 먹으면 행복 호르몬이 나와요.', eng: 'When you eat chocolate, happy hormones are released.' }],
+                    subDefs: [
+                        { subTerm: '뇌', subDef: 'brain' },
+                        { subTerm: '호르몬이 나오다', subDef: 'hormones are released' }
+                    ]
+                },
+                {
+                    term: '카타르시스',
+                    mainDef: 'catharsis',
+                    variants: ['카타르시스'],
+                    examples: [{ kor: '슬픈 영화를 보고 카타르시스를 느꼈어요.', eng: 'I felt catharsis after watching a sad movie.' }],
+                    subDefs: []
+                },
+                {
+                    term: '마음속에 있던 감정이 나가서 시원해지는 것',
+                    mainDef: 'the act of feeling relieved as pent-up emotions are let out',
+                    variants: ['마음속에 있던 감정이 나가서 시원해지는 것'],
+                    examples: [{ kor: '울고 나면 감정이 나가서 시원해져요.', eng: 'After crying, emotions are let out and you feel relieved.' }],
+                    subDefs: [
+                        { subTerm: '마음속에 있다', subDef: 'to be inside one\'s heart/mind' },
+                        { subTerm: '-던 as in 있던', subDef: 'used to turn a past continuing state into an "adjective-ish" phrase' },
+                        { subTerm: '감정', subDef: 'emotion' },
+                        { subTerm: '-아서/어서 as in 나가서', subDef: 'used to express a cause ("because they go out...")' },
+                        { subTerm: '-는 것 as in 시원해지는 것', subDef: 'nominalizing the action ("the act of feeling relieved")' }
+                    ]
+                },
+                {
+                    term: '행복 호르몬이 나온다고 다 좋은 건 아니에요',
+                    mainDef: 'Just because happy hormones are released doesn\'t mean it\'s all good',
+                    variants: ['행복 호르몬이 나온다고 다 좋은 건 아니에요'],
+                    examples: [{ kor: '맛있다고 다 몸에 좋은 건 아니에요.', eng: 'Just because it\'s delicious doesn\'t mean it\'s all good for your body.' }],
+                    subDefs: [
+                        { subTerm: '호르몬이 나오다', subDef: 'hormones are released' },
+                        { subTerm: '-다고 해도 as in 나온다고 다', subDef: '"just because [X happens]..." — concession pattern' },
+                        { subTerm: '-이라고 해도 as in 본성이라고', subDef: '"even if it is called..." or "just because it is..."' },
+                        { subTerm: '-ㄴ/은 건 아니에요 as in 좋은 건 아니에요', subDef: 'used to clarify or deny an assumption ("it doesn\'t mean that it is [adjective]")' }
+                    ]
+                },
+                {
+                    term: '신뢰가 깨지다',
+                    mainDef: 'trust is broken',
+                    variants: ['신뢰가 깨져요', '신뢰가 깨진다고요'],
+                    examples: [{ kor: '거짓말을 반복하면 신뢰가 깨져요.', eng: 'If you repeat lies, trust is broken.' }],
+                    subDefs: [
+                        { subTerm: '신뢰', subDef: 'trust' },
+                        { subTerm: '깨지다', subDef: 'to be broken, to be shattered' }
+                    ]
+                },
+                {
+                    term: '믿음이 없어지다',
+                    mainDef: 'to lose faith, faith disappears',
+                    variants: ['믿음이 없어지다'],
+                    examples: [{ kor: '그 사람에 대한 믿음이 없어졌어요.', eng: 'My faith in that person disappeared.' }],
+                    subDefs: [
+                        { subTerm: '믿음', subDef: 'faith, belief' },
+                        { subTerm: '없어지다', subDef: 'to disappear, to be gone' }
+                    ]
+                },
+                {
+                    term: '내 이야기를 하겠구나',
+                    mainDef: '"Ah, he\'s going to talk about me (too)"',
+                    variants: ['내 이야기를 하겠구나', '내 이야기를 안 하겠구나'],
+                    examples: [{ kor: '저 사람은 내 비밀도 말하겠구나 생각했어요.', eng: 'I thought, "Ah, that person will probably tell my secrets too."' }],
+                    subDefs: [
+                        { subTerm: '-겠구나', subDef: 'used to show an immediate reaction or a strong guess based on a situation. Nuance: "I guess that..." or "Ah, so..."' }
+                    ]
+                },
+                {
+                    term: '-라고 한 건 뭐예요?',
+                    mainDef: 'What about the fact that you said "...?"',
+                    variants: ['-라고 한 건 뭐예요?'],
+                    examples: [{ kor: '어제 안 간다고 한 건 뭐예요?', eng: 'What about the fact that you said you weren\'t going yesterday?' }],
+                    subDefs: [
+                        { subTerm: '-라고 하다', subDef: 'to say that...' },
+                        { subTerm: '-ㄴ/은 것 as in 한 건', subDef: 'nominalizes the past action ("the fact that you said")' }
+                    ]
+                },
+                {
+                    term: '공감하다',
+                    mainDef: 'to empathize, to relate',
+                    variants: ['공감', '공감하다', '공감했어요'],
+                    examples: [{ kor: '너의 마음에 100% 공감해.', eng: 'I relate to your feelings 100%.' }],
+                    subDefs: []
+                },
+                {
+                    term: '마음을 이해하다',
+                    mainDef: 'to understand (someone\'s) heart/mind',
+                    variants: ['마음을 이해하다'],
+                    examples: [{ kor: '서로의 마음을 이해하는 게 중요해요.', eng: 'It\'s important to understand each other\'s hearts.' }],
+                    subDefs: [
+                        { subTerm: '이해하다', subDef: 'to understand' }
+                    ]
+                },
+                {
+                    term: '나중에',
+                    mainDef: 'later, later on',
+                    variants: ['나중에'],
+                    examples: [{ kor: '나중에 다시 이야기해요.', eng: 'Let\'s talk again later.' }],
+                    subDefs: []
+                },
+                {
+                    term: '-에게 돌아와요',
+                    mainDef: 'it comes back to (someone), it backfires on',
+                    variants: ['나에게 돌아와요'],
+                    examples: [{ kor: '나쁜 행동은 결국 자기에게 돌아와요.', eng: 'Bad behavior eventually comes back to oneself.' }],
+                    subDefs: []
+                },
+                {
+                    term: '좋은 기능',
+                    mainDef: 'good function, positive role',
+                    variants: ['좋은 기능'],
+                    examples: [{ kor: '이 앱은 좋은 기능이 많아요.', eng: 'This app has many good functions.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 as in 좋은', subDef: 'used to turn a descriptive verb into an "adjective-ish" phrase' },
+                        { subTerm: '기능', subDef: 'function, role' }
+                    ]
+                },
+                {
+                    term: '눈치를 보다',
+                    mainDef: 'to walk on eggshells, to read the room, to be self-conscious of others',
+                    variants: ['눈치를 봐요', '눈치를 보다'],
+                    examples: [{ kor: '직장에서 상사 눈치를 봐요.', eng: 'I walk on eggshells around my boss at work.' }],
+                    subDefs: []
+                },
+                {
+                    term: '기분',
+                    mainDef: 'mood, feelings',
+                    variants: ['기분'],
+                    examples: [{ kor: '오늘 기분이 어때요?', eng: 'How is your mood today?' }],
+                    subDefs: []
+                },
+                {
+                    term: '나쁜 행동을 안 하게 돼요',
+                    mainDef: 'you end up not doing bad behavior',
+                    variants: ['나쁜 행동을 안 하게 돼요'],
+                    examples: [{ kor: '규칙이 있으면 나쁜 행동을 안 하게 돼요.', eng: 'If there are rules, you end up not doing bad behaviors.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 as in 나쁜', subDef: 'adjective-ish phrase' },
+                        { subTerm: '행동을 하다', subDef: 'to do an action, to behave' },
+                        { subTerm: '-게 되다 as in 안 하게 돼요', subDef: 'used to express a change in state or situation outside of one\'s direct control, meaning "end up (not) doing..."' }
+                    ]
+                },
+                {
+                    term: '무서워서',
+                    mainDef: 'because you are scared',
+                    variants: ['무서워서'],
+                    examples: [{ kor: '귀신이 무서워서 도망갔어요.', eng: 'I ran away because I was scared of the ghost.' }],
+                    subDefs: [
+                        { subTerm: '-아서/어서', subDef: 'used to express a cause, meaning "because..."' }
+                    ]
+                },
+                {
+                    term: '착하게 행동한다고요?',
+                    mainDef: 'Are you saying you act nicely (because of that)?',
+                    variants: ['착하게 행동한다고요?'],
+                    examples: [{ kor: '매일 착하게 행동한다고요?', eng: 'Are you saying you act nicely every day?' }],
+                    subDefs: [
+                        { subTerm: '착하게 행동하다', subDef: 'to behave nicely, to act good' },
+                        { subTerm: '-게 as in 착하게', subDef: 'adverbial marker meaning "nicely"' },
+                        { subTerm: '-다고요?', subDef: 'used to seek confirmation of what was just heard, meaning "Are you saying that...?"' }
+                    ]
+                },
+                {
+                    term: '착한 게 아니에요',
+                    mainDef: 'It doesn\'t mean you are a good person',
+                    variants: ['착한 게 아니에요'],
+                    examples: [{ kor: '돈이 많다고 다 착한 게 아니에요.', eng: 'Just because someone has a lot of money doesn\'t mean they are a good person.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/는 것이 아니에요 as in 착한 게 아니에요', subDef: 'used to clarify the fact ("it is not the fact that you are nice")' }
+                    ]
+                },
+                {
+                    term: '착한 척하는 거예요',
+                    mainDef: 'You are just pretending to be nice',
+                    variants: ['착한 척하는 거예요'],
+                    examples: [{ kor: '그는 똑똑한 척하는 거예요.', eng: 'He is pretending to be smart.' }],
+                    subDefs: [
+                        { subTerm: '착하다', subDef: 'to be nice, kind' },
+                        { subTerm: '-ㄴ/은 척하다 as in 착한 척하다', subDef: 'to pretend to be (adjective)' },
+                        { subTerm: '-는 거예요 as in 척하는 거예요', subDef: 'colloquial explanation ("The fact is you are pretending...")' }
+                    ]
+                },
+                {
+                    term: '그렇게 보면 그렇네요',
+                    mainDef: 'Now that you put it that way, I guess you\'re right.',
+                    variants: ['그렇게 보면 그렇네요'],
+                    examples: [{ kor: '설명을 듣고 나니 그렇게 보면 그렇네요.', eng: 'After hearing the explanation, now that you put it that way, yeah.' }],
+                    subDefs: [
+                        { subTerm: '그렇게 보면', subDef: 'Looking at it that way' },
+                        { subTerm: '그렇네요', subDef: 'That is so (with a realization nuance, -네요)' }
+                    ]
+                },
+                {
+                    term: '뒷담화는 안 하는 게',
+                    mainDef: 'the act of not gossiping',
+                    variants: ['뒷담화는 안 하는 게'],
+                    examples: [{ kor: '거짓말은 안 하는 게 좋아요.', eng: 'It\'s better not to lie.' }],
+                    subDefs: [
+                        { subTerm: '뒷담화를 하다', subDef: 'to gossip' },
+                        { subTerm: '-는 게 as in 하는 게', subDef: 'colloquial form of -는 것이, meaning "the act of doing"' }
+                    ]
+                },
+                {
+                    term: '불가능하다',
+                    mainDef: 'to be impossible',
+                    variants: ['불가능해요'],
+                    examples: [{ kor: '하루 만에 다 하는 건 불가능해요.', eng: 'Doing it all in one day is impossible.' }],
+                    subDefs: []
+                },
+                {
+                    term: '뒷담화 없이도',
+                    mainDef: 'even without gossiping',
+                    variants: ['뒷담화 없이도'],
+                    examples: [{ kor: '돈 없이도 행복할 수 있어요.', eng: 'You can be happy even without money.' }],
+                    subDefs: [
+                        { subTerm: '없이', subDef: 'without' }
+                    ]
+                },
+                {
+                    term: '친구를 사귀다',
+                    mainDef: 'to make friends',
+                    variants: ['친구를 사귈'],
+                    examples: [{ kor: '동아리에서 새로운 친구를 사귀었어요.', eng: 'I made new friends in the club.' }],
+                    subDefs: []
+                },
+                {
+                    term: '오히려',
+                    mainDef: 'actually, rather, on the contrary',
+                    variants: ['오히려'],
+                    examples: [{ kor: '도와주려고 했는데 오히려 방해가 됐어요.', eng: 'I tried to help, but it actually became a distraction.' }],
+                    subDefs: []
+                },
+                {
+                    term: '신뢰를 받다',
+                    mainDef: 'to gain trust, to be trusted',
+                    variants: ['신뢰를 받아요'],
+                    examples: [{ kor: '솔직한 사람이 신뢰를 받아요.', eng: 'Honest people gain trust.' }],
+                    subDefs: [
+                        { subTerm: '신뢰', subDef: 'trust' }
+                    ]
+                },
+                {
+                    term: '"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요',
+                    mainDef: 'Because they think, "Ah, this person won\'t talk behind my back."',
+                    variants: ['"이 사람은 내 이야기를 안 하겠구나"라고 생각하니까요'],
+                    examples: [{ kor: '나를 믿는다고 생각하니까요.', eng: 'Because I think they trust me.' }],
+                    subDefs: [
+                        { subTerm: '-겠구나 as in 하겠구나', subDef: 'realization/guess ("I guess they won\'t...")' },
+                        { subTerm: '-라고 생각하다', subDef: 'to think that...' },
+                        { subTerm: '-니까요 as in 생각하니까요', subDef: 'giving a reason as an ending ("Because...")' }
+                    ]
+                },
+                {
+                    term: '그건 맞는 것 같아요',
+                    mainDef: 'I think that makes sense / That seems right',
+                    variants: ['그건 맞는 것 같아요'],
+                    examples: [{ kor: '네 말이 맞는 것 같아.', eng: 'I think what you said is right.' }],
+                    subDefs: [
+                        { subTerm: '맞다', subDef: 'to be correct' },
+                        { subTerm: '-는 것 같다', subDef: 'used to express an assumption or guess, meaning "I think..." or "it seems..."' }
+                    ]
+                },
+                {
+                    term: '솔직히 말해 봐요',
+                    mainDef: 'Be honest with me / Try telling the truth',
+                    variants: ['솔직히 말해 봐요'],
+                    examples: [{ kor: '숨기지 말고 솔직히 말해 봐요.', eng: 'Don\'t hide it, try speaking honestly.' }],
+                    subDefs: [
+                        { subTerm: '솔직히', subDef: 'honestly, frankly' },
+                        { subTerm: '-아/어 보다 as in 말해 봐요', subDef: 'used to make a gentle suggestion ("try doing...")' }
+                    ]
+                },
+                {
+                    term: '뒷담화 한 적 있죠?',
+                    mainDef: 'You\'ve gossiped before, right?',
+                    variants: ['뒷담화 한 적 있죠?'],
+                    examples: [{ kor: '김치 먹어본 적 있죠?', eng: 'You\'ve tried eating Kimchi before, right?' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 적 있다 as in 한 적 있다', subDef: 'used to express past experience, meaning "have done..."' },
+                        { subTerm: '-죠? as in 있죠?', subDef: 'seeking confirmation ("right?")' }
+                    ]
+                },
+                {
+                    term: '양심에 찔리다',
+                    mainDef: 'to feel a pang of guilt, to have a guilty conscience',
+                    variants: ['양심에 찔렸어요', '양심에 찔리다'],
+                    examples: [{ kor: '거짓말을 하고 나니 양심에 찔려요.', eng: 'After lying, I felt a pang of guilt.' }],
+                    subDefs: [
+                        { subTerm: '양심', subDef: 'conscience' },
+                        { subTerm: '찔리다', subDef: 'to be pierced, pricked (guilty)' }
+                    ]
+                },
+                {
+                    term: '잘못한 것 같아서',
+                    mainDef: 'because it feels like I did something wrong',
+                    variants: ['잘못한 것 같아서'],
+                    examples: [{ kor: '내가 잘못한 것 같아서 사과했어요.', eng: 'I apologized because it felt like I did something wrong.' }],
+                    subDefs: [
+                        { subTerm: '잘못하다', subDef: 'to do wrong, to make a mistake' },
+                        { subTerm: '-ㄴ/은 것 같다', subDef: 'I think..., it seems like...' },
+                        { subTerm: '-아서/어서 as in 같아서', subDef: 'used to express a cause ("because...")' }
+                    ]
+                },
+                {
+                    term: '마음이 불편하다',
+                    mainDef: 'to feel uncomfortable, to feel uneasy',
+                    variants: ['마음이 불편하다'],
+                    examples: [{ kor: '싸운 친구를 보면 마음이 불편해요.', eng: 'I feel uncomfortable when I see the friend I fought with.' }],
+                    subDefs: []
+                },
+                {
+                    term: '봐요! 조이 씨도 하잖아요',
+                    mainDef: 'See! You do it too, you know!',
+                    variants: ['봐요! 조이 씨도 하잖아요'],
+                    examples: [{ kor: '봐요! 제가 맞다고 했잖아요.', eng: 'See! I told you I was right, you know.' }],
+                    subDefs: [
+                        { subTerm: '봐요!', subDef: 'Look! / See!' },
+                        { subTerm: '-잖아요 as in 하잖아요', subDef: 'reminding the listener of an obvious fact ("Come on, you do it too!")' }
+                    ]
+                },
+                {
+                    term: '뒷담화를 안 하려고 노력하고 있어요',
+                    mainDef: 'I am making an effort not to gossip',
+                    variants: ['뒷담화를 안 하려고 노력하고 있어요'],
+                    examples: [{ kor: '건강을 위해 운동하려고 노력하고 있어요.', eng: 'I am making an effort to exercise for my health.' }],
+                    subDefs: [
+                        { subTerm: '-려고 노력하다 as in 안 하려고 노력하다', subDef: 'to try to do, to make an effort to do' },
+                        { subTerm: '-고 있다 as in 노력하고 있어요', subDef: 'present continuous ("am doing...")' }
+                    ]
+                },
+                {
+                    term: '뒷담화가 본성이라는 건 알아요',
+                    mainDef: 'I know that gossip is human nature',
+                    variants: ['본성이라는 건 알아요'],
+                    examples: [{ kor: '공부가 중요하다는 건 알아요.', eng: 'I know that studying is important.' }],
+                    subDefs: [
+                        { subTerm: '-라는 것 as in 본성이라는 건', subDef: 'the fact that it is... (quoting a fact)' },
+                        { subTerm: '알다', subDef: 'to know' }
+                    ]
+                },
+                {
+                    term: '좋은 게 아니에요',
+                    mainDef: 'it is not a good thing',
+                    variants: ['좋은 게 아니에요'],
+                    examples: [{ kor: '쉽게 포기하는 건 좋은 게 아니에요.', eng: 'Giving up easily is not a good thing.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 것이 아니에요', subDef: 'it is not the fact that it is...' }
+                    ]
+                },
+                {
+                    term: '조절할 수 있어야 해요',
+                    mainDef: 'we must be able to keep it in check / control it',
+                    variants: ['조절할 수 있어야 해요'],
+                    examples: [{ kor: '화가 나도 감정을 조절할 수 있어야 해요.', eng: 'Even if you are angry, you must be able to keep your emotions in check.' }],
+                    subDefs: [
+                        { subTerm: '조절하다', subDef: 'to control, to regulate' },
+                        { subTerm: '-ㄹ/을 수 있다', subDef: 'to be able to' },
+                        { subTerm: '-어야 하다', subDef: 'must, have to' }
+                    ]
+                },
+                {
+                    term: '오늘 배운 단어를 정리해 봐요',
+                    mainDef: 'let\'s recap today\'s vocabulary',
+                    variants: ['오늘 배운 단어를 정리해 봐요'],
+                    examples: [{ kor: '회의가 끝난 후 내용을 정리해 봐요.', eng: 'Let\'s recap the details after the meeting ends.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 as in 배운', subDef: 'past tense modifier' },
+                        { subTerm: '단어', subDef: 'word, vocabulary' },
+                        { subTerm: '정리하다', subDef: 'to recap, to organize' },
+                        { subTerm: '-아/어 보다 as in 정리해 봐요', subDef: 'let\'s try doing...' }
+                    ]
+                },
+                {
+                    term: '뒷담화에 대해서 어떻게 생각해요?',
+                    mainDef: 'What do you think about gossiping?',
+                    variants: ['뒷담화에 대해서 어떻게 생각해요?'],
+                    examples: [{ kor: '이 계획에 대해서 어떻게 생각해요?', eng: 'What do you think about this plan?' }],
+                    subDefs: [
+                        { subTerm: '-에 대해서', subDef: 'about, regarding' },
+                        { subTerm: '어떻게 생각하다', subDef: 'to think what/how' }
+                    ]
+                },
+                {
+                    term: '나쁜 거예요',
+                    mainDef: 'is it a bad thing?',
+                    variants: ['나쁜 거예요?'],
+                    examples: [{ kor: '거짓말은 나쁜 거예요.', eng: 'Lying is a bad thing.' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 것 as in 나쁜 거', subDef: 'nominalizing the adjective ("a thing that is bad")' }
+                    ]
+                },
+                {
+                    term: '자연스러운 것',
+                    mainDef: 'a natural thing',
+                    variants: ['자연스러운 거예요?'],
+                    examples: [{ kor: '실수하는 건 인간으로서 자연스러운 거예요.', eng: 'Making a mistake is a natural thing as a human.' }],
+                    subDefs: [
+                        { subTerm: '자연스럽다', subDef: 'to be natural' },
+                        { subTerm: '-ㄴ/은 것 as in 자연스러운 거', subDef: 'nominalizing ("a thing that is natural")' }
+                    ]
+                },
+                {
+                    term: '오늘은 여기까지 할게요',
+                    mainDef: 'That\'s a wrap for today',
+                    variants: ['오늘은 여기까지 할게요'],
+                    examples: [{ kor: '회의는 오늘은 여기까지 할게요.', eng: 'That\'s a wrap for the meeting today.' }],
+                    subDefs: [
+                        { subTerm: '여기까지', subDef: 'up to here' },
+                        { subTerm: '-ㄹ/을게요 as in 할게요', subDef: 'I will... (intention/announcement)' }
+                    ]
+                },
+                {
+                    term: '뒷담화 한 적 있다고 했거든요',
+                    mainDef: 'Because she said she has gossiped before... (Just so you know)',
+                    variants: ['뒷담화 한 적 있다고 했거든요'],
+                    examples: [{ kor: '친구가 어제 바쁘다고 했거든요.', eng: 'Because my friend said they were busy yesterday... (Just so you know)' }],
+                    subDefs: [
+                        { subTerm: '-ㄴ/은 적 있다 as in 한 적 있다고', subDef: 'have done (experience)' },
+                        { subTerm: '-다고 하다 as in 있다고 했다', subDef: 'quoting a statement ("she said that...")' },
+                        { subTerm: '-거든요 as in 했거든요', subDef: 'giving a reason or a fact the listener might not know ("Just so you know...")' }
+                    ]
+                },
+                {
+                    term: '진짜 저 사람은...',
+                    mainDef: 'Seriously, that guy is...',
+                    variants: ['진짜 저 사람은'],
+                    examples: [{ kor: '진짜 저 사람은 못 말려요.', eng: 'Seriously, there\'s no stopping that guy.' }],
+                    subDefs: [
+                        { subTerm: '\'진짜\'', subDef: 'seriously, for real (expressing frustration here)' }
+                    ]
+                }
         ];
 
         const QUIZ_LIST = [
@@ -1659,7 +2394,7 @@ ${vocabContext}
                         </div>
                     </div>
                     
-                    <a href="https://gemini.google.com/share/dac09dba8996" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
+                    <a href="https://gemini.google.com/share/af85f86e12d5" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
                         <div className="flex items-center gap-1">
                             <span className="text-[11px] font-bold font-sans text-gray-700 group-hover:text-black">Gemini에서 열기</span>
                             <ExternalLinkIcon className="w-3 h-3 text-gray-400 group-hover:text-black"/>
