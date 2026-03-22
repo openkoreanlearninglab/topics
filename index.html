@@ -22,6 +22,7 @@
             text-align: center;
         }
         .level-a1 { background-color: #dbf4ff; color: #0077b6; }
+        .level-a1plus { background-color: #cffafe; color: #0891b2; }
         .level-a2 { background-color: #d1fae5; color: #059669; }
         .level-b1 { background-color: #ffedd5; color: #ea580c; }
         .level-b1plus { background-color: #fce7f3; color: #be185d; }
@@ -58,6 +59,7 @@
                 <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0" id="filterContainer">
                     <button onclick="filterList('all')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-800 text-white hover:bg-slate-700 transition whitespace-nowrap filter-btn active" data-filter="all">전체</button>
                     <button onclick="filterList('A1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-blue-100 transition whitespace-nowrap filter-btn" data-filter="A1">A1</button>
+                    <button onclick="filterList('A1+')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-cyan-100 transition whitespace-nowrap filter-btn" data-filter="A1+">A1+</button>
                     <button onclick="filterList('A2')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-green-100 transition whitespace-nowrap filter-btn" data-filter="A2">A2</button>
                     <button onclick="filterList('A2+')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-green-100 transition whitespace-nowrap filter-btn" data-filter="A2+">A2+</button>
                     <button onclick="filterList('B1')" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-200 text-slate-700 hover:bg-orange-100 transition whitespace-nowrap filter-btn" data-filter="B1">B1</button>
@@ -239,6 +241,16 @@
                 </h2>
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
                     <ul class="divide-y divide-slate-100">
+                        <!-- [A1+] 책을 몇 권 읽어요? (새로 추가됨) -->
+                        <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A1+">
+                            <a href="a1plus-how-many-books.html" class="block p-5 sm:p-6 group">
+                                <div class="flex items-center">
+                                    <span class="level-badge level-a1plus">A1+</span>
+                                    <span class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition">책을 몇 권 읽어요? (How Many Books Do You Read?)</span>
+                                </div>
+                            </a>
+                        </li>
+
                         <!-- [A1] 오늘 뭐 해요? -->
                         <li class="topic-item hover:bg-slate-50 transition duration-200" data-level="A1">
                             <a href="a1-easy-today-what-doing.html" class="block p-5 sm:p-6 group">
