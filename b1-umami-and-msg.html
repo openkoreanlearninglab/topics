@@ -125,7 +125,7 @@
             { id: 's21', speaker: '유나', kor: '이케다 박사의 아내가 다시마로 국물을 만들었는데, 그 국물이 너무 맛있었어요.', time: [77.677, 84.124], eng: "Dr. Ikeda's wife made a broth with kelp, and that broth was so delicious." },
             { id: 's22', speaker: '유나', kor: '그래서 "이 맛은 뭘까?" 궁금해서 연구를 했어요.', time: [84.484, 88.302], eng: "So he wondered, \"What is this taste?\" and did research." },
             { id: 's23', speaker: '유나', kor: '\'연구하다\'는 \'깊이 공부하다\'라는 뜻이에요.', time: [88.572, 92.394], eng: "'To research' means 'to study deeply'." },
-            { id: 's24', speaker: '유나', kor: '그리고 다시마에서 \'글루탐산\'이라는 성분을 찾았어요.', time: [92.694, 97.205], eng: "And he found a component called 'glutamic acid' in the kelp." },
+            { id: 's24', speaker: '유나', kor: '그리고 다시마에서 \'글루탐산\'이라는 성분을 찾했어요.', time: [92.694, 97.205], eng: "And he found a component called 'glutamic acid' in the kelp." },
             { id: 's25', speaker: '유나', kor: '\'성분\'은 \'음식 안에 들어 있는 것\'이라는 뜻이에요.', time: [97.310, 101.564], eng: "'Component/Ingredient' means 'what is inside the food'." },
             { id: 's26', speaker: '유나', kor: '그리고 이 맛을 \'우마미\'라고 불렀어요.', time: [101.833, 105.283], eng: "And he called this taste 'umami'." },
             { id: 's27', speaker: '유나', kor: '우마미는 일본어로 "맛있는 맛"이라는 뜻이에요.', time: [105.643, 109.606], eng: "Umami means \"delicious taste\" in Japanese." },
@@ -2097,7 +2097,7 @@
 
             return (
                 <div className="mb-16 group print:mb-4 print:break-inside-avoid">
-                    <div className="flex items-center gap-4 mb-6 print:mb-2"><span className="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900 print:text-[14px] print:text-gray-900">0{item.id}</span><h3 className="text-xl font-serif font-bold text-gray-900 leading-normal print:text-[12px] whitespace-pre-line">{item.questionKor}</h3></div>
+                    <div className="flex items-center gap-4 mb-6 print:mb-2"><span className="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900 print:text-[14px] print:text-gray-900">{String(item.id).padStart(2, '0')}</span><h3 className="text-xl font-serif font-bold text-gray-900 leading-normal print:text-[12px] whitespace-pre-line">{item.questionKor}</h3></div>
                     <div className="pl-0 md:pl-14 print:pl-6">
                         <div className="flex gap-2 mb-4 print:hidden"><TranslateButton onClick={() => setShowTranslation(!showTranslation)} isShowing={showTranslation} />{showTranslation && (<p className="text-sm font-sans text-gray-500 animate-fade-in whitespace-pre-line">{item.questionEng}</p>)}</div>
                         <div className="bg-gray-50 p-5 mb-6 border-l-2 border-black print:p-2 print:mb-2 print:bg-transparent print:border-l-0 print:border-t"><span className="text-xs font-bold font-sans text-gray-400 uppercase mb-2 block tracking-widest print:text-[10px]">Key Vocabulary</span><div className="space-y-1 print:space-y-0">{item.vocab.map((v, i) => (<p key={i} className="text-sm font-serif text-gray-700 print:text-[10px]"><span className="font-bold text-black mr-2">{v.term}</span>{v.def}</p>))}</div></div>
@@ -2152,7 +2152,7 @@
                         <div className="shrink-0 text-gray-400"><SparklesIcon className="w-5 h-5" /></div>
                         <div className="flex flex-col"><p className="text-xs font-bold font-sans text-gray-800 leading-tight">AI 피드백은 현재 Gemini 웹에서만 가능합니다.</p><p className="text-[10px] font-sans text-gray-400 mt-1">AI feedback is currently available only on Gemini web.</p></div>
                     </div>
-                    <a href="https://gemini.google.com/share/5fbb3c8ad20e" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
+                    <a href="https://gemini.google.com/share/c0561d00446e" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
                         <div className="flex items-center gap-1"><span className="text-[11px] font-bold font-sans text-gray-700 group-hover:text-black">Gemini에서 열기</span><ExternalLinkIcon className="w-3 h-3 text-gray-400 group-hover:text-black"/></div>
                         <span className="text-[9px] font-sans text-gray-400 group-hover:text-gray-600 uppercase tracking-widest mt-0.5">Open in Gemini</span>
                     </a>
