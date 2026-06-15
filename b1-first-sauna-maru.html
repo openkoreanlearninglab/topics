@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인생 첫 사우나 - 나는 마루</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', 'serif'],
+                        ui: ['"Noto Sans KR"', 'sans-serif'],
+                        'eng-header': ['"Montserrat"', 'sans-serif'],
+                        'sans-kr': ['"Noto Sans KR"', 'sans-serif'],
+                        'serif-kr': ['"Noto Serif KR"', 'serif'],
+                    },
+                    colors: {
+                        'journal-black': '#1a1a1a',
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#030712',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+        .font-sans { font-family: 'Noto Sans KR', sans-serif; }
+        .font-serif { font-family: 'Noto Serif KR', serif; }
+        .font-ui { font-family: 'Noto Sans KR', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; } 
+        ::-webkit-scrollbar-track { background: transparent; } 
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 0px; } 
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } 
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+        /* Range Input */
+        input[type=range] { -webkit-appearance: none; background: transparent; } 
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 12px; width: 12px; border-radius: 0%; background: #1a1a1a; cursor: pointer; margin-top: -5px; border: none; } 
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #e5e7eb; }
+
+        ::selection { background-color: #f3f4f6; color: #000; }
+
+        /* Print Settings for Perfect Minimalist Layout */
+        @media print {
+            @page { margin: 15mm; size: auto; }
+            body { background-color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            ::-webkit-scrollbar { display: none !important; }
+            #root, main, .flex-1, .overflow-y-auto, .overflow-hidden, .overflow-x-hidden {
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+                display: block !important;
+            }
+            .print\:flex-row { flex-direction: row !important; }
+            .print\:grid { display: grid !important; }
+            .print\:block { display: block !important; }
+            .print\:flex { display: flex !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
+        const { createPortal } = ReactDOM;
+
+        const CONFIG = { 
+            GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent', 
+            API_RETRY_DELAYS: [1000, 2000, 4000, 8000, 16000] 
+        };
+
+        const VIDEO_CONFIG = {
+            YOUTUBE_VIDEO_ID: 'E8ZHFRY1reU',
+            DEFAULT_PLAYBACK_RATE: 1.0,
+        };
+
+        const VIDEO_SCRIPT_DATA = [
+            { id: 's1', speaker: '마루', kor: '우와!', time: [4.05, 4.80], eng: "Wow!" },
+            { id: 's2', speaker: '언니', kor: '자리가 있나?...', time: [6.00, 8.00], eng: "Is there a spot?..." },
+            { id: 's3', speaker: '마루', kor: '짱 큰 목욕탕!', time: [8.49, 9.82], eng: "A super huge bathhouse!" },
+            { id: 's4', speaker: '언니', kor: '탕에 들어가려면 깨끗하게 샤워 먼저 해야 해.', time: [10.38, 12.00], eng: "To get in the bath, you have to shower clean first." },
+            { id: 's5', speaker: '마루', kor: '언니... 이게 안 멈춰...', time: [27.00, 30.20], eng: "Sis... this won't stop..." },
+            { id: 's6', speaker: '마루', kor: '너무 뜨거운데...', time: [31.60, 33.10], eng: "It's too hot..." },
+            { id: 's7', speaker: '할머니1', kor: '어이구 시원하다, 아이고 시원해.', time: [33.22, 36.12], eng: "Ahh, so refreshing, oh so nice." },
+            { id: 's8', speaker: '마루', kor: '시원해요?', time: [36.20, 37.24], eng: "It feels refreshing?" },
+            { id: 's9', speaker: '할머니1', kor: '으이... 시원혀~', time: [37.40, 39.29], eng: "Yeah... it's refreshing~" },
+            { id: 's10', speaker: '언니', kor: '마루야~ 여기 엄청 시원해!', time: [45.94, 48.21], eng: "Maru~ it's super refreshing over here!" },
+            { id: 's11', speaker: '언니', kor: '이리 와봐~', time: [48.22, 48.46], eng: "Come over here~" },
+            { id: 's12', speaker: '마루', kor: '싫어!!!!!', time: [48.92, 49.45], eng: "No way!!!!!" },
+            { id: 's13', speaker: '언니', kor: '응?...', time: [49.95, 50.57], eng: "Huh?..." },
+            { id: 's14', speaker: '마루', kor: '내 머리랑 똑같다.', time: [52.72, 54.40], eng: "It's just like my hair." },
+            { id: 's15', speaker: '언니', kor: '자, 먹자~!', time: [54.50, 55.80], eng: "Okay, let's eat~!" },
+            { id: 's16', speaker: '언니', kor: '이거 봐봐 마루야 계란인데~ 짜잔!', time: [56.15, 59.02], eng: "Look at this, Maru, it's an egg~ ta-da!" },
+            { id: 's17', speaker: '마루', kor: '우와아!! 갈색이야!', time: [59.04, 61.00], eng: "Whoaa!! It's brown!" },
+            { id: 's18', speaker: '언니', kor: '어? 근데... 소금이 없네?', time: [61.90, 63.95], eng: "Huh? But... there's no salt?" },
+            { id: 's19', speaker: '마루', kor: '소금?! 내가 가져올게!!', time: [63.97, 65.90], eng: "Salt?! I'll go get it!!" },
+            { id: 's20', speaker: '마루', kor: '자!!', time: [68.47, 69.00], eng: "Here!!" },
+            { id: 's21', speaker: '언니', kor: '음~ 역시 소금이 있어야 제맛이지!ㅎㅎ', time: [70.00, 73.25], eng: "Mmm~ it really tastes best with salt! haha" },
+            { id: 's22', speaker: '언니', kor: '마루가 기특해서 이렇게 많이 주셨나 보다.', time: [73.40, 75.60], eng: "They must've given us this much because Maru was such a good kid." },
+            { id: 's23', speaker: '마루', kor: '내가 퍼온 건데?', time: [75.63, 76.90], eng: "But I scooped it myself?" },
+            { id: 's24', speaker: '언니', kor: '응?', time: [77.01, 77.48], eng: "Huh?" },
+            { id: 's25', speaker: '마루', kor: '저기 소금 짱 많음.', time: [77.50, 78.77], eng: "There's tons of salt over there." },
+            { id: 's26', speaker: '마루', kor: '응? 이건 뭐지??', time: [83.34, 85.11], eng: "Huh? What's this??" },
+            { id: 's27', speaker: '남자', kor: '이곳은 아무나 들어올 수 있는 곳이 아니야.', time: [85.95, 88.12], eng: "This is not a place just anyone can enter." },
+            { id: 's28', speaker: '남자', kor: '꼬맹이는 돌아가.', time: [88.16, 89.28], eng: "Go back, kid." },
+            { id: 's29', speaker: '마루', kor: '나도 할 수 있는데?!', time: [89.35, 90.67], eng: "I can do it too!" },
+            { id: 's30', speaker: '마루', kor: '언니! 우리도 들어가자!', time: [90.77, 92.30], eng: "Sis! Let's go in too!" },
+            { id: 's31', speaker: '언니', kor: '어?!... 뜨거울 텐데...', time: [92.33, 92.83], eng: "Huh?!... It's probably hot though..." },
+            { id: 's32', speaker: '남자', kor: '훗... 도전자인가?', time: [93.97, 95.50], eng: "Heh... a challenger?" },
+            { id: 's33', speaker: '마루 & 남자', kor: '더 이상은...!!', time: [104.29, 105.80], eng: "I can't take any more...!!" },
+            { id: 's34', speaker: '마루', kor: '쳇, 무승부인가?', time: [107.36, 108.99], eng: "Tch, a draw?" },
+            { id: 's35', speaker: '남자', kor: '좋은 승부였다. 꼬마!', time: [109.03, 110.80], eng: "It was a good match, kid!" },
+            { id: 's36', speaker: '언니', kor: '들어온 지 5초 지났는데...', time: [112.29, 114.35], eng: "It's only been 5 seconds since they went in..." },
+            { id: 's37', speaker: '언니', kor: '30초 안에 무조건 끝낸다.', time: [115.00, 117.38], eng: "I'll finish this within 30 seconds, no matter what." },
+            { id: 's38', speaker: '할머니1', kor: '아들 때문에 내가 못 살아~', time: [118.15, 120.17], eng: "My son is going to be the death of me~" },
+            { id: 's39', speaker: '할머니1', kor: '"어깨 아프다"고 한마디 하니까', time: [120.21, 121.72], eng: "The moment I said 'my shoulders hurt,'" },
+            { id: 's40', speaker: '할머니1', kor: '밤새 안마를 해주더라니까~?', time: [121.76, 123.50], eng: "he gave me a massage all night long~!" },
+            { id: 's41', speaker: '할머니3', kor: '우리 며느리는 나눠 먹으라고 애플 망고 싸줬잖아.', time: [123.55, 127.56], eng: "My daughter-in-law packed apple mangoes for me to share." },
+            { id: 's42', speaker: '할머니3', kor: '우리 둘째는 나 걱정된다고 이런 걸 가져다 줬다니까~', time: [128.21, 131.92], eng: "My second child brought me this because they were worried about me~" },
+            { id: 's43', speaker: '마루', kor: '아니, 우리 언니가 삶은 달걀 5개나 사줬잖아.', time: [131.96, 134.98], eng: "Well, my big sister bought me five whole boiled eggs." },
+            { id: 's44', speaker: '마루', kor: '아이참, 안 먹는대두~.', time: [135.02, 136.97], eng: "Oh come on, I said I won't eat them~" },
+            { id: 's45', speaker: '언니', kor: '너 여기서 뭐해?!', time: [137.13, 138.25], eng: "What are you doing here?!" },
+            { id: 's46', speaker: '주인', kor: '음, 십이만 원이요.', time: [139.76, 141.64], eng: "Um, that'll be 120,000 won." },
+            { id: 's47', speaker: '언니', kor: '네?! 십이만 원이요???', time: [141.76, 143.34], eng: "What?! 120,000 won???" },
+            { id: 's48', speaker: '주인', kor: '128번, 113번... 이거 아니여?', time: [143.53, 147.57], eng: "Number 128, number 113... isn't this it?" },
+            { id: 's49', speaker: '마루', kor: '목욕탕은 정말 배부른 곳이구나~', time: [151.57, 154.26], eng: "The bathhouse really is a place that fills your belly~" },
+            { id: 's50', speaker: '언니', kor: '으...으응, 그렇네...', time: [154.58, 156.91], eng: "Uh... y-yeah, you're right..." }
+        ];
+
+        const VOCAB_DATA = [
+            // ===== 도입 =====
+            { term: '자리가 있나?', mainDef: 'Is there a seat/spot? (wondering aloud)', variants: ['자리가 있나?'],
+              subDefs: [ { subTerm: '• 자리', subDef: 'seat, spot, place' }, { subTerm: '• -나?', subDef: 'a casual ending for wondering to yourself — "I wonder if…?"' } ],
+              examples: [ { kor: '빈 자리가 있나?', eng: 'I wonder if there is an empty seat.' } ] },
+            { term: '짱', mainDef: 'slang: "super / the best" (intensifier)', variants: ['짱'],
+              examples: [ { kor: '이 빵 짱 맛있어!', eng: 'This bread is super tasty!' } ] },
+            { term: '목욕탕', mainDef: 'public bathhouse', variants: ['목욕탕'],
+              subDefs: [ { subTerm: '• 목욕', subDef: 'a bath, bathing' }, { subTerm: '• 탕', subDef: 'a (hot) bath, tub' } ],
+              examples: [ { kor: '주말에 목욕탕에 가요.', eng: 'I go to the bathhouse on weekends.' } ] },
+            { term: '탕에 들어가려면', mainDef: 'if you want to get into the bath…', variants: ['탕에 들어가려면'],
+              subDefs: [ { subTerm: '• 탕에 들어가다', subDef: 'to get into the bath (set phrase)' }, { subTerm: '• -(으)려면', subDef: 'if you intend/want to (do) ~' } ],
+              examples: [ { kor: '버스를 타려면 카드가 필요해요.', eng: 'If you want to take the bus, you need a card.' } ] },
+            { term: '깨끗하게', mainDef: 'cleanly, thoroughly clean', variants: ['깨끗하게'],
+              subDefs: [ { subTerm: '• 깨끗하다', subDef: 'to be clean' }, { subTerm: '• -게', subDef: 'turns an adjective into an adverb — "in a ~ way"' } ],
+              examples: [ { kor: '손을 깨끗하게 씻어요.', eng: 'Wash your hands cleanly.' } ] },
+            { term: '먼저', mainDef: 'first, before others', variants: ['먼저'],
+              examples: [ { kor: '제가 먼저 씻을게요.', eng: "I'll wash first." } ] },
+            { term: '해야 해', mainDef: '(you) have to do (it)', variants: ['해야 해'],
+              subDefs: [ { subTerm: '• -아/어야 하다', subDef: 'must / have to do ~' } ],
+              examples: [ { kor: '숙제를 해야 해요.', eng: 'I have to do my homework.' } ] },
+
+            // ===== 탕 안 =====
+            { term: '멈추다', mainDef: 'to stop', variants: ['멈추다'],
+              subDefs: [ { subTerm: '• 안', subDef: 'not (negation), as in 안 멈춰 ("it won\'t stop")' } ],
+              examples: [ { kor: '비가 안 멈춰요.', eng: "The rain won't stop." } ] },
+            { term: '뜨거운데', mainDef: "it's hot, though…", variants: ['뜨거운데'],
+              subDefs: [ { subTerm: '• 뜨겁다', subDef: 'to be hot (ㅂ-irregular → 뜨거운)' }, { subTerm: '• -(으)ㄴ데/는데', subDef: 'sets up background or trails off — "…, but/though"' } ],
+              examples: [ { kor: '날씨가 추운데 옷이 얇아요.', eng: "It's cold, but my clothes are thin." } ] },
+            { term: '시원하다', mainDef: 'Here NOT "cool/cold" — the "ahh, so refreshing!" feeling Koreans express in a hot bath or sauna: relief and satisfaction that comes from the heat.', variants: ['시원하다'],
+              subDefs: [ { subTerm: '• 시원혀 (dialect)', subDef: 'a regional / older-speaker pronunciation of 시원해' } ],
+              examples: [ { kor: '뜨거운 물에 들어가니까 시원해요!', eng: 'Getting into the hot water feels so good!' } ] },
+            { term: '어이구 / 아이고', mainDef: 'an exclamation of relief, effort, or dismay — "oh my, ahh"', variants: ['어이구', '아이고'],
+              examples: [ { kor: '아이고, 힘들다!', eng: 'Oh my, this is tough!' } ] },
+            { term: '엄청', mainDef: 'really, extremely (casual)', variants: ['엄청'],
+              examples: [ { kor: '여기 엄청 더워요.', eng: "It's extremely hot here." } ] },
+            { term: '이리 와봐', mainDef: 'come over here (and see)', variants: ['이리 와봐'],
+              subDefs: [ { subTerm: '• 이리', subDef: 'this way, over here' }, { subTerm: '• -아/어 보다', subDef: 'try doing / do and see (as in 와봐)' } ],
+              examples: [ { kor: '이거 한번 먹어 봐.', eng: 'Try eating this.' } ] },
+            { term: '-랑/이랑 똑같다', mainDef: 'exactly the same as ~', variants: ['똑같다'],
+              subDefs: [ { subTerm: '• 똑같다', subDef: 'to be exactly the same' }, { subTerm: '• -랑/이랑', subDef: 'casual "with / and / as" particle (as in 머리랑)' } ],
+              examples: [ { kor: '내 가방이랑 똑같아요.', eng: "It's exactly the same as my bag." } ] },
+
+            // ===== 계란 먹기 =====
+            { term: '계란인데', mainDef: "it's an egg, and…", variants: ['계란인데'],
+              subDefs: [ { subTerm: '• 계란', subDef: 'egg' }, { subTerm: '• -인데', subDef: '"it is ~, and/but" (gives background for a noun)' } ],
+              examples: [ { kor: '이건 선물인데 마음에 들어요?', eng: 'This is a gift — do you like it?' } ] },
+            { term: '갈색', mainDef: 'brown (color)', variants: ['갈색'],
+              examples: [ { kor: '갈색 가방을 샀어요.', eng: 'I bought a brown bag.' } ] },
+            { term: '근데', mainDef: '"but, by the way" (casual form of 그런데)', variants: ['근데'],
+              examples: [ { kor: '근데 지금 몇 시예요?', eng: 'By the way, what time is it now?' } ] },
+            { term: '소금', mainDef: 'salt', variants: ['소금'],
+              examples: [ { kor: '국에 소금을 넣어요.', eng: 'I put salt in the soup.' } ] },
+            { term: '없네?', mainDef: '"huh, there\'s none?"', variants: ['없네?'],
+              subDefs: [ { subTerm: '• -네', subDef: 'shows you just noticed / realized something' } ],
+              examples: [ { kor: '어, 우유가 없네?', eng: 'Oh, there is no milk?' } ] },
+            { term: '가져올게', mainDef: "I'll go bring (it)", variants: ['가져올게'],
+              subDefs: [ { subTerm: '• 가져오다', subDef: 'to bring (something)' }, { subTerm: '• -ㄹ게/-을게', subDef: '"I\'ll ~" — the speaker\'s intention or small promise' } ],
+              examples: [ { kor: '제가 물을 가져올게요.', eng: "I'll bring the water." } ] },
+            { term: '역시', mainDef: 'as expected, sure enough', variants: ['역시'],
+              examples: [ { kor: '역시 집밥이 최고예요.', eng: 'Home cooking is the best, as expected.' } ] },
+            { term: '있어야 제맛이지', mainDef: 'it only tastes right when you have it', variants: ['있어야 제맛이지'],
+              subDefs: [ { subTerm: '• -아/어야', subDef: '"only if/when (you) ~" (as in 있어야)' }, { subTerm: '• 제맛', subDef: 'the real / proper taste' }, { subTerm: '• -지', subDef: 'casual assertion — "of course / right?"' } ],
+              examples: [ { kor: '라면은 김치가 있어야 제맛이지.', eng: 'Ramen only tastes right with kimchi.' } ] },
+
+            // ===== 소금의 정체 =====
+            { term: '기특해서', mainDef: 'because (she/he) is so good and admirable', variants: ['기특해서'],
+              subDefs: [ { subTerm: '• 기특하다', subDef: 'to be admirable / good (often of a child doing well)' }, { subTerm: '• -아/어서', subDef: 'because, so (reason), as in 기특해서' } ],
+              examples: [ { kor: '동생이 기특해서 칭찬했어요.', eng: 'My sibling was so good that I praised them.' } ] },
+            { term: '주셨나 보다', mainDef: 'I guess (she) gave it…', variants: ['주셨나 보다'],
+              subDefs: [ { subTerm: '• 주시다', subDef: 'the respectful form of 주다 (to give), with -(으)시-' }, { subTerm: '• -나 보다', subDef: '"I guess / suppose ~" (a guess from what you see)' } ],
+              examples: [ { kor: '비가 왔나 봐요. 길이 젖었어요.', eng: 'I guess it rained — the road is wet.' } ] },
+            { term: '퍼온 건데', mainDef: "it's the thing I scooped up, though", variants: ['퍼온 건데'],
+              subDefs: [ { subTerm: '• 퍼오다', subDef: 'to scoop / ladle up and bring' }, { subTerm: '• -는/은 거', subDef: 'turns a verb into "the thing that ~" (spoken form of 것)' }, { subTerm: '• -인데', subDef: '"it is ~, but/and" (repeat)' } ],
+              examples: [ { kor: '제가 만든 건데 한번 드셔 보세요.', eng: "It's something I made — please try it." } ] },
+            { term: '많음', mainDef: '"(there\'s) a lot" — blunt casual ending', variants: ['많음'],
+              subDefs: [ { subTerm: '• -(으)ㅁ', subDef: 'a blunt noun-style ending used in casual writing / notes' } ],
+              examples: [ { kor: '여기 사람 많음.', eng: 'Lots of people here.' } ] },
+            { term: '이건 뭐지?', mainDef: '"what is this, I wonder?"', variants: ['이건 뭐지?'],
+              subDefs: [ { subTerm: '• -지?', subDef: 'wondering to yourself — "I wonder ~"' } ],
+              examples: [ { kor: '이 소리는 뭐지?', eng: 'What is this sound, I wonder?' } ] },
+
+            // ===== 비밀의 탕 (대결 패러디) =====
+            { term: '아무나', mainDef: 'just anyone, anybody', variants: ['아무나'],
+              examples: [ { kor: '이건 아무나 못 해요.', eng: 'Not just anyone can do this.' } ] },
+            { term: '들어올 수 있는 곳', mainDef: 'a place (you) can enter', variants: ['들어올 수 있는 곳'],
+              subDefs: [ { subTerm: '• -(으)ㄹ 수 있다', subDef: 'can / be able to' }, { subTerm: '• -는 곳', subDef: '"the place where ~" — a dependent noun read as one unit. Compare: -는 데, -ㄹ/을 때, -는 분' } ],
+              examples: [ { kor: '여기는 학생만 들어올 수 있는 곳이에요.', eng: 'This is a place only students can enter.' } ] },
+            { term: '꼬맹이', mainDef: 'slang: "squirt, little kid" (playful/teasing)', variants: ['꼬맹이'],
+              subDefs: [ { subTerm: '• 돌어가 (구어)', subDef: 'casual / misspelled 돌아가 (go back)' } ],
+              examples: [ { kor: '꼬맹이가 벌써 컸네!', eng: 'The little squirt has grown already!' } ] },
+            { term: '돌아가다', mainDef: 'to go back, return', variants: ['돌아가다'],
+              examples: [ { kor: '집에 돌아가요.', eng: "I'm going back home." } ] },
+            { term: '할 수 있는데', mainDef: '"but I can do it (too)…"', variants: ['할 수 있는데'],
+              subDefs: [ { subTerm: '• -(으)ㄹ 수 있다', subDef: 'can / be able to (repeat)' }, { subTerm: '• -는데', subDef: 'trailing background / contrast (repeat)' } ],
+              examples: [ { kor: '저도 할 수 있는데 안 했어요.', eng: "I could do it too, but I didn't." } ] },
+            { term: '들어가자', mainDef: "let's go in", variants: ['들어가자'],
+              subDefs: [ { subTerm: '• -자', subDef: 'casual "let\'s ~"' } ],
+              examples: [ { kor: '우리 같이 들어가자.', eng: "Let's go in together." } ] },
+            { term: '뜨거울 텐데', mainDef: "it'll probably be hot, though…", variants: ['뜨거울 텐데'],
+              subDefs: [ { subTerm: '• -(으)ㄹ 텐데', subDef: '"(it) will probably ~, and/but" (a guess + background)' } ],
+              examples: [ { kor: '지금 가면 막힐 텐데.', eng: "If you go now it'll probably be jammed." } ] },
+            { term: '도전자', mainDef: 'challenger', variants: ['도전자'],
+              subDefs: [ { subTerm: '• 도전', subDef: 'challenge' }, { subTerm: '• -자(者)', subDef: '"the person who ~" (suffix)' }, { subTerm: '• -(이)ㄴ가?', subDef: '"is it ~?" (wondering)' } ],
+              examples: [ { kor: '새로운 도전자가 나타났어요.', eng: 'A new challenger appeared.' } ] },
+            { term: '더 이상', mainDef: '(not) anymore, any further', variants: ['더 이상'],
+              examples: [ { kor: '더 이상 못 먹어요.', eng: "I can't eat anymore." } ] },
+            { term: '무승부', mainDef: 'a draw, a tie', variants: ['무승부'],
+              subDefs: [ { subTerm: '• 무(無)', subDef: 'no / none (Sino-Korean)' }, { subTerm: '• 승부', subDef: 'match outcome, win-or-lose' }, { subTerm: '• -(이)ㄴ가?', subDef: '"is it ~?" (repeat)' } ],
+              examples: [ { kor: '경기는 무승부로 끝났어요.', eng: 'The game ended in a draw.' } ] },
+            { term: '승부', mainDef: 'a match, contest (win-or-lose)', variants: ['승부'],
+              subDefs: [ { subTerm: '• 꼬마', subDef: 'little kid' } ],
+              examples: [ { kor: '오늘 승부는 제가 이겼어요.', eng: "I won today's match." } ] },
+            { term: '들어온 지 ~ 지나다', mainDef: '~ has passed since (I) came in', variants: ['들어온 지'],
+              subDefs: [ { subTerm: '• -(으)ㄴ 지', subDef: '"(time) since doing ~"' }, { subTerm: '• 지나다', subDef: 'to pass (of time)' }, { subTerm: '• -는데', subDef: 'trailing background (repeat)' } ],
+              examples: [ { kor: '한국에 온 지 1년 지났어요.', eng: "It's been a year since I came to Korea." } ] },
+            { term: '무조건', mainDef: 'no matter what, unconditionally', variants: ['무조건'],
+              examples: [ { kor: '무조건 이길 거예요.', eng: "I'll win no matter what." } ] },
+            { term: '끝내다', mainDef: 'to finish (something)', variants: ['끝내다'],
+              subDefs: [ { subTerm: '• 안에', subDef: 'within (a time), as in 30초 안에' } ],
+              examples: [ { kor: '한 시간 안에 끝내요.', eng: 'Finish it within an hour.' } ] },
+
+            // ===== 할머니들의 자식 자랑 =====
+            { term: '때문에 내가 못 살아', mainDef: 'Idiom — literally "I can\'t live because of ~," but here a humble-brag: the speaker pretends to complain while actually bragging (about a devoted child). Surface = negative, real feeling = proud.', variants: ['때문에 내가 못 살아'],
+              subDefs: [ { subTerm: '• 아들', subDef: 'son' } ],
+              examples: [ { kor: '우리 애 때문에 내가 못 살아~ (사실은 자랑).', eng: '"My kid is going to be the death of me~" (actually bragging).' } ] },
+            { term: '아프다고', mainDef: '"(he) said it hurts"', variants: ['아프다고'],
+              subDefs: [ { subTerm: '• -다고', subDef: 'reporting what someone said (quote)' }, { subTerm: '• 어깨', subDef: 'shoulder' } ],
+              examples: [ { kor: '친구가 배고프다고 했어요.', eng: 'My friend said he was hungry.' } ] },
+            { term: '한마디 하니까', mainDef: '"the moment I said one word…"', variants: ['한마디 하니까'],
+              subDefs: [ { subTerm: '• 한마디 하다', subDef: 'to say a word / a remark' }, { subTerm: '• -(으)니까', subDef: 'because / since (and then)' } ],
+              examples: [ { kor: '제가 한마디 하니까 조용해졌어요.', eng: 'As soon as I said something, it got quiet.' } ] },
+            { term: '밤새', mainDef: 'all night long', variants: ['밤새'],
+              examples: [ { kor: '밤새 공부했어요.', eng: 'I studied all night.' } ] },
+            { term: '안마', mainDef: 'massage', variants: ['안마'],
+              examples: [ { kor: '할머니 어깨를 안마해 드렸어요.', eng: 'I gave grandma a shoulder massage.' } ] },
+            { term: '해주더라니까', mainDef: '"(he) actually did it for me, I tell you"', variants: ['해주더라니까'],
+              subDefs: [ { subTerm: '• -아/어 주다', subDef: 'do (something) for someone (as in 해주다)' }, { subTerm: '• -더라니까', subDef: 'recalling + insisting — "I\'m telling you, he really ~"' } ],
+              examples: [ { kor: '그 집 진짜 맛있더라니까.', eng: 'That place was really good, I\'m telling you.' } ] },
+            { term: '며느리', mainDef: 'daughter-in-law', variants: ['며느리'],
+              examples: [ { kor: '며느리가 선물을 사 왔어요.', eng: 'My daughter-in-law brought a gift.' } ] },
+            { term: '나눠 먹으라고', mainDef: '"(she) told me to share it"', variants: ['나눠 먹으라고'],
+              subDefs: [ { subTerm: '• 나눠 먹다', subDef: 'to share food, eat by sharing' }, { subTerm: '• -(으)라고 하다', subDef: 'to tell someone to do ~ (command quote)' } ],
+              examples: [ { kor: '엄마가 동생이랑 나눠 먹으라고 했어요.', eng: 'Mom told me to share with my sibling.' } ] },
+            { term: '둘째', mainDef: 'the second child', variants: ['둘째'],
+              examples: [ { kor: '우리 둘째는 아홉 살이에요.', eng: 'Our second child is nine.' } ] },
+            { term: '걱정된다고', mainDef: '"(he) said he was worried"', variants: ['걱정된다고'],
+              subDefs: [ { subTerm: '• 걱정되다', subDef: 'to be / feel worried' }, { subTerm: '• -ㄴ다고', subDef: 'reporting a statement (quote), as in 걱정된다고' } ],
+              examples: [ { kor: '친구가 시험이 걱정된다고 했어요.', eng: 'My friend said she was worried about the exam.' } ] },
+            { term: '이런 걸', mainDef: 'something like this', variants: ['이런 걸'],
+              subDefs: [ { subTerm: '• 이런', subDef: 'this kind of' }, { subTerm: '• -ㄴ/은 것', subDef: '"the thing / one (that is) ~" (걸 = 것을)' } ],
+              examples: [ { kor: '이런 걸 어디서 샀어요?', eng: 'Where did you buy something like this?' } ] },
+            { term: '가져다 줬다니까', mainDef: '"(he) actually brought it to me, I tell you"', variants: ['가져다 줬다니까'],
+              subDefs: [ { subTerm: '• 가져다 주다', subDef: 'to bring and give (to someone)' }, { subTerm: '• -다니까', subDef: 'insisting / emphasizing (as in 줬다니까)' } ],
+              examples: [ { kor: '친구가 우산을 가져다 줬어요.', eng: 'My friend brought me an umbrella.' } ] },
+            { term: '삶은 달걀', mainDef: 'boiled egg', variants: ['삶은 달걀'],
+              subDefs: [ { subTerm: '• 삶다', subDef: 'to boil (in water)' }, { subTerm: '• -ㄴ/은', subDef: 'past modifier — "~ed"' }, { subTerm: '• 달걀', subDef: 'egg' } ],
+              examples: [ { kor: '아침에 삶은 달걀을 먹어요.', eng: 'I eat a boiled egg in the morning.' } ] },
+            { term: '5개나', mainDef: 'as many as five', variants: ['5개나'],
+              subDefs: [ { subTerm: '• -(이)나', subDef: '"as many / much as ~" (more than expected)' } ],
+              examples: [ { kor: '커피를 세 잔이나 마셨어요.', eng: 'I drank as many as three cups of coffee.' } ] },
+            { term: '사줬잖아', mainDef: '"(she) bought it for me, you know"', variants: ['사줬잖아'],
+              subDefs: [ { subTerm: '• 사주다', subDef: 'to buy (something) for someone' }, { subTerm: '• -잖아', subDef: '"you know, remember?" (shared knowledge, repeat)' } ],
+              examples: [ { kor: '내가 어제 밥 사줬잖아.', eng: 'I bought you a meal yesterday, remember?' } ] },
+            { term: '안 먹는대두', mainDef: '"(I said) I\'m not eating it"', variants: ['안 먹는대두'],
+              subDefs: [ { subTerm: '• -는대(요)', subDef: 'casual reporting — "(someone) says ~"; here restating one\'s own point' }, { subTerm: '• -두 (dialect)', subDef: 'dialect / casual form of -도 ("also/even")' } ],
+              examples: [ { kor: '동생이 학교에 안 간대요.', eng: 'My sibling says he\'s not going to school.' } ] },
+
+            // ===== 계산 & 마무리 =====
+            { term: '-번', mainDef: 'number ~ / counter for numbers (113번, 128번)', variants: ['번'],
+              examples: [ { kor: '제 번호는 7번이에요.', eng: 'My number is 7.' } ] },
+            { term: '아니여', mainDef: 'dialect / older-speaker form of 아니야 ("no / isn\'t it")', variants: ['아니여'],
+              examples: [ { kor: '이거 네 거 아니여?', eng: "Isn't this yours? (dialect)" } ] },
+            { term: '배부른 곳이구나', mainDef: 'Figurative — "so this is a place that fills you up!" (the bathhouse "feeds" them with free eggs and salt jokes; 배부르다 used figuratively = rewarding / gives you a lot).', variants: ['배부른 곳이구나'],
+              subDefs: [ { subTerm: '• 배부르다', subDef: 'to be full (here figurative: satisfying, gives a lot)' }, { subTerm: '• -ㄴ 곳', subDef: '"a place that ~" (dependent noun)' }, { subTerm: '• -구나/-이구나', subDef: 'realizing something — "oh, so ~!"' } ],
+              examples: [ { kor: '여기가 그렇게 좋은 곳이구나!', eng: 'So this is such a nice place!' } ] },
+            { term: '그렇네', mainDef: '"yeah, that\'s right" (realizing / agreeing)', variants: ['그렇네'],
+              subDefs: [ { subTerm: '• 그렇다', subDef: 'to be so / that way' }, { subTerm: '• -네', subDef: 'noticing / agreeing (repeat)' } ],
+              examples: [ { kor: '듣고 보니 그렇네요.', eng: "Now that you mention it, that's right." } ] }
+        ];
+
+        const QUIZ_LIST = [
+            {
+                id: 1,
+                questionKor: "언니는 탕에 들어가기 전에 무엇을 해야 한다고 했어요?",
+                questionEng: "What did the older sister say you must do before getting in the tub?",
+                sentence_pre: "탕에 ",
+                sentence_post: " 깨끗하게 샤워 먼저 해야 해.",
+                correct_word: "들어가려면",
+                translation: "To get into the tub, you have to shower clean first.",
+                hint: "Verb 들어가다 ('to go in'). Which connective means 'in order to / if you intend to'?",
+                options: [
+                    { text: "들어가려면", isCorrect: true, feedback: "Correct! -(으)려면 means 'in order to / if you want to.' 들어가려면 = 'to get in, (you need to)...,' setting up the condition for showering first: 들어가다 → 들어가려면." },
+                    { text: "들어가지만", isCorrect: false, feedback: "Not here! -지만 means 'but / however' (contrast). '탕에 들어가지만 샤워를 해야 해' = 'you get in, BUT you must shower' — there's no contrast; showering is a requirement FOR getting in, so -려면 fits." },
+                    { text: "들어가다가", isCorrect: false, feedback: "Nope! -다가 means 'in the middle of doing, then switch.' 들어가다가 = 'while getting in, (you stop and)...' — but she's stating a rule for BEFORE you get in, not an interrupted action." },
+                    { text: "들어가거나", isCorrect: false, feedback: "Not this one! -거나 means 'or' (listing choices). 들어가거나 = 'either get in or...' — no choice is being listed, just a condition, so -려면 is correct." }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "탕에 들어가기 전에 샤워는 '필수'예요.",
+                questionEng: "Showering before the tub is a must.",
+                sentence_pre: "탕에 들어가려면 깨끗하게 샤워 먼저 ",
+                sentence_post: ".",
+                correct_word: "해야 해",
+                translation: "To get in the tub, you have to shower clean first.",
+                hint: "Verb 하다 ('to do'). Which ending expresses obligation ('have to / must')?",
+                options: [
+                    { text: "해야 해", isCorrect: true, feedback: "Correct! -아야/어야 하다(되다) expresses obligation — 'must / have to.' 해야 해 = 'you have to do (it).' Showering is required, so: 하다 → 해야 해." },
+                    { text: "하고 싶어", isCorrect: false, feedback: "Not here! -고 싶다 means 'want to.' 하고 싶어 = 'I want to shower' — but the sister is stating a rule, not Maru's wish. Obligation needs -아야 해." },
+                    { text: "하지 마", isCorrect: false, feedback: "Opposite! -지 마 is a prohibition ('don't'). 하지 마 = 'don't shower' — the exact opposite of the rule, which says you MUST shower." },
+                    { text: "할까?", isCorrect: false, feedback: "Nope! -ㄹ까? asks/suggests ('shall I?'). 할까 = 'shall I shower?' — she's not asking; she's telling Maru it's required, so -아야 해." }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "언니가 시원한 곳에서 마루를 부를 때 뭐라고 했어요?",
+                questionEng: "What did the sister say when calling Maru over to the cool spot?",
+                sentence_pre: "마루야, 여기 엄청 시원해! 이리 ",
+                sentence_post: "!",
+                correct_word: "와 봐",
+                translation: "Maru, it's super cool here! Come and try it (come over)!",
+                hint: "Verb 오다 ('to come'). Which ending means 'try doing / do and see'?",
+                options: [
+                    { text: "와 봐", isCorrect: true, feedback: "Correct! -아/어 보다 means 'try doing / give it a go.' 와 봐 = 'come and see / come try it.' The sister invites Maru to come experience the cool spot: 오다 → 와 봐." },
+                    { text: "왔어", isCorrect: false, feedback: "Not here! -았어 is past tense ('came'). 왔어 = '(you) came' — but Maru hasn't come yet; the sister is inviting her, so the 'try it' form 와 봐 fits." },
+                    { text: "올까?", isCorrect: false, feedback: "Nope! -ㄹ까? means 'shall I?' 올까 = 'shall I come?' — but the sister isn't asking about herself; she's telling Maru to come, so 와 봐." },
+                    { text: "오지 마", isCorrect: false, feedback: "Opposite! -지 마 is 'don't.' 오지 마 = 'don't come' — the opposite of inviting her over." }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "소금이 없자 마루가 뭐라고 했어요?",
+                questionEng: "When there was no salt, what did Maru say?",
+                sentence_pre: "소금? 내가 ",
+                sentence_post: "!",
+                correct_word: "가져올게",
+                translation: "Salt? I'll go get it!",
+                hint: "Verb 가져오다 ('to bring'). Which ending expresses the speaker's own intention/offer ('I'll ...')?",
+                options: [
+                    { text: "가져올게", isCorrect: true, feedback: "Correct! -(으)ㄹ게 expresses the speaker's intention or offer — 'I'll (do it).' 가져올게 = 'I'll bring it.' Maru is volunteering: 가져오다 → 가져올게." },
+                    { text: "가져왔어", isCorrect: false, feedback: "Not here! -았어 is past ('brought'). 가져왔어 = 'I brought it' — but she hasn't brought it yet; she's offering to go get it, so 가져올게." },
+                    { text: "가져올까?", isCorrect: false, feedback: "Close, but no! -ㄹ까? asks 'shall I?' 가져올까 = 'shall I bring it?' — Maru isn't asking permission; she's declaring she'll do it, so 가져올게." },
+                    { text: "가져와", isCorrect: false, feedback: "Nope! -아/어 (plain) is a command to someone else: 가져와 = '(you) bring it.' But Maru is talking about HERSELF doing it, so the intention form 가져올게 is right." }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "소금이 왜 많은지 모르지만 언니는 이유를 추측해요.",
+                questionEng: "Not sure why there's so much salt, the sister guesses the reason.",
+                sentence_pre: "마루가 기특해서 이렇게 많이 ",
+                sentence_post: ".",
+                correct_word: "주셨나 봐",
+                translation: "I guess they gave this much because Maru was being good.",
+                hint: "Verb 주다 ('to give', honorific 주시다). Which ending expresses a guess/inference ('I guess / it seems')?",
+                options: [
+                    { text: "주셨나 봐", isCorrect: true, feedback: "Correct! -나 보다 expresses an inference from evidence — 'I guess / it must be that...' The sister sees lots of salt and guesses why: 주시다 → 주셨나 봐 ('they must have given a lot')." },
+                    { text: "주셨어", isCorrect: false, feedback: "Not here! -았어 just states a fact ('they gave'). 주셨어 = 'they gave it.' But the sister doesn't actually know — she's guessing — so the inference form 주셨나 봐 fits." },
+                    { text: "주실 거야", isCorrect: false, feedback: "Nope! -ㄹ 거야 is future ('will give'). 주실 거야 = 'they will give' — but the salt is already there; she's guessing about something that already happened, so 주셨나 봐." },
+                    { text: "주지 마", isCorrect: false, feedback: "Opposite! -지 마 is 'don't give' — a prohibition that makes no sense here, since she's guessing why so much was already given." }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "사우나 앞에서 남자가 마루를 막았어요. 그래도 마루는 어떻게 했어요?",
+                questionEng: "A man blocked Maru in front of the sauna. What did Maru do anyway?",
+                sentence_pre: "남자가 마루를 ",
+                sentence_post: " 마루는 포기하지 않았어요.",
+                correct_word: "막았지만",
+                translation: "The man blocked Maru, but Maru didn't give up.",
+                hint: "Verb 막다 ('to block'). Which connective means 'but / although' (contrast)?",
+                options: [
+                    { text: "막았지만", isCorrect: true, feedback: "Correct! -지만 means 'but / although' (contrast). 막았지만 = 'he blocked her, but...' — he blocked her, yet she still didn't give up. The clauses contrast: 막다 → 막았지만." },
+                    { text: "막았으니까", isCorrect: false, feedback: "Not here! -(으)니까 means 'because/so' (reason). 막았으니까 = 'because he blocked her...' — that would mean his blocking CAUSED her not to give up, but the point is contrast, not cause." },
+                    { text: "막으려고", isCorrect: false, feedback: "Nope! -(으)려고 means 'in order to' (purpose). 막으려고 = 'in order to block' — but blocking isn't Maru's goal; it's what happened TO her, so -지만." },
+                    { text: "막으면", isCorrect: false, feedback: "Not this one! -(으)면 means 'if / when' (condition). 막으면 = 'if he blocks' — but he already blocked her; it's a real past event with a contrast, so -지만." }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "마루가 뜨거운 사우나에 들어가려고 하자 언니가 걱정했어요.",
+                questionEng: "When Maru tried to enter the hot sauna, the sister worried.",
+                sentence_pre: "어?! ",
+                sentence_post: "...",
+                correct_word: "뜨거울 텐데",
+                translation: "Huh?! It'll probably be hot, though...",
+                hint: "Adjective 뜨겁다 ('to be hot'). Which ending expresses a conjecture about something expected ('it'll probably be... though')?",
+                options: [
+                    { text: "뜨거울 텐데", isCorrect: true, feedback: "Correct! -(으)ㄹ 텐데 expresses a conjecture/expectation, often with worry — 'it'll probably be... (so I'm concerned).' 뜨거울 텐데 = 'it'll likely be hot, though.' The sister guesses the sauna will be hot: 뜨겁다 → 뜨거울 텐데." },
+                    { text: "뜨거웠는데", isCorrect: false, feedback: "Not here! -았는데 is past background ('it was hot, and...'). 뜨거웠는데 = 'it was hot, but...' — but the sister is worried about what WILL happen if Maru goes in, not reporting the past." },
+                    { text: "뜨거우니까", isCorrect: false, feedback: "Nope! -(으)니까 means 'because it's hot.' 뜨거우니까 = 'because it's hot...' — that states a reason as fact, but she's making a worried guess about what's likely, so -ㄹ 텐데." },
+                    { text: "뜨겁지만", isCorrect: false, feedback: "Not this one! -지만 means 'but.' 뜨겁지만 = 'it's hot, but...' — that asserts it IS hot as a fact; she's speculating ('it'll probably be hot'), so the conjecture form 뜨거울 텐데 fits." }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "할머니의 아들은 왜 밤새 안마를 해줬어요?",
+                questionEng: "Why did the grandmother's son massage her all night?",
+                sentence_pre: "할머니가 어깨가 ",
+                sentence_post: " 아들이 밤새 안마를 해줬어요.",
+                correct_word: "아프니까",
+                translation: "Because the grandmother's shoulder hurt, her son massaged it all night.",
+                hint: "Adjective 아프다 ('to hurt'). Which connective means 'because / since' (reason)?",
+                options: [
+                    { text: "아프니까", isCorrect: true, feedback: "Correct! -(으)니까 means 'because / since' (reason, common in speech). 아프니까 = 'because (her shoulder) hurts.' The pain is the reason the son gave a massage: 아프다 → 아프니까." },
+                    { text: "아프지만", isCorrect: false, feedback: "Not here! -지만 means 'but.' 아프지만 = 'it hurts, but...' — that sets up a contrast, but the sentence gives a reason (pain → massage), so -니까 fits." },
+                    { text: "아프면", isCorrect: false, feedback: "Nope! -(으)면 means 'if/when.' 아프면 = 'if it hurts...' — but it actually DID hurt (a real reason), not a hypothetical, so -니까." },
+                    { text: "아파도", isCorrect: false, feedback: "Not this one! -아도 means 'even if.' 아파도 = 'even if it hurts...' — that's concession, but here the pain directly caused the massage, so the reason form 아프니까 is correct." }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "마루는 자기 언니가 무엇을 해줬다고 자랑했어요?",
+                questionEng: "What did Maru brag that her sister did for her?",
+                sentence_pre: "우리 언니가 삶은 달걀 5개나 ",
+                sentence_post: ".",
+                correct_word: "사줬잖아",
+                translation: "My sister bought me a whole 5 boiled eggs, you know.",
+                hint: "Verb 사주다 ('to buy for someone'). Which ending reminds the listener of something they should already know ('..., you know')?",
+                options: [
+                    { text: "사줬잖아", isCorrect: true, feedback: "Correct! -잖아 reminds the listener of shared/obvious info — '..., you know.' 사줬잖아 = '(she) bought it for me, you know.' Maru is bragging, pointing to a fact she wants acknowledged: 사주다 → 사줬잖아." },
+                    { text: "사줄까?", isCorrect: false, feedback: "Not here! -ㄹ까? asks 'shall I?' 사줄까 = 'shall I buy it?' — but Maru is talking about something her sister ALREADY did, not offering to buy, so 사줬잖아." },
+                    { text: "사주세요", isCorrect: false, feedback: "Nope! -(으)세요 is a polite request ('please buy'). 사주세요 = 'please buy it for me' — but she's bragging about a past gift, not requesting one." },
+                    { text: "사줬어?", isCorrect: false, feedback: "Not this one! -았어? is a question ('did she buy?'). 사줬어 = 'did she buy it?' — Maru isn't asking; she's asserting it as a known fact to brag, so -잖아 fits." }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "마루는 목욕탕에 대해 마지막에 무엇을 깨달았어요?",
+                questionEng: "What did Maru realize about the bathhouse at the end?",
+                sentence_pre: "목욕탕은 정말 배부른 ",
+                sentence_post: "~",
+                correct_word: "곳이구나",
+                translation: "Wow, the bathhouse really is a place that fills you up!",
+                hint: "Noun + 이다 ('to be a place'). Which ending expresses a fresh realization ('oh, it's...!')?",
+                options: [
+                    { text: "곳이구나", isCorrect: true, feedback: "Correct! -(이)구나 expresses something you've just realized — 'oh, it's...!' 곳이구나 = 'oh, it's a place (that fills you up)!' Maru realizes this after all the free food: 곳이다 → 곳이구나." },
+                    { text: "곳일까?", isCorrect: false, feedback: "Not here! -ㄹ까? means 'I wonder if...' 곳일까 = 'I wonder if it's a place...' — but Maru isn't wondering; she's stating a realization she's now sure of, so -구나." },
+                    { text: "곳이었어", isCorrect: false, feedback: "Nope! -이었어 is past ('it was a place'). 곳이었어 = 'it was a place...' — but she's realizing it right now in the moment, so the realization form 곳이구나 fits." },
+                    { text: "곳이에요?", isCorrect: false, feedback: "Not this one! -이에요? is a polite question ('is it a place?'). 곳이에요 = 'is it a place?' — Maru isn't asking; she's exclaiming a discovery, so -구나." }
+                ]
+            }
+        ];
+
+        const DISCUSS_DATA = [
+            {
+                id: 1,
+                questionKor: "여러분의 나라에도 목욕탕이나 사우나가 있어요?",
+                questionEng: "Does your country also have public baths or saunas?",
+                vocab: [
+                    { term: "목욕탕", def: "public bath / bathhouse" },
+                    { term: "사우나", def: "sauna" }
+                ]
+            },
+            {
+                id: 2,
+                questionKor: "여러분은 목욕탕이나 사우나에 가 봤어요? 누구하고 갔어요?",
+                questionEng: "Have you ever been to a public bath or a sauna? Who did you go with?",
+                vocab: [
+                    { term: "목욕탕", def: "public bath / bathhouse" },
+                    { term: "사우나", def: "sauna" },
+                    { term: "-아/어 봤어요", def: "have you ever ~ (experience)" }
+                ]
+            },
+            {
+                id: 3,
+                questionKor: "여러분은 목욕탕이나 사우나에 자주 가요? 보통 언제 가요?",
+                questionEng: "Do you go to a public bath or sauna often? When do you usually go?",
+                vocab: [
+                    { term: "목욕탕", def: "public bath / bathhouse" },
+                    { term: "자주", def: "often / frequently" },
+                    { term: "보통", def: "usually" }
+                ]
+            },
+            {
+                id: 4,
+                questionKor: "사우나에 가 봤으면, 그 안에서 얼마 동안 있을 수 있어요?",
+                questionEng: "If you've been to a sauna, how long can you stay inside?",
+                vocab: [
+                    { term: "사우나", def: "sauna" },
+                    { term: "얼마 동안", def: "for how long" },
+                    { term: "-ㄹ 수 있다", def: "can / to be able to ~" }
+                ]
+            },
+            {
+                id: 5,
+                questionKor: "한국 목욕탕에서는 삶은 달걀이나 식혜를 먹어요. 여러분의 나라에서도 목욕탕에서 음식을 먹을 수 있어요?",
+                questionEng: "At Korean bathhouses, people eat boiled eggs or sikhye. In your country too, can you eat food at a bathhouse?",
+                vocab: [
+                    { term: "삶은 달걀", def: "boiled egg" },
+                    { term: "식혜", def: "sikhye (sweet rice drink)" },
+                    { term: "-ㄹ 수 있다", def: "can / to be able to ~" }
+                ]
+            },
+            {
+                id: 6,
+                questionKor: "한국에는 사람들이 같이 쓰는 큰 목욕탕이 있어요. 여러분의 나라에도 이런 공용 목욕탕이 있어요?",
+                questionEng: "In Korea there are big baths that people use together. Does your country also have this kind of shared public bath?",
+                vocab: [
+                    { term: "같이 쓰다", def: "to use together / to share" },
+                    { term: "공용 목욕탕", def: "a shared / communal public bath" },
+                    { term: "목욕탕", def: "public bath / bathhouse" }
+                ]
+            },
+            {
+                id: 7,
+                questionKor: "한국 목욕탕에서는 사람들이 모여서 이야기를 많이 해요. 여러분의 나라에서도 그래요?",
+                questionEng: "At Korean bathhouses, people gather and talk a lot. Is it like that in your country too?",
+                vocab: [
+                    { term: "모이다", def: "to gather" },
+                    { term: "목욕탕", def: "public bath / bathhouse" }
+                ]
+            },
+            {
+                id: 8,
+                questionKor: "한국 사람들은 뜨거운 물에 들어가서 \"시원하다\"라고 말해요. 여러분은 이 말을 이해할 수 있어요?",
+                questionEng: "Koreans get into hot water and say \"siwonhada (refreshing).\" Can you understand this expression?",
+                vocab: [
+                    { term: "시원하다", def: "to be cool / refreshing (in Korean, also 'soothing' — even for hot things)" },
+                    { term: "이해하다", def: "to understand" }
+                ]
+            },
+            {
+                id: 9,
+                questionKor: "여러분의 나라에도 \"시원하다\"와 비슷한 표현이 있어요? (뜨거운데 시원하다고 말하는 것처럼요.)",
+                questionEng: "Does your country also have an expression similar to \"siwonhada\"? (Like saying something is \"refreshing\" even though it's hot.)",
+                vocab: [
+                    { term: "시원하다", def: "to be cool / refreshing (also 'soothing' for hot things)" },
+                    { term: "표현", def: "expression" },
+                    { term: "-처럼", def: "like ~" }
+                ]
+            },
+            {
+                id: 10,
+                questionKor: "다음에 한국에 가면 여러분은 목욕탕이나 찜질방에 가 보고 싶어요?",
+                questionEng: "Next time you go to Korea, would you like to try going to a bathhouse or a jjimjilbang?",
+                vocab: [
+                    { term: "찜질방", def: "jjimjilbang (Korean dry sauna)" },
+                    { term: "-고 싶다", def: "to want to ~" }
+                ]
+            }
+        ];
+
+        const LEVEL_DEFINITIONS = { 
+            "A1": { title: "Novice", desc: "Basic everyday expressions." }, "A1+": { title: "Pre-Beginner", desc: "Can handle slightly more than A1." },
+            "A2": { title: "Beginner", desc: "Frequently used sentences." }, "A2+": { title: "Upper Beginner", desc: "Can speak a bit more smoothly." }, 
+            "B1": { title: "Pre-Intermediate", desc: "Standard speech main points." }, "B1+": { title: "Lower Intermediate", desc: "Stronger B1. More comfortable carrying conversations." },
+            "B2": { title: "Intermediate", desc: "Complex text main ideas." }, "B2+": { title: "Upper Intermediate", desc: "Near C1. Can argue a point logically." },
+            "C1": { title: "Advanced", desc: "Long, demanding texts." }, "C1+": { title: "Upper Advanced", desc: "Very strong C1, approaching native-like flexibility." },
+            "C2": { title: "Proficient", desc: "Can understand virtually everything heard or read." }
+        };
+
+        // --- Icons ---
+        const HomeIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><rect x="3" y="3" width="18" height="18" rx="0" ry="0" /><path d="M3 9h18" /><path d="M9 21V9" /></svg>);
+        const VideoIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>);
+        const VocabIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>);
+        const QuizIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>);
+        const DiscussIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>);
+        const TranslateIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.09-.02.67-.02zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" /></svg>);
+        const RewindIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>);
+        const ForwardIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>);
+        const PauseIcon = ({ className }) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>);
+        const PlayIconSolid = ({ className }) => (<svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M5 3l14 9-14 9V3z" /></svg>);
+        const MenuIcon = ({ className }) => (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        );
+        const ExternalLinkIcon = ({className}) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" className={className}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>);
+        const SparklesIcon = ({className}) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 00-1.423 1.423z" /></svg>);
+
+        // --- Helper Utilities ---
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = ""; 
+            const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${apiKey}`; 
+            const delays = CONFIG.API_RETRY_DELAYS;
+            for (let i = 0; i <= delays.length; i++) { 
+                try { 
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); 
+                    if (!response.ok) { 
+                        if (response.status === 429 || response.status >= 500) throw new Error(`Server error: ${response.status}`); 
+                        throw new Error(`API error: ${response.statusText}`); 
+                    } 
+                    return await response.json(); 
+                } catch (error) { 
+                    if (i === delays.length) throw error; 
+                    await new Promise(resolve => setTimeout(resolve, delays[i])); 
+                } 
+            }
+        };
+
+        const shuffleArray = (array) => {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        };
+
+        const TranslateButton = ({ onClick, isShowing, labelOff='Eng', labelOn='Hide', className = "" }) => (
+            <button onClick={(e) => { e.stopPropagation(); onClick(e); }} className={`flex items-center gap-1 text-[10px] font-medium text-gray-400 hover:text-gray-900 font-sans transition-colors cursor-pointer border-none p-0 tracking-wide uppercase print:hidden ${className}`}>
+                <TranslateIcon className="w-3 h-3" />{isShowing ? labelOn : labelOff}
+            </button>
+        );
+
+        const LevelBadge = ({ levelCode }) => {
+            const definition = LEVEL_DEFINITIONS[levelCode] || { title: "Unknown", desc: "" };
+            return (<div className="flex items-center gap-2 border border-black px-2 py-0.5 rounded-none"><span className="text-xs font-bold font-sans text-black print:text-[12px]">{levelCode}</span><div className="w-px h-3 bg-gray-300"></div><span className="text-xs text-gray-500 font-sans print:text-[12px]">{definition.title}</span></div>);
+        };
+
+        const renderFormattedText = (textContent) => {
+            if (!textContent) return null;
+            const parts = textContent.split(/(\*\*.*?\*\*)/g);
+            return parts.map((part, i) => {
+                if (part.startsWith('**') && part.endsWith('**')) {
+                    return <strong key={i} className="font-bold text-gray-900 bg-gray-100 px-1 mx-0.5 rounded-sm">{part.slice(2, -2)}</strong>;
+                }
+                return <span key={i}>{part}</span>;
+            });
+        };
+
+        const FeedbackSection = ({ titleKor, titleEng, content, isCorrection = false }) => (
+            <div>
+                <h4 className="text-[10px] font-bold font-sans text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    {titleKor} <span className="font-eng-header font-medium text-[9px]">{titleEng}</span>
+                </h4>
+                <p className={isCorrection ? "text-[15px] md:text-base font-serif text-gray-900 leading-relaxed font-medium bg-white p-4 border border-gray-200 shadow-sm rounded-sm" : "text-[13px] md:text-sm font-sans text-gray-700 leading-relaxed whitespace-pre-wrap"}>
+                    {content}
+                </p>
+            </div>
+        );
+
+        // --- Configuration ---
+        const NAV_ITEMS = [
+            { id: 'home', label: '시작 페이지', icon: HomeIcon },
+            { id: 'video', label: '동영상 자료', icon: VideoIcon },
+            { id: 'vocab', label: '핵심 어휘', icon: VocabIcon },
+            { id: 'quiz', label: '내용 확인 퀴즈', icon: QuizIcon },
+            { id: 'discuss', label: '생각해 보기', icon: DiscussIcon }
+        ];
+
+        const HOME_CARDS = [
+            { tag: "Vocab", title: "핵심 어휘", korDesc: <>학습 자료에 나온 단어와<br/>표현을 학습해 보세요.</>, engDesc: <>Learn new words and<br/>expressions from the text.</>, subtitle: "Key Vocabulary", target: 'vocab' },
+            { tag: "Quiz", title: "내용 퀴즈", korDesc: <>학습 자료의 내용과 어휘를<br/>이해했는지 확인해 보세요.</>, engDesc: <>Check your understanding of<br/>the content and vocabulary.</>, subtitle: "Comprehension Quiz", target: 'quiz' },
+            { tag: "Discuss", title: "생각해 보기", korDesc: <>학습 자료에 대해<br/>깊게 생각해 보세요.</>, engDesc: <>Think deeply about the topic<br/>and form your own opinion.</>, subtitle: "Food For Thought", target: 'discuss' }
+        ];
+
+        // --- Main Views ---
+        const Header = ({ isExpanded, setIsExpanded, activeTab, setActiveTab }) => (
+            <>
+                <nav className={`sticky top-0 z-50 bg-white border-b border-gray-100 hidden lg:flex items-center justify-between px-8 overflow-hidden transition-all duration-500 ease-in-out print:hidden ${isExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'}`}>
+                    <div className="flex items-center cursor-pointer text-left" onClick={() => setActiveTab('home')}><span className="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div>
+                    <div className="flex items-center justify-end gap-8 pr-12 flex-1">
+                        {NAV_ITEMS.map((menu) => (
+                            <button key={menu.id} onClick={() => setActiveTab(menu.id)} className={`text-sm font-medium transition-colors font-sans relative ${activeTab === menu.id ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}>{menu.label}{activeTab === menu.id && <div className="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>}</button>
+                        ))}
+                    </div>
+                </nav>
+                <button onClick={() => setIsExpanded(!isExpanded)} className={`fixed top-0 right-0 z-[60] hidden lg:flex items-center justify-center w-10 h-16 bg-white hover:bg-gray-50 transition-colors print:hidden ${isExpanded ? 'border-b border-gray-100' : 'border-transparent'}`} title={isExpanded ? "메뉴 접기" : "메뉴 펼치기"}>
+                    <MenuIcon className="w-5 h-5 text-black" />
+                </button>
+            </>
+        );
+
+        const HomeListItem = ({ title, korDesc, engDesc, subtitle, onClick }) => (
+            <div onClick={onClick} className="group p-8 md:p-10 flex flex-col items-center text-center transition-colors hover:bg-gray-50 cursor-pointer">
+                <h3 className="font-serif-kr text-xl mb-4 text-gray-900 mt-4 print:text-[14px] print:mb-2 print:mt-0">{title}</h3>
+                <div className="mb-8 space-y-2 print:mb-2 print:space-y-1">
+                    <p className="font-sans-kr text-xs text-gray-500 leading-relaxed print:text-[12px]">{korDesc}</p>
+                    <p className="font-eng-header text-[9px] text-gray-300 leading-relaxed group-hover:text-gray-500 transition-colors print:text-[12px]">{engDesc}</p>
+                </div>
+                <span className="font-eng-header text-[10px] tracking-widest border-b border-transparent group-hover:border-gray-900 pb-0.5 transition-all uppercase text-gray-800 print:hidden">{subtitle}</span>
+            </div>
+        );
+
+        const HomeView = ({ setActiveTab, userLevel }) => {
+            const levelInfo = LEVEL_DEFINITIONS[userLevel] || { title: "Unknown" };
+            return (
+                <div className="animate-fade-in max-w-5xl mx-auto w-full px-6 lg:px-0 pt-[3.75rem] pb-8 flex flex-col items-center h-full justify-center print:pt-0 print:block">
+                    <div className="flex flex-col items-center justify-center text-center w-full mb-16 print:mb-8">
+                        <div className="flex flex-wrap items-center justify-center gap-3 mb-6 print:mb-4"> 
+                            <div className="flex gap-1.5">
+                                <span className="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-wide print:text-[12px]">
+                                    문화
+                                </span>
+                                <span className="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-wide print:text-[12px]">
+                                    일상
+                                </span>
+                            </div>
+                            <LevelBadge levelCode={userLevel} />
+                        </div>
+                        <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold print:text-[22px] print:mb-2">
+                            인생 첫 사우나 - 나는 마루
+                        </h1>
+                        <p className="font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed print:text-[16px] print:mb-6">
+My Very First Sauna — I'm Maru
+                        </p>
+                        
+                        <div onClick={() => setActiveTab('video')} className="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black print:hidden">
+                            <img src={`https://img.youtube.com/vi/${VIDEO_CONFIG.YOUTUBE_VIDEO_ID}/maxresdefault.jpg`} alt="Video Thumbnail" className="w-full h-full object-cover opacity-90 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"/>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                                    <PlayIconSolid className="w-6 h-6 text-black ml-1" />
+                                </div>
+                            </div>
+                            <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="bg-black px-5 py-2 flex items-center gap-2.5">
+                                    <span className="text-white text-xs font-bold font-sans tracking-widest">동영상 보기</span>
+                                    <div className="w-px h-2.5 bg-gray-500"></div>
+                                    <span className="text-gray-300 text-[10px] font-eng-header tracking-widest uppercase mt-px">Watch Video</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 w-full pt-0 max-w-5xl print:grid-cols-3 print:gap-4 print:border-none">
+                        {HOME_CARDS.map((card, idx) => (<HomeListItem key={idx} {...card} onClick={() => setActiveTab(card.target)} />))}
+                    </div>
+                </div>
+            );
+        };
+
+        const VideoSidebarVocabCard = ({ word, activeVocabTerm, sidebarVocabRefs }) => {
+            const [showTrans, setShowTrans] = useState(false);
+            const trans = word.translations?.en;
+            return (
+                <div ref={el => sidebarVocabRefs.current[word.term] = el} className={`p-5 border-b border-gray-100 last:border-0 transition-all duration-500 bg-white print:p-1 print:mb-[2px] print:border-transparent print:break-inside-avoid`}>
+                    <div className="flex justify-between items-baseline mb-2 print:flex-row print:justify-start print:gap-1.5 print:mb-0">
+                        <h3 className={`text-lg font-serif font-bold ${activeVocabTerm === word.term ? 'text-black underline decoration-1 underline-offset-4' : 'text-gray-900'} print:text-[10px] print:leading-none print:no-underline`}>{word.term}</h3>
+                        <span className="hidden print:inline-block print:text-[6px] print:text-gray-400 print:opacity-20 print:leading-none print:font-sans">{trans?.term}</span>
+                    </div>
+                    <p className="text-sm font-serif text-gray-600 mb-3 leading-relaxed print:text-[9px] print:leading-[1.15] print:mb-0">{word.mainDef}</p>
+                    {word.subDefs && word.subDefs.length > 0 && (
+                        <div className="space-y-2 mt-3 pl-3 border-l border-gray-200 print:space-y-0 print:mt-0 print:pl-1 print:border-none">
+                            {word.subDefs.map((sub, i) => (
+                                <div key={i} className="print:flex print:items-baseline print:gap-1">
+                                    <p className="text-xs font-bold text-gray-800 font-ui mb-0.5 print:text-[8px] print:mb-0 print:leading-none">{sub.subTerm}</p>
+                                    <p className="text-xs text-gray-500 font-serif print:text-[8px] print:leading-none print:mb-0">{sub.subDef}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const VideoVocabPopup = ({ popup, onGlobalClick }) => {
+            const [showTrans, setShowTrans] = useState(false);
+            const trans = popup.data?.translations?.en;
+            const popupWidth = 300; const padding = 20; const windowWidth = window.innerWidth;
+            let leftPos = popup.x - (popupWidth / 2);
+            if (leftPos < padding) leftPos = padding; else if (leftPos + popupWidth > windowWidth - padding) leftPos = windowWidth - popupWidth - padding;
+            useEffect(() => { setShowTrans(false); }, [popup.data]);
+            if (!popup.show || !popup.data) return null;
+            return createPortal(
+                <div className={`fixed z-[9999] bg-white border border-gray-200 p-6 w-[300px] shadow-2xl animate-fade-in print:hidden ${!popup.fixed ? 'pointer-events-none' : ''}`} style={{ left: leftPos, top: popup.y + 16 }} onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                        <h3 className="text-xl font-serif font-bold text-gray-900">{popup.data.term}</h3>
+                    </div>
+                    <p className="text-sm font-serif text-gray-700 leading-relaxed mb-4">{popup.data.mainDef}</p>
+                    {popup.fixed && popup.data.subDefs && popup.data.subDefs.length > 0 && (<div className="space-y-3 mt-4">{popup.data.subDefs.map((sub, idx) => (<div key={idx}><p className="text-xs font-bold font-ui text-gray-900 mb-1">{sub.subTerm}</p><p className="text-xs font-serif text-gray-600">{sub.subDef}</p></div>))}</div>)}
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45"></div>
+                </div>, document.body
+            );
+        };
+
+        const LearnView = ({ updateProgress }) => {
+            const playerRef = useRef(null); 
+            const [videoState, setVideoState] = useState({ player: null, currentTime: 0, duration: 0, isPlaying: false });
+            const [activeLine, setActiveLine] = useState(null);
+            const [translations, setTranslations] = useState({});
+            const [popup, setPopup] = useState({ show: false, fixed: false, data: null, x: 0, y: 0 });
+            const [isLoading, setIsLoading] = useState(true);
+            const [activeVocabTerm, setActiveVocabTerm] = useState(null);
+            const sidebarVocabRefs = useRef({});
+            const scriptRefs = useRef({});
+            const intervalRef = useRef(null);
+            const [isSpeedMenuOpen, setIsSpeedMenuOpen] = useState(false);
+            const [layoutMode, setLayoutMode] = useState('split');
+            const [autoScroll, setAutoScroll] = useState(true);
+            const [showVocab, setShowVocab] = useState(false);
+            const [playbackRate, setPlaybackRate] = useState(1.0);
+
+            useEffect(() => {
+                const loadVideo = () => {
+                    if (window.YT && window.YT.Player) {
+                        new window.YT.Player('youtube-player', {
+                            videoId: VIDEO_CONFIG.YOUTUBE_VIDEO_ID, width: '100%', height: '100%',
+                            playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0, 'disablekb': 1 },
+                            events: {
+                                'onReady': (event) => { playerRef.current = event.target; setVideoState(prev => ({ ...prev, player: event.target, duration: event.target.getDuration() })); setIsLoading(false); },
+                                'onStateChange': (event) => { if (event.data === window.YT.PlayerState.PLAYING) { startInterval(); updateProgress('learn'); setVideoState(prev => ({ ...prev, isPlaying: true })); } else { stopInterval(); if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) { setVideoState(prev => ({ ...prev, isPlaying: false })); } } }
+                            }
+                        });
+                    }
+                };
+                if (!window.YT) { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); window.onYouTubeIframeAPIReady = loadVideo; } else { loadVideo(); }
+                return () => stopInterval();
+            }, []);
+
+            useEffect(() => { if (videoState.player && videoState.player.setPlaybackRate) videoState.player.setPlaybackRate(playbackRate); }, [playbackRate, videoState.player]);
+
+            const handleGlobalClick = useCallback(() => { if (popup.fixed) setPopup(prev => ({ ...prev, show: false, fixed: false })); }, [popup.fixed]);
+            useEffect(() => { if (popup.fixed) window.addEventListener('click', handleGlobalClick); return () => window.removeEventListener('click', handleGlobalClick); }, [popup.fixed, handleGlobalClick]);
+
+            useEffect(() => {
+                const handleKeyPress = (e) => {
+                    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                    if (e.code === 'Space') { e.preventDefault(); const player = videoState.player; if (player && typeof player.getPlayerState === 'function') { if (player.getPlayerState() === 1) player.pauseVideo(); else player.playVideo(); } }
+                    if (e.code === 'ArrowLeft') { e.preventDefault(); const currentIndex = VIDEO_SCRIPT_DATA.findIndex(line => line.id === activeLine); if (currentIndex > 0) handleLineClick(VIDEO_SCRIPT_DATA[currentIndex - 1].time[0]); }
+                    if (e.code === 'ArrowRight') { e.preventDefault(); const currentIndex = VIDEO_SCRIPT_DATA.findIndex(line => line.id === activeLine); if (currentIndex !== -1 && currentIndex < VIDEO_SCRIPT_DATA.length - 1) handleLineClick(VIDEO_SCRIPT_DATA[currentIndex + 1].time[0]); else if (currentIndex === -1 && VIDEO_SCRIPT_DATA.length > 0) handleLineClick(VIDEO_SCRIPT_DATA[0].time[0]); }
+                };
+                window.addEventListener('keydown', handleKeyPress); return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [videoState.player, activeLine]);
+
+            const startInterval = () => { 
+                stopInterval(); 
+                intervalRef.current = setInterval(() => {
+                    const p = playerRef.current; 
+                    if (p && p.getCurrentTime) { 
+                        const time = p.getCurrentTime(); 
+                        setVideoState(prev => ({ ...prev, currentTime: time })); 
+                        const currentLine = VIDEO_SCRIPT_DATA.find(line => time >= line.time[0] && time < line.time[1]); 
+                        if (currentLine) setActiveLine(currentLine.id); 
+                    }
+                }, 200); 
+            };
+            
+            const stopInterval = () => { if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; } };
+
+            useEffect(() => { 
+                if (popup.show) return; 
+                if (activeLine && autoScroll && scriptRefs.current[activeLine]) scriptRefs.current[activeLine].scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+            }, [activeLine, autoScroll, popup.show, layoutMode]);
+
+            const handleLineClick = (time) => { const player = videoState.player; if (player) { player.seekTo(time, true); player.playVideo(); } };
+            const toggleTranslation = (id) => setTranslations(prev => ({...prev, [id]: !prev[id]}));
+            const scrollToVocab = (term) => { const element = sidebarVocabRefs.current[term]; if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+            
+            const handleVocabEnter = (e, wordData) => { if (popup.fixed) return; const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: false, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+            const handleVocabLeave = () => { if (popup.fixed) return; setPopup(prev => ({ ...prev, show: false })); };
+            const handleVocabClick = (e, wordData) => { e.stopPropagation(); if (popup.fixed && popup.data && popup.data.term === wordData.term) { setPopup(prev => ({ ...prev, show: false, fixed: false })); return; } const rect = e.target.getBoundingClientRect(); setPopup({ show: true, fixed: true, data: wordData, x: rect.left + rect.width / 2, y: rect.bottom }); if (showVocab) { setActiveVocabTerm(wordData.term); scrollToVocab(wordData.term); } };
+
+            const handleSeek = (e) => { const time = parseFloat(e.target.value); if (videoState.player) videoState.player.seekTo(time, true); setVideoState(prev => ({ ...prev, currentTime: time })); };
+            const togglePlay = () => { const player = videoState.player; if (player) { if (videoState.isPlaying) player.pauseVideo(); else player.playVideo(); } };
+            const rewind2 = () => { const player = videoState.player; if (player) { const newTime = Math.max(0, videoState.currentTime - 1.5); player.seekTo(newTime, true); setVideoState(prev => ({ ...prev, currentTime: newTime })); } };
+            const forward2 = () => { const player = videoState.player; if (player) { const newTime = Math.min(videoState.duration, videoState.currentTime + 1.5); player.seekTo(newTime, true); setVideoState(prev => ({ ...prev, currentTime: newTime })); } };
+            const formatTime = (seconds) => { if (isNaN(seconds)) return "00:00"; const date = new Date(seconds * 1000); const mm = date.getUTCMinutes(); const ss = date.getUTCSeconds(); return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`; };
+
+            const allVocabTerms = useMemo(() => { return VOCAB_DATA.flatMap(vocab => { const terms = [vocab.term]; if (vocab.variants) terms.push(...vocab.variants); if (vocab.subDefs) terms.push(...vocab.subDefs.map(s => s.subTerm)); return [...new Set(terms)].filter(t => t).map(term => ({ term, vocab })); }).sort((a, b) => b.term.length - a.term.length); }, []);
+
+            const renderTextWithVocab = (text) => {
+                if (!text) return [""];
+                const matches = [];
+                allVocabTerms.forEach(({ term, vocab }) => { let index = 0; while ((index = text.indexOf(term, index)) !== -1) { const end = index + term.length; const overlaps = matches.some(m => (index >= m.start && index < m.end) || (end > m.start && end <= m.end) || (index <= m.start && end >= m.end)); if (!overlaps) matches.push({ start: index, end, term, vocab }); index += 1; } });
+                matches.sort((a, b) => a.start - b.start);
+                const result = []; let lastIndex = 0;
+                matches.forEach((match, idx) => { if (match.start > lastIndex) result.push(text.substring(lastIndex, match.start)); const isActive = (popup.show && popup.data && popup.data.term === match.vocab.term) || (showVocab && activeVocabTerm === match.vocab.term); 
+                result.push(<span key={`${match.term}-${idx}`} className={`cursor-pointer border-b border-dotted transition-all duration-200 font-medium inline-block leading-tight ${isActive ? 'border-black bg-white text-black border-solid' : 'border-gray-400 text-gray-800 hover:border-black hover:text-black'}`} onMouseEnter={(e) => handleVocabEnter(e, match.vocab)} onMouseLeave={handleVocabLeave} onClick={(e) => handleVocabClick(e, match.vocab)}>{match.term}</span>); lastIndex = match.end; });
+                if (lastIndex < text.length) result.push(text.substring(lastIndex));
+                return result;
+            };
+
+            const isScriptMode = layoutMode === 'script';
+            const isVideoOnlyMode = layoutMode === 'video';
+            const isSplitMode = layoutMode === 'split';
+
+            const videoStyle = isSplitMode ? `w-full aspect-video shrink-0 z-20 shadow-md lg:shadow-none lg:h-full lg:aspect-auto ${showVocab ? 'lg:w-[58%] xl:flex-1' : 'lg:w-[58%] xl:w-7/12'}` : (isScriptMode ? 'hidden' : 'flex-1 w-full h-full');
+            const scriptContainerBaseClass = `flex-1 flex flex-col min-h-0 bg-white border-l border-gray-200 transition-all duration-300`;
+            const scriptContainerResponsiveClass = isSplitMode ? `w-full lg:w-[42%] lg:h-full lg:flex-none ${showVocab ? 'xl:w-4/12' : 'xl:w-5/12'}` : (isScriptMode ? 'w-full h-full' : 'hidden');
+
+            const LearnToolbar = () => (
+                <div className="sticky top-0 z-40 h-16 flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shadow-sm pr-14 print:hidden">
+                    <div className="flex items-center gap-1 shrink-0">
+                        {[
+                            { id: 'split', kor: '동영상 & 스크립트', eng: 'Video & Transcript' }, 
+                            { id: 'video', kor: '동영상만 보기', eng: 'Watch Video' }, 
+                            { id: 'script', kor: '스크립트만 보기', eng: 'Read Transcript' }
+                        ].map((mode) => {
+                            const isActive = layoutMode === mode.id;
+                            let visibilityClass = "hidden"; 
+                            if (mode.id === 'split') visibilityClass = "flex"; 
+                            else if (mode.id === 'video') visibilityClass = "hidden md:flex"; 
+                            else if (mode.id === 'script') visibilityClass = "hidden sm:flex"; 
+                            return (
+                                <button key={mode.id} onClick={() => setLayoutMode(mode.id)} className={`flex-col items-center justify-center px-3 py-1.5 transition-all rounded-sm ${visibilityClass} ${isActive ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-gray-50'}`}>
+                                    <span className="text-[11px] md:text-xs font-bold font-sans">{mode.kor}</span>
+                                    <span className="text-[8px] md:text-[9px] font-eng-header uppercase tracking-widest mt-0.5 opacity-80">{mode.eng}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                    <div className="flex items-center gap-4 flex-1 justify-end min-w-0">
+                        <div className="hidden sm:flex items-center gap-4 flex-1 max-w-xl justify-end">
+                            <div className="hidden md:flex flex-col flex-1 gap-1 w-full">
+                                <div className="relative group h-2 flex items-center">
+                                    <div className="absolute inset-0 flex items-center"><div className="w-full h-[1px] bg-gray-200 group-hover:h-[2px] transition-all"></div><div className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-black" style={{ width: `${(videoState.currentTime/videoState.duration)*100}%` }}></div></div>
+                                    <input type="range" min="0" max={videoState.duration || 100} value={videoState.currentTime} onChange={handleSeek} className="absolute inset-0 w-full opacity-0 cursor-pointer" />
+                                </div>
+                                <span className="text-[10px] font-mono text-gray-400 text-right leading-none">{formatTime(videoState.currentTime)} / {formatTime(videoState.duration)}</span>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-3 shrink-0">
+                                <button onClick={rewind2} className="text-gray-400 hover:text-black transition-colors"><RewindIcon className="w-4 h-4" /></button>
+                                <button onClick={togglePlay} className="w-6 h-6 border border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">{videoState.isPlaying ? <PauseIcon className="w-2.5 h-2.5 fill-current" /> : <PlayIconSolid className="w-2.5 h-2.5 fill-current ml-0.5" />}</button>
+                                <button onClick={forward2} className="text-gray-400 hover:text-black transition-colors"><ForwardIcon className="w-4 h-4" /></button>
+                            </div>
+                        </div>
+                        <div className="h-4 w-px bg-gray-200 hidden sm:block"></div>
+                        <div className="relative shrink-0 hidden sm:flex group">
+                            <button onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)} className="flex items-center gap-1.5 text-xs font-bold font-ui uppercase tracking-wider text-gray-500 hover:text-black">{playbackRate.toFixed(1)}x</button>
+                            {isSpeedMenuOpen && (
+                                <>
+                                <div className="fixed inset-0 z-40" onClick={() => setIsSpeedMenuOpen(false)}></div>
+                                <div className="absolute top-full right-0 mt-2 bg-white border border-gray-200 shadow-xl p-1 z-50 w-20 animate-fade-in">
+                                    {[0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map(speed => (<button key={speed} onClick={() => { setPlaybackRate(speed); setIsSpeedMenuOpen(false); }} className={`w-full text-center py-1.5 text-[10px] font-bold font-ui hover:bg-white ${playbackRate === speed ? 'text-black' : 'text-gray-400'}`}>{speed}x</button>))}
+                                </div>
+                                </>
+                            )}
+                        </div>
+                        <button onClick={() => setAutoScroll(!autoScroll)} className={`hidden sm:flex items-center gap-2 text-[10px] font-bold font-ui uppercase tracking-widest transition-colors ${autoScroll ? 'text-black' : 'text-gray-300 hover:text-gray-500'}`}>
+                            <span className={`w-2 h-2 rounded-full ${autoScroll ? 'bg-black' : 'border border-gray-300'}`}></span>
+                            <span className="md:hidden">Scroll</span><span className="hidden md:inline">Auto Scroll</span>
+                        </button>
+                        <button onClick={() => setShowVocab(!showVocab)} className={`hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}`}>Vocabulary</button>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="flex flex-col h-full animate-fade-in print:block print:h-auto print:overflow-visible">
+                    <LearnToolbar />
+                    <div className={`flex flex-col lg:flex-row flex-1 overflow-hidden relative print:flex-row print:overflow-visible print:h-auto print:block`}>
+                        <VideoVocabPopup popup={popup} onGlobalClick={handleGlobalClick} />
+                        <div className={`bg-black overflow-hidden relative transition-all duration-300 ${videoStyle} print:hidden`}>
+                                {isLoading && (<div className="absolute inset-0 z-10 bg-black flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div></div>)}
+                                <div id="youtube-player" className={`w-full h-full`}></div>
+                        </div>
+                        <div className={`${scriptContainerBaseClass} ${scriptContainerResponsiveClass} ${isVideoOnlyMode ? 'hidden print:flex' : 'flex'} print:w-[80%] print:flex-none print:overflow-visible print:h-auto print:border-none print:pr-4`}>
+                            <div className={`flex-1 overflow-y-auto bg-white print:overflow-visible print:h-auto print:block`}>
+                                <div className={isScriptMode ? "w-full mx-auto p-4 sm:p-8 min-h-full bg-white shadow-sm my-8 max-w-4xl lg:max-w-5xl print:w-full print:max-w-none print:p-0 print:m-0 print:shadow-none" : "p-8 space-y-8 print:w-full print:max-w-none print:p-0 print:m-0 print:space-y-4"}>
+                                    {VIDEO_SCRIPT_DATA.map(line => {
+                                        const isActive = activeLine === line.id;
+                                        const isLeft = line.speaker === VIDEO_SCRIPT_DATA[0].speaker;
+                                        const translation = translations[line.id];
+                                        const speakerClass = "text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-bold font-ui uppercase tracking-widest text-gray-400 print:text-[10px] print:mb-0";
+                                        const koreanClass = "text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-serif leading-[1.8] tracking-wide text-left print:text-[12px] print:leading-snug";
+                                        const englishClass = "text-xs sm:text-sm md:text-sm lg:text-sm xl:text-sm font-serif text-gray-500 text-left";
+
+                                        if (isScriptMode) {
+                                            return (
+                                                <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`flex flex-col w-full mb-8 ${isLeft ? 'items-start' : 'items-end'} print:mb-4 print:break-inside-avoid`}>
+                                                    <span className={`${speakerClass} mb-2 ${isLeft ? 'ml-1' : 'mr-1'} print:mb-1`}>{line.speaker}</span>
+                                                    <div onClick={() => handleLineClick(line.time[0])} className={`relative px-6 py-5 max-w-[90%] md:max-w-[80%] bg-white border border-transparent rounded-2xl ${isLeft ? 'rounded-bl-none' : 'rounded-br-none'} hover:shadow-md transition-all duration-300 cursor-pointer group ${isActive ? 'ring-1 ring-black border-black' : ''} print:p-2 print:rounded-md print:shadow-none print:border-gray-200 print:border print:max-w-none`}>
+                                                        <p className={`${koreanClass} text-gray-800 print:text-black`}>{renderTextWithVocab(line.kor)}</p>
+                                                        {translation && <div className="mt-3 pt-3 border-t border-dashed border-gray-100 animate-fade-in print:hidden"><p className={`${englishClass} leading-relaxed`}>{line.eng}</p></div>}
+                                                        <div className={`flex items-center mt-4 gap-3 ${isLeft ? 'justify-start' : 'justify-end'} print:hidden`}>
+                                                            <button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0"><PlayIconSolid className="w-2 h-2 ml-0.5" /></button>
+                                                            <TranslateButton onClick={() => toggleTranslation(line.id)} isShowing={translation} labelOff="Eng" className="font-bold" />
+                                                        </div>
+                                                        <svg className={`absolute bottom-[-1px] ${isLeft ? '-left-[7px]' : '-right-[7px]'} w-[8px] h-[8px] z-10 print:hidden`} viewBox="0 0 8 8" fill="none"><path d={isLeft ? "M8 0 C 8 4 4 8 0 8 L 8 8 V 0 Z" : "M0 0 C 0 4 4 8 8 8 L 0 8 V 0 Z"} fill="white" /><path d={isLeft ? "M0 8 C 4 8 8 4 8 0" : "M8 8 C 4 8 0 4 0 0"} stroke={isActive ? "black" : "transparent"} strokeWidth="1" fill="none" /><path d={isLeft ? "M8 0 V8" : "M0 0 V8"} stroke="white" strokeWidth="2" /></svg>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <div key={line.id} ref={el => scriptRefs.current[line.id] = el} className={`transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-90'} print:opacity-100 print:break-inside-avoid print:mb-4`}>
+                                                <div className="flex items-center gap-2 mb-2 justify-start print:mb-0"><span className={speakerClass}>{line.speaker}</span><span className={`w-1.5 h-1.5 bg-black rounded-full animate-pulse ${isActive ? 'block' : 'hidden'} print:hidden`}></span></div>
+                                                <div onClick={() => handleLineClick(line.time[0])} className="cursor-pointer group">
+                                                    <p className={`${koreanClass} ${isActive ? 'text-black' : 'text-[#1a1a1a]'} print:text-black`}>{renderTextWithVocab(line.kor)}</p>
+                                                    {translation && <p className={`${englishClass} mt-2 animate-fade-in pl-3 border-l border-gray-200 print:hidden`}>{line.eng}</p>}
+                                                    <div className="flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity justify-start print:hidden">
+                                                        <button onClick={(e) => { e.stopPropagation(); handleLineClick(line.time[0]); }} className="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0"><PlayIconSolid className="w-2 h-2 ml-0.5" /></button>
+                                                        <TranslateButton onClick={() => toggleTranslation(line.id)} isShowing={translation} labelOff="Eng" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="h-32 print:hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`w-80 flex-col bg-white border-l border-gray-200 animate-fade-in ${showVocab ? 'flex' : 'hidden'} print:flex print:w-[20%] print:flex-none print:h-auto print:fixed-none print:static print:border-none print:overflow-visible ${isScriptMode ? 'fixed right-0 top-[114px] h-[calc(100vh-114px)]' : 'h-full'}`}>
+                            <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-white print:hidden"><span className="font-ui text-xs font-bold uppercase tracking-widest text-gray-900">핵심 어휘</span><span className="text-xs font-serif text-gray-500 italic">{VOCAB_DATA.length}개</span></div>
+                            <div className="flex-1 overflow-y-auto bg-white print:overflow-visible print:h-auto">
+                                {VOCAB_DATA.map((word, idx) => (<VideoSidebarVocabCard key={idx} word={word} activeVocabTerm={activeVocabTerm} sidebarVocabRefs={sidebarVocabRefs} />))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const VocabExampleRow = ({ ex }) => {
+            const [isTransVisible, setIsTransVisible] = useState(false);
+            return (
+                <div className="group print:hidden">
+                    <div className="flex justify-between items-start gap-2">
+                        <p className="font-serif-kr text-base text-gray-700 leading-relaxed mb-1.5 break-keep print:text-[11px]">{ex.kor}</p>
+                        <div className={`shrink-0 mt-0.5 transition-opacity duration-200 ${isTransVisible ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} print:hidden`}><TranslateButton onClick={() => setIsTransVisible(!isTransVisible)} isShowing={isTransVisible} /></div>
+                    </div>
+                    {isTransVisible && (<p className="font-sans-kr text-sm text-gray-500 font-light leading-relaxed animate-fade-in print:text-[10px] print:block">{ex.eng}</p>)}
+                </div>
+            );
+        };
+
+        const VocabItem = ({ word }) => {
+            const [showExamples, setShowExamples] = useState(false);
+            return (
+                <div className="bg-white p-8 md:p-12 border border-gray-200 hover:border-gray-300 transition-colors duration-300 flex flex-col h-full print:p-2 print:border-transparent print:break-inside-avoid">
+                    <div className="mb-6 print:mb-2"><h3 className="font-serif-kr text-xl md:text-2xl text-gray-900 font-semibold tracking-tight mb-2 print:text-[14px] print:mb-1">{word.term}</h3><p className="font-sans-kr text-base text-gray-500 font-light print:text-[12px]">{word.mainDef}</p></div>
+                    {word.subDefs && word.subDefs.length > 0 && (
+                        <div className="mb-8 pl-4 border-l border-gray-200 flex-1 print:mb-2 print:pl-2">
+                            <div className="font-sans-kr text-xs text-gray-400 tracking-widest uppercase mb-3 flex items-center gap-2 print:mb-1">어휘 풀이 <span className="font-eng-header font-light text-xs">BREAKDOWN</span></div>
+                            <div className="space-y-4 print:space-y-1">
+                                {word.subDefs.map((sub, idx) => (
+                                    <div key={idx} className="flex flex-col gap-1 print:gap-0">
+                                        <span className="font-serif-kr text-base text-gray-800 font-medium print:text-[13px]">{sub.subTerm}</span>
+                                        <span className="font-sans-kr text-sm text-gray-500 leading-relaxed print:text-[11px]">{sub.subDef}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    {(!word.subDefs || word.subDefs.length === 0) && <div className="flex-1 print:hidden"></div>}
+                    {word.examples && word.examples.length > 0 && (
+                        <div className="mt-6 pt-6 border-t border-gray-100 mt-auto print:mt-2 print:pt-2">
+                            <button onClick={() => setShowExamples(!showExamples)} className="flex items-center gap-2 font-sans-kr text-xs text-gray-400 hover:text-gray-800 transition-colors duration-200 print:hidden">
+                                <svg className={`w-3 h-3 transition-transform duration-200 ${showExamples ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>예문 보기 <span className="font-eng-header text-xs tracking-widest uppercase font-light">VIEW EXAMPLES</span>
+                            </button>
+                            {/* Force examples to show on print if needed, but per request examples are 11px and translations 10px. I'll just render them always in print mode */}
+                            <div className={`space-y-5 bg-gray-50/50 p-5 rounded-sm mt-6 animate-fade-in print:block print:bg-transparent print:p-0 print:mt-0 print:space-y-2 ${showExamples ? 'block' : 'hidden'}`}>
+                                {word.examples.map((ex, idx) => (
+                                    <div key={idx} className="group print:block">
+                                        <p className="font-serif-kr text-base text-gray-700 leading-relaxed mb-1.5 break-keep print:text-[11px] print:mb-0.5">{ex.kor}</p>
+                                        <p className="font-sans-kr text-sm text-gray-500 font-light leading-relaxed animate-fade-in print:text-[10px] print:block">{ex.eng}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        const VocabView = ({ updateProgress }) => { 
+            useEffect(() => { updateProgress('vocab'); }, []); 
+            return (
+                <div className="w-full pt-16 px-6 max-w-[1000px] mx-auto pb-20 animate-fade-in print:pt-0 print:pb-0">
+                    <div className="mb-12 md:mb-20 text-center animate-fade-in print:mb-6"><h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight print:text-[18px]">핵심 어휘</h2><span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2 print:text-[12px]">Key Vocabulary</span><div className="w-[1px] h-8 bg-gray-200 mx-auto mt-8 print:hidden"></div></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 print:gap-4">{VOCAB_DATA.map((word, idx) => (<VocabItem key={idx} word={word} />))}</div>
+                </div>
+            ); 
+        };
+
+        const QuizSentence = ({ quiz, onAttempt }) => {
+            const [selectedOption, setSelectedOption] = useState(null);
+            const [showHint, setShowHint] = useState(false);
+            const [showTrans, setShowTrans] = useState(false);
+            const [isSolved, setIsSolved] = useState(false);
+            const [hasAttempted, setHasAttempted] = useState(false);
+
+            const handleOptionClick = (option) => {
+                if (isSolved && option.isCorrect) return;
+                setSelectedOption(option);
+                if (!hasAttempted) { setHasAttempted(true); onAttempt(quiz.id, option.isCorrect); }
+                if (option.isCorrect) setIsSolved(true);
+            };
+
+            return (
+                <div className="mb-16 pb-8 border-b border-gray-100 last:border-0 print:mb-6 print:pb-4 print:break-inside-avoid">
+                    <div className="flex items-center gap-3 mb-4 print:mb-2"><span className="text-xs font-bold font-sans text-black border border-black px-1.5 py-0.5 print:text-[10px]">Q.{quiz.id}</span><div className="flex flex-col"><h3 className="text-lg font-bold font-serif text-gray-900 leading-snug print:text-[12px]">{quiz.questionKor}</h3><p className="text-xs font-sans text-gray-400 print:hidden">{quiz.questionEng}</p></div></div>
+                    <div className="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200 print:p-2 print:mb-2 print:bg-transparent print:border-none">
+                        <div className="text-xl font-serif text-gray-900 leading-loose text-left print:text-[12px] print:leading-normal"><span>{quiz.sentence_pre}</span><span className={`inline-block border-b-2 px-2 mx-1 font-bold transition-colors ${isSolved ? 'text-green-600 border-green-500' : (selectedOption && !selectedOption.isCorrect ? 'text-red-500 border-red-400' : 'text-gray-400 border-gray-400 min-w-[80px]')}`}>{isSolved ? quiz.correct_word : (selectedOption && !selectedOption.isCorrect ? selectedOption.text : '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')}</span><span>{quiz.sentence_post}</span></div>
+                        <div className={`mt-6 pt-6 border-t border-gray-200 text-left animate-fade-in print:mt-1 print:pt-1 print:border-none ${showTrans ? 'block' : 'hidden print:hidden'}`}>
+                            <p className="text-sm font-serif text-gray-600 leading-relaxed print:text-[10px] print:leading-normal">{quiz.translation}</p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 print:grid-cols-2 print:gap-2 print:mb-2">
+                        {quiz.options.map((option, idx) => (
+                            <button key={idx} onClick={() => handleOptionClick(option)} disabled={isSolved && option.isCorrect} className={`p-4 text-left border rounded-lg transition-all font-serif text-base relative print:text-[12px] print:p-2 ${isSolved && option.isCorrect ? 'bg-green-50 border-green-500 text-green-800' : selectedOption === option ? (option.isCorrect ? 'bg-green-50 border-green-500 text-green-800' : 'bg-red-50 border-red-300 text-red-800') : 'bg-white border-gray-200 hover:border-gray-400 hover:shadow-sm text-gray-700'}`}>
+                                <span className="font-bold mr-2 text-sm font-sans text-gray-400 print:text-[10px]">{String.fromCharCode(65 + idx)}.</span>{option.text}
+                                {isSolved && option.isCorrect && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600">✓</span>}{selectedOption === option && !option.isCorrect && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500">✕</span>}
+                            </button>
+                        ))}
+                    </div>
+                    {selectedOption && (<div className={`p-4 rounded-lg text-sm mb-4 animate-fade-in print:text-[12px] print:p-2 print:mb-2 ${selectedOption.isCorrect ? 'bg-green-50 text-green-800 border border-green-100' : 'bg-red-50 text-red-800 border border-red-100'}`}><p className="font-bold mb-1 font-sans print:hidden">{selectedOption.isCorrect ? '정답입니다! 🎉' : '다시 생각해보세요.'}</p><p className="font-serif leading-relaxed">{selectedOption.feedback}</p></div>)}
+                    <div className="flex items-center gap-4 text-xs font-bold font-sans print:hidden"><button onClick={() => setShowHint(!showHint)} className="text-gray-400 hover:text-journal-black uppercase tracking-widest transition-colors">Hint</button><div className="h-3 w-px bg-gray-300"></div><TranslateButton onClick={() => setShowTrans(!showTrans)} isShowing={showTrans} /></div>
+                    <div className={`mt-3 text-sm font-sans text-gray-500 italic animate-fade-in print:text-[10px] print:mt-1 ${showHint ? 'block' : 'hidden print:hidden'}`}>💡 Hint: {quiz.hint}</div>
+                </div>
+            );
+        };
+
+        const QuizView = ({ updateProgress }) => {
+            const [attempts, setAttempts] = useState({});
+            const [quizData, setQuizData] = useState(() => { return QUIZ_LIST.map(quiz => ({ ...quiz, options: shuffleArray(quiz.options) })); });
+            const [resetToken, setResetToken] = useState(0); 
+            const totalQuestions = quizData.length; 
+            const correctCount = Object.values(attempts).filter(v => v).length; 
+            const currentScore = Math.round((correctCount / totalQuestions) * 100);
+            
+            useEffect(() => { const totalAttempts = Object.keys(attempts).length; if (totalAttempts === 0) return; updateProgress('quiz', currentScore); }, [attempts, currentScore, updateProgress]);
+            const handleAttempt = (quizId, isCorrect) => { setAttempts(prev => ({ ...prev, [quizId]: isCorrect })); };
+            const handleReset = () => { setAttempts({}); setQuizData(QUIZ_LIST.map(quiz => ({ ...quiz, options: shuffleArray(quiz.options) }))); setResetToken(prev => prev + 1); updateProgress('quiz', 0); };
+            
+            return (
+                <div className="max-w-3xl mx-auto w-full px-6 py-12 animate-fade-in flex flex-col gap-8 print:pt-0 print:gap-4 print:block">
+                    <div className="mb-12 md:mb-16 text-center animate-fade-in print:text-center print:mb-6"><h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight print:text-[18px]">내용 확인 퀴즈</h2><span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2 print:text-[12px]">Comprehension Quiz</span><div className="w-12 h-px bg-gray-200 mx-auto mt-12 md:mt-16 print:hidden"></div></div>
+                    <div className="flex-1">{quizData.map((quiz) => (<QuizSentence key={`${quiz.id}-${resetToken}`} quiz={quiz} onAttempt={handleAttempt} />))}</div>
+                    <div className="mt-8 pt-12 border-t border-gray-100 flex flex-col items-center gap-10 animate-fade-in print:hidden">
+                        <div className="flex flex-col items-center"><span className="text-[10px] font-bold font-eng-header text-gray-400 uppercase tracking-[0.2em] mb-2">정답률 / Accuracy</span><span className="text-5xl font-serif-kr font-bold text-journal-black tracking-tight">{currentScore}%</span></div>
+                        <button onClick={handleReset} className="group flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 hover:border-black hover:bg-gray-50 transition-all duration-300"><svg className="w-4 h-4 text-gray-400 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg><div className="flex flex-col items-start leading-none gap-1"><span className="text-xs font-bold font-sans-kr text-gray-900 group-hover:text-black">다시 풀기</span><span className="text-[9px] font-eng-header font-medium tracking-wider text-gray-400 group-hover:text-gray-600 uppercase">Retry</span></div></button>
+                    </div>
+                </div>
+            );
+        };
+
+        const DiscussQuestionItem = ({ item, userLevel }) => {
+            const [text, setText] = useState(''); 
+            const [showTranslation, setShowTranslation] = useState(false);
+            const [isGenerating, setIsGenerating] = useState(false);
+            const [feedbackData, setFeedbackData] = useState(null);
+            const [error, setError] = useState('');
+
+            const handleGetFeedback = async () => {
+                if (!text.trim()) return;
+                setIsGenerating(true); setFeedbackData(null); setError('');
+
+                const isBeginnerOrIntermediate = ["A1", "A1+", "A2", "A2+", "B1", "B1+"].includes(userLevel);
+                let feedbackInstruction = isBeginnerOrIntermediate 
+                    ? `The student's level is ${userLevel} (Beginner/Intermediate).\nFeedback Guidelines:\n1. feedback field: Write an encouraging and positive general feedback message **ENTIRELY IN ENGLISH**.\n2. correction field: Provide the fully corrected version of the student's answer in natural Korean.\n3. detailed_corrections field: Break down the specific errors. For each error:\n   - Provide the 'original' text (the incorrect Korean part).\n   - Provide the 'corrected' text (the correct Korean part).\n   - Provide an 'explanation' **ENTIRELY IN ENGLISH**. \n   - CRITICAL: Inside the English explanation, whenever you mention a Korean word or expression, you MUST wrap it in double asterisks like this: **한국어**.`
+                    : `학생의 레벨은 ${userLevel} (중고급 이상)입니다.\n피드백 작성 지침:\n1. 모든 필드(feedback, correction, detailed_corrections)를 **오직 한국어로만** 자연스럽고 친절하게 작성해주세요. 영어는 절대 사용하지 마세요.\n2. detailed_corrections의 explanation 필드 내에서 강조하고 싶은 한국어 단어나 표현이 있다면 반드시 **단어** 처럼 마크다운 기호를 사용하여 강조해주세요.`;
+
+                const vocabContext = item.vocab ? item.vocab.map(v => `- ${v.term}: ${v.def}`).join('\n') : "제공된 핵심 어휘 없음";
+                const systemPrompt = `당신은 한국어 맞춤법과 문법에 완벽하게 통달한 전문적인 한국어 선생님입니다.\n${feedbackInstruction}\n\n[필수 준수 사항 - 철저한 오류 검증 및 환각 방지]\n1. 학생의 답변에서 철자(맞춤법), 띄어쓰기, 문법 오류를 가장 먼저 찾아내어 분석하세요. (예: '뒤담화'는 틀린 표기이며 '뒷담화'가 맞습니다.)\n2. 특히 아래 제공된 [핵심 어휘 목록]의 단어들이 정확한 맞춤법으로 사용되었는지 반드시 확인하세요.\n3. 'correction' 필에는 국립국어원 표준국어대사전 기준에 맞는 완벽한 한국어 문장만 작성하세요. 발음이 비슷하다고 해서 잘못된 철자를 맞는 것으로 간주해서는 안 됩니다.\n4. **[중요] 'correction' 필드의 모범 답안은 반드시 '해요체(~요)'를 사용하여 작성하세요.** (예: ~했습니다(X), ~한다(X) -> ~했어요(O))\n\n[출력 형식 (JSON)]\n반드시 아래 구조의 순수 JSON 포맷으로만 응답하세요. 마크다운 기호(\`\`\`json 등)는 절대 포함하지 마세요.\n{\n  "feedback": "...",\n  "correction": "...",\n  "detailed_corrections": [\n    { "original": "...", "corrected": "...", "explanation": "..." }\n  ]\n}\n\n[핵심 어휘 목록 (참고용)]\n${vocabContext}`;
+                
+                const combinedPrompt = `${systemPrompt}\n\n[학생의 요청]\n질문: "${item.questionKor}"\n학생 답변: "${text}"\n\n위 지침을 엄격히 준수하여 JSON 형식으로 피드백을 제공해주세요.`;
+
+                const payload = { 
+                    contents: [{ role: "user", parts: [{ text: combinedPrompt }] }], 
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
+                };
+
+                try {
+                    const result = await callGeminiWithBackoff(payload);
+                    const feedbackText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (feedbackText) {
+                        const cleanedText = feedbackText.replace(/^```(json)?\n?/, '').replace(/\n?```$/, '').trim();
+                        setFeedbackData(JSON.parse(cleanedText));
+                    } else {
+                        setError("피드백을 생성하지 못했습니다.");
+                    }
+                } catch (err) { 
+                    console.error("Feedback Generation API Error:", err);
+                    setError("오류가 발생했습니다. 잠시 후 다시 시도해주세요."); 
+                } finally { 
+                    setIsGenerating(false); 
+                }
+            };
+
+            return (
+                <div className="mb-16 group print:mb-4 print:break-inside-avoid">
+                    <div className="flex items-center gap-4 mb-6 print:mb-2"><span className="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900 print:text-[14px] print:text-gray-900">{String(item.id).padStart(2, '0')}</span><h3 className="text-xl font-serif font-bold text-gray-900 leading-normal print:text-[12px] whitespace-pre-line">{item.questionKor}</h3></div>
+                    <div className="pl-0 md:pl-14 print:pl-6">
+                        <div className="flex gap-2 mb-4 print:hidden"><TranslateButton onClick={() => setShowTranslation(!showTranslation)} isShowing={showTranslation} />{showTranslation && (<p className="text-sm font-sans text-gray-500 animate-fade-in whitespace-pre-line">{item.questionEng}</p>)}</div>
+                        <div className="bg-gray-50 p-5 mb-6 border-l-2 border-black print:p-2 print:mb-2 print:bg-transparent print:border-l-0 print:border-t"><span className="text-xs font-bold font-sans text-gray-400 uppercase mb-2 block tracking-widest print:text-[10px]">Key Vocabulary</span><div className="space-y-1 print:space-y-0">{item.vocab.map((v, i) => (<p key={i} className="text-sm font-serif text-gray-700 print:text-[10px]"><span className="font-bold text-black mr-2">{v.term}</span>{v.def}</p>))}</div></div>
+                        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="여기에 생각을 적어보세요..." className="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300 print:hidden"></textarea>
+                        <div className="flex justify-end print:hidden">
+                            <button onClick={handleGetFeedback} disabled={!text.trim() || isGenerating} className={`px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${!text.trim() || isGenerating ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}`}>
+                                {isGenerating ? (<><div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>Generating...</>) : 'Get AI Feedback'}
+                            </button>
+                        </div>
+                        {error && (<div className="mt-4 p-4 text-sm text-red-600 bg-red-50 border border-red-100 rounded-sm animate-fade-in print:hidden">{error}</div>)}
+                        {feedbackData && (
+                            <div className="mt-8 p-6 bg-gray-50 border border-gray-200 rounded-sm animate-fade-in relative print:hidden">
+                                <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-200"><SparklesIcon className="w-5 h-5 text-gray-900" /><span className="text-xs font-bold font-sans text-gray-900 uppercase tracking-widest">AI Teacher Feedback</span></div>
+                                <div className="space-y-8">
+                                    <FeedbackSection titleKor="피드백" titleEng="FEEDBACK" content={renderFormattedText(feedbackData.feedback)} />
+                                    <FeedbackSection titleKor="모범 답안" titleEng="CORRECTION" content={feedbackData.correction} isCorrection={true} />
+                                    {feedbackData.detailed_corrections && feedbackData.detailed_corrections.length > 0 && (
+                                        <div>
+                                            <h4 className="text-[10px] font-bold font-sans text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">상세 설명 <span className="font-eng-header font-medium text-[9px]">EXPLANATION</span></h4>
+                                            <div className="space-y-3">
+                                                {feedbackData.detailed_corrections.map((detail, idx) => (
+                                                    <div key={idx} className="bg-white p-4 border border-gray-100 rounded-sm hover:border-gray-200 transition-colors">
+                                                        {(detail.original || detail.corrected) && (
+                                                            <div className="flex flex-wrap items-center gap-3 mb-2.5 text-[15px] font-serif">
+                                                                {detail.original && <span className="text-red-400 line-through decoration-red-300/60">{detail.original}</span>}
+                                                                {detail.original && detail.corrected && <span className="text-gray-300">→</span>}
+                                                                {detail.corrected && <span className="text-gray-900 font-bold tracking-wide">{detail.corrected}</span>}
+                                                            </div>
+                                                        )}
+                                                        <p className="text-[13px] md:text-sm font-sans text-gray-600 leading-relaxed">{renderFormattedText(detail.explanation)}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="mt-8 pt-4 border-t border-gray-200"><p className="text-[10px] text-gray-400 font-sans text-center">※ AI가 생성한 피드백이므로 간혹 부자연스럽거나 오류가 있을 수 있습니다.</p></div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+        
+        const DiscussView = ({ updateProgress, userLevel }) => (
+            <div className="max-w-3xl mx-auto w-full px-6 py-12 animate-fade-in print:pt-0">
+                <div className="mb-12 md:mb-16 text-center animate-fade-in print:text-center print:mb-6">
+                    <h2 className="font-serif-kr text-3xl md:text-4xl text-gray-900 font-semibold leading-tight print:text-[18px]">생각해 보기</h2><span className="block font-eng-header text-[11px] md:text-xs tracking-[0.2em] text-gray-400 uppercase mt-2 print:text-[12px]">Food For Thought</span>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 py-4 px-5 mb-24 md:mb-32 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
+                    <div className="flex gap-4 items-center">
+                        <div className="shrink-0 text-gray-400"><SparklesIcon className="w-5 h-5" /></div>
+                        <div className="flex flex-col"><p className="text-xs font-bold font-sans text-gray-800 leading-tight">AI 피드백은 현재 Gemini 웹에서만 가능합니다.</p><p className="text-[10px] font-sans text-gray-400 mt-1">AI feedback is currently available only on Gemini web.</p></div>
+                    </div>
+                    <a href="https://gemini.google.com/share/276a0703ea48" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center bg-white py-1.5 px-3 shadow-sm hover:shadow transition-all shrink-0 no-underline rounded-none border border-gray-100">
+                        <div className="flex items-center gap-1"><span className="text-[11px] font-bold font-sans text-gray-700 group-hover:text-black">Gemini에서 열기</span><ExternalLinkIcon className="w-3 h-3 text-gray-400 group-hover:text-black"/></div>
+                        <span className="text-[9px] font-sans text-gray-400 group-hover:text-gray-600 uppercase tracking-widest mt-0.5">Open in Gemini</span>
+                    </a>
+                </div>
+                <div className="print:grid print:grid-cols-2 print:gap-6 print:items-start print:w-full">
+                    {DISCUSS_DATA.map((item) => (<DiscussQuestionItem key={item.id} item={item} userLevel={userLevel} />))}
+                </div>
+            </div>
+        );
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home'); 
+            const [userLevel] = useState("B1");
+            const [progress, setProgress] = useState({ learn: false, vocab: false, quiz: 0, discuss: false });
+            const [isHeaderExpanded, setIsHeaderExpanded] = useState(true);
+
+            useEffect(() => { if (activeTab === 'video') { setIsHeaderExpanded(false); } else { setIsHeaderExpanded(true); } }, [activeTab]);
+            const updateProgress = useCallback((key, value = true) => { setProgress(prev => { if (prev[key] === value) return prev; return { ...prev, [key]: value }; }); }, []);
+            
+            const renderContent = () => { 
+                switch(activeTab) { 
+                    case 'video': return <LearnView updateProgress={updateProgress} />; 
+                    case 'vocab': return <VocabView updateProgress={updateProgress} />; 
+                    case 'quiz': return <QuizView updateProgress={updateProgress} />; 
+                    case 'discuss': return <DiscussView updateProgress={updateProgress} userLevel={userLevel} />; 
+                    case 'home': default: return <HomeView setActiveTab={setActiveTab} userLevel={userLevel} />; 
+                } 
+            };
+            
+            const isVideoTab = activeTab === 'video';
+            return (
+                <div className={`flex flex-col bg-white text-gray-900 selection:bg-gray-200 selection:text-black font-sans ${isVideoTab ? 'h-screen overflow-hidden' : 'min-h-screen'} print:h-auto print:overflow-visible`}>
+                    <Header isExpanded={isHeaderExpanded} setIsExpanded={setIsHeaderExpanded} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <div className="lg:hidden h-14 border-b border-gray-100 flex items-center justify-center sticky top-0 bg-white z-40 print:hidden"><span className="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span></div>
+                    <main className={`flex-1 relative flex flex-col ${isVideoTab ? 'overflow-x-hidden lg:overflow-hidden lg:h-full' : ''} print:overflow-visible print:h-auto print:block`}>{renderContent()}</main>
+                    <nav className="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-100 flex justify-around p-3 z-50 print:hidden">{NAV_ITEMS.map((item) => (<button key={item.id} onClick={() => setActiveTab(item.id)} className={`p-2 ${activeTab === item.id ? 'text-black' : 'text-gray-300'}`}><item.icon className="w-6 h-6" /></button>))}</nav>
+                </div>
+            );
+        };
+        
+        const root = ReactDOM.createRoot(document.getElementById('root')); root.render(<App />);
+    </script>
+</body>
+</html>
